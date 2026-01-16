@@ -1,0 +1,297 @@
+# motion_controller_device.cpp 文件调用情况分析
+
+## 一、头文件依赖
+
+### 1.1 
+- device_services/motion_controller_device.h (设备类声明)
+- common/system_config.h (系统配置)
+- drivers/LTSMC.h (运动控制器驱动)
+
+### 1.2 标准库
+- iostream (输入输出流)
+- cstdio (C标准输入输出)
+- stdexcept (标准异常)
+- sstream (字符串流)
+- chrono (时间处理)
+- ctime (C时间库)
+- iomanip (输入输出格式化)
+
+## 二、外部库调用
+
+### 2.1 LTSMC驱动函数调用 (共15个不同函数)
+     1	smc_board_close
+     2	smc_board_init
+     3	smc_check_done
+     4	smc_clear_stop_reason
+     5	smc_emg_stop
+     6	smc_get_ain
+     7	smc_get_position_unit
+     8	smc_home_move
+     9	smc_pmove_unit
+    10	smc_read_eln_pin
+    11	smc_read_elp_pin
+    12	smc_read_inport
+    13	smc_read_org_pin
+    14	smc_read_outbit
+    15	smc_read_sevon_pin
+    16	smc_set_da_output
+    17	smc_set_encoder_unit
+    18	smc_set_equiv
+    19	smc_set_profile_unit
+    20	smc_stop
+    21	smc_write_outbit
+    22	smc_write_sevon_pin
+
+### 2.2 Tango框架调用
+#### 状态管理
+- set_state(): 25 次调用
+- set_status(): 23 次调用
+
+#### 异常处理
+- Tango::Except::throw_exception: 20 次异常抛出
+
+#### 使用的Tango数据类型
+- Tango::ALARM
+- Tango::Attr
+- Tango::Attribute
+- Tango::DEV_BOOLEAN
+- Tango::DEV_DOUBLE
+- Tango::DEV_LONG
+- Tango::DEV_SHORT
+- Tango::DEV_STRING
+- Tango::DISABLE
+- Tango::DServer
+- Tango::DbData
+- Tango::DbDatum
+- Tango::DevBoolean
+- Tango::DevDouble
+- Tango::DevShort
+- Tango::DevStateName
+- Tango::DevString
+- Tango::DevVarDoubleArray
+- Tango::DevVarStringArray
+- Tango::DeviceClass
+- Tango::DeviceImpl
+- Tango::Device_
+- Tango::Except
+- Tango::FAULT
+- Tango::INIT
+- Tango::MOVING
+- Tango::OFF
+- Tango::ON
+- Tango::READ
+- Tango::READ_WRITE
+- Tango::STANDBY
+- Tango::SpectrumAttr
+- Tango::TemplCommand
+- Tango::TemplCommandIn
+- Tango::TemplCommandInOut
+- Tango::TemplCommandOut
+- Tango::Util
+- Tango::WAttribute
+- Tango::string_dup
+
+## 三、类方法定义 (共70个方法)
+
+### 3.1 构造/析构函数
+- MotionControllerDevice(DeviceClass*, string&)
+- MotionControllerDevice(DeviceClass*, const char*)
+- MotionControllerDevice(DeviceClass*, const char*, const char*)
+- ~MotionControllerDevice()
+
+### 3.2 设备生命周期
+- init_device()
+- delete_device()
+
+### 3.3 连接与健康检查
+- check_connection()
+- check_error(short, const string&)
+- try_reconnect()
+- check_connection_health()
+
+### 3.4 锁定机制
+- devLock(DevString)
+- devUnlock(DevBoolean)
+- devLockVerify()
+- devLockQuery()
+
+### 3.5 设备控制命令
+- init_device() {
+- delete_device() {
+- check_connection() {
+- check_error(short error_code, const std::string &context) {
+- log_event(const std::string &event) {
+- update_motor_positions() {
+- update_axis_status() {
+- devLock(Tango::DevString argin) {
+- devUnlock(Tango::DevBoolean argin) {
+- devLockVerify() {
+- devUserConfig(Tango::DevString argin) {
+- selfCheck() {
+- init() {
+- connect() {
+- setDisabled(bool disabled) {
+- disconnect() {
+- reset(Tango::DevShort axis_id) {
+- moveZero(Tango::DevShort axis_id) {
+- moveRelative(const Tango::DevVarDoubleArray *argin) {
+- moveAbsolute(const Tango::DevVarDoubleArray *argin) {
+
+### 3.6 读取命令
+- Tango::DevBoolean MotionControllerDevice::readOrg(Tango::DevShort axis_id) {
+- Tango::DevShort MotionControllerDevice::readEL(Tango::DevShort axis_id) {
+- Tango::DevDouble MotionControllerDevice::readPos(Tango::DevShort axis_id) {
+- Tango::DevShort MotionControllerDevice::readIO(Tango::DevShort bitno) {
+- Tango::DevDouble MotionControllerDevice::readAD(Tango::DevShort channel) {
+
+### 3.7 属性读写
+- void MotionControllerDevice::read_selfCheckResult(Tango::Attribute &attr) {
+- void MotionControllerDevice::read_positionUnit(Tango::Attribute &attr) {
+- void MotionControllerDevice::write_positionUnit(Tango::WAttribute &attr) {
+- void MotionControllerDevice::read_groupAttributeJson(Tango::Attribute &attr) {
+- void MotionControllerDevice::read_controllerLogs(Tango::Attribute &attr) {
+- void MotionControllerDevice::read_faultState(Tango::Attribute &attr) {
+- void MotionControllerDevice::read_motorPos(Tango::Attribute &attr) {
+- void MotionControllerDevice::read_structParameter(Tango::Attribute &attr) {
+- void MotionControllerDevice::read_moveParameter(Tango::Attribute &attr) {
+- void MotionControllerDevice::read_analogOutValue(Tango::Attribute &attr) {
+- void MotionControllerDevice::read_analogInValue(Tango::Attribute &attr) {
+- void MotionControllerDevice::read_genericIoInputValue(Tango::Attribute &attr) {
+- void MotionControllerDevice::read_specialLocationValue(Tango::Attribute &attr) {
+- void MotionControllerDevice::read_axisStatus(Tango::Attribute &attr) {
+- void MotionControllerDevice::read_resultValue(Tango::Attribute &attr) {
+- void MotionControllerDevice::read_attr_hardware(std::vector<long> &/*attr_list*/) {}
+- void MotionControllerDevice::read_attr(Tango::Attribute &attr) {
+- void MotionControllerDevice::write_attr(Tango::WAttribute &attr) {
+
+### 3.8 Device Class方法
+- MotionControllerDeviceClass::instance()
+- MotionControllerDeviceClass::command_factory()
+- MotionControllerDeviceClass::device_factory()
+- MotionControllerDeviceClass::attribute_factory()
+
+## 四、标准库使用
+
+### 4.1 线程同步
+- std::lock_guard: 16 次使用
+- std::mutex: 用于保护共享资源
+
+### 4.2 字符串处理
+- std::string: 18 次相关操作
+- std::stringstream: 3 次使用
+
+### 4.3 时间处理
+- std::chrono: 7 次使用 (用于重连时间管理)
+
+### 4.4 容器
+- std::array: 用于存储位置、模拟量等数据
+- std::vector: 用于属性列表等
+- std::fill: 数组初始化
+
+## 五、关键调用流程
+
+### 5.1 设备初始化流程
+init_device() 
+  → set_state(INIT)
+  → get_db_device()->get_property()  // 读取配置
+  → smc_board_init()  // 硬件初始化
+  → set_state(ON/FAULT)
+
+### 5.2 连接管理流程
+connect()
+  → smc_board_init()
+  → set_state(STANDBY)
+  
+disconnect()
+  → smc_board_close()
+  → set_state(OFF)
+
+### 5.3 运动控制流程
+moveAbsolute/moveRelative()
+  → 检查状态 (DISABLED/FAULT)
+  → smc_write_sevon_pin()  // 使能轴
+  → smc_pmove_unit()  // 执行运动
+  → set_state(MOVING)
+
+### 5.4 健康检查流程  
+always_executed_hook()
+  → check_connection_health()
+  → smc_get_position_unit()  // 测试连接
+  → try_reconnect()  // 连接失败时重连
+  → update_motor_positions()
+  → update_axis_status()
+
+### 5.5 错误处理流程
+check_error()
+  → 检查返回码
+  → Tango::Except::throw_exception()  // 抛出异常
+
+## 六、主要功能模块
+
+### 6.1 运动控制 (14个命令)
+- reset: 紧急停止与清除错误
+- moveZero: 回零运动
+- moveRelative: 相对运动
+- moveAbsolute: 绝对运动
+- stopMove: 停止运动
+- checkMoveState: 检查运动状态
+- setPvts/movePvts: PVTS模式 (未完全实现)
+
+### 6.2 参数设置 (3个命令)
+- setMoveParameter: 设置运动参数
+- setStructParameter: 设置结构参数
+- setAnalog: 设置模拟输出
+
+### 6.3 IO操作 (4个命令)
+- readIO/writeIO: 数字IO
+- readAD/writeAD: 模拟量
+- readOrg: 读原点信号
+- readEL: 读限位信号
+
+### 6.4 编码器操作 (2个命令)
+- readPos: 读取位置
+- setEncoderPosition: 设置编码器位置
+
+### 6.5 连接管理 (4个命令)
+- init: 初始化
+- connect: 连接
+- disconnect: 断开
+- selfCheck: 自检
+
+### 6.6 状态监控 (10个属性)
+- motorPos: 电机位置
+- axisStatus: 轴状态
+- faultState: 故障状态
+- analogInValue: 模拟输入
+- analogOutValue: 模拟输出
+- genericIoInputValue: 通用IO输入
+- specialLocationValue: 特殊位置
+- structParameter: 结构参数
+- moveParameter: 运动参数
+- controllerLogs: 控制器日志
+
+## 七、调用统计
+
+### 7.1 LTSMC驱动调用
+- 板卡初始化/关闭: smc_board_init, smc_board_close
+- 运动控制: smc_pmove_unit, smc_home_move, smc_stop, smc_emg_stop
+- 参数设置: smc_set_profile_unit, smc_set_equiv
+- 状态查询: smc_check_done, smc_get_position_unit
+- 伺服控制: smc_write_sevon_pin, smc_read_sevon_pin
+- IO操作: smc_set_da_output
+- 错误处理: smc_clear_stop_reason
+
+### 7.2 内部工具方法调用统计
+- check_connection: 20 次
+- check_error: 14 次
+- log_event: 41 次
+
+### 7.3 状态转换
+- INIT → ON/FAULT (初始化)
+- ON → STANDBY (连接)
+- STANDBY → MOVING (运动开始)
+- MOVING → STANDBY (运动完成)
+- STANDBY → DISABLE (联锁触发)
+- FAULT → STANDBY (重置后恢复)
+- * → OFF (断开连接)
+

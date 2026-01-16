@@ -1,0 +1,86 @@
+[
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/c++ -DHAS_TANGO -I/usr/local/include/tango -I/app/include  -g -O0 -Wall -Wextra -Wno-deprecated -Wno-sign-compare -isystem /usr/local/include/tango -std=gnu++17 -o CMakeFiles/common_lib.dir/src/common/device_interface.cpp.o -c /app/src/common/device_interface.cpp",
+  "file": "/app/src/common/device_interface.cpp",
+  "output": "CMakeFiles/common_lib.dir/src/common/device_interface.cpp.o"
+},
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/c++ -DHAS_TANGO -I/usr/local/include/tango -I/app/include  -g -O0 -Wall -Wextra -Wno-deprecated -Wno-sign-compare -isystem /usr/local/include/tango -std=gnu++17 -o CMakeFiles/common_lib.dir/src/common/kinematics.cpp.o -c /app/src/common/kinematics.cpp",
+  "file": "/app/src/common/kinematics.cpp",
+  "output": "CMakeFiles/common_lib.dir/src/common/kinematics.cpp.o"
+},
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/c++ -DHAS_TANGO -I/usr/local/include/tango -I/app/include  -g -O0 -Wall -Wextra -Wno-deprecated -Wno-sign-compare -isystem /usr/local/include/tango -std=gnu++17 -o CMakeFiles/common_lib.dir/src/common/system_config.cpp.o -c /app/src/common/system_config.cpp",
+  "file": "/app/src/common/system_config.cpp",
+  "output": "CMakeFiles/common_lib.dir/src/common/system_config.cpp.o"
+},
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/c++ -DHAS_TANGO -I/usr/local/include/tango -I/app/include  -g -O0 -Wall -Wextra -Wno-deprecated -Wno-sign-compare -isystem /usr/local/include/tango -std=gnu++17 -o CMakeFiles/common_lib.dir/src/common/standard_system_device.cpp.o -c /app/src/common/standard_system_device.cpp",
+  "file": "/app/src/common/standard_system_device.cpp",
+  "output": "CMakeFiles/common_lib.dir/src/common/standard_system_device.cpp.o"
+},
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/c++ -DHAS_TANGO -I/usr/local/include/tango -I/app/include  -g -O0 -Wall -Wextra -Wno-deprecated -Wno-sign-compare -isystem /usr/local/include/tango -std=gnu++17 -o CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o -c /app/src/common/encoder_acquisition.cpp",
+  "file": "/app/src/common/encoder_acquisition.cpp",
+  "output": "CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o"
+},
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/c++ -DHAS_TANGO -I/usr/local/include/tango -I/app/include  -g -O0 -Wall -Wextra -Wno-deprecated -Wno-sign-compare -isystem /usr/local/include/tango -std=gnu++17 -o CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o -c /app/src/common/tango_device_wrapper.cpp",
+  "file": "/app/src/common/tango_device_wrapper.cpp",
+  "output": "CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o"
+},
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/c++ -DHAS_TANGO -I/app/include -I/usr/local/include/tango  -g -O0 -Wall -Wextra -Wno-deprecated -Wno-sign-compare -isystem /usr/local/include/tango -std=gnu++17 -o CMakeFiles/motion_controller_server.dir/src/device_services/motion_controller_device.cpp.o -c /app/src/device_services/motion_controller_device.cpp",
+  "file": "/app/src/device_services/motion_controller_device.cpp",
+  "output": "CMakeFiles/motion_controller_server.dir/src/device_services/motion_controller_device.cpp.o"
+},
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/c++ -DHAS_TANGO -I/app/include -I/usr/local/include/tango  -g -O0 -Wall -Wextra -Wno-deprecated -Wno-sign-compare -isystem /usr/local/include/tango -std=gnu++17 -o CMakeFiles/encoder_server.dir/src/device_services/encoder_device.cpp.o -c /app/src/device_services/encoder_device.cpp",
+  "file": "/app/src/device_services/encoder_device.cpp",
+  "output": "CMakeFiles/encoder_server.dir/src/device_services/encoder_device.cpp.o"
+},
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/c++ -DHAS_TANGO -I/app/include -I/usr/local/include/tango  -g -O0 -Wall -Wextra -Wno-deprecated -Wno-sign-compare -isystem /usr/local/include/tango -std=gnu++17 -Wno-deprecated -o CMakeFiles/large_stroke_server.dir/src/device_services/large_stroke_device.cpp.o -c /app/src/device_services/large_stroke_device.cpp",
+  "file": "/app/src/device_services/large_stroke_device.cpp",
+  "output": "CMakeFiles/large_stroke_server.dir/src/device_services/large_stroke_device.cpp.o"
+},
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/c++ -DHAS_TANGO -I/app/include -I/usr/local/include/tango  -g -O0 -Wall -Wextra -Wno-deprecated -Wno-sign-compare -isystem /usr/local/include/tango -std=gnu++17 -Wno-deprecated -o CMakeFiles/auxiliary_support_server.dir/src/device_services/auxiliary_support_device.cpp.o -c /app/src/device_services/auxiliary_support_device.cpp",
+  "file": "/app/src/device_services/auxiliary_support_device.cpp",
+  "output": "CMakeFiles/auxiliary_support_server.dir/src/device_services/auxiliary_support_device.cpp.o"
+},
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/c++ -DHAS_TANGO -I/app/include -I/usr/local/include/tango  -g -O0 -Wall -Wextra -Wno-deprecated -Wno-sign-compare -isystem /usr/local/include/tango -std=gnu++17 -Wno-deprecated -o CMakeFiles/interlock_server.dir/src/system_services/interlock_service.cpp.o -c /app/src/system_services/interlock_service.cpp",
+  "file": "/app/src/system_services/interlock_service.cpp",
+  "output": "CMakeFiles/interlock_server.dir/src/system_services/interlock_service.cpp.o"
+},
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/c++ -DHAS_TANGO -I/app/include -I/usr/local/include/tango  -g -O0 -Wall -Wextra -Wno-deprecated -Wno-sign-compare -isystem /usr/local/include/tango -std=gnu++17 -Wno-deprecated -o CMakeFiles/six_dof_server.dir/src/device_services/six_dof_device.cpp.o -c /app/src/device_services/six_dof_device.cpp",
+  "file": "/app/src/device_services/six_dof_device.cpp",
+  "output": "CMakeFiles/six_dof_server.dir/src/device_services/six_dof_device.cpp.o"
+},
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/c++ -DHAS_TANGO -I/app/include -I/usr/local/include/tango  -g -O0 -Wall -Wextra -Wno-deprecated -Wno-sign-compare -isystem /usr/local/include/tango -std=gnu++17 -Wno-deprecated -o CMakeFiles/reflection_imaging_server.dir/src/device_services/reflection_imaging_device.cpp.o -c /app/src/device_services/reflection_imaging_device.cpp",
+  "file": "/app/src/device_services/reflection_imaging_device.cpp",
+  "output": "CMakeFiles/reflection_imaging_server.dir/src/device_services/reflection_imaging_device.cpp.o"
+},
+{
+  "directory": "/app/build",
+  "command": "/usr/bin/c++ -DHAS_TANGO -I/app/include -I/usr/local/include/tango  -g -O0 -Wall -Wextra -Wno-deprecated -Wno-sign-compare -isystem /usr/local/include/tango -std=gnu++17 -Wno-deprecated -o CMakeFiles/reflection_imaging_server.dir/src/drivers/mv_cu020_19gc.cpp.o -c /app/src/drivers/mv_cu020_19gc.cpp",
+  "file": "/app/src/drivers/mv_cu020_19gc.cpp",
+  "output": "CMakeFiles/reflection_imaging_server.dir/src/drivers/mv_cu020_19gc.cpp.o"
+}
+]

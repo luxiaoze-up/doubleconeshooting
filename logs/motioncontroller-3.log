@@ -1,0 +1,1384 @@
+Warning: Qt5 not available, using default configuration values.
+  Controller IP: 192.168.1.177
+  PLC IP: 192.168.1.177
+  Tango Host: 192.168.80.98:10000
+  ORB Timeouts: call=5000ms, connect=3000ms
+MotionControllerDeviceClass::device_factory() called with 1 device(s)
+  Creating device: sys/motion/3
+2026-01-16T15:51:10,957902+0800 INFO (motion_controller_device.cpp:100) sys/motion/3 MotionControllerDevice::init_device() sys/motion/3
+2026-01-16T15:51:10,961672+0800 INFO (motion_controller_device.cpp:192) sys/motion/3 [DEBUG] 运行模式: 真实模式 (从配置文件加载, SIM_MODE=false)
+2026-01-16T15:51:10,961709+0800 INFO (motion_controller_device.cpp:193) sys/motion/3 [DEBUG] 提示: 可通过 simSwitch 命令或GUI动态切换模拟模式
+2026-01-16T15:51:10,961826+0800 DEBUG (motion_controller_device.cpp:196) sys/motion/3 [SMC] smc_board_init(card_id=0, ip=192.168.1.13)
+2026-01-16T15:51:10,971567+0800 DEBUG (motion_controller_device.cpp:198) sys/motion/3 [SMC] smc_board_init() returned: 0
+2026-01-16T15:51:10,972173+0800 INFO (motion_controller_device.cpp:213) sys/motion/3 MotionControllerDevice::init_device() completed for sys/motion/3 [State: ON]
+  Exporting device: sys/motion/3
+  ✓ Device sys/motion/3 exported successfully
+MotionControllerDeviceClass::device_factory() completed. Total devices: 1
+MotionController Server Ready - Exported 1 device(s):
+  [1] sys/motion/3
+2026-01-16T15:51:13,045257+0800 DEBUG (motion_controller_device.cpp:1000) sys/motion/3 [SMC] smc_set_equiv(card_id=0, axis=6, equiv=1.25e-06 [step_angle=1.8, gear_ratio=1, subdivision=4000])
+16/01/2026  15:51:13:047 src/smcxxx.c,L:6098,smc_set_equiv:ConnectNo:0,axis:6,new_equiv:0.000001,return:1008
+
+2026-01-16T15:51:13,047665+0800 DEBUG (motion_controller_device.cpp:1004) sys/motion/3 [SMC] smc_set_equiv() returned: 1008
+2026-01-16T15:51:13,048973+0800 DEBUG (motion_controller_device.cpp:1198) sys/motion/3 [SMC] smc_write_outbit(card_id=0, bitno=0, logical_value=1, hardware_value=0)
+2026-01-16T15:51:13,049471+0800 DEBUG (motion_controller_device.cpp:1201) sys/motion/3 [SMC] smc_write_outbit() returned: 0
+2026-01-16T15:51:13,049995+0800 DEBUG (motion_controller_device.cpp:1198) sys/motion/3 [SMC] smc_write_outbit(card_id=0, bitno=4, logical_value=1, hardware_value=0)
+2026-01-16T15:51:13,050413+0800 DEBUG (motion_controller_device.cpp:1201) sys/motion/3 [SMC] smc_write_outbit() returned: 0
+2026-01-16T15:51:14,043900+0800 DEBUG (motion_controller_device.cpp:1198) sys/motion/3 [SMC] smc_write_outbit(card_id=0, bitno=0, logical_value=1, hardware_value=0)
+2026-01-16T15:51:14,044747+0800 DEBUG (motion_controller_device.cpp:1201) sys/motion/3 [SMC] smc_write_outbit() returned: 0
+2026-01-16T15:51:14,045215+0800 DEBUG (motion_controller_device.cpp:1198) sys/motion/3 [SMC] smc_write_outbit(card_id=0, bitno=3, logical_value=1, hardware_value=0)
+2026-01-16T15:51:14,045639+0800 DEBUG (motion_controller_device.cpp:1201) sys/motion/3 [SMC] smc_write_outbit() returned: 0
+2026-01-16T15:51:22,561763+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=0, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:22,562968+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:22,564031+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=1, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:22,564960+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:22,565278+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=2, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:22,566048+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:22,566371+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=3, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:22,567123+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:22,567414+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=4, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:22,568163+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:22,568444+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=5, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:22,569210+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:22,570690+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 0 enable status...
+2026-01-16T15:51:22,571527+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:22,571547+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=0, dist=0, mode=relative)
+2026-01-16T15:51:22,572385+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:22,572585+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:22,573160+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:22,573308+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 1 enable status...
+2026-01-16T15:51:22,573920+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:22,573931+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=1, dist=0, mode=relative)
+2026-01-16T15:51:22,574591+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:22,574739+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:22,575167+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:22,575186+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 2 enable status...
+2026-01-16T15:51:22,575543+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:22,575551+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=2, dist=0, mode=relative)
+2026-01-16T15:51:22,576445+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:22,576536+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:22,576996+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:22,577011+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 3 enable status...
+2026-01-16T15:51:22,577441+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:22,577448+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=3, dist=0, mode=relative)
+2026-01-16T15:51:22,578098+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:22,578211+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:22,578551+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:22,578566+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 4 enable status...
+2026-01-16T15:51:22,578932+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:22,578939+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=4, dist=0, mode=relative)
+2026-01-16T15:51:22,579648+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:22,579774+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:22,580260+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:22,580270+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 5 enable status...
+2026-01-16T15:51:22,580729+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:22,580736+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=5, dist=0, mode=relative)
+2026-01-16T15:51:22,581500+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:22,582213+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:22,582622+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:22,583196+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:22,583204+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:22,583629+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:22,583634+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:22,584577+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:22,584593+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:22,584934+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:22,584946+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:22,585407+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:22,585418+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:22,585748+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:22,585755+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:22,586193+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:22,586201+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:22,586651+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:22,586663+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:22,587111+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:22,587120+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:22,587538+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:22,587546+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:22,588010+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:22,588020+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:22,588374+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:22,588380+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:30,924200+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=0, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:30,925317+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:30,926398+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=1, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:30,927553+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:30,927842+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=2, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:30,929041+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:30,929317+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=3, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:30,930424+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:30,930703+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=4, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:30,931642+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:30,931929+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=5, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:30,933014+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:30,933477+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 0 enable status...
+2026-01-16T15:51:30,934057+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:30,934071+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=0, dist=11682, mode=relative)
+2026-01-16T15:51:30,935306+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:30,935413+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:30,935810+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,935949+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 1 enable status...
+2026-01-16T15:51:30,936760+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:30,936771+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=1, dist=-11280, mode=relative)
+2026-01-16T15:51:30,937678+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:30,937828+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:30,938254+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,938263+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:30,938877+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,938892+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 2 enable status...
+2026-01-16T15:51:30,939354+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:30,939363+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=2, dist=11682, mode=relative)
+2026-01-16T15:51:30,940150+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:30,940282+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:30,940978+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,940987+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:30,941388+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,941395+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:30,941998+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,942013+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 3 enable status...
+2026-01-16T15:51:30,944943+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:30,945045+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=3, dist=-11280, mode=relative)
+2026-01-16T15:51:30,962596+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:30,963276+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:30,963915+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,963939+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:30,964518+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,964541+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:30,965050+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,965068+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:30,965568+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,965603+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 4 enable status...
+2026-01-16T15:51:30,966143+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:30,966163+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=4, dist=11682, mode=relative)
+2026-01-16T15:51:30,969018+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:30,969633+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:30,970699+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,970747+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:30,971724+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,971757+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:30,972296+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,972315+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:30,972878+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,972896+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:30,973590+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,973618+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 5 enable status...
+2026-01-16T15:51:30,973984+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:30,974000+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=5, dist=-11280, mode=relative)
+2026-01-16T15:51:30,974706+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:30,975575+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:30,976077+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,976096+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:30,976610+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,976622+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:30,976993+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,977002+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:30,977467+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,977492+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:30,977995+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,978012+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:30,978557+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,979119+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:30,979128+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:30,979516+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:30,979533+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:30,979697+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:30,980204+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,980216+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:30,980633+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,980647+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:30,981227+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,981239+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:30,981589+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,981601+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:30,982078+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,982087+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:30,982735+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,983196+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:30,983205+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:30,983675+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:30,983692+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:30,983834+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:30,984370+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,984382+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:30,984750+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,984759+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:30,985365+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,985373+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:30,985757+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,985766+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:30,986225+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,986231+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:30,986764+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,987259+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:30,987267+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:30,987652+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:30,987658+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:30,987764+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:30,988369+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,988390+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:30,988891+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,988907+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:30,989474+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,989489+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:30,989874+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,989882+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:30,990395+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,990402+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:30,991138+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,991630+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:30,991646+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:30,992121+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:30,992130+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:30,992329+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:30,992889+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,992901+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:30,993450+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,993459+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:30,993845+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,993855+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:30,994497+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,994509+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:30,994883+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,994889+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:30,995366+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,995739+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:30,995754+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:30,996124+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:30,996131+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:30,996250+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:30,996614+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,996626+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:30,997080+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,997095+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:30,997597+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,997608+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:30,998318+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,998335+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:30,998805+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,998843+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:30,999369+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:30,999976+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:30,999985+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:31,000340+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:31,000347+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:31,000474+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:31,001047+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,001062+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:31,001680+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,001699+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:31,002070+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,002078+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:31,002529+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,002536+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:31,002953+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,002960+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:31,003431+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,509406+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:31,512374+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,512578+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:31,514560+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,514752+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:31,515846+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,515909+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:31,516643+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,516685+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:31,517308+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,517338+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:31,517981+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,518868+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:31,518919+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:31,519658+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:31,519696+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:31,520308+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:31,521057+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,521098+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:31,522250+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,522349+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:31,523589+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,523617+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:31,524460+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,524563+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:31,525519+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,525565+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:31,526260+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,527123+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:31,527150+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:31,527850+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:31,527863+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:31,528336+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:31,529210+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,529255+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:31,530059+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,530080+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:31,530920+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,531110+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:31,532187+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,532215+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:31,532925+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,533011+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:31,533814+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,534746+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:31,534786+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:31,535478+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:31,535494+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:31,536121+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:31,536677+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,536693+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:31,537467+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,537485+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:31,538156+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,538172+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:31,538720+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,538748+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:31,539331+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,539348+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:31,540001+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,540560+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:31,540579+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:31,541463+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:31,541658+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:31,542161+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:31,542802+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,542839+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:31,543420+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,543430+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:31,543956+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,544025+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:31,544681+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,544697+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:31,545243+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,545270+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:31,545889+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,546494+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:31,546510+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:31,546959+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:31,546965+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:31,547236+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:31,547888+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,547926+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:31,548616+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,548640+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:31,549148+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,549183+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:31,549636+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,549643+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:31,550193+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,550208+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:31,550741+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,551270+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:31,551284+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:31,552051+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:31,552084+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:31,552361+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:31,553299+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,553328+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:31,553946+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,553965+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:31,554552+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,554628+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:31,555261+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,555280+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:31,555883+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:31,555898+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:31,556569+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,060153+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:32,060997+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,061016+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:32,061456+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,061468+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:32,061857+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,061867+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:32,063680+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,063689+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:32,064089+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,064098+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:32,064542+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,065418+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:32,065425+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:32,065901+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:32,065907+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:32,066054+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:32,066653+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,066660+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:32,067214+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,067221+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:32,067645+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,067652+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:32,068135+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,068145+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:32,068608+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,068618+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:32,069121+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,069531+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:32,069540+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:32,070234+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:32,070243+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:32,070389+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:32,071143+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,071156+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:32,071889+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,071899+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:32,072596+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,072606+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:32,073094+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,073103+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:32,073773+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,073786+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:32,074402+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,075129+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:32,075140+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:32,075693+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:32,075703+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:32,075924+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:32,076519+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,076530+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:32,076985+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,076992+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:32,077622+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,077641+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:32,077994+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,078005+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:32,078515+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,078523+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:32,078971+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,079651+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:32,079658+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:32,080374+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:32,080384+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:32,080521+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:32,081129+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,081141+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:32,081661+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,081669+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:32,082214+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,082223+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:32,082671+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,082680+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:32,083323+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,083331+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:32,083802+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,084388+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:32,084404+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:32,084953+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:32,084963+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:32,085094+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:32,085743+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,085755+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:32,086455+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,086475+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:32,086939+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,086951+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:32,087936+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,087951+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:32,088511+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,088521+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:32,088973+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,089352+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:32,089360+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:32,089870+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:32,089883+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:32,090087+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:32,090739+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,090750+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:32,091518+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,091526+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:32,092101+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,092108+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:32,092922+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,092929+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:32,093680+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,093692+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:32,094341+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:32,597423+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:32,599270+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:32,599379+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:32,600374+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:32,600424+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:32,601381+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:32,601439+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:32,602352+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:32,602410+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:32,603078+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:32,603130+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:32,604061+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:32,606606+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:32,606731+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:32,609595+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:32,609680+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:32,612110+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:32,612272+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:32,613655+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:32,613904+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:32,615801+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:32,615875+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:32,616593+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:32,616615+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:32,617964+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:32,618062+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:32,619058+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:32,619106+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:32,620571+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:32,620607+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:32,621456+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:32,621471+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:32,623169+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:32,623306+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:32,624321+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:32,624427+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:40,369772+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=0, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:40,371026+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:40,372099+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=1, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:40,373059+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:40,373454+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=2, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:40,374185+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:40,374456+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=3, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:40,375162+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:40,375411+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=4, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:40,376239+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:40,376552+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=5, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:40,377331+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:40,377695+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 0 enable status...
+2026-01-16T15:51:40,378054+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:40,378064+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=0, dist=-11682, mode=relative)
+2026-01-16T15:51:40,378844+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:40,378953+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,379327+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,379343+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 1 enable status...
+2026-01-16T15:51:40,379692+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:40,379701+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=1, dist=11280, mode=relative)
+2026-01-16T15:51:40,380533+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:40,380665+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,381091+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,381103+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,381571+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,381587+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 2 enable status...
+2026-01-16T15:51:40,381999+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:40,382009+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=2, dist=-11682, mode=relative)
+2026-01-16T15:51:40,382754+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:40,382906+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,383367+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,383376+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,383668+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,383675+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,384068+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,384079+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 3 enable status...
+2026-01-16T15:51:40,384384+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:40,384392+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=3, dist=11280, mode=relative)
+2026-01-16T15:51:40,385035+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:40,385130+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,385549+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,385562+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,385892+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,385903+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,386207+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,386214+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,386534+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,386546+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 4 enable status...
+2026-01-16T15:51:40,386976+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:40,386985+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=4, dist=-11682, mode=relative)
+2026-01-16T15:51:40,388019+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:40,388213+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,388612+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,388625+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,389109+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,389132+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,389615+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,389622+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,389943+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,389950+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,390688+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,390768+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 5 enable status...
+2026-01-16T15:51:40,391274+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:40,391297+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=5, dist=11280, mode=relative)
+2026-01-16T15:51:40,392373+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:40,393080+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,393465+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,393474+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,393903+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,393913+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,394490+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,394531+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,394864+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,394876+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,395220+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,395225+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:40,395595+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,396066+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:40,396073+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:40,396509+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:40,396515+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:40,396646+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,397104+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,397114+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,397631+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,397700+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,398107+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,398118+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,398517+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,398587+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,399036+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,399047+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:40,399423+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,399751+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:40,399760+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:40,400265+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:40,400273+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:40,400471+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,400848+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,400856+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,401255+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,401262+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,401698+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,401708+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,402174+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,402181+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,402681+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,402698+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:40,403169+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,403577+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:40,403584+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:40,404024+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:40,404033+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:40,404151+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,404754+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,404766+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,405093+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,405100+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,405643+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,405653+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,406115+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,406129+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,406599+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,406612+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:40,407069+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,407628+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:40,407640+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:40,408107+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:40,408117+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:40,408274+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,408672+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,408679+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,409327+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,409338+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,409767+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,409786+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,410220+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,410234+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,410580+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,410589+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:40,411151+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,411491+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:40,411498+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:40,411903+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:40,411911+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:40,412132+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,412689+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,412701+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,413179+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,413195+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,413567+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,413574+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,413972+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,413985+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,414579+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,414587+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:40,415250+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,415781+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:40,415795+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:40,416223+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:40,416247+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:40,416453+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,416884+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,416895+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,417377+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,417384+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,417699+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,417706+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,418087+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,418093+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,418565+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,418574+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:40,419044+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,921620+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,922205+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,922221+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,922622+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,922631+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,923169+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,923191+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,923553+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,923565+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,923955+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,923963+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:40,924322+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,924730+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:40,924737+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:40,925077+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:40,925083+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:40,925197+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,925553+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,925563+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,925929+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,925939+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,926319+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,926328+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,926689+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,926698+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,927067+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,927073+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:40,927528+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,927911+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:40,927917+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:40,928259+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:40,928265+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:40,928409+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,928836+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,928840+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,929281+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,929307+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,929838+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,929850+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,930248+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,930257+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,930622+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,930629+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:40,930989+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,931436+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:40,931445+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:40,932036+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:40,932103+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:40,932361+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,932997+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,933019+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,933537+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,933556+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,934069+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,934081+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,934496+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,934508+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,935047+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,935065+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:40,935669+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,936161+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:40,936173+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:40,936581+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:40,936590+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:40,936833+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,937376+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,937394+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,937891+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,937901+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,938385+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,938393+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,938829+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,938836+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,939356+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,939363+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:40,939952+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,940570+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:40,940598+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:40,941118+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:40,941129+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:40,941347+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,941878+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,941887+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,942347+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,942355+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,943149+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,943167+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,943638+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,943651+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,944112+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,944119+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:40,944729+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,945179+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:40,945196+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:40,945576+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:40,945583+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:40,945776+0800 DEBUG (motion_controller_device.cpp:322) sys/motion/3 [SMC] smc_get_position_unit(card_id=0, axis=0) [health check]
+2026-01-16T15:51:40,946251+0800 DEBUG (motion_controller_device.cpp:324) sys/motion/3 [SMC] smc_get_position_unit() returned: 0 [health check]
+2026-01-16T15:51:40,946264+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:40,946714+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,946725+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:40,947161+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,947165+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:40,947672+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,947684+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:40,948229+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,948233+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:40,948721+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:40,948733+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:40,949171+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,452659+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:41,453900+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,453931+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:41,454551+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,454572+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:41,455189+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,455201+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:41,455773+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,455782+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:41,456475+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,456502+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:41,457029+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,457493+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:41,457502+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:41,457967+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:41,457977+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:41,458185+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:41,458689+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,458701+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:41,459220+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,459231+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:41,459750+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,459759+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:41,460363+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,460372+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:41,460874+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,460882+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:41,461383+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,461832+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:41,461840+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:41,462351+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:41,462359+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:41,462492+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:41,463064+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,463069+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:41,463553+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,463561+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:41,463984+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,464001+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:41,464477+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,464484+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:41,465070+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,465079+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:41,465529+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,466170+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:41,466200+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:41,466656+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:41,466668+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:41,466883+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:41,467263+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,467277+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:41,467660+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,467677+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:41,468307+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,468319+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:41,468864+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,468869+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:41,469350+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,469355+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:41,469699+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,470047+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:41,470052+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:41,470384+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:41,470388+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:41,470554+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:41,470977+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,470985+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:41,471516+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,471522+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:41,472214+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,472282+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:41,472947+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,472973+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:41,473629+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,473636+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:41,474127+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,474844+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:41,474865+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:41,475364+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:41,475370+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:41,475686+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:41,476196+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,476207+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:41,476594+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,476603+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:41,476996+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,477003+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:41,477430+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,477435+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:41,477981+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,478000+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:41,478628+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,479125+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:41,479141+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:41,479656+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:41,479669+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:41,479851+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:41,480308+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,480319+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:41,480869+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,480884+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:41,481317+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,481328+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:41,481994+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,482006+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:41,482559+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,482633+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:41,483324+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:41,985644+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:41,986274+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:41,986291+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:41,986743+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:41,986750+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:41,987136+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:41,987145+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:41,987534+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:41,987543+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:41,987972+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:41,987981+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:41,988353+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:41,988694+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:41,988700+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:41,989158+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:41,989167+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:41,989711+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:41,989728+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:41,990086+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:41,990097+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:41,990480+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:41,990490+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:41,990847+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:41,990857+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:41,991386+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:41,991398+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:41,991940+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:41,991965+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:41,992610+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:41,992622+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:41,993009+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:41,993015+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:41,993544+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:41,993561+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:41,993995+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:41,994014+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:46,813185+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=0, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:46,814416+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:46,815460+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=1, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:46,816239+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:46,816502+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=2, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:46,817215+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:46,817413+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=3, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:46,818218+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:46,818490+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=4, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:46,819485+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:46,819769+0800 DEBUG (motion_controller_device.cpp:968) sys/motion/3 [SMC] smc_set_profile_unit(card_id=0, axis=5, start_vel=3000, max_vel=10000, acc_time=0.1, dec_time=0.1, stop_vel=100)
+2026-01-16T15:51:46,820541+0800 DEBUG (motion_controller_device.cpp:973) sys/motion/3 [SMC] smc_set_profile_unit() returned: 0
+2026-01-16T15:51:46,820946+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 0 enable status...
+2026-01-16T15:51:46,821345+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:46,821360+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=0, dist=11682, mode=relative)
+2026-01-16T15:51:46,822206+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:46,822315+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:46,822849+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,822867+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 1 enable status...
+2026-01-16T15:51:46,823311+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:46,823319+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=1, dist=-11280, mode=relative)
+2026-01-16T15:51:46,824253+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:46,824362+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:46,824915+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,824929+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:46,825310+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,825325+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 2 enable status...
+2026-01-16T15:51:46,825674+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:46,825688+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=2, dist=11682, mode=relative)
+2026-01-16T15:51:46,826579+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:46,826688+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:46,827272+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,827288+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:46,827598+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,827606+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:46,827944+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,827958+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 3 enable status...
+2026-01-16T15:51:46,828414+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:46,828425+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=3, dist=-11280, mode=relative)
+2026-01-16T15:51:46,829317+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:46,829428+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:46,829926+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,829946+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:46,830553+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,830564+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:46,830904+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,830920+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:46,831364+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,831380+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 4 enable status...
+2026-01-16T15:51:46,831752+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:46,831762+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=4, dist=11682, mode=relative)
+2026-01-16T15:51:46,832861+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:46,833084+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:46,833628+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,833636+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:46,834053+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,834060+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:46,834404+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,834410+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:46,834941+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,834948+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:46,835276+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,835293+0800 DEBUG (motion_controller_device.cpp:646) sys/motion/3 [SMC] Checking axis 5 enable status...
+2026-01-16T15:51:46,835674+0800 DEBUG (motion_controller_device.cpp:648) sys/motion/3 [SMC] smc_read_sevon_pin() returned: 1 (0=disabled, 1=enabled)
+2026-01-16T15:51:46,835688+0800 DEBUG (motion_controller_device.cpp:662) sys/motion/3 [SMC] smc_pmove_unit(card_id=0, axis=5, dist=-11280, mode=relative)
+2026-01-16T15:51:46,836392+0800 DEBUG (motion_controller_device.cpp:664) sys/motion/3 [SMC] smc_pmove_unit() returned: 0
+2026-01-16T15:51:46,837474+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:46,838057+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,838071+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:46,838554+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,838564+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:46,839195+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,839206+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:46,839629+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,839637+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:46,840037+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,840044+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:46,840406+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,840806+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:46,840839+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:46,841434+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:46,841445+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:46,841639+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:46,842127+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,842138+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:46,842960+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,842970+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:46,843592+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,843610+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:46,844095+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,844109+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:46,844480+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,844488+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:46,844895+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,845363+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:46,845371+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:46,845787+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:46,845793+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:46,846033+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:46,846521+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,846541+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:46,847018+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,847032+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:46,847591+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,847603+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:46,848003+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,848027+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:46,848420+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,848437+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:46,848949+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,849524+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:46,849538+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:46,850286+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:46,850368+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:46,850580+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:46,851041+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,851051+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:46,851390+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,851399+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:46,851840+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,851848+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:46,852299+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,852316+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:46,852880+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,852895+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:46,853329+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,853656+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:46,853663+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:46,854103+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:46,854109+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:46,854223+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:46,854621+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,854632+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:46,854971+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,854978+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:46,855470+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,855496+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:46,855950+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,855958+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:46,856385+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,856401+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:46,856835+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,857303+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:46,857311+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:46,857663+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:46,857669+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:46,857804+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:46,858180+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,858187+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:46,858722+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,858729+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:46,859315+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,859321+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:46,859835+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,859858+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:46,860308+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,860317+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:46,860662+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,861006+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:46,861012+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:46,861507+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:46,861513+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:46,861619+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:46,862097+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,862107+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:46,862744+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,862753+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:46,863319+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,863330+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:46,863677+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,863685+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:46,864055+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:46,864062+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:46,864479+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,367480+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:47,368192+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,368210+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:47,368693+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,368703+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:47,369121+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,369129+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:47,369507+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,369515+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:47,369935+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,369948+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:47,370324+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,370863+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:47,370873+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:47,371248+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:47,371258+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:47,371384+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:47,371819+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,371859+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:47,372320+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,372327+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:47,372770+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,372777+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:47,373205+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,373213+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:47,373743+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,373753+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:47,374171+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,374593+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:47,374600+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:47,375031+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:47,375037+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:47,375227+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:47,375748+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,375759+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:47,376227+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,376236+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:47,376648+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,376656+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:47,377135+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,377145+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:47,377538+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,377544+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:47,377957+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,378332+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:47,378341+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:47,378689+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:47,378695+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:47,378778+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:47,379223+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,379230+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:47,379705+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,379711+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:47,380123+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,380127+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:47,380566+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,380572+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:47,380958+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,380966+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:47,381403+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,381751+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:47,381757+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:47,382307+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:47,382313+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:47,382418+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:47,383018+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,383032+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:47,383668+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,383675+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:47,384164+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,384171+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:47,384574+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,384577+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:47,385045+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,385053+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:47,385562+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,385981+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:47,385990+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:47,386393+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:47,386402+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:47,386502+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:47,386883+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,386892+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:47,387298+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,387308+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:47,387831+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,387840+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:47,388258+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,388264+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:47,388673+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,388682+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:47,389093+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,389562+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:47,389568+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:47,390000+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:47,390007+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:47,390149+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:47,390817+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,390837+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:47,391261+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,391271+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:47,391655+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,391662+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:47,392065+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,392075+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:47,392422+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,392433+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:47,392804+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,900219+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:47,901906+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,901989+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:47,902862+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,902914+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:47,903642+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,903682+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:47,904383+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,904449+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:47,905196+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,905234+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:47,906497+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,907397+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:47,907437+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:47,908429+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:47,908494+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:47,909175+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:47,910231+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,910309+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:47,911184+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,911269+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:47,912587+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,912682+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:47,913542+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,913594+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:47,914629+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,914704+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:47,915708+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,916656+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:47,916719+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:47,917527+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:47,917551+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:47,917996+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:47,918811+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,918867+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:47,919544+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,919563+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:47,920313+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,920328+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:47,920954+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,920968+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:47,921669+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,921677+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:47,922532+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,923351+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:47,923370+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:47,923995+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:47,924009+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:47,924312+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:47,925093+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,925120+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:47,925847+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,925862+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:47,926435+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,926447+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:47,926984+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,926996+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:47,927742+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,927761+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:47,928285+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,929024+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:47,929042+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:47,929554+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:47,929576+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:47,929771+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:47,930308+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,930326+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:47,930933+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,930953+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:47,931523+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,931536+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:47,932094+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,932108+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:47,932603+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,932617+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:47,933366+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,933752+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:47,933762+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:47,934314+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:47,934324+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:47,934517+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:47,937261+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,937278+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:47,937759+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,937768+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:47,938429+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,938443+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:47,938957+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,938966+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:47,939463+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,939477+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:47,939995+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,940558+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:47,940569+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:47,941006+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:47,941019+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:47,941144+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:47,941614+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,941625+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:47,942140+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,942150+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:47,942845+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,942860+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:47,943374+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,943383+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:47,943743+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:47,943752+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:47,944193+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 0 (0=moving, 1=stopped)
+2026-01-16T15:51:48,446584+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=0) [always_executed_hook]
+2026-01-16T15:51:48,447291+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:48,447313+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=1) [always_executed_hook]
+2026-01-16T15:51:48,447834+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:48,447843+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=2) [always_executed_hook]
+2026-01-16T15:51:48,448421+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:48,448441+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=3) [always_executed_hook]
+2026-01-16T15:51:48,448976+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:48,448989+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=4) [always_executed_hook]
+2026-01-16T15:51:48,449480+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:48,449487+0800 DEBUG (motion_controller_device.cpp:1464) sys/motion/3 [SMC] smc_check_done(card_id=0, axis=5) [always_executed_hook]
+2026-01-16T15:51:48,449950+0800 DEBUG (motion_controller_device.cpp:1467) sys/motion/3 [SMC] smc_check_done() returned: 1 (0=moving, 1=stopped)
+2026-01-16T15:51:48,450471+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:48,450481+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:48,450886+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=0)
+2026-01-16T15:51:48,450896+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:48,451531+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:48,451549+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:48,451981+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=1)
+2026-01-16T15:51:48,451992+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:48,452490+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:48,452501+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:48,452957+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=2)
+2026-01-16T15:51:48,452970+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:48,453581+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:48,453590+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:48,454021+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=3)
+2026-01-16T15:51:48,454030+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:48,454490+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:48,454502+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:48,454975+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=4)
+2026-01-16T15:51:48,454985+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:51:48,455704+0800 DEBUG (motion_controller_device.cpp:1087) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:48,455715+0800 DEBUG (motion_controller_device.cpp:1088) sys/motion/3 [SMC] smc_read_elp_pin() returned: 1
+2026-01-16T15:51:48,456214+0800 DEBUG (motion_controller_device.cpp:1090) sys/motion/3 [SMC] smc_read_eln_pin(card_id=0, axis=5)
+2026-01-16T15:51:48,456220+0800 DEBUG (motion_controller_device.cpp:1091) sys/motion/3 [SMC] smc_read_eln_pin() returned: 1
+2026-01-16T15:52:04,766031+0800 DEBUG (motion_controller_device.cpp:219) sys/motion/3 [SMC] smc_board_close(card_id=0)
+2026-01-16T15:52:04,766538+0800 DEBUG (motion_controller_device.cpp:221) sys/motion/3 [SMC] smc_board_close() completed

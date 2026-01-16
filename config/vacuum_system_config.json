@@ -1,0 +1,33 @@
+{
+    "device_name": "sys/vacuum/2",
+    "description": "真空系统 Tango 设备服务配置",
+    
+    "plc_connection": {
+        "protocol": "opcua",
+        "ip": "192.168.1.100",
+        "port": 4840,
+        "timeout_ms": 5000
+    },
+    
+    "valve_timeout_ms": 5000,
+    "poll_interval_ms": 100,
+    
+    "alarm_log": {
+        "enabled": true,
+        "file_path": "logs/vacuum_system_alarms.json",
+        "max_records": 10000
+    },
+    
+    "auto_sequence": {
+        "enabled": true,
+        "vacuum_target_pa": 1e-3,
+        "step_timeout_s": 300
+    },
+    
+    "safety_limits": {
+        "max_pressure_diff_pa": 3000,
+        "min_air_pressure_mpa": 0.4,
+        "molecular_pump_full_speed_hz": 518
+    }
+}
+

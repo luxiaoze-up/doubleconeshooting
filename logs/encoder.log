@@ -1,0 +1,12 @@
+Warning: Qt5 not available, using default configuration values.
+  Controller IP: 192.168.1.177
+  PLC IP: 192.168.1.177
+  Tango Host: 192.168.80.98:10000
+  ORB Timeouts: call=5000ms, connect=3000ms
+EncoderDevice::init_device() sys/encoder/1
+2026-01-16T15:51:12,005960+0800 INFO (encoder_device.cpp:132) sys/encoder/1 [DEBUG] 运行模式: 真实模式 (从配置文件加载, SIM_MODE=false)
+2026-01-16T15:51:12,006721+0800 INFO (encoder_device.cpp:133) sys/encoder/1 [DEBUG] 提示: 可通过 simSwitch 命令或GUI动态切换模拟模式
+2026-01-16T15:51:12,007851+0800 INFO (encoder_device.cpp:148) sys/encoder/1 [DEBUG] 使用配置的编码器采集器:
+2026-01-16T15:51:12,007917+0800 INFO (encoder_device.cpp:150) sys/encoder/1   [0] 192.168.1.199:5000
+2026-01-16T15:51:12,007922+0800 INFO (encoder_device.cpp:150) sys/encoder/1   [1] 192.168.1.198:5000
+Encoder Server Ready

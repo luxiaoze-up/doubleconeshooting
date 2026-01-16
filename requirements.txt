@@ -1,0 +1,10 @@
+# C++ Project - Python backup components only
+PyTango>=9.3.0
+PyQt5>=5.15.0
+numpy>=1.19.0
+
+# Testing dependencies
+pytest>=7.0.0
+pytest-html>=3.1.0
+pytest-cov>=4.0.0
+pytest-timeout>=2.1.0

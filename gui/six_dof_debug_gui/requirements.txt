@@ -1,0 +1,10 @@
+# 六自由度机器人调试GUI依赖
+# Six DOF Robot Debug GUI Dependencies
+
+# GUI框架
+PyQt5>=5.15.0
+
+# 数值计算
+numpy>=1.21.0
+
+# 配置管理（Python标准库已包含json，无需额外安装）

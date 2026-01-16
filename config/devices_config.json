@@ -1,0 +1,397 @@
+{
+  "_comment": "设备配置文件 - 根据《双锥项目测试数据收集》文档配置",
+  "_version": "2.0.0",
+  "_hardware_doc": "双锥项目测试数据收集.pdf",
+  
+  "motion_controllers": {
+    "_comment": "三台网络运动控制器: 雷赛 SMC608-BAS - 按《双锥项目测试数据收集》PDF配置(最新版)",
+    "motion_controller_1": {
+      "_comment": "192.168.1.11 - 辅助支撑(AXIS 0-4)",
+      "server": "motion_controller_server/ctrl1",
+      "class": "MotionControllerDevice",
+      "name": "sys/motion/1",
+      "props": {
+        "controller_ip": "192.168.1.11",
+        "card_id": "0",
+        "port_count": "8"
+      }
+    },
+    "motion_controller_2": {
+      "_comment": "192.168.1.12 - 反射光成像(AXIS 0-5)，上下平台各3轴(X/Y/Z)",
+      "server": "motion_controller_server/ctrl2",
+      "class": "MotionControllerDevice",
+      "name": "sys/motion/2",
+      "props": {
+        "controller_ip": "192.168.1.12",
+        "card_id": "0",
+        "port_count": "8"
+      }
+    },
+    "motion_controller_3": {
+      "_comment": "192.168.1.13 - 六自由度(AXIS 0-5) + 大行程(AXIS 6) + 通用IO控制",
+      "server": "motion_controller_server/ctrl3",
+      "class": "MotionControllerDevice",
+      "name": "sys/motion/3",
+      "props": {
+        "controller_ip": "192.168.1.13",
+        "card_id": "0",
+        "port_count": "8",
+        "_io_mapping": "OUT0=六自由度/大行程驱动器上电, OUT1=相机供电, OUT2=反射光驱动器上电, OUT3=六自由度刹车, OUT4=大行程刹车, OUT5=反射光刹车, OUT6=辅助支撑驱动器上电"
+      }
+    }
+  },
+
+  "encoder": {
+    "_comment": "绝对编码器采集器: 哈尔滨明快机电 AELAN10 - 两个采集器共18通道",
+    "_channel_mapping": {
+      "192.168.1.199": {
+        "通道1-6(代码0-5)": "六自由度轴1-6",
+        "通道7(代码6)": "大行程",
+        "通道8(代码7)": "反射光成像设备1-X",
+        "通道9(代码8)": "反射光成像设备2-X",
+        "通道10(代码9)": "反射光成像设备1-Y"
+      },
+      "192.168.1.198": {
+        "通道1(代码10)": "反射光成像设备2-Y",
+        "通道2(代码11)": "反射光成像设备1-Z",
+        "通道3(代码12)": "反射光成像设备2-Z",
+        "通道4(代码13)": "辅助支撑设备1",
+        "通道5(代码14)": "辅助支撑设备2",
+        "通道6(代码15)": "辅助支撑设备3",
+        "通道7(代码16)": "辅助支撑设备4",
+        "通道8(代码17)": "辅助支撑设备5"
+      }
+    },
+    "encoder_1": {
+      "server": "encoder_server/main",
+      "class": "EncoderDevice",
+      "name": "sys/encoder/1",
+      "props": {
+        "deviceName": "编码器采集设备",
+        "deviceID": "ENC01",
+        "deviceModel": "AELAN10",
+        "encoderCollectorIPs": ["192.168.1.199", "192.168.1.198"],
+        "encoderCollectorPorts": ["5000", "5000"],
+        "channelsPerCollector": "10",
+        "encoderResolution": "{\"0\":0.00274658,\"1\":0.00274658,\"2\":0.00274658,\"3\":0.00274658,\"4\":0.00274658,\"5\":0.00274658,\"6\":0.00274658,\"7\":0.00274658,\"8\":0.00274658,\"9\":0.00274658,\"10\":0.00274658,\"11\":0.00274658,\"12\":0.00274658,\"13\":0.00274658,\"14\":0.00274658,\"15\":0.00274658,\"16\":0.00274658,\"17\":0.00274658}"
+      }
+    }
+  },
+
+  "six_dof": {
+    "_comment": "六自由度设备 - 控制器3(192.168.1.13) AXIS 0-5, 编码器199通道1-6(代码0-5)",
+    "six_dof_1": {
+      "server": "six_dof_server/six_dof",
+      "class": "SixDofDevice",
+      "name": "sys/six_dof/1",
+      "props": {
+        "bundleNo": "0000",
+        "laserNo": "0000",
+        "systemNo": "0001",
+        "deviceName": "六自由度调节",
+        "deviceID": "6D01",
+        "motorModel": "YC42248-13-AEB-BK-HV-NT",
+        "motionControllerName": "sys/motion/3",
+        "encoderDeviceName": "sys/encoder/1",
+        "axis_ids": ["0", "1", "2", "3", "4", "5"],
+        "encoderChannels": ["1", "2", "3", "4", "5", "6"],
+        "axis_pos": ["0.0", "0.0", "0.0", "0.0", "0.0", "0.0"],
+        "sdofConfig": "{\"r1\":110,\"r2\":193,\"hh\":408.01,\"a1\":40,\"a2\":14,\"h\":575.5,\"h3\":57,\"ll\":417.4857}",
+        "motorStepAngle": "1.8",
+        "motorGearRatio": "1.0",
+        "motorSubdivision": "4000",
+        "driverPowerPort": "0",
+        "driverPowerController": "sys/motion/3",
+        "brakePowerPort": "3",
+        "brakePowerController": "sys/motion/3"
+      }
+    }
+  },
+
+  "large_stroke": {
+    "_comment": "大行程设备 - 控制器3(192.168.1.13) AXIS 6, 编码器199通道7(代码6)",
+    "large_stroke_1": {
+      "server": "large_stroke_server/large_stroke",
+      "class": "LargeStrokeDevice",
+      "name": "sys/large_stroke/1",
+      "props": {
+        "bundleNo": "0000",
+        "laserNo": "0000",
+        "systemNo": "0001",
+        "deviceName": "送靶大行程",
+        "deviceID": "DB01",
+        "motorModel": "YC862118-S0-AEB-BK-HV",
+        "devicePosition": "Shanghai",
+        "deviceProductDate": "2026-02-28",
+        "deviceInstallDate": "2025-12-31",
+        "moveRange": "9000",
+        "limitNumber": "3",
+        "motionControllerName": "sys/motion/3",
+        "encoderName": "sys/encoder/1",
+        "axisId": "6",
+        "encoderChannel": "6",
+        "motorStepAngle": "1.8",
+        "motorGearRatio": "1.0",
+        "motorSubdivision": "4000",
+        "driverPowerPort": "0",
+        "driverPowerController": "sys/motion/3",
+        "brakePowerPort": "4",
+        "brakePowerController": "sys/motion/3"
+      }
+    }
+  },
+
+  "reflection_imaging": {
+    "_comment": "反射光成像设备 - 控制器2(192.168.1.12) AXIS 0-5, 编码器199通道8-10(代码7-9)+198通道1-3(代码10-12)",
+    "_axis_mapping": {
+      "AXIS-0": "设备1-X (M8)",
+      "AXIS-1": "设备2-X (M9)",
+      "AXIS-2": "设备1-Y (M10)",
+      "AXIS-3": "设备2-Y (M11)",
+      "AXIS-4": "设备1-Z (M12)",
+      "AXIS-5": "设备2-Z (M13)"
+    },
+    "reflection_1": {
+      "server": "reflection_imaging_server/reflection",
+      "class": "ReflectionImagingDevice",
+      "name": "sys/reflection/1",
+      "props": {
+        "bundleNo": "0000",
+        "laserNo": "0000",
+        "systemNo": "0001",
+        "deviceName": "反射光成像表征",
+        "deviceID": "RF01",
+        "motorModel": "YC42E248-10-AEB-Tr6.35-90-HV-1.5M / YC57276-20-AEB-BK-HV-0.65M(Z轴)",
+        "motionControllerName": "sys/motion/2",
+        "encoderName": "sys/encoder/1",
+        "_comment_encoder": "编码器通道映射(代码通道号,0-based): 上平台(设备1) X=7(199-ch8), Y=9(199-ch10), Z=11(198-ch2); 下平台(设备2) X=8(199-ch9), Y=10(198-ch1), Z=12(198-ch3)",
+        "upperPlatformEncoderChannels": ["7", "9", "11"],
+        "lowerPlatformEncoderChannels": ["8", "10", "12"],
+        "upperPlatformConfig": "{\"XAxis\":{\"axisId\":0,\"range\":1000,\"limitNumber\":3},\"YAxis\":{\"axisId\":2,\"range\":1000,\"limitNumber\":3},\"ZAxis\":{\"axisId\":4,\"range\":500,\"limitNumber\":3}}",
+        "lowerPlatformConfig": "{\"XAxis\":{\"axisId\":1,\"range\":1000,\"limitNumber\":3},\"YAxis\":{\"axisId\":3,\"range\":1000,\"limitNumber\":3},\"ZAxis\":{\"axisId\":5,\"range\":500,\"limitNumber\":3}}",
+        "upperCCD1xConfig": "{\"cameraId\":\"upper_ccd_1x_01\",\"model\":\"MV-CU020-19GC\",\"magnification\":1,\"resolution\":{\"width\":1920,\"height\":1080},\"exposureRange\":{\"min\":0.1,\"max\":10.0},\"defaultExposure\":1.0}",
+        "upperCCD10xConfig": "{\"cameraId\":\"upper_ccd_10x_01\",\"model\":\"MV-CU020-19GC\",\"magnification\":10,\"resolution\":{\"width\":1920,\"height\":1080},\"exposureRange\":{\"min\":0.1,\"max\":10.0},\"defaultExposure\":1.0}",
+        "lowerCCD1xConfig": "{\"cameraId\":\"lower_ccd_1x_01\",\"model\":\"MV-CU020-19GC\",\"magnification\":1,\"resolution\":{\"width\":1920,\"height\":1080},\"exposureRange\":{\"min\":0.1,\"max\":10.0},\"defaultExposure\":1.0}",
+        "lowerCCD10xConfig": "{\"cameraId\":\"lower_ccd_10x_01\",\"model\":\"MV-CU020-19GC\",\"magnification\":10,\"resolution\":{\"width\":1920,\"height\":1080},\"exposureRange\":{\"min\":0.1,\"max\":10.0},\"defaultExposure\":1.0}",
+        "imageSavePath": "./images",
+        "imageFormat": "PNG",
+        "autoCaptureInterval": "0",
+        "motorStepAngle": "1.8",
+        "motorGearRatio": "1.0",
+        "motorSubdivision": "4000",
+        "driverPowerPort": "2",
+        "driverPowerController": "sys/motion/3",
+        "brakePowerPort": "5",
+        "brakePowerController": "sys/motion/3",
+        "cameraPowerPort": "1",
+        "cameraPowerController": "sys/motion/3"
+      }
+    }
+  },
+
+  "auxiliary_support": {
+    "_comment": "辅助支撑设备 - 全部使用控制器1(192.168.1.11) AXIS 0-4, 编码器198通道4-8(代码13-17), 驱动器上电通过控制器3(192.168.1.13) OUT6",
+    "_axis_mapping": {
+      "AXIS-0": "辅助支撑设备1 (M14)",
+      "AXIS-1": "辅助支撑设备2 (M15)",
+      "AXIS-2": "辅助支撑设备3 (M16)",
+      "AXIS-3": "辅助支撑设备4 (M17)",
+      "AXIS-4": "辅助支撑设备5 (M18, 未安装)"
+    },
+    "_force_sensor_mapping": {
+      "设备1-2": "控制器3(192.168.1.13) AIN0",
+      "设备3-4": "控制器2(192.168.1.12) AIN0",
+      "设备5": "控制器1(192.168.1.11) AIN0"
+    },
+    "support_1": {
+      "_comment": "辅助支撑设备1 - M14, 运动控制器192.168.1.11 AXIS-0, 力传感器192.168.1.13 AIN0",
+      "server": "auxiliary_support_server/auxiliary",
+      "class": "AuxiliarySupportDevice",
+      "name": "sys/auxiliary/1",
+      "props": {
+        "bundleNo": "0000",
+        "laserNo": "0000",
+        "systemNo": "0001",
+        "deviceName": "辅助支撑设备1",
+        "deviceID": "AUX01",
+        "motorModel": "YC57276-20-AEB",
+        "motionControllerName": "sys/motion/1",
+        "encoderName": "sys/encoder/1",
+        "axisId": "0",
+        "encoderChannel": "13",
+        "forceSensorChannel": "0",
+        "forceSensorController": "sys/motion/3",
+        "forceSensorScale": "1000.0",
+        "forceSensorOffset": "0.0",
+        "motorStepAngle": "1.8",
+        "motorGearRatio": "1.0",
+        "motorSubdivision": "4000",
+        "driverPowerPort": "6",
+        "driverPowerController": "sys/motion/3"
+      }
+    },
+    "support_2": {
+      "_comment": "辅助支撑设备2 - M15, 运动控制器192.168.1.11 AXIS-1, 力传感器192.168.1.13 AIN0",
+      "server": "auxiliary_support_server/auxiliary",
+      "class": "AuxiliarySupportDevice",
+      "name": "sys/auxiliary/2",
+      "props": {
+        "bundleNo": "0000",
+        "laserNo": "0000",
+        "systemNo": "0001",
+        "deviceName": "辅助支撑设备2",
+        "deviceID": "AUX02",
+        "motorModel": "YC57276-20-AEB",
+        "motionControllerName": "sys/motion/1",
+        "encoderName": "sys/encoder/1",
+        "axisId": "1",
+        "encoderChannel": "14",
+        "forceSensorChannel": "1",
+        "forceSensorController": "sys/motion/3",
+        "forceSensorScale": "1000.0",
+        "forceSensorOffset": "0.0",
+        "motorStepAngle": "1.8",
+        "motorGearRatio": "1.0",
+        "motorSubdivision": "4000",
+        "driverPowerPort": "6",
+        "driverPowerController": "sys/motion/3"
+      }
+    },
+    "support_3": {
+      "_comment": "辅助支撑设备3 - M16, 运动控制器192.168.1.11 AXIS-2, 力传感器192.168.1.12 AIN0",
+      "server": "auxiliary_support_server/auxiliary",
+      "class": "AuxiliarySupportDevice",
+      "name": "sys/auxiliary/3",
+      "props": {
+        "bundleNo": "0000",
+        "laserNo": "0000",
+        "systemNo": "0001",
+        "deviceName": "辅助支撑设备3",
+        "deviceID": "AUX03",
+        "motorModel": "YC57276-20-AEB",
+        "motionControllerName": "sys/motion/1",
+        "encoderName": "sys/encoder/1",
+        "axisId": "2",
+        "encoderChannel": "15",
+        "forceSensorChannel": "0",
+        "forceSensorController": "sys/motion/2",
+        "forceSensorScale": "1000.0",
+        "forceSensorOffset": "0.0",
+        "motorStepAngle": "1.8",
+        "motorGearRatio": "1.0",
+        "motorSubdivision": "4000",
+        "driverPowerPort": "6",
+        "driverPowerController": "sys/motion/3"
+      }
+    },
+    "support_4": {
+      "_comment": "辅助支撑设备4 - M17, 运动控制器192.168.1.11 AXIS-3, 力传感器192.168.1.12 AIN0",
+      "server": "auxiliary_support_server/auxiliary",
+      "class": "AuxiliarySupportDevice",
+      "name": "sys/auxiliary/4",
+      "props": {
+        "bundleNo": "0000",
+        "laserNo": "0000",
+        "systemNo": "0001",
+        "deviceName": "辅助支撑设备4",
+        "deviceID": "AUX04",
+        "motorModel": "YC57276-20-AEB",
+        "motionControllerName": "sys/motion/1",
+        "encoderName": "sys/encoder/1",
+        "axisId": "3",
+        "encoderChannel": "16",
+        "forceSensorChannel": "1",
+        "forceSensorController": "sys/motion/2",
+        "forceSensorScale": "1000.0",
+        "forceSensorOffset": "0.0",
+        "motorStepAngle": "1.8",
+        "motorGearRatio": "1.0",
+        "motorSubdivision": "4000",
+        "driverPowerPort": "6",
+        "driverPowerController": "sys/motion/3"
+      }
+    },
+    "support_5": {
+      "_comment": "辅助支撑设备5 - M18 (未安装), 运动控制器192.168.1.11 AXIS-4, 力传感器192.168.1.11 AIN0",
+      "server": "auxiliary_support_server/auxiliary",
+      "class": "AuxiliarySupportDevice",
+      "name": "sys/auxiliary/5",
+      "props": {
+        "bundleNo": "0000",
+        "laserNo": "0000",
+        "systemNo": "0001",
+        "deviceName": "辅助支撑设备5",
+        "deviceID": "AUX05",
+        "motorModel": "YC57276-20-AEB",
+        "motionControllerName": "sys/motion/1",
+        "encoderName": "sys/encoder/1",
+        "axisId": "4",
+        "encoderChannel": "17",
+        "forceSensorChannel": "0",
+        "forceSensorController": "sys/motion/1",
+        "forceSensorScale": "1000.0",
+        "forceSensorOffset": "0.0",
+        "motorStepAngle": "1.8",
+        "motorGearRatio": "1.0",
+        "motorSubdivision": "4000",
+        "driverPowerPort": "6",
+        "driverPowerController": "sys/motion/3"
+      }
+    }
+  },
+
+  "vacuum": {
+    "_comment": "真空系统 - PLC控制",
+    "vacuum_1": {
+      "_comment": "简化版真空设备 (旧版，保留兼容)",
+      "server": "vacuum_server/vacuum",
+      "class": "VacuumDevice",
+      "name": "sys/vacuum/1",
+      "props": {
+        "bundleNo": "0000",
+        "laserNo": "0000",
+        "systemNo": "0001",
+        "deviceName": "真空系统(简化版)",
+        "deviceID": "VAC01",
+        "plc_ip": "127.0.0.1",
+        "simulator_mode": "0"
+      }
+    },
+    "vacuum_system_2": {
+      "_comment": "完整真空系统设备",
+      "server": "vacuum_system_server/vacuum2",
+      "class": "VacuumSystemDevice",
+      "name": "sys/vacuum/2",
+      "props": {
+        "bundleNo": "0000",
+        "laserNo": "0000",
+        "systemNo": "0001",
+        "deviceName": "真空系统",
+        "deviceID": "VAC02",
+        "plc_ip": "127.0.0.1",
+        "plc_port": "4840",
+        "simulator_mode": "0",
+        "poll_interval_ms": "100",
+        "valve_timeout_ms": "5000"
+      }
+    }
+  },
+
+  "interlock": {
+    "_comment": "联锁服务",
+    "interlock_1": {
+      "server": "interlock_server/interlock",
+      "class": "InterlockService",
+      "name": "sys/interlock/1",
+      "props": {
+        "large_stroke_device": "sys/large_stroke/1",
+        "six_dof_device": "sys/six_dof/1",
+        "auxiliary_devices": ["sys/auxiliary/1", "sys/auxiliary/2", "sys/auxiliary/3", "sys/auxiliary/4", "sys/auxiliary/5"],
+        "reflection_device": "sys/reflection/1",
+        "vacuum_device": "sys/vacuum/1",
+        "vacuum_system_device": "sys/vacuum/2",
+        "check_interval_ms": "100"
+      }
+    }
+  }
+}

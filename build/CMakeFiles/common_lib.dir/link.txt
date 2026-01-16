@@ -1,0 +1,2 @@
+/usr/bin/ar qc libcommon_lib.a CMakeFiles/common_lib.dir/src/common/device_interface.cpp.o CMakeFiles/common_lib.dir/src/common/kinematics.cpp.o CMakeFiles/common_lib.dir/src/common/system_config.cpp.o CMakeFiles/common_lib.dir/src/common/standard_system_device.cpp.o CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o
+/usr/bin/ranlib libcommon_lib.a

@@ -1,0 +1,137 @@
+========================================
+[DEBUG] AuxiliarySupport Server Starting...
+========================================
+[DEBUG] Loading system config...
+Warning: Qt5 not available, using default configuration values.
+  Controller IP: 192.168.1.177
+  PLC IP: 192.168.1.177
+  Tango Host: 192.168.80.98:10000
+  ORB Timeouts: call=5000ms, connect=3000ms
+[DEBUG] SystemConfig.SIM_MODE = false
+[DEBUG] Initializing Tango Util...
+[DEBUG] Calling server_init()...
+[DEBUG] device_factory() called, creating 5 device(s)
+[DEBUG] Creating device: sys/auxiliary/1
+[DEBUG] AuxiliarySupportDevice constructor called for: sys/auxiliary/1
+[DEBUG] Initial state (before init_device): UNKNOWN
+2026-01-16T15:51:15,024108+0800 INFO (auxiliary_support_device.cpp:129) sys/auxiliary/1 ========== [DEBUG] init_device() START ==========
+2026-01-16T15:51:15,025627+0800 INFO (auxiliary_support_device.cpp:130) sys/auxiliary/1 [DEBUG] Current state before parent init: UNKNOWN
+2026-01-16T15:51:15,027012+0800 INFO (auxiliary_support_device.cpp:134) sys/auxiliary/1 [DEBUG] Current state after parent init: UNKNOWN
+2026-01-16T15:51:15,031570+0800 INFO (auxiliary_support_device.cpp:234) sys/auxiliary/1 [DEBUG] 运行模式: 真实模式 (从配置文件加载, SIM_MODE=false)
+2026-01-16T15:51:15,031584+0800 INFO (auxiliary_support_device.cpp:235) sys/auxiliary/1 [DEBUG] 提示: 可通过 simSwitch 命令或GUI动态切换模拟模式
+2026-01-16T15:51:15,031593+0800 INFO (auxiliary_support_device.cpp:238) sys/auxiliary/1 [DEBUG] State before connect_proxies: UNKNOWN
+2026-01-16T15:51:15,031652+0800 INFO (auxiliary_support_device.cpp:1785) sys/auxiliary/1 [2026-01-16 15:51:15] AuxiliarySupportDevice (辅助支撑类) initialized
+2026-01-16T15:51:15,031664+0800 INFO (auxiliary_support_device.cpp:241) sys/auxiliary/1 AuxiliarySupportDevice initialized. Motion: sys/motion/1, Encoder: sys/encoder/1
+2026-01-16T15:51:15,031804+0800 INFO (auxiliary_support_device.cpp:407) sys/auxiliary/1 [DEBUG] connect_proxies() called. sim_mode=0
+2026-01-16T15:51:15,031890+0800 INFO (auxiliary_support_device.cpp:422) sys/auxiliary/1 [DEBUG] Rebuilding proxies (motion=sys/motion/1, encoder=sys/encoder/1)
+2026-01-16T15:51:15,035438+0800 WARN (auxiliary_support_device.cpp:443) sys/auxiliary/1 [DEBUG] connect_proxies() FAILED - proxy not available yet
+2026-01-16T15:51:15,035456+0800 WARN (auxiliary_support_device.cpp:444) sys/auxiliary/1 [DEBUG] Exception: Failed to connect to device sys/motion/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago
+2026-01-16T15:51:15,035463+0800 WARN (auxiliary_support_device.cpp:445) sys/auxiliary/1 [DEBUG] Keeping current state (not setting FAULT during init)
+2026-01-16T15:51:15,035470+0800 WARN (auxiliary_support_device.cpp:446) sys/auxiliary/1 [DEBUG] Hint: Start motion controller first, or use simSwitch(1) for simulation mode
+2026-01-16T15:51:15,035708+0800 INFO (auxiliary_support_device.cpp:249) sys/auxiliary/1 [DEBUG] State after connect_proxies: UNKNOWN
+2026-01-16T15:51:15,035718+0800 INFO (auxiliary_support_device.cpp:250) sys/auxiliary/1 ========== [DEBUG] init_device() END ==========
+[DEBUG] State after constructor init_device(): UNKNOWN
+[DEBUG] Device created, state: UNKNOWN
+[DEBUG] Device exported: sys/auxiliary/1, final state: UNKNOWN
+[DEBUG] Creating device: sys/auxiliary/2
+[DEBUG] AuxiliarySupportDevice constructor called for: sys/auxiliary/2
+[DEBUG] Initial state (before init_device): UNKNOWN
+2026-01-16T15:51:15,050330+0800 INFO (auxiliary_support_device.cpp:129) sys/auxiliary/2 ========== [DEBUG] init_device() START ==========
+2026-01-16T15:51:15,050344+0800 INFO (auxiliary_support_device.cpp:130) sys/auxiliary/2 [DEBUG] Current state before parent init: UNKNOWN
+2026-01-16T15:51:15,051390+0800 INFO (auxiliary_support_device.cpp:134) sys/auxiliary/2 [DEBUG] Current state after parent init: UNKNOWN
+2026-01-16T15:51:15,054585+0800 INFO (auxiliary_support_device.cpp:234) sys/auxiliary/2 [DEBUG] 运行模式: 真实模式 (从配置文件加载, SIM_MODE=false)
+2026-01-16T15:51:15,054590+0800 INFO (auxiliary_support_device.cpp:235) sys/auxiliary/2 [DEBUG] 提示: 可通过 simSwitch 命令或GUI动态切换模拟模式
+2026-01-16T15:51:15,054593+0800 INFO (auxiliary_support_device.cpp:238) sys/auxiliary/2 [DEBUG] State before connect_proxies: UNKNOWN
+2026-01-16T15:51:15,054597+0800 INFO (auxiliary_support_device.cpp:1785) sys/auxiliary/2 [2026-01-16 15:51:15] AuxiliarySupportDevice (辅助支撑类) initialized
+2026-01-16T15:51:15,054599+0800 INFO (auxiliary_support_device.cpp:241) sys/auxiliary/2 AuxiliarySupportDevice initialized. Motion: sys/motion/1, Encoder: sys/encoder/1
+2026-01-16T15:51:15,054602+0800 INFO (auxiliary_support_device.cpp:407) sys/auxiliary/2 [DEBUG] connect_proxies() called. sim_mode=0
+2026-01-16T15:51:15,054605+0800 INFO (auxiliary_support_device.cpp:422) sys/auxiliary/2 [DEBUG] Rebuilding proxies (motion=sys/motion/1, encoder=sys/encoder/1)
+2026-01-16T15:51:15,055863+0800 WARN (auxiliary_support_device.cpp:443) sys/auxiliary/2 [DEBUG] connect_proxies() FAILED - proxy not available yet
+2026-01-16T15:51:15,055869+0800 WARN (auxiliary_support_device.cpp:444) sys/auxiliary/2 [DEBUG] Exception: Failed to connect to device sys/motion/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago
+2026-01-16T15:51:15,055871+0800 WARN (auxiliary_support_device.cpp:445) sys/auxiliary/2 [DEBUG] Keeping current state (not setting FAULT during init)
+2026-01-16T15:51:15,055873+0800 WARN (auxiliary_support_device.cpp:446) sys/auxiliary/2 [DEBUG] Hint: Start motion controller first, or use simSwitch(1) for simulation mode
+2026-01-16T15:51:15,055919+0800 INFO (auxiliary_support_device.cpp:249) sys/auxiliary/2 [DEBUG] State after connect_proxies: UNKNOWN
+2026-01-16T15:51:15,055923+0800 INFO (auxiliary_support_device.cpp:250) sys/auxiliary/2 ========== [DEBUG] init_device() END ==========
+[DEBUG] State after constructor init_device(): UNKNOWN
+[DEBUG] Device created, state: UNKNOWN
+[DEBUG] Device exported: sys/auxiliary/2, final state: UNKNOWN
+[DEBUG] Creating device: sys/auxiliary/3
+[DEBUG] AuxiliarySupportDevice constructor called for: sys/auxiliary/3
+[DEBUG] Initial state (before init_device): UNKNOWN
+2026-01-16T15:51:15,064532+0800 INFO (auxiliary_support_device.cpp:129) sys/auxiliary/3 ========== [DEBUG] init_device() START ==========
+2026-01-16T15:51:15,064545+0800 INFO (auxiliary_support_device.cpp:130) sys/auxiliary/3 [DEBUG] Current state before parent init: UNKNOWN
+2026-01-16T15:51:15,065313+0800 INFO (auxiliary_support_device.cpp:134) sys/auxiliary/3 [DEBUG] Current state after parent init: UNKNOWN
+2026-01-16T15:51:15,068348+0800 INFO (auxiliary_support_device.cpp:234) sys/auxiliary/3 [DEBUG] 运行模式: 真实模式 (从配置文件加载, SIM_MODE=false)
+2026-01-16T15:51:15,068355+0800 INFO (auxiliary_support_device.cpp:235) sys/auxiliary/3 [DEBUG] 提示: 可通过 simSwitch 命令或GUI动态切换模拟模式
+2026-01-16T15:51:15,068357+0800 INFO (auxiliary_support_device.cpp:238) sys/auxiliary/3 [DEBUG] State before connect_proxies: UNKNOWN
+2026-01-16T15:51:15,068362+0800 INFO (auxiliary_support_device.cpp:1785) sys/auxiliary/3 [2026-01-16 15:51:15] AuxiliarySupportDevice (辅助支撑类) initialized
+2026-01-16T15:51:15,068364+0800 INFO (auxiliary_support_device.cpp:241) sys/auxiliary/3 AuxiliarySupportDevice initialized. Motion: sys/motion/1, Encoder: sys/encoder/1
+2026-01-16T15:51:15,068366+0800 INFO (auxiliary_support_device.cpp:407) sys/auxiliary/3 [DEBUG] connect_proxies() called. sim_mode=0
+2026-01-16T15:51:15,068369+0800 INFO (auxiliary_support_device.cpp:422) sys/auxiliary/3 [DEBUG] Rebuilding proxies (motion=sys/motion/1, encoder=sys/encoder/1)
+2026-01-16T15:51:15,070019+0800 WARN (auxiliary_support_device.cpp:443) sys/auxiliary/3 [DEBUG] connect_proxies() FAILED - proxy not available yet
+2026-01-16T15:51:15,070024+0800 WARN (auxiliary_support_device.cpp:444) sys/auxiliary/3 [DEBUG] Exception: Failed to connect to device sys/motion/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago
+2026-01-16T15:51:15,070027+0800 WARN (auxiliary_support_device.cpp:445) sys/auxiliary/3 [DEBUG] Keeping current state (not setting FAULT during init)
+2026-01-16T15:51:15,070029+0800 WARN (auxiliary_support_device.cpp:446) sys/auxiliary/3 [DEBUG] Hint: Start motion controller first, or use simSwitch(1) for simulation mode
+2026-01-16T15:51:15,070070+0800 INFO (auxiliary_support_device.cpp:249) sys/auxiliary/3 [DEBUG] State after connect_proxies: UNKNOWN
+2026-01-16T15:51:15,070074+0800 INFO (auxiliary_support_device.cpp:250) sys/auxiliary/3 ========== [DEBUG] init_device() END ==========
+[DEBUG] State after constructor init_device(): UNKNOWN
+[DEBUG] Device created, state: UNKNOWN
+[DEBUG] Device exported: sys/auxiliary/3, final state: UNKNOWN
+[DEBUG] Creating device: sys/auxiliary/4
+[DEBUG] AuxiliarySupportDevice constructor called for: sys/auxiliary/4
+[DEBUG] Initial state (before init_device): UNKNOWN
+2026-01-16T15:51:15,078278+0800 INFO (auxiliary_support_device.cpp:129) sys/auxiliary/4 ========== [DEBUG] init_device() START ==========
+2026-01-16T15:51:15,078284+0800 INFO (auxiliary_support_device.cpp:130) sys/auxiliary/4 [DEBUG] Current state before parent init: UNKNOWN
+2026-01-16T15:51:15,079057+0800 INFO (auxiliary_support_device.cpp:134) sys/auxiliary/4 [DEBUG] Current state after parent init: UNKNOWN
+2026-01-16T15:51:15,081683+0800 INFO (auxiliary_support_device.cpp:234) sys/auxiliary/4 [DEBUG] 运行模式: 真实模式 (从配置文件加载, SIM_MODE=false)
+2026-01-16T15:51:15,081688+0800 INFO (auxiliary_support_device.cpp:235) sys/auxiliary/4 [DEBUG] 提示: 可通过 simSwitch 命令或GUI动态切换模拟模式
+2026-01-16T15:51:15,081690+0800 INFO (auxiliary_support_device.cpp:238) sys/auxiliary/4 [DEBUG] State before connect_proxies: UNKNOWN
+2026-01-16T15:51:15,081694+0800 INFO (auxiliary_support_device.cpp:1785) sys/auxiliary/4 [2026-01-16 15:51:15] AuxiliarySupportDevice (辅助支撑类) initialized
+2026-01-16T15:51:15,081696+0800 INFO (auxiliary_support_device.cpp:241) sys/auxiliary/4 AuxiliarySupportDevice initialized. Motion: sys/motion/1, Encoder: sys/encoder/1
+2026-01-16T15:51:15,081698+0800 INFO (auxiliary_support_device.cpp:407) sys/auxiliary/4 [DEBUG] connect_proxies() called. sim_mode=0
+2026-01-16T15:51:15,081701+0800 INFO (auxiliary_support_device.cpp:422) sys/auxiliary/4 [DEBUG] Rebuilding proxies (motion=sys/motion/1, encoder=sys/encoder/1)
+2026-01-16T15:51:15,082978+0800 WARN (auxiliary_support_device.cpp:443) sys/auxiliary/4 [DEBUG] connect_proxies() FAILED - proxy not available yet
+2026-01-16T15:51:15,082983+0800 WARN (auxiliary_support_device.cpp:444) sys/auxiliary/4 [DEBUG] Exception: Failed to connect to device sys/motion/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago
+2026-01-16T15:51:15,082986+0800 WARN (auxiliary_support_device.cpp:445) sys/auxiliary/4 [DEBUG] Keeping current state (not setting FAULT during init)
+2026-01-16T15:51:15,082988+0800 WARN (auxiliary_support_device.cpp:446) sys/auxiliary/4 [DEBUG] Hint: Start motion controller first, or use simSwitch(1) for simulation mode
+2026-01-16T15:51:15,083042+0800 INFO (auxiliary_support_device.cpp:249) sys/auxiliary/4 [DEBUG] State after connect_proxies: UNKNOWN
+2026-01-16T15:51:15,083046+0800 INFO (auxiliary_support_device.cpp:250) sys/auxiliary/4 ========== [DEBUG] init_device() END ==========
+[DEBUG] State after constructor init_device(): UNKNOWN
+[DEBUG] Device created, state: UNKNOWN
+[DEBUG] Device exported: sys/auxiliary/4, final state: UNKNOWN
+[DEBUG] Creating device: sys/auxiliary/5
+[DEBUG] AuxiliarySupportDevice constructor called for: sys/auxiliary/5
+[DEBUG] Initial state (before init_device): UNKNOWN
+2026-01-16T15:51:15,090122+0800 INFO (auxiliary_support_device.cpp:129) sys/auxiliary/5 ========== [DEBUG] init_device() START ==========
+2026-01-16T15:51:15,090129+0800 INFO (auxiliary_support_device.cpp:130) sys/auxiliary/5 [DEBUG] Current state before parent init: UNKNOWN
+2026-01-16T15:51:15,091150+0800 INFO (auxiliary_support_device.cpp:134) sys/auxiliary/5 [DEBUG] Current state after parent init: UNKNOWN
+2026-01-16T15:51:15,094392+0800 INFO (auxiliary_support_device.cpp:234) sys/auxiliary/5 [DEBUG] 运行模式: 真实模式 (从配置文件加载, SIM_MODE=false)
+2026-01-16T15:51:15,094396+0800 INFO (auxiliary_support_device.cpp:235) sys/auxiliary/5 [DEBUG] 提示: 可通过 simSwitch 命令或GUI动态切换模拟模式
+2026-01-16T15:51:15,094398+0800 INFO (auxiliary_support_device.cpp:238) sys/auxiliary/5 [DEBUG] State before connect_proxies: UNKNOWN
+2026-01-16T15:51:15,094402+0800 INFO (auxiliary_support_device.cpp:1785) sys/auxiliary/5 [2026-01-16 15:51:15] AuxiliarySupportDevice (辅助支撑类) initialized
+2026-01-16T15:51:15,094404+0800 INFO (auxiliary_support_device.cpp:241) sys/auxiliary/5 AuxiliarySupportDevice initialized. Motion: sys/motion/1, Encoder: sys/encoder/1
+2026-01-16T15:51:15,094406+0800 INFO (auxiliary_support_device.cpp:407) sys/auxiliary/5 [DEBUG] connect_proxies() called. sim_mode=0
+2026-01-16T15:51:15,094409+0800 INFO (auxiliary_support_device.cpp:422) sys/auxiliary/5 [DEBUG] Rebuilding proxies (motion=sys/motion/1, encoder=sys/encoder/1)
+2026-01-16T15:51:15,095689+0800 WARN (auxiliary_support_device.cpp:443) sys/auxiliary/5 [DEBUG] connect_proxies() FAILED - proxy not available yet
+2026-01-16T15:51:15,095694+0800 WARN (auxiliary_support_device.cpp:444) sys/auxiliary/5 [DEBUG] Exception: Failed to connect to device sys/motion/1
+The connection request was delayed.
+The last connection request was done less than 1000 ms ago
+2026-01-16T15:51:15,095697+0800 WARN (auxiliary_support_device.cpp:445) sys/auxiliary/5 [DEBUG] Keeping current state (not setting FAULT during init)
+2026-01-16T15:51:15,095699+0800 WARN (auxiliary_support_device.cpp:446) sys/auxiliary/5 [DEBUG] Hint: Start motion controller first, or use simSwitch(1) for simulation mode
+2026-01-16T15:51:15,095744+0800 INFO (auxiliary_support_device.cpp:249) sys/auxiliary/5 [DEBUG] State after connect_proxies: UNKNOWN
+2026-01-16T15:51:15,095748+0800 INFO (auxiliary_support_device.cpp:250) sys/auxiliary/5 ========== [DEBUG] init_device() END ==========
+[DEBUG] State after constructor init_device(): UNKNOWN
+[DEBUG] Device created, state: UNKNOWN
+[DEBUG] Device exported: sys/auxiliary/5, final state: UNKNOWN
+[DEBUG] device_factory() completed
+========================================
+AuxiliarySupport (辅助支撑) Server Ready
+========================================

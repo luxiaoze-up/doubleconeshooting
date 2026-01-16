@@ -1,0 +1,40 @@
+Warning: Qt5 not available, using default configuration values.
+  Controller IP: 192.168.1.177
+  PLC IP: 192.168.1.177
+  Tango Host: 192.168.80.98:10000
+  ORB Timeouts: call=5000ms, connect=3000ms
+2026-01-16T15:51:13,029003+0800 INFO (large_stroke_device.cpp:170) sys/large_stroke/1 [DEBUG] 运行模式: 真实模式 (从配置文件加载, SIM_MODE=false)
+2026-01-16T15:51:13,030714+0800 INFO (large_stroke_device.cpp:171) sys/large_stroke/1 [DEBUG] 提示: 可通过 simSwitch 命令或GUI动态切换模拟模式
+2026-01-16T15:51:13,031973+0800 INFO (large_stroke_device.cpp:184) sys/large_stroke/1 Unit conversion factors: stepsPerMm=100, stepsPerRad=1000
+2026-01-16T15:51:13,032017+0800 INFO (large_stroke_device.cpp:187) sys/large_stroke/1 [DEBUG] LargeStrokeDevice initialized. Motion Controller: sys/motion/3, Encoder: sys/encoder/1, Axis ID: 6, Encoder Channel: 6
+2026-01-16T15:51:13,032031+0800 INFO (large_stroke_device.cpp:190) sys/large_stroke/1 [DEBUG] Configuration: moveRange=9000, limitNumber=3, positionUnit=step
+2026-01-16T15:51:13,032736+0800 INFO (large_stroke_device.cpp:447) sys/large_stroke/1 [DEBUG] connect_proxies() called. sim_mode=0
+2026-01-16T15:51:13,032840+0800 INFO (large_stroke_device.cpp:463) sys/large_stroke/1 [DEBUG] Rebuilding proxies (motion=sys/motion/3, encoder=sys/encoder/1)
+2026-01-16T15:51:13,042503+0800 INFO (large_stroke_device.cpp:471) sys/large_stroke/1 [DEBUG] All proxies connected. Device state: ON, status: Connected, connection_healthy=true
+2026-01-16T15:51:13,042696+0800 INFO (large_stroke_device.cpp:276) sys/large_stroke/1 Applying motor subdivision parameters (axis=6, stepAngle=1.8, gearRatio=1, subdivision=4000)
+2026-01-16T15:51:13,048582+0800 WARN (large_stroke_device.cpp:291) sys/large_stroke/1 Failed to apply motor subdivision parameters: setStructParameter failed with error code 1008
+2026-01-16T15:51:13,048599+0800 INFO (large_stroke_device.cpp:298) sys/large_stroke/1 Restoring relay configuration and enabling driver power after reconnection...
+2026-01-16T15:51:13,048687+0800 INFO (large_stroke_device.cpp:2028) sys/large_stroke/1 [PowerControl] enable_driver_power() called
+2026-01-16T15:51:13,048705+0800 INFO (large_stroke_device.cpp:2029) sys/large_stroke/1 [PowerControl] driver_power_port_=0, driver_power_controller_=sys/motion/3
+2026-01-16T15:51:13,048748+0800 INFO (large_stroke_device.cpp:2058) sys/large_stroke/1 [PowerControl] Using connected motion controller
+2026-01-16T15:51:13,048816+0800 INFO (large_stroke_device.cpp:2072) sys/large_stroke/1 [PowerControl] Calling writeIO with port=0, value=1
+2026-01-16T15:51:13,048824+0800 INFO (large_stroke_device.cpp:2073) sys/large_stroke/1 [PowerControl] Executing hardware writeIO command...
+2026-01-16T15:51:13,049565+0800 INFO (large_stroke_device.cpp:2075) sys/large_stroke/1 [PowerControl] writeIO command executed successfully
+2026-01-16T15:51:13,049580+0800 INFO (large_stroke_device.cpp:2078) sys/large_stroke/1 ✓ Driver power enabled on port OUT0
+2026-01-16T15:51:13,049762+0800 INFO (large_stroke_device.cpp:300) sys/large_stroke/1 Driver power enabled successfully after reconnection
+2026-01-16T15:51:13,049876+0800 INFO (large_stroke_device.cpp:2145) sys/large_stroke/1 [PowerControl] release_brake() called
+2026-01-16T15:51:13,049886+0800 INFO (large_stroke_device.cpp:2146) sys/large_stroke/1 [PowerControl] brake_power_port_=4, brake_power_controller_=sys/motion/3
+2026-01-16T15:51:13,049891+0800 INFO (large_stroke_device.cpp:2174) sys/large_stroke/1 [PowerControl] Using connected motion controller for brake
+2026-01-16T15:51:13,049938+0800 INFO (large_stroke_device.cpp:2189) sys/large_stroke/1 [PowerControl] Calling writeIO for brake with port=4, value=1
+2026-01-16T15:51:13,050464+0800 INFO (large_stroke_device.cpp:2193) sys/large_stroke/1 ✓ Brake released on port OUT4
+2026-01-16T15:51:13,050475+0800 INFO (large_stroke_device.cpp:302) sys/large_stroke/1 Brake released successfully after reconnection, device ready for operation
+2026-01-16T15:51:13,050491+0800 INFO (large_stroke_device.cpp:317) sys/large_stroke/1 [DEBUG] Synchronizing encoder position to motion controller...
+2026-01-16T15:51:13,052049+0800 WARN (large_stroke_device.cpp:336) sys/large_stroke/1 [DEBUG] Failed to sync encoder position: No encoder collector connected
+LargeStroke Server Ready
+2026-01-16T15:52:04,866437+0800 INFO (large_stroke_device.cpp:206) sys/large_stroke/1 [BrakeControl] Auto-engaging brake before device shutdown (safety)
+2026-01-16T15:52:04,866621+0800 INFO (large_stroke_device.cpp:2204) sys/large_stroke/1 [PowerControl] engage_brake() called
+2026-01-16T15:52:04,866632+0800 INFO (large_stroke_device.cpp:2205) sys/large_stroke/1 [PowerControl] brake_power_port_=4, brake_power_controller_=sys/motion/3
+2026-01-16T15:52:04,866640+0800 INFO (large_stroke_device.cpp:2233) sys/large_stroke/1 [PowerControl] Using connected motion controller for brake
+2026-01-16T15:52:04,866709+0800 INFO (large_stroke_device.cpp:2248) sys/large_stroke/1 [PowerControl] Calling writeIO for brake with port=4, value=0
+2026-01-16T15:52:04,869569+0800 ERROR (large_stroke_device.cpp:2256) sys/large_stroke/1 ✗ Failed to engage brake: Device sys/motion/3 is not exported (hint: try starting the device server)
+2026-01-16T15:52:04,869616+0800 WARN (large_stroke_device.cpp:208) sys/large_stroke/1 [BrakeControl] Failed to engage brake before shutdown

@@ -1,0 +1,3 @@
+New device: sys/backlight/1
+2025-12-13T22:40:30,293644+0800 INFO (backlight_imaging_device.cpp:115) sys/backlight/1 BacklightImagingDevice initialized. Motion Controller: sys/motion/3
+BacklightImaging Server Ready

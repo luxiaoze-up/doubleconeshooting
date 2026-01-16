@@ -1,0 +1,44 @@
+{
+    "configurations": [
+        {
+            "name": "Win32 (IntelliSense)",
+            "includePath": [
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/include/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "HAS_TANGO"
+            ],
+            "windowsSdkVersion": "10.0.19041.0",
+            "compilerPath": "cl.exe",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64",
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/include",
+                    "${workspaceFolder}/src"
+                ]
+            }
+        },
+        {
+            "name": "WSL (Build)",
+            "includePath": [
+                "${workspaceFolder}/include",
+                "/usr/include/tango",
+                "/usr/include"
+            ],
+            "defines": [
+                "HAS_TANGO"
+            ],
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}

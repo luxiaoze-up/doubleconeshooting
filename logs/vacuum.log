@@ -1,0 +1,26 @@
+Loaded configuration from config/system_config.json
+  Controller IP: 192.168.1.100
+  PLC IP: 127.0.0.1
+  Tango Host: 127.0.0.1:10000
+  Sim Mode: disabled
+  ORB Timeouts: call=5000ms, connect=3000ms
+2025-12-23T12:04:18,683894+0800 INFO (vacuum_device.cpp:227) sys/vacuum/1 [DEBUG] 从数据库属性读取 simulator_mode=0
+2025-12-23T12:04:18,683944+0800 INFO (vacuum_device.cpp:242) sys/vacuum/1 Initializing PLC communication, sim_mode=0
+[S7] Client created (snap7 C API)
+2025-12-23T12:04:18,684230+0800 INFO (vacuum_device.cpp:1839) sys/vacuum/1 ========== VacuumDevice::connectPLC ===========
+2025-12-23T12:04:18,684242+0800 INFO (vacuum_device.cpp:1840) sys/vacuum/1   PLC IP: 127.0.0.1
+2025-12-23T12:04:18,684245+0800 INFO (vacuum_device.cpp:1841) sys/vacuum/1   PLC Port: 102
+2025-12-23T12:04:18,684248+0800 INFO (vacuum_device.cpp:1842) sys/vacuum/1   Sim Mode: NO
+2025-12-23T12:04:18,684250+0800 INFO (vacuum_device.cpp:1850) sys/vacuum/1   PLC Comm Type: S7Communication (snap7)
+2025-12-23T12:04:18,684253+0800 INFO (vacuum_device.cpp:1858) sys/vacuum/1   Connecting to PLC...
+[S7] ========== S7 CONNECT ==========
+[S7] Connecting to: 127.0.0.1 (rack=0, slot=1)
+[S7] Timeouts set: ping=1000ms, recv=2000ms, send=2000ms
+[S7] FAILED: ConnectTo error=113 ( TCP : Unreachable peer)
+[S7] ========================================
+2025-12-23T12:04:19,685490+0800 ERROR (vacuum_device.cpp:1866) sys/vacuum/1   FAILED: Cannot connect to PLC!
+2025-12-23T12:04:19,685540+0800 INFO (vacuum_device.cpp:1590) sys/vacuum/1 [2025-12-23 12:04:19] PLC连接失败: 127.0.0.1
+2025-12-23T12:04:19,685544+0800 INFO (vacuum_device.cpp:1872) sys/vacuum/1 ================================================
+2025-12-23T12:04:19,685548+0800 INFO (vacuum_device.cpp:1590) sys/vacuum/1 [2025-12-23 12:04:19] 真空设备已初始化。PLC IP: 127.0.0.1, 仿真模式: 否
+2025-12-23T12:04:19,685551+0800 INFO (vacuum_device.cpp:255) sys/vacuum/1 VacuumDevice initialized. PLC IP: 127.0.0.1
+Vacuum Server Ready

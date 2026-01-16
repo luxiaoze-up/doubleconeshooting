@@ -1,0 +1,17 @@
+# Taurus GUI Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core Tango bindings
+pytango>=9.4.0
+
+# Taurus framework with Qt support
+taurus[taurus-qt]>=5.1.0
+
+# PyQt5 (Taurus uses Qt)
+PyQt5>=5.15.0
+
+# Optional: for trend plots
+pyqtgraph>=0.13.0
+
+# Optional: for enhanced widgets
+numpy>=1.21.0

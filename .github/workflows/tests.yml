@@ -1,0 +1,60 @@
+name: 自动化测试
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ['3.8', '3.9', '3.10']
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: 设置Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: 安装依赖
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: 运行单元测试
+      run: |
+        pytest tests/unit/ -m unit --tb=short -v
+    
+    - name: 运行集成测试
+      run: |
+        pytest tests/integration/ -m integration --tb=short -v
+    
+    - name: 生成测试报告
+      if: always()
+      run: |
+        pytest tests/ --html=reports/report.html --self-contained-html --tb=short
+        pytest tests/ --cov=. --cov-report=xml --cov-report=html
+    
+    - name: 上传测试报告
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-report-${{ matrix.os }}-${{ matrix.python-version }}
+        path: |
+          reports/
+          htmlcov/
+    
+    - name: 上传覆盖率报告
+      if: always()
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+

@@ -1,0 +1,2071 @@
+Loaded configuration from config/system_config.json
+  Controller IP: 192.168.1.100
+  PLC IP: 127.0.0.1
+  Tango Host: 127.0.0.1:10000
+  Sim Mode: disabled
+  ORB Timeouts: call=5000ms, connect=3000ms
+创建 VacuumSystemDeviceClass
+2025-12-23T12:04:18,641000+0800 INFO (vacuum_system_device.cpp:46) sys/vacuum/2 VacuumSystemDevice::init_device - 初始化真空系统设备 sys/vacuum/2
+2025-12-23T12:04:18,641075+0800 INFO (vacuum_system_device.cpp:170) sys/vacuum/2 使用 OPC UA 通信 -> 127.0.0.1
+[2025-12-23 12:04:18.641 (UTC+0800)] [33mwarn/userland[0m	AcceptAll Certificate Verification. Any remote certificate will be accepted.
+[OPC-UA] Client created with open62541 library
+2025-12-23T12:04:18,641209+0800 INFO (vacuum_system_device.cpp:175) sys/vacuum/2 尝试连接 PLC（将在后台重试）...
+2025-12-23T12:04:18,641373+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-23 12:04:18.641] 设备初始化完成
+2025-12-23T12:04:18,641411+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+VacuumSystemDevice server started
+[2025-12-23 12:04:23.645 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[2025-12-23 12:04:23.645 (UTC+0800)] [32minfo/client[0m	Client Status: ChannelState: Fresh, SessionState: Closed, ConnectStatus: BadTimeout
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:04:23,645713+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:04:23,645730+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:04:23,645734+0800 WARN (vacuum_system_device.cpp:185) sys/vacuum/2 初始化时 PLC 连接失败，将在后台重试
+2025-12-23T12:04:23,647780+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 10 秒)
+2025-12-23T12:04:23,648155+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:04:28.652 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:04:28,652203+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:04:28,652237+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:04:28,652244+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:04:28,656924+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:04:28,657066+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:04:33.657 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:04:33,657336+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:04:33,657353+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:04:33,657358+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:04:33,664491+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:04:33,664627+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:04:38.671 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:04:38,671380+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:04:38,671399+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:04:38,671403+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:04:38,721098+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:04:38,721322+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:04:43.726 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:04:43,726351+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:04:43,726379+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:04:43,726388+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:04:43,773521+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:04:43,774314+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:04:48.778 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:04:48,778900+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:04:48,778918+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:04:48,778922+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:04:48,793016+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:04:48,793424+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:04:53.795 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:04:53,795233+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:04:53,795250+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:04:53,795254+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:04:53,800542+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:04:53,800809+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:04:58.803 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:04:58,803821+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:04:58,803839+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:04:58,803843+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:04:58,809107+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:04:58,809280+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:05:03.808 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:05:03,808672+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:05:03,808691+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:05:03,808695+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:05:03,816999+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:05:03,817212+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:05:08.819 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:05:08,820119+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:05:08,820150+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:05:08,820163+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:05:08,824366+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:05:08,824549+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:05:13.838 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:05:13,838250+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:05:13,838267+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:05:13,838271+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:05:13,907707+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:05:13,907898+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:05:18.912 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:05:18,913053+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:05:18,913072+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:05:18,913076+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:05:18,942417+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:05:18,942871+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:05:23.945 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:05:23,945618+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:05:23,945635+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:05:23,945640+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:05:23,951921+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:05:23,952034+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:05:28.956 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:05:28,956419+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:05:28,956444+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:05:28,956452+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:05:28,959251+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:05:28,959512+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:05:33.963 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:05:33,963580+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:05:33,963609+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:05:33,963619+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:05:33,967703+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:05:33,968047+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:05:38.969 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:05:38,969414+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:05:38,969454+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:05:38,969463+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:05:38,976801+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:05:38,977150+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:05:43.987 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:05:43,988090+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:05:43,988108+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:05:43,988112+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:05:44,017091+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:05:44,017322+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:05:49.022 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:05:49,022227+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:05:49,022257+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:05:49,022267+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:05:49,066430+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:05:49,066667+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:05:54.070 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:05:54,070827+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:05:54,070846+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:05:54,070850+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:05:54,081836+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:05:54,082022+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:05:59.085 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:05:59,085727+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:05:59,085758+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:05:59,085763+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:05:59,091117+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:05:59,091260+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:06:04.094 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:06:04,094332+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:06:04,094353+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:06:04,094359+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:06:04,099660+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:06:04,099813+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:06:09.103 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:06:09,103414+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:06:09,103445+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:06:09,103451+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:06:09,108155+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:06:09,108376+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:06:14.111 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:06:14,111420+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:06:14,111437+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:06:14,111441+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:06:14,117046+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:06:14,117199+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:06:19.128 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:06:19,128467+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:06:19,128484+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:06:19,128489+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:06:19,170465+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:06:19,170902+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:06:24.175 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:06:24,175493+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:06:24,175511+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:06:24,175515+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:06:24,201302+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:06:24,201744+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:06:29.205 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:06:29,205417+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:06:29,205444+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:06:29,205454+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:06:29,208436+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:06:29,208550+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:06:34.210 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:06:34,210584+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:06:34,210602+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:06:34,210606+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:06:34,216038+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:06:34,216187+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:06:39.218 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:06:39,218542+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:06:39,218560+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:06:39,218564+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:06:39,224093+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:06:39,224227+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:06:44.228 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:06:44,228697+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:06:44,228727+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:06:44,228734+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:06:44,232242+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:06:44,232355+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:06:49.241 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:06:49,241211+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:06:49,241230+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:06:49,241234+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:06:49,257224+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:06:49,257516+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:06:54.267 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:06:54,267129+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:06:54,267226+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:06:54,267243+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:06:54,313325+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:06:54,313707+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:06:59.317 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:06:59,317876+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:06:59,317893+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:06:59,317897+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:06:59,334172+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:06:59,334426+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:07:04.336 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:07:04,336213+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:07:04,336232+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:07:04,336236+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:07:04,340176+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:07:04,340361+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:07:09.342 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:07:09,343040+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:07:09,343062+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:07:09,343067+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:07:09,347228+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:07:09,347384+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:07:14.347 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:07:14,347342+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:07:14,347373+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:07:14,347378+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:07:14,356631+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:07:14,356802+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:07:19.357 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:07:19,357822+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:07:19,357840+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:07:19,357844+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:07:19,366787+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:07:19,366924+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:07:24.386 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:07:24,386558+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:07:24,386577+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:07:24,386581+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:07:24,445665+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:07:24,445977+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:07:29.452 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:07:29,452414+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:07:29,452447+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:07:29,452453+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:07:29,501481+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:07:29,501686+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:07:34.505 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:07:34,505674+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:07:34,505704+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:07:34,505717+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:07:34,518843+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:07:34,519241+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:07:39.520 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:07:39,520470+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:07:39,520488+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:07:39,520492+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:07:39,526310+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:07:39,526483+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:07:44.529 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:07:44,530010+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:07:44,530031+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:07:44,530036+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:07:44,536438+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:07:44,536594+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:07:49.537 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:07:49,538194+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:07:49,538234+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:07:49,538246+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:07:49,545019+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:07:49,545188+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:07:54.549 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:07:54,549616+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:07:54,549634+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:07:54,549639+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:07:54,553344+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:07:54,553602+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:07:59.569 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:07:59,570065+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:07:59,570084+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:07:59,570089+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:07:59,662854+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:07:59,663067+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:08:04.668 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:08:04,668423+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:08:04,668466+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:08:04,668477+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:08:04,716003+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:08:04,716389+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:08:09.720 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:08:09,720603+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:08:09,720621+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:08:09,720626+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:08:09,733783+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:08:09,734076+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:08:14.738 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:08:14,738366+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:08:14,738383+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:08:14,738389+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:08:14,740238+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:08:14,740825+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:08:19.742 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:08:19,742432+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:08:19,742449+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:08:19,742453+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:08:19,748343+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:08:19,748499+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:08:24.750 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:08:24,750218+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:08:24,750236+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:08:24,750240+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:08:24,756576+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:08:24,756945+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:08:29.763 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:08:29,763590+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:08:29,763608+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:08:29,763612+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:08:29,776481+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:08:29,776672+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:08:34.781 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:08:34,781172+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:08:34,781199+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:08:34,781208+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:08:34,798562+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:08:34,798695+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:08:39.802 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:08:39,802873+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:08:39,802891+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:08:39,802896+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:08:39,805584+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:08:39,805755+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:08:44.809 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:08:44,809913+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:08:44,809932+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:08:44,809936+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:08:44,812588+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:08:44,812713+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:08:49.815 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:08:49,815124+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:08:49,815142+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:08:49,815146+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:08:49,826538+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:08:49,826804+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:08:54.826 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:08:54,826575+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:08:54,826605+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:08:54,826611+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:08:54,834624+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:08:54,834756+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:08:59.838 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:08:59,838368+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:08:59,838408+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:08:59,838418+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:08:59,841553+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:08:59,841691+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:09:04.858 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:09:04,858800+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:09:04,858819+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:09:04,858824+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:09:04,920856+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:09:04,921106+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:09:09.926 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:09:09,926784+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:09:09,926802+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:09:09,926806+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:09:09,964326+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:09:09,964547+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:09:14.968 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:09:14,968217+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:09:14,968234+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:09:14,968238+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:09:14,978761+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:09:14,978994+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:09:19.983 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:09:19,983193+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:09:19,983225+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:09:19,983231+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:09:19,984922+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:09:19,985093+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:09:24.989 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:09:24,989232+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:09:24,989250+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:09:24,989254+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:09:24,993633+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:09:24,993821+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:09:29.993 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:09:29,993323+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:09:29,993342+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:09:29,993347+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:09:30,002083+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:09:30,002270+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:09:35.010 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:09:35,010336+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:09:35,010362+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:09:35,010371+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:09:35,027924+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:09:35,028196+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:09:40.033 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:09:40,033926+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:09:40,033945+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:09:40,033949+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:09:40,086749+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:09:40,087027+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:09:45.091 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:09:45,091715+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:09:45,091754+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:09:45,091764+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:09:45,108468+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:09:45,108803+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:09:50.112 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:09:50,112690+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:09:50,112708+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:09:50,112712+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:09:50,116109+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:09:50,116356+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:09:55.116 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:09:55,116307+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:09:55,116325+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:09:55,116329+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:09:55,122530+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:09:55,122705+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:10:00.124 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:10:00,124461+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:10:00,124480+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:10:00,124484+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:10:00,128925+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:10:00,129098+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:10:05.132 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:10:05,132270+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:10:05,132287+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:10:05,132291+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:10:05,136052+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:10:05,136176+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:10:10.140 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:10:10,140779+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:10:10,140796+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:10:10,140800+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:10:10,182241+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:10:10,182441+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:10:15.188 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:10:15,188750+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:10:15,188767+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:10:15,188771+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:10:15,215002+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:10:15,215291+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:10:20.218 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:10:20,218902+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:10:20,218921+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:10:20,218925+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:10:20,223492+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:10:20,223603+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:10:25.226 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:10:25,226776+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:10:25,226798+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:10:25,226804+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:10:25,230887+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:10:25,231046+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:10:30.233 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:10:30,233635+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:10:30,233654+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:10:30,233659+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:10:30,238135+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:10:30,238263+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:10:35.241 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:10:35,241413+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:10:35,241430+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:10:35,241434+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:10:35,245307+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:10:35,245462+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:10:40.251 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:10:40,251942+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:10:40,251960+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:10:40,251964+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:10:40,258450+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:10:40,258558+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:10:45.266 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:10:45,266337+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:10:45,266355+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:10:45,266358+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:10:45,351767+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:10:45,351945+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:10:50.358 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:10:50,359144+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:10:50,359168+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:10:50,359175+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:10:50,391230+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:10:50,391417+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:10:55.394 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:10:55,394598+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:10:55,394638+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:10:55,394643+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:10:55,401140+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:10:55,401259+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:11:00.403 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:11:00,403537+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:11:00,403556+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:11:00,403559+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:11:00,408110+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:11:00,408254+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:11:05.410 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:11:05,410146+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:11:05,410164+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:11:05,410168+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:11:05,415105+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:11:05,415389+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:11:10.419 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:11:10,419951+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:11:10,419969+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:11:10,419973+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:11:10,422613+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:11:10,422744+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:11:15.444 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:11:15,444415+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:11:15,444440+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:11:15,444449+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:11:15,481101+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:11:15,481319+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:11:20.486 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:11:20,486182+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:11:20,486205+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:11:20,486212+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:11:20,543624+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:11:20,543832+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:11:25.548 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:11:25,548344+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:11:25,548369+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:11:25,548377+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:11:25,565082+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:11:25,565344+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:11:30.566 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:11:30,566135+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:11:30,566161+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:11:30,566169+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:11:30,571892+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:11:30,571996+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:11:35.575 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:11:35,575319+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:11:35,575337+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:11:35,575341+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:11:35,578991+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:11:35,579196+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:11:40.583 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:11:40,583627+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:11:40,583645+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:11:40,583649+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:11:40,586700+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:11:40,586891+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:11:45.591 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:11:45,591190+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:11:45,591208+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:11:45,591212+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:11:45,594021+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:11:45,594197+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:11:50.602 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:11:50,602519+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:11:50,602536+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:11:50,602541+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:11:50,668202+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:11:50,668469+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:11:55.673 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:11:55,673285+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:11:55,673303+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:11:55,673307+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:11:55,699668+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:11:55,699931+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:12:00.703 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:12:00,703851+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:12:00,703878+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:12:00,703882+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:12:00,706990+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:12:00,707307+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:12:05.708 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:12:05,708308+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:12:05,708337+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:12:05,708346+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:12:05,714340+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:12:05,714537+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:12:10.718 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:12:10,718589+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:12:10,718606+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:12:10,718610+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:12:10,722117+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:12:10,722270+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:12:15.726 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:12:15,726701+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:12:15,726718+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:12:15,726722+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:12:15,729395+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:12:15,729522+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:12:20.739 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:12:20,739377+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:12:20,739409+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:12:20,739415+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:12:20,770522+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:12:20,771047+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:12:25.779 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:12:25,779288+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:12:25,779324+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:12:25,779338+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:12:25,830920+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:12:25,831172+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:12:30.835 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:12:30,835305+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:12:30,835323+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:12:30,835327+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:12:30,844446+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:12:30,844768+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:12:35.846 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:12:35,846629+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:12:35,846653+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:12:35,846659+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:12:35,858379+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:12:35,858587+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:12:40.860 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:12:40,860945+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:12:40,860963+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:12:40,860967+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:12:40,865881+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:12:40,866014+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:12:45.869 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:12:45,869630+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:12:45,869647+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:12:45,869651+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:12:45,873057+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:12:45,873164+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:12:50.879 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:12:50,879149+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:12:50,879166+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:12:50,879171+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:12:50,886493+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:12:50,886806+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:12:55.889 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:12:55,889490+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:12:55,889523+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:12:55,889530+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:12:55,909050+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:12:55,909565+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:13:00.913 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:13:00,914053+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:13:00,914090+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:13:00,914100+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:13:00,917750+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:13:00,917901+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:13:05.920 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:13:05,920165+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:13:05,920184+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:13:05,920189+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:13:05,929362+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:13:05,929485+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:13:10.931 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:13:10,931431+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:13:10,931505+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:13:10,931511+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:13:10,994197+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:13:10,994357+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:13:16.002 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:13:16,002213+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:13:16,002231+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:13:16,002235+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:13:16,064219+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:13:16,064510+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:13:21.067 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:13:21,068156+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:13:21,068184+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:13:21,068189+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:13:21,072056+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:13:21,072209+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:13:26.075 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:13:26,075839+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:13:26,075859+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:13:26,075863+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:13:26,130817+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:13:26,131059+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:13:31.135 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:13:31,135614+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:13:31,135639+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:13:31,135648+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:13:31,149815+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:13:31,150131+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:13:36.154 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:13:36,154431+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:13:36,154448+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:13:36,154452+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:13:36,159528+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:13:36,159691+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:13:41.165 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:13:41,165812+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:13:41,165849+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:13:41,165854+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:13:41,251776+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:13:41,252016+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:13:46.256 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:13:46,256696+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:13:46,256714+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:13:46,256718+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:13:46,338246+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:13:46,338467+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:13:51.346 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:13:51,347013+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:13:51,347031+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:13:51,347035+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:13:51,383210+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:13:51,383675+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:13:56.385 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:13:56,385891+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:13:56,385918+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:13:56,385927+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:13:56,402080+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:13:56,402306+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:14:01.407 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:14:01,407596+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:14:01,407616+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:14:01,407621+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:14:01,412655+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:14:01,412838+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:14:06.415 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:14:06,415612+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:14:06,415631+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:14:06,415634+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:14:06,421419+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:14:06,421603+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:14:11.424 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:14:11,424119+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:14:11,424138+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:14:11,424141+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:14:11,429044+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:14:11,429163+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:14:16.433 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:14:16,433503+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:14:16,433522+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:14:16,433526+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:14:16,436771+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:14:16,436934+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:14:21.438 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:14:21,439012+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:14:21,439031+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:14:21,439035+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:14:21,444832+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:14:21,445004+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:14:26.449 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:14:26,449457+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:14:26,449475+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:14:26,449479+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:14:26,456869+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:14:26,457262+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:14:31.461 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:14:31,461736+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:14:31,461754+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:14:31,461758+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:14:31,513271+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:14:31,513541+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:14:36.517 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:14:36,518021+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:14:36,518043+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:14:36,518049+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:14:36,522846+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:14:36,527730+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:14:41.532 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:14:41,532598+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:14:41,532676+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:14:41,532682+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:14:41,538235+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:14:41,538410+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:14:46.542 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:14:46,542857+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:14:46,542875+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:14:46,542879+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:14:46,556285+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:14:46,556655+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:14:51.560 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:14:51,561133+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:14:51,561160+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:14:51,561168+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:14:51,565239+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:14:51,565402+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:14:56.569 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:14:56,569830+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:14:56,569848+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:14:56,569852+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:14:56,574764+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:14:56,575040+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:15:01.579 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:15:01,579398+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:15:01,579416+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:15:01,579420+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:15:01,585198+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:15:01,585366+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:15:06.589 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:15:06,589859+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:15:06,589877+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:15:06,589881+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:15:06,594666+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:15:06,595127+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:15:11.599 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:15:11,599618+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:15:11,599645+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:15:11,599650+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:15:11,603908+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:15:11,604085+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:15:16.608 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:15:16,608450+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:15:16,608467+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:15:16,608471+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:15:16,614889+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:15:16,615065+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:15:21.631 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:15:21,631607+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:15:21,631626+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:15:21,631630+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:15:21,675199+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:15:21,675485+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:15:26.688 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:15:26,688427+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:15:26,688445+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:15:26,688450+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:15:26,745626+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:15:26,745851+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:15:31.750 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:15:31,750488+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:15:31,750505+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:15:31,750509+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:15:31,785502+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:15:31,785856+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:15:36.791 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:15:36,791098+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:15:36,791116+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:15:36,791121+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:15:36,809622+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:15:36,809985+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:15:41.814 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:15:41,814480+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:15:41,814499+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:15:41,814504+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:15:41,822116+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:15:41,822385+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:15:46.822 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:15:46,822128+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:15:46,822145+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:15:46,822149+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:15:46,829326+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:15:46,829533+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:15:51.833 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:15:51,833729+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:15:51,833747+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:15:51,833751+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:15:51,836825+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:15:51,837028+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:15:56.841 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:15:56,841539+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:15:56,841565+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:15:56,841574+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:15:56,844057+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:15:56,844308+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:16:01.847 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:16:01,847985+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:16:01,848005+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:16:01,848010+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:16:01,850489+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:16:01,850650+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:16:06.867 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:16:06,867815+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:16:06,867837+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:16:06,867842+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:16:06,916789+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:16:06,916962+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:16:11.923 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:16:11,923290+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:16:11,923321+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:16:11,923327+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:16:11,930684+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:16:11,930815+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:16:16.935 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:16:16,935282+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:16:16,935300+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:16:16,935303+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:16:16,958697+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:16:16,958939+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:16:21.965 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:16:21,965558+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:16:21,965575+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:16:21,965579+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:16:21,977721+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:16:21,977973+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:16:26.988 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:16:26,988401+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:16:26,988420+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:16:26,988424+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:16:27,022229+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:16:27,022510+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:16:32.030 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:16:32,030885+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:16:32,030908+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:16:32,030926+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:16:32,073634+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:16:32,073824+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:16:37.075 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:16:37,075699+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:16:37,075719+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:16:37,075723+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:16:37,095321+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:16:37,095503+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:16:42.101 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:16:42,101371+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:16:42,101389+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:16:42,101393+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:16:42,113225+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:16:42,113446+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:16:47.117 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:16:47,117777+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:16:47,117794+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:16:47,117798+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:16:47,120267+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:16:47,120405+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:16:52.119 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:16:52,119775+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:16:52,119793+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:16:52,119797+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:16:52,130085+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:16:52,130295+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:16:57.134 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:16:57,134802+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:16:57,134825+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:16:57,134832+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:16:57,139118+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:16:57,139310+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:17:02.155 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:17:02,155320+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:17:02,155338+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:17:02,155341+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:17:02,213139+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:17:02,213566+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:17:07.214 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:17:07,214783+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:17:07,214801+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:17:07,214805+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:17:07,260153+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:17:07,260692+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:17:12.268 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:17:12,268297+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:17:12,268315+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:17:12,268320+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:17:12,277343+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:17:12,277535+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:17:17.281 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:17:17,281806+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:17:17,281824+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:17:17,281828+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:17:17,289987+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:17:17,290184+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:17:22.294 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:17:22,294796+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:17:22,294815+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:17:22,294819+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:17:22,303853+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:17:22,304066+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:17:27.307 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:17:27,307805+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:17:27,307822+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:17:27,307826+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:17:27,312561+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:17:27,312694+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:17:32.321 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:17:32,321651+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:17:32,321669+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:17:32,321673+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:17:32,343415+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:17:32,343592+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:17:37.350 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:17:37,350737+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:17:37,350756+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:17:37,350760+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:17:37,400539+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:17:37,400736+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:17:42.401 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:17:42,401718+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:17:42,401738+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:17:42,401743+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:17:42,416687+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:17:42,417051+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:17:47.421 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:17:47,421345+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:17:47,421363+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:17:47,421367+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:17:47,439411+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:17:47,439627+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:17:52.444 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:17:52,444747+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:17:52,444768+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:17:52,444776+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:17:52,451898+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:17:52,452149+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:17:57.454 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:17:57,454848+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:17:57,454868+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:17:57,454873+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:17:57,463167+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:17:57,463339+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:18:02.467 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:18:02,467689+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:18:02,467773+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:18:02,467798+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:18:02,474943+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:18:02,475081+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:18:07.484 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:18:07,485048+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:18:07,485066+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:18:07,485070+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:18:07,523484+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:18:07,523741+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:18:12.527 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:18:12,528076+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:18:12,528094+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:18:12,528098+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:18:12,579363+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:18:12,579626+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:18:17.586 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:18:17,586902+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:18:17,586921+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:18:17,586925+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:18:17,610665+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:18:17,611043+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:18:22.616 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:18:22,616385+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:18:22,616405+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:18:22,616411+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:18:22,626218+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:18:22,626416+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:18:27.630 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:18:27,630612+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:18:27,630629+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:18:27,630634+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:18:27,640981+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:18:27,641177+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:18:32.645 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:18:32,645720+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:18:32,645804+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:18:32,645819+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:18:32,650568+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:18:32,650751+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+[2025-12-23 12:18:37.653 (UTC+0800)] [33mwarn/network[0m	Connection to opc.tcp://127.0.0.1:4840 timed out
+[OPC-UA] FAILED: Connection failed with status: 0x800a0000
+[OPC-UA] Status message: BadTimeout
+[OPC-UA] ========================================
+2025-12-23T12:18:37,653873+0800 ERROR (vacuum_system_device.cpp:354) sys/vacuum/2 PLC 连接失败
+2025-12-23T12:18:37,653891+0800 DEBUG (vacuum_system_device.cpp:355) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接失败
+2025-12-23T12:18:37,653895+0800 WARN (vacuum_system_device.cpp:576) sys/vacuum/2 PLC 重连失败，将在 5 秒后重试
+2025-12-23T12:18:37,660683+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 5 秒)
+2025-12-23T12:18:37,661263+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840

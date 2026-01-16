@@ -1,0 +1,48 @@
+{
+  "motion_controller": {
+    "ip": "192.168.1.13",
+    "card_id": 0
+  },
+  "encoder_collector": {
+    "ip": "192.168.1.199",
+    "port": 5000,
+    "channels": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "encoder_resolution": 0.001
+  },
+  "pulse_calculation": {
+    "lead": 2.0,
+    "subdivision": 4000,
+    "gear_ratio": 29.0,
+    "gear_ratio_denominator": 54.0,
+    "reduction_ratio": 1.0,
+    "reduction_ratio_denominator": 8.0
+  },
+  "kinematics": {
+    "r1": 110,
+    "r2": 193,
+    "hh": 408,
+    "a1": 40,
+    "a2": 14,
+    "h": 575.5,
+    "h3": 57,
+    "ll": 421.4857
+  },
+  "speed_defaults": {
+    "start_speed": 100,
+    "max_speed": 1000,
+    "acc_time": 0.1,
+    "dec_time": 0.1,
+    "stop_speed": 50
+  },
+  "brake_control": {
+    "port": 3,
+    "active_low": true
+  }
+}

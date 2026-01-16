@@ -1,0 +1,8 @@
+Warning: Qt5 not available, using default configuration values.
+  Controller IP: 192.168.1.177
+  PLC IP: 192.168.1.177
+  Tango Host: 192.168.80.98:10000
+  ORB Timeouts: call=5000ms, connect=3000ms
+2026-01-16T15:51:17,075141+0800 WARN (interlock_service.cpp:127) sys/interlock/1 Failed to connect to vacuum device sys/vacuum/1
+2026-01-16T15:51:17,077732+0800 INFO (interlock_service.cpp:743) sys/interlock/1 [2026-01-16 15:51:17] InterlockService initialized with 59 rules
+Interlock Server Ready

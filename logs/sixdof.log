@@ -1,0 +1,289 @@
+Warning: Qt5 not available, using default configuration values.
+  Controller IP: 192.168.1.177
+  PLC IP: 192.168.1.177
+  Tango Host: 192.168.80.98:10000
+  ORB Timeouts: call=5000ms, connect=3000ms
+2026-01-16T15:51:14,032019+0800 INFO (six_dof_device.cpp:299) sys/six_dof/1 [DEBUG] 运行模式: 真实模式 (从配置文件加载, SIM_MODE=false)
+2026-01-16T15:51:14,033675+0800 INFO (six_dof_device.cpp:300) sys/six_dof/1 [DEBUG] 提示: 可通过 simSwitch 命令或GUI动态切换模拟模式
+2026-01-16T15:51:14,033692+0800 INFO (six_dof_device.cpp:303) sys/six_dof/1 SixDofDevice initialized. Motion Controller: sys/motion/3
+Initial height (hh): 408.01
+2026-01-16T15:51:14,038332+0800 INFO (six_dof_device.cpp:2213) sys/six_dof/1 Kinematics configured: r1=110, r2=193, hh=408.01
+Calculated nominal leg length: 421.495
+2026-01-16T15:51:14,039145+0800 INFO (six_dof_device.cpp:480) sys/six_dof/1 [DEBUG] connect_proxies() called. sim_mode=0
+2026-01-16T15:51:14,039229+0800 INFO (six_dof_device.cpp:495) sys/six_dof/1 [DEBUG] Rebuilding proxies (motion=sys/motion/3, encoder=)
+2026-01-16T15:51:14,043369+0800 INFO (six_dof_device.cpp:507) sys/six_dof/1 [DEBUG] All proxies connected. Device state: ON, status: Connected
+2026-01-16T15:51:14,043509+0800 INFO (six_dof_device.cpp:571) sys/six_dof/1 Restoring relay configuration and enabling driver power after reconnection...
+2026-01-16T15:51:14,043559+0800 INFO (six_dof_device.cpp:2438) sys/six_dof/1 [PowerControl] enable_driver_power() called
+2026-01-16T15:51:14,043578+0800 INFO (six_dof_device.cpp:2439) sys/six_dof/1 [PowerControl] driver_power_port_=0, driver_power_controller_=sys/motion/3
+2026-01-16T15:51:14,043662+0800 INFO (six_dof_device.cpp:2468) sys/six_dof/1 [PowerControl] Using connected motion controller
+2026-01-16T15:51:14,043766+0800 INFO (six_dof_device.cpp:2482) sys/six_dof/1 [PowerControl] Calling writeIO with port=0, value=1
+2026-01-16T15:51:14,043773+0800 INFO (six_dof_device.cpp:2483) sys/six_dof/1 [PowerControl] Executing hardware writeIO command...
+2026-01-16T15:51:14,044795+0800 INFO (six_dof_device.cpp:2485) sys/six_dof/1 [PowerControl] writeIO command executed successfully
+2026-01-16T15:51:14,044809+0800 INFO (six_dof_device.cpp:2490) sys/six_dof/1 ✓ Driver power enabled on port OUT0
+2026-01-16T15:51:14,045005+0800 INFO (six_dof_device.cpp:573) sys/six_dof/1 Driver power enabled successfully after reconnection
+2026-01-16T15:51:14,045064+0800 INFO (six_dof_device.cpp:2559) sys/six_dof/1 [PowerControl] release_brake() called
+2026-01-16T15:51:14,045071+0800 INFO (six_dof_device.cpp:2560) sys/six_dof/1 [PowerControl] brake_power_port_=3, brake_power_controller_=sys/motion/3
+2026-01-16T15:51:14,045142+0800 INFO (six_dof_device.cpp:2588) sys/six_dof/1 [PowerControl] Using connected motion controller for brake
+2026-01-16T15:51:14,045152+0800 INFO (six_dof_device.cpp:2603) sys/six_dof/1 [PowerControl] Calling writeIO for brake with port=3, value=1
+2026-01-16T15:51:14,045681+0800 INFO (six_dof_device.cpp:2609) sys/six_dof/1 ✓ Brake released on port OUT3
+2026-01-16T15:51:14,045692+0800 INFO (six_dof_device.cpp:576) sys/six_dof/1 Brake released successfully after reconnection, device ready for operation
+SixDof Server Ready
+0, 0, 0
+R: 
+1, -0, 0
+0, 1, -0
+0, 0, 1
+cal done!
+Pose: 0, 0, 0, 408.01
+T: 0, 0, 408.01
+q[0]: 84.2649, 70.7066, 408.01
+l[0]: -103.002, 24.0157, 408.01
+Leg 0 length: 421.4954
+q[1]: 19.1013, 108.3289, 408.0100
+l[1]: 72.2993, -77.1947, 408.0100
+Leg 1 length: 421.4954
+q[2]: -103.3662, 37.6222, 408.0100
+l[2]: 30.7029, -101.2104, 408.0100
+Leg 2 length: 421.4954
+q[3]: -103.3662, -37.6222, 408.0100
+l[3]: 30.7029, 101.2104, 408.0100
+Leg 3 length: 421.4954
+q[4]: 19.1013, -108.3289, 408.0100
+l[4]: 72.2993, 77.1947, 408.0100
+Leg 4 length: 421.4954
+q[5]: 84.2649, -70.7066, 408.0100
+l[5]: -103.0022, -24.0157, 408.0100
+Leg 5 length: 421.4954
+get in motion
+current leg length 421.4954
+target leg length 421.4954
+axis 0 delta: 0.0000
+axis 0 delta steps: 0
+2026-01-16T15:51:22,570114+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=0, position=0, relative=true, cmd=moveRelative
+2026-01-16T15:51:22,572446+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 0
+current leg length 421.4954
+target leg length 421.4954
+axis 1 delta: 0.0000
+axis 1 delta steps: 0
+2026-01-16T15:51:22,572480+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=1, position=0, relative=true, cmd=moveRelative
+2026-01-16T15:51:22,574637+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 1
+current leg length 421.4954
+target leg length 421.4954
+axis 2 delta: 0.0000
+axis 2 delta steps: 0
+2026-01-16T15:51:22,574671+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=2, position=0, relative=true, cmd=moveRelative
+2026-01-16T15:51:22,576477+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 2
+current leg length 421.4954
+target leg length 421.4954
+axis 3 delta: 0.0000
+axis 3 delta steps: 0
+2026-01-16T15:51:22,576503+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=3, position=0, relative=true, cmd=moveRelative
+2026-01-16T15:51:22,578126+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 3
+current leg length 421.4954
+target leg length 421.4954
+axis 4 delta: 0.0000
+axis 4 delta steps: 0
+2026-01-16T15:51:22,578146+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=4, position=0, relative=true, cmd=moveRelative
+2026-01-16T15:51:22,579699+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 4
+current leg length 421.4954
+target leg length 421.4954
+axis 5 delta: 0.0000
+axis 5 delta steps: 0
+2026-01-16T15:51:22,579727+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=5, position=0, relative=true, cmd=moveRelative
+2026-01-16T15:51:22,581544+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 5
+0.0000, 0.0000, 1.0000
+R: 
+0.9998, -0.0175, 0.0000
+0.0175, 0.9998, -0.0000
+0.0000, 0.0000, 1.0000
+cal done!
+Pose: 0.0000, 0.0000, 0.0000, 408.0100
+T: 0.0000, 0.0000, 408.0100
+q[0]: 83.0181, 72.1665, 408.0100
+l[0]: -104.2490, 25.4756, 408.0100
+Leg 0 length: 421.8875
+q[1]: 17.2078, 108.6457, 408.0100
+l[1]: 70.4058, -76.8778, 408.0100
+Leg 1 length: 421.1168
+q[2]: -104.0070, 35.8125, 408.0100
+l[2]: 30.0620, -103.0201, 408.0100
+Leg 2 length: 421.8875
+q[3]: -102.6938, -39.4205, 408.0100
+l[3]: 31.3752, 99.4121, 408.0100
+Leg 3 length: 421.1168
+q[4]: 20.9890, -107.9790, 408.0100
+l[4]: 74.1870, 77.5445, 408.0100
+Leg 4 length: 421.8875
+q[5]: 85.4861, -69.2252, 408.0100
+l[5]: -101.7810, -22.5343, 408.0100
+Leg 5 length: 421.1168
+get in motion
+current leg length 421.4954
+target leg length 421.8875
+axis 0 delta: 0.3921
+axis 0 delta steps: 11682
+2026-01-16T15:51:30,933418+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=0, position=11682, relative=true, cmd=moveRelative
+2026-01-16T15:51:30,935333+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 0
+current leg length 421.4954
+target leg length 421.1168
+axis 1 delta: -0.3786
+axis 1 delta steps: -11280
+2026-01-16T15:51:30,935360+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=1, position=-11280, relative=true, cmd=moveRelative
+2026-01-16T15:51:30,937723+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 1
+current leg length 421.4954
+target leg length 421.8875
+axis 2 delta: 0.3921
+axis 2 delta steps: 11682
+2026-01-16T15:51:30,937765+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=2, position=11682, relative=true, cmd=moveRelative
+2026-01-16T15:51:30,940188+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 2
+current leg length 421.4954
+target leg length 421.1168
+axis 3 delta: -0.3786
+axis 3 delta steps: -11280
+2026-01-16T15:51:30,940221+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=3, position=-11280, relative=true, cmd=moveRelative
+2026-01-16T15:51:30,963002+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 3
+current leg length 421.4954
+target leg length 421.8875
+axis 4 delta: 0.3921
+axis 4 delta steps: 11682
+2026-01-16T15:51:30,963081+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=4, position=11682, relative=true, cmd=moveRelative
+2026-01-16T15:51:30,969289+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 4
+current leg length 421.4954
+target leg length 421.1168
+axis 5 delta: -0.3786
+axis 5 delta steps: -11280
+2026-01-16T15:51:30,969397+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=5, position=-11280, relative=true, cmd=moveRelative
+2026-01-16T15:51:30,974798+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 5
+0.0000, 0.0000, 0.0000
+R: 
+1.0000, -0.0000, 0.0000
+0.0000, 1.0000, -0.0000
+0.0000, 0.0000, 1.0000
+cal done!
+Pose: 0.0000, 0.0000, 0.0000, 408.0100
+T: 0.0000, 0.0000, 408.0100
+q[0]: 84.2649, 70.7066, 408.0100
+l[0]: -103.0022, 24.0157, 408.0100
+Leg 0 length: 421.4954
+q[1]: 19.1013, 108.3289, 408.0100
+l[1]: 72.2993, -77.1947, 408.0100
+Leg 1 length: 421.4954
+q[2]: -103.3662, 37.6222, 408.0100
+l[2]: 30.7029, -101.2104, 408.0100
+Leg 2 length: 421.4954
+q[3]: -103.3662, -37.6222, 408.0100
+l[3]: 30.7029, 101.2104, 408.0100
+Leg 3 length: 421.4954
+q[4]: 19.1013, -108.3289, 408.0100
+l[4]: 72.2993, 77.1947, 408.0100
+Leg 4 length: 421.4954
+q[5]: 84.2649, -70.7066, 408.0100
+l[5]: -103.0022, -24.0157, 408.0100
+Leg 5 length: 421.4954
+get in motion
+current leg length 421.8875
+target leg length 421.4954
+axis 0 delta: -0.3921
+axis 0 delta steps: -11682
+2026-01-16T15:51:40,377633+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=0, position=-11682, relative=true, cmd=moveRelative
+2026-01-16T15:51:40,378886+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 0
+current leg length 421.1168
+target leg length 421.4954
+axis 1 delta: 0.3786
+axis 1 delta steps: 11280
+2026-01-16T15:51:40,378908+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=1, position=11280, relative=true, cmd=moveRelative
+2026-01-16T15:51:40,380600+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 1
+current leg length 421.8875
+target leg length 421.4954
+axis 2 delta: -0.3921
+axis 2 delta steps: -11682
+2026-01-16T15:51:40,380622+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=2, position=-11682, relative=true, cmd=moveRelative
+2026-01-16T15:51:40,382795+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 2
+current leg length 421.1168
+target leg length 421.4954
+axis 3 delta: 0.3786
+axis 3 delta steps: 11280
+2026-01-16T15:51:40,382847+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=3, position=11280, relative=true, cmd=moveRelative
+2026-01-16T15:51:40,385063+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 3
+current leg length 421.8875
+target leg length 421.4954
+axis 4 delta: -0.3921
+axis 4 delta steps: -11682
+2026-01-16T15:51:40,385082+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=4, position=-11682, relative=true, cmd=moveRelative
+2026-01-16T15:51:40,388095+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 4
+current leg length 421.1168
+target leg length 421.4954
+axis 5 delta: 0.3786
+axis 5 delta steps: 11280
+2026-01-16T15:51:40,388138+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=5, position=11280, relative=true, cmd=moveRelative
+2026-01-16T15:51:40,392472+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 5
+0.0000, 0.0000, 1.0000
+R: 
+0.9998, -0.0175, 0.0000
+0.0175, 0.9998, -0.0000
+0.0000, 0.0000, 1.0000
+cal done!
+Pose: 0.0000, 0.0000, 0.0000, 408.0100
+T: 0.0000, 0.0000, 408.0100
+q[0]: 83.0181, 72.1665, 408.0100
+l[0]: -104.2490, 25.4756, 408.0100
+Leg 0 length: 421.8875
+q[1]: 17.2078, 108.6457, 408.0100
+l[1]: 70.4058, -76.8778, 408.0100
+Leg 1 length: 421.1168
+q[2]: -104.0070, 35.8125, 408.0100
+l[2]: 30.0620, -103.0201, 408.0100
+Leg 2 length: 421.8875
+q[3]: -102.6938, -39.4205, 408.0100
+l[3]: 31.3752, 99.4121, 408.0100
+Leg 3 length: 421.1168
+q[4]: 20.9890, -107.9790, 408.0100
+l[4]: 74.1870, 77.5445, 408.0100
+Leg 4 length: 421.8875
+q[5]: 85.4861, -69.2252, 408.0100
+l[5]: -101.7810, -22.5343, 408.0100
+Leg 5 length: 421.1168
+get in motion
+current leg length 421.4954
+target leg length 421.8875
+axis 0 delta: 0.3921
+axis 0 delta steps: 11682
+2026-01-16T15:51:46,820868+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=0, position=11682, relative=true, cmd=moveRelative
+2026-01-16T15:51:46,822244+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 0
+current leg length 421.4954
+target leg length 421.1168
+axis 1 delta: -0.3786
+axis 1 delta steps: -11280
+2026-01-16T15:51:46,822267+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=1, position=-11280, relative=true, cmd=moveRelative
+2026-01-16T15:51:46,824288+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 1
+current leg length 421.4954
+target leg length 421.8875
+axis 2 delta: 0.3921
+axis 2 delta steps: 11682
+2026-01-16T15:51:46,824310+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=2, position=11682, relative=true, cmd=moveRelative
+2026-01-16T15:51:46,826616+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 2
+current leg length 421.4954
+target leg length 421.1168
+axis 3 delta: -0.3786
+axis 3 delta steps: -11280
+2026-01-16T15:51:46,826643+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=3, position=-11280, relative=true, cmd=moveRelative
+2026-01-16T15:51:46,829356+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 3
+current leg length 421.4954
+target leg length 421.8875
+axis 4 delta: 0.3921
+axis 4 delta steps: 11682
+2026-01-16T15:51:46,829383+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=4, position=11682, relative=true, cmd=moveRelative
+2026-01-16T15:51:46,832966+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 4
+current leg length 421.4954
+target leg length 421.1168
+axis 5 delta: -0.3786
+axis 5 delta steps: -11280
+2026-01-16T15:51:46,833002+0800 INFO (six_dof_device.cpp:1519) sys/six_dof/1 [DEBUG] send_move_command: axis=5, position=-11280, relative=true, cmd=moveRelative
+2026-01-16T15:51:46,836442+0800 INFO (six_dof_device.cpp:1526) sys/six_dof/1 [DEBUG] send_move_command: command sent successfully for axis 5
+2026-01-16T15:52:04,813379+0800 INFO (six_dof_device.cpp:317) sys/six_dof/1 [BrakeControl] Auto-engaging brake before device shutdown (safety)
+2026-01-16T15:52:04,813487+0800 INFO (six_dof_device.cpp:2620) sys/six_dof/1 [PowerControl] engage_brake() called
+2026-01-16T15:52:04,813501+0800 INFO (six_dof_device.cpp:2621) sys/six_dof/1 [PowerControl] brake_power_port_=3, brake_power_controller_=sys/motion/3
+2026-01-16T15:52:04,813641+0800 INFO (six_dof_device.cpp:2649) sys/six_dof/1 [PowerControl] Using connected motion controller for brake
+2026-01-16T15:52:04,813660+0800 INFO (six_dof_device.cpp:2664) sys/six_dof/1 [PowerControl] Calling writeIO for brake with port=3, value=0
+2026-01-16T15:52:04,816663+0800 ERROR (six_dof_device.cpp:2674) sys/six_dof/1 ✗ Failed to engage brake: Device sys/motion/3 is not exported (hint: try starting the device server)
+2026-01-16T15:52:04,816727+0800 WARN (six_dof_device.cpp:319) sys/six_dof/1 [BrakeControl] Failed to engage brake before shutdown

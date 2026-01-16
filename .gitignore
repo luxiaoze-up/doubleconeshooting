@@ -1,0 +1,8 @@
+# Clangd placeholder files (if you don't want to commit them)
+# Uncomment the line below if you want to ignore the tango.h placeholder
+# include/tango.h
+
+# 临时测试文件
+linear_logs_*.json
+axis_params_*.json
+test_db_conn

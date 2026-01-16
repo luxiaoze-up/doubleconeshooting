@@ -1,0 +1,5 @@
+Loaded configuration from config/system_config.json
+  Controller IP: 192.168.1.100
+  PLC IP: 192.168.1.101
+  Tango Host: 127.0.0.1:10000
+MotionController Server Ready

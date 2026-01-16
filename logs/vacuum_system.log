@@ -1,0 +1,975 @@
+Loaded configuration from ../config/system_config.json
+  Controller IP: 192.168.1.100
+  PLC IP: 127.0.0.1
+  Tango Host: 127.0.0.1:10000
+  Sim Mode: disabled
+  ORB Timeouts: call=5000ms, connect=3000ms
+创建 VacuumSystemDeviceClass
+2025-12-20T22:07:34,454143+0800 INFO (vacuum_system_device.cpp:46) sys/vacuum/2 VacuumSystemDevice::init_device - 初始化真空系统设备 sys/vacuum/2
+2025-12-20T22:07:34,454223+0800 INFO (vacuum_system_device.cpp:170) sys/vacuum/2 使用 OPC UA 通信 -> 127.0.0.1
+[2025-12-20 22:07:34.454 (UTC+0800)] [33mwarn/userland[0m	AcceptAll Certificate Verification. Any remote certificate will be accepted.
+[OPC-UA] Client created with open62541 library
+2025-12-20T22:07:34,454651+0800 INFO (vacuum_system_device.cpp:175) sys/vacuum/2 尝试连接 PLC（将在后台重试）...
+2025-12-20T22:07:34,454834+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840
+2025-12-20T22:07:34,455593+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:07:34.455] 设备初始化完成
+[2025-12-20 22:07:34.456 (UTC+0800)] [32minfo/channel[0m	Connection 21 | SecureChannel 11 | SecureChannel opened with SecurityPolicy http://opcfoundation.org/UA/SecurityPolicy#None and a revised lifetime of 600.00s
+[2025-12-20 22:07:34.456 (UTC+0800)] [32minfo/client[0m	Client Status: ChannelState: Open, SessionState: Closed, ConnectStatus: Good
+[2025-12-20 22:07:34.457 (UTC+0800)] [32minfo/client[0m	The initially defined EndpointURL opc.tcp://127.0.0.1:4840is valid for the server
+[2025-12-20 22:07:34.458 (UTC+0800)] [32minfo/client[0m	Selected endpoint 0 in URL opc.tcp://127.0.0.1:4840 with SecurityMode None and SecurityPolicy http://opcfoundation.org/UA/SecurityPolicy#None
+[2025-12-20 22:07:34.458 (UTC+0800)] [32minfo/client[0m	Selected UserTokenPolicy anonymous with UserTokenType Anonymous and SecurityPolicy http://opcfoundation.org/UA/SecurityPolicy#None
+[2025-12-20 22:07:34.459 (UTC+0800)] [32minfo/client[0m	Client Status: ChannelState: Open, SessionState: Created, ConnectStatus: Good
+[2025-12-20 22:07:34.460 (UTC+0800)] [32minfo/client[0m	Client Status: ChannelState: Open, SessionState: Activated, ConnectStatus: Good
+[OPC-UA] SUCCESS: Connected to OPC UA server
+[OPC-UA] ========================================
+2025-12-20T22:07:34,460270+0800 INFO (vacuum_system_device.cpp:348) sys/vacuum/2 PLC 连接成功
+2025-12-20T22:07:34,460280+0800 DEBUG (vacuum_system_device.cpp:349) sys/vacuum/2 [DEBUG] connectPLC_locked: 连接成功
+VacuumSystemDevice server started
+2025-12-20T22:07:34,482865+0800 DEBUG (vacuum_system_device.cpp:502) sys/vacuum/2 [DEBUG] synchronizeStateFromPLC: 已同步分子泵启用配置到PLC
+2025-12-20T22:07:34,482937+0800 INFO (vacuum_system_device.cpp:515) sys/vacuum/2 同步状态: 系统处于 IDLE
+2025-12-20T22:07:34,482941+0800 INFO (vacuum_system_device.cpp:183) sys/vacuum/2 PLC 初始连接成功
+2025-12-20T22:07:57,513263+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:07:57.513] 切换至自动模式
+2025-12-20T22:08:01,269722+0800 DEBUG (vacuum_system_device.cpp:1061) sys/vacuum/2 [DEBUG] OneKeyVacuumStart: 调用，当前模式=自动, 当前状态=0
+2025-12-20T22:08:01,272859+0800 DEBUG (vacuum_system_device.cpp:1100) sys/vacuum/2 [DEBUG] OneKeyVacuumStart: 判断流程类型 - 当前真空度G2=100000Pa, 判断条件: 100000 >= 3000Pa, 结果=非真空, 起始步骤=1
+2025-12-20T22:08:01,272909+0800 DEBUG (vacuum_system_device.cpp:1111) sys/vacuum/2 [DEBUG] OneKeyVacuumStart: 启动成功，状态=PUMPING, 流程类型=非真空状态, 当前真空度=100000Pa, 步骤=1, 流程类型已保存=非真空
+2025-12-20T22:08:01,272920+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:01.272] 一键抽真空启动 - 非真空状态流程
+2025-12-20T22:08:01,345743+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=1, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:01,345831+0800 DEBUG (vacuum_system_device.cpp:2231) sys/vacuum/2 [DEBUG] 自动抽真空步骤1: 开启电磁阀4
+2025-12-20T22:08:01,346731+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:01.346] 自动抽真空 - 步骤1: 开启电磁阀4
+2025-12-20T22:08:01,486051+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=2, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:01,486106+0800 DEBUG (vacuum_system_device.cpp:2239) sys/vacuum/2 [DEBUG] 自动抽真空步骤2: 开启电磁阀1、2、3
+2025-12-20T22:08:01,487491+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:01.487] 自动抽真空 - 步骤2: 开启电磁阀1、2、3
+2025-12-20T22:08:01,617145+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=3, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:01,617204+0800 DEBUG (vacuum_system_device.cpp:2250) sys/vacuum/2 [DEBUG] 自动抽真空步骤3: 等待电磁阀1、2、3全部开到位 (已等待=0秒, EMV1=关, EMV2=关, EMV3=关)
+2025-12-20T22:08:01,753697+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=3, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:01,753754+0800 DEBUG (vacuum_system_device.cpp:2250) sys/vacuum/2 [DEBUG] 自动抽真空步骤3: 等待电磁阀1、2、3全部开到位 (已等待=0秒, EMV1=关, EMV2=关, EMV3=关)
+2025-12-20T22:08:01,882153+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=3, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:01,882211+0800 DEBUG (vacuum_system_device.cpp:2250) sys/vacuum/2 [DEBUG] 自动抽真空步骤3: 等待电磁阀1、2、3全部开到位 (已等待=0秒, EMV1=关, EMV2=关, EMV3=关)
+2025-12-20T22:08:02,005042+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=3, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:02,005115+0800 DEBUG (vacuum_system_device.cpp:2250) sys/vacuum/2 [DEBUG] 自动抽真空步骤3: 等待电磁阀1、2、3全部开到位 (已等待=0秒, EMV1=关, EMV2=关, EMV3=关)
+2025-12-20T22:08:02,135051+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=3, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:02,135110+0800 DEBUG (vacuum_system_device.cpp:2250) sys/vacuum/2 [DEBUG] 自动抽真空步骤3: 等待电磁阀1、2、3全部开到位 (已等待=0秒, EMV1=关, EMV2=关, EMV3=关)
+2025-12-20T22:08:02,257769+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=3, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:02,257820+0800 DEBUG (vacuum_system_device.cpp:2250) sys/vacuum/2 [DEBUG] 自动抽真空步骤3: 等待电磁阀1、2、3全部开到位 (已等待=0秒, EMV1=开, EMV2=开, EMV3=开)
+2025-12-20T22:08:02,257823+0800 DEBUG (vacuum_system_device.cpp:2256) sys/vacuum/2 [DEBUG] 自动抽真空步骤3: 电磁阀1、2、3已全部开启，开启闸板阀1、2、3
+2025-12-20T22:08:02,261253+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:02.261] 自动抽真空 - 步骤3: 开启闸板阀1、2、3
+2025-12-20T22:08:02,389231+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:02,389282+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:08:02,515187+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:02,515244+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:08:02,650819+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:02,650874+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:08:02,797740+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:02,797788+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:08:02,937712+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:02,937783+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:08:03,072713+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:03,072775+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:08:03,232910+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:03,233015+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:08:03,384525+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:03,533391+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:03,677505+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:08:03,677555+0800 DEBUG (vacuum_system_device.cpp:2284) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 闸板阀1、2、3已全部开启，启动螺杆泵
+2025-12-20T22:08:03,679554+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:03.679] 自动抽真空 - 步骤4: 启动螺杆泵
+2025-12-20T22:08:03,784837+0800 DEBUG (vacuum_system_device.cpp:656) sys/vacuum/2 [DEBUG] 螺杆泵状态变化: 停止 -> 运行
+2025-12-20T22:08:03,820904+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=5, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=88615.2Pa
+2025-12-20T22:08:03,820958+0800 DEBUG (vacuum_system_device.cpp:2304) sys/vacuum/2 [DEBUG] 自动抽真空步骤5: 等待螺杆泵达110Hz稳定 (已等待=0秒, 当前=110 Hz, 目标≥110 Hz, 进度=100%)
+2025-12-20T22:08:03,820961+0800 DEBUG (vacuum_system_device.cpp:2309) sys/vacuum/2 [DEBUG] 自动抽真空步骤5: 螺杆泵已达110Hz稳定 (耗时=0秒)，进入下一步
+2025-12-20T22:08:03,820970+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:03.820] 自动抽真空 - 步骤5: 螺杆泵已达110Hz稳定
+2025-12-20T22:08:03,957921+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=79135.9Pa
+2025-12-20T22:08:03,957998+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=79135.9 Pa, 目标<7000 Pa, 进度=-1030.51%)
+2025-12-20T22:08:04,115659+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=67943.5Pa
+2025-12-20T22:08:04,115735+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=67943.5 Pa, 目标<7000 Pa, 进度=-870.622%)
+2025-12-20T22:08:04,257154+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=60335.4Pa
+2025-12-20T22:08:04,257211+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=60335.4 Pa, 目标<7000 Pa, 进度=-761.934%)
+2025-12-20T22:08:04,392007+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=51984.4Pa
+2025-12-20T22:08:04,392067+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=51984.4 Pa, 目标<7000 Pa, 进度=-642.634%)
+2025-12-20T22:08:04,520042+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=46718Pa
+2025-12-20T22:08:04,520111+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=46718 Pa, 目标<7000 Pa, 进度=-567.4%)
+2025-12-20T22:08:04,646295+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=41691.2Pa
+2025-12-20T22:08:04,646356+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=41691.2 Pa, 目标<7000 Pa, 进度=-495.589%)
+2025-12-20T22:08:04,773960+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=37205.3Pa
+2025-12-20T22:08:04,774018+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=37205.3 Pa, 目标<7000 Pa, 进度=-431.504%)
+2025-12-20T22:08:04,898431+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=33318.9Pa
+2025-12-20T22:08:05,027023+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=29796.6Pa
+2025-12-20T22:08:05,158952+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=26590.5Pa
+2025-12-20T22:08:05,286205+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=22990.7Pa
+2025-12-20T22:08:05,414001+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=20719.8Pa
+2025-12-20T22:08:05,540814+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=18555.4Pa
+2025-12-20T22:08:05,668044+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=16628.9Pa
+2025-12-20T22:08:05,793288+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=14881.4Pa
+2025-12-20T22:08:05,922062+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=13355Pa
+2025-12-20T22:08:06,050939+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=11985.2Pa
+2025-12-20T22:08:06,172625+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=10755.9Pa
+2025-12-20T22:08:06,304761+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=9679.88Pa
+2025-12-20T22:08:06,428680+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=8711.48Pa
+2025-12-20T22:08:06,561770+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=7851Pa
+2025-12-20T22:08:06,690008+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=6869.73Pa
+2025-12-20T22:08:06,690060+0800 DEBUG (vacuum_system_device.cpp:2333) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 真空度达标 (G3=6869.73 Pa, 耗时=2秒)，启动罗茨泵
+2025-12-20T22:08:06,690683+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:06.690] 自动抽真空 - 步骤6: 启动罗茨泵
+2025-12-20T22:08:06,795827+0800 DEBUG (vacuum_system_device.cpp:660) sys/vacuum/2 [DEBUG] 罗茨泵状态变化: 停止 -> 运行
+2025-12-20T22:08:06,817311+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=6309.75Pa
+2025-12-20T22:08:06,817382+0800 DEBUG (vacuum_system_device.cpp:2355) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 等待真空度达标 (已等待=0秒, 当前: G1=6309.75 Pa, G2=6309.75 Pa, 目标<=45 Pa)
+2025-12-20T22:08:06,948027+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=5775.09Pa
+2025-12-20T22:08:06,948101+0800 DEBUG (vacuum_system_device.cpp:2355) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 等待真空度达标 (已等待=0秒, 当前: G1=5775.09 Pa, G2=5775.09 Pa, 目标<=45 Pa)
+2025-12-20T22:08:07,075735+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=5278.31Pa
+2025-12-20T22:08:07,075796+0800 DEBUG (vacuum_system_device.cpp:2355) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 等待真空度达标 (已等待=0秒, 当前: G1=5278.31 Pa, G2=5278.31 Pa, 目标<=45 Pa)
+2025-12-20T22:08:07,200999+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=4827.66Pa
+2025-12-20T22:08:07,201063+0800 DEBUG (vacuum_system_device.cpp:2355) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 等待真空度达标 (已等待=0秒, 当前: G1=4827.66 Pa, G2=4827.66 Pa, 目标<=45 Pa)
+2025-12-20T22:08:07,326627+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=4421.69Pa
+2025-12-20T22:08:07,326674+0800 DEBUG (vacuum_system_device.cpp:2355) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 等待真空度达标 (已等待=0秒, 当前: G1=4421.69 Pa, G2=4421.69 Pa, 目标<=45 Pa)
+2025-12-20T22:08:07,458483+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=4044.18Pa
+2025-12-20T22:08:07,458546+0800 DEBUG (vacuum_system_device.cpp:2355) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 等待真空度达标 (已等待=0秒, 当前: G1=4044.18 Pa, G2=4044.18 Pa, 目标<=45 Pa)
+2025-12-20T22:08:07,613797+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=3566.17Pa
+2025-12-20T22:08:07,613867+0800 DEBUG (vacuum_system_device.cpp:2355) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 等待真空度达标 (已等待=0秒, 当前: G1=3566.17 Pa, G2=3566.17 Pa, 目标<=45 Pa)
+2025-12-20T22:08:07,742089+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=3280.08Pa
+2025-12-20T22:08:07,883723+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=3004.25Pa
+2025-12-20T22:08:08,026799+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=2643.58Pa
+2025-12-20T22:08:08,157230+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=2424.68Pa
+2025-12-20T22:08:08,278640+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=2231.74Pa
+2025-12-20T22:08:08,403404+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=2041.2Pa
+2025-12-20T22:08:08,525464+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=1868.24Pa
+2025-12-20T22:08:08,669046+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=1709.93Pa
+2025-12-20T22:08:08,797358+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=1565.04Pa
+2025-12-20T22:08:08,932215+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=1432.42Pa
+2025-12-20T22:08:09,070540+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=1275.6Pa
+2025-12-20T22:08:09,197162+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=1174.1Pa
+2025-12-20T22:08:09,323962+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=1075.37Pa
+2025-12-20T22:08:09,446128+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=984.244Pa
+2025-12-20T22:08:09,571327+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=901.477Pa
+2025-12-20T22:08:09,695347+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=826.25Pa
+2025-12-20T22:08:09,821061+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=757.834Pa
+2025-12-20T22:08:09,945031+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=694.106Pa
+2025-12-20T22:08:10,073203+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=635.737Pa
+2025-12-20T22:08:10,220204+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=560.595Pa
+2025-12-20T22:08:10,354689+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=514.176Pa
+2025-12-20T22:08:10,489915+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=473.926Pa
+2025-12-20T22:08:10,615816+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=433.463Pa
+2025-12-20T22:08:10,743193+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=396.733Pa
+2025-12-20T22:08:10,873829+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=350.579Pa
+2025-12-20T22:08:11,003375+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=324.957Pa
+2025-12-20T22:08:11,140370+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=299.098Pa
+2025-12-20T22:08:11,267376+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=274.139Pa
+2025-12-20T22:08:11,399529+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=251.439Pa
+2025-12-20T22:08:11,526759+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=224.543Pa
+2025-12-20T22:08:11,656286+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=206.384Pa
+2025-12-20T22:08:11,783105+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=189.428Pa
+2025-12-20T22:08:11,914723+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=173.987Pa
+2025-12-20T22:08:12,042605+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=159.58Pa
+2025-12-20T22:08:12,166507+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=146.469Pa
+2025-12-20T22:08:12,293756+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=134.435Pa
+2025-12-20T22:08:12,420854+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=123.477Pa
+2025-12-20T22:08:12,543132+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=113.492Pa
+2025-12-20T22:08:12,667248+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=104.24Pa
+2025-12-20T22:08:12,790393+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=95.8107Pa
+2025-12-20T22:08:12,914613+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=88.0008Pa
+2025-12-20T22:08:13,037515+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=80.9981Pa
+2025-12-20T22:08:13,163397+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=74.6051Pa
+2025-12-20T22:08:13,297843+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=68.7166Pa
+2025-12-20T22:08:13,428493+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=61.1936Pa
+2025-12-20T22:08:13,557990+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=56.881Pa
+2025-12-20T22:08:13,682043+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=52.6868Pa
+2025-12-20T22:08:13,804443+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=7秒, 流程类型=非真空, 当前真空度G2=48.5965Pa
+2025-12-20T22:08:13,925471+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=7秒, 流程类型=非真空, 当前真空度G2=44.95Pa
+2025-12-20T22:08:13,925521+0800 DEBUG (vacuum_system_device.cpp:2361) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 真空度达标 (G1=44.95 Pa, G2=44.95 Pa, 耗时=7秒)，启动启用的分子泵
+2025-12-20T22:08:13,929082+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:13.929] 自动抽真空 - 步骤7: 启动分子泵1 2 3 (根据配置)
+2025-12-20T22:08:14,034920+0800 DEBUG (vacuum_system_device.cpp:664) sys/vacuum/2 [DEBUG] 分子泵1状态变化: 停止 -> 运行
+2025-12-20T22:08:14,034981+0800 DEBUG (vacuum_system_device.cpp:668) sys/vacuum/2 [DEBUG] 分子泵2状态变化: 停止 -> 运行
+2025-12-20T22:08:14,034985+0800 DEBUG (vacuum_system_device.cpp:672) sys/vacuum/2 [DEBUG] 分子泵3状态变化: 停止 -> 运行
+2025-12-20T22:08:14,035984+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 0 -> 987 RPM
+2025-12-20T22:08:14,037163+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 0 -> 987 RPM
+2025-12-20T22:08:14,037743+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 0 -> 987 RPM
+2025-12-20T22:08:14,060165+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=42.5226Pa
+2025-12-20T22:08:14,060219+0800 DEBUG (vacuum_system_device.cpp:2389) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 等待分子泵满转 (已等待=0秒, MP1=987 RPM (3%), MP2=987 RPM (3%), MP3=987 RPM (3%), 目标≥30000 RPM)
+2025-12-20T22:08:14,166205+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 987 -> 1982 RPM
+2025-12-20T22:08:14,167035+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 987 -> 1982 RPM
+2025-12-20T22:08:14,167922+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 987 -> 1982 RPM
+2025-12-20T22:08:14,188203+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=40.2546Pa
+2025-12-20T22:08:14,188270+0800 DEBUG (vacuum_system_device.cpp:2389) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 等待分子泵满转 (已等待=0秒, MP1=1982 RPM (6%), MP2=1982 RPM (6%), MP3=1982 RPM (6%), 目标≥30000 RPM)
+2025-12-20T22:08:14,293331+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 1982 -> 2984 RPM
+2025-12-20T22:08:14,294184+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 1982 -> 2984 RPM
+2025-12-20T22:08:14,294890+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 1982 -> 2984 RPM
+2025-12-20T22:08:14,320315+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=38.0541Pa
+2025-12-20T22:08:14,320373+0800 DEBUG (vacuum_system_device.cpp:2389) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 等待分子泵满转 (已等待=0秒, MP1=2984 RPM (9%), MP2=2984 RPM (9%), MP3=2984 RPM (9%), 目标≥30000 RPM)
+2025-12-20T22:08:14,427024+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 2984 -> 3976 RPM
+2025-12-20T22:08:14,428174+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 2984 -> 3976 RPM
+2025-12-20T22:08:14,428846+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 2984 -> 3976 RPM
+2025-12-20T22:08:14,452330+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=36.0244Pa
+2025-12-20T22:08:14,452392+0800 DEBUG (vacuum_system_device.cpp:2389) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 等待分子泵满转 (已等待=0秒, MP1=3976 RPM (13%), MP2=3976 RPM (13%), MP3=3976 RPM (13%), 目标≥30000 RPM)
+2025-12-20T22:08:14,559955+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 3976 -> 5266 RPM
+2025-12-20T22:08:14,560305+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 3976 -> 5266 RPM
+2025-12-20T22:08:14,560925+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 3976 -> 5266 RPM
+2025-12-20T22:08:14,578581+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=33.5326Pa
+2025-12-20T22:08:14,578610+0800 DEBUG (vacuum_system_device.cpp:2389) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 等待分子泵满转 (已等待=0秒, MP1=5266 RPM (17%), MP2=5266 RPM (17%), MP3=5266 RPM (17%), 目标≥30000 RPM)
+2025-12-20T22:08:14,683637+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 5266 -> 6216 RPM
+2025-12-20T22:08:14,684407+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 5266 -> 6216 RPM
+2025-12-20T22:08:14,685130+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 5266 -> 6216 RPM
+2025-12-20T22:08:14,707243+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=31.8111Pa
+2025-12-20T22:08:14,707300+0800 DEBUG (vacuum_system_device.cpp:2389) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 等待分子泵满转 (已等待=0秒, MP1=6216 RPM (20%), MP2=6216 RPM (20%), MP3=6216 RPM (20%), 目标≥30000 RPM)
+2025-12-20T22:08:14,811483+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 6216 -> 7206 RPM
+2025-12-20T22:08:14,812080+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 6216 -> 7206 RPM
+2025-12-20T22:08:14,812652+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 6216 -> 7206 RPM
+2025-12-20T22:08:14,830799+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=30.0933Pa
+2025-12-20T22:08:14,830851+0800 DEBUG (vacuum_system_device.cpp:2389) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 等待分子泵满转 (已等待=0秒, MP1=7206 RPM (24%), MP2=7206 RPM (24%), MP3=7206 RPM (24%), 目标≥30000 RPM)
+2025-12-20T22:08:14,936167+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 7206 -> 8204 RPM
+2025-12-20T22:08:14,936906+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 7206 -> 8204 RPM
+2025-12-20T22:08:14,937353+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 7206 -> 8204 RPM
+2025-12-20T22:08:14,958980+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=28.4682Pa
+2025-12-20T22:08:15,063954+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 8204 -> 9200 RPM
+2025-12-20T22:08:15,065553+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 8204 -> 9200 RPM
+2025-12-20T22:08:15,066564+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 8204 -> 9200 RPM
+2025-12-20T22:08:15,092840+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=26.9498Pa
+2025-12-20T22:08:15,198828+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 9200 -> 10182 RPM
+2025-12-20T22:08:15,199879+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 9200 -> 10182 RPM
+2025-12-20T22:08:15,200633+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 9200 -> 10182 RPM
+2025-12-20T22:08:15,221072+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=25.5124Pa
+2025-12-20T22:08:15,327029+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 10182 -> 11178 RPM
+2025-12-20T22:08:15,328366+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 10182 -> 11178 RPM
+2025-12-20T22:08:15,329579+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 10182 -> 11178 RPM
+2025-12-20T22:08:15,364221+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=23.5649Pa
+2025-12-20T22:08:15,472826+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 11178 -> 12551 RPM
+2025-12-20T22:08:15,473829+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 11178 -> 12551 RPM
+2025-12-20T22:08:15,474586+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 11178 -> 12551 RPM
+2025-12-20T22:08:15,500255+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=22.3551Pa
+2025-12-20T22:08:15,605188+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 12551 -> 13542 RPM
+2025-12-20T22:08:15,606121+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 12551 -> 13542 RPM
+2025-12-20T22:08:15,606925+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 12551 -> 13542 RPM
+2025-12-20T22:08:15,626848+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=21.1627Pa
+2025-12-20T22:08:15,731009+0800 DEBUG (vacuum_system_device.cpp:1118) sys/vacuum/2 [DEBUG] OneKeyVacuumStop: 调用，当前模式=自动, 当前状态=1
+2025-12-20T22:08:15,731091+0800 DEBUG (vacuum_system_device.cpp:1165) sys/vacuum/2 [DEBUG] OneKeyVacuumStop: 停机流程已启动，流程类型标志已重置
+2025-12-20T22:08:15,731104+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:15.731] 一键停机启动
+2025-12-20T22:08:15,734051+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 13542 -> 14539 RPM
+2025-12-20T22:08:15,735512+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 13542 -> 14539 RPM
+2025-12-20T22:08:15,737036+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 13542 -> 14539 RPM
+2025-12-20T22:08:15,777341+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:15.777] 自动停机 - 步骤1: 停止分子泵1 2 3 (根据配置)
+2025-12-20T22:08:15,884772+0800 DEBUG (vacuum_system_device.cpp:664) sys/vacuum/2 [DEBUG] 分子泵1状态变化: 运行 -> 停止
+2025-12-20T22:08:15,884832+0800 DEBUG (vacuum_system_device.cpp:668) sys/vacuum/2 [DEBUG] 分子泵2状态变化: 运行 -> 停止
+2025-12-20T22:08:15,884835+0800 DEBUG (vacuum_system_device.cpp:672) sys/vacuum/2 [DEBUG] 分子泵3状态变化: 运行 -> 停止
+2025-12-20T22:08:15,885545+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 14539 -> 13625 RPM
+2025-12-20T22:08:15,887147+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 14539 -> 13625 RPM
+2025-12-20T22:08:15,888167+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 14539 -> 13625 RPM
+2025-12-20T22:08:16,016682+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 13625 -> 12210 RPM
+2025-12-20T22:08:16,017237+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 13625 -> 12210 RPM
+2025-12-20T22:08:16,017619+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 13625 -> 12210 RPM
+2025-12-20T22:08:16,143591+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 12210 -> 10716 RPM
+2025-12-20T22:08:16,144123+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 12210 -> 10716 RPM
+2025-12-20T22:08:16,144588+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 12210 -> 10716 RPM
+2025-12-20T22:08:16,269541+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 10716 -> 9231 RPM
+2025-12-20T22:08:16,270114+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 10716 -> 9231 RPM
+2025-12-20T22:08:16,271071+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 10716 -> 9231 RPM
+2025-12-20T22:08:16,402841+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 9231 -> 7742 RPM
+2025-12-20T22:08:16,403777+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 9231 -> 7742 RPM
+2025-12-20T22:08:16,404616+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 9231 -> 7742 RPM
+2025-12-20T22:08:16,536030+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 7742 -> 5805 RPM
+2025-12-20T22:08:16,536641+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 7742 -> 5805 RPM
+2025-12-20T22:08:16,537183+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 7742 -> 5805 RPM
+2025-12-20T22:08:16,660568+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 5805 -> 4396 RPM
+2025-12-20T22:08:16,661292+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 5805 -> 4396 RPM
+2025-12-20T22:08:16,661788+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 5805 -> 4396 RPM
+2025-12-20T22:08:16,786636+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 4396 -> 2911 RPM
+2025-12-20T22:08:16,787472+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 4396 -> 2911 RPM
+2025-12-20T22:08:16,788016+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 4396 -> 2911 RPM
+2025-12-20T22:08:16,909784+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 2911 -> 1449 RPM
+2025-12-20T22:08:16,910872+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 2911 -> 1449 RPM
+2025-12-20T22:08:16,911588+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 2911 -> 1449 RPM
+2025-12-20T22:08:17,037595+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 1449 -> 0 RPM
+2025-12-20T22:08:17,038603+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 1449 -> 0 RPM
+2025-12-20T22:08:17,038913+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 1449 -> 0 RPM
+2025-12-20T22:08:17,065972+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:17.065] 自动停机 - 步骤2: 关闭闸板阀1-3
+2025-12-20T22:08:18,319665+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:18.319] 自动停机 - 步骤3: 关闭电磁阀1-3
+2025-12-20T22:08:19,074941+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:19.074] 自动停机 - 步骤4: 停止罗茨泵
+2025-12-20T22:08:19,179664+0800 DEBUG (vacuum_system_device.cpp:660) sys/vacuum/2 [DEBUG] 罗茨泵状态变化: 运行 -> 停止
+2025-12-20T22:08:19,202545+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:19.202] 自动停机 - 步骤5: 停止螺杆泵
+2025-12-20T22:08:19,307999+0800 DEBUG (vacuum_system_device.cpp:656) sys/vacuum/2 [DEBUG] 螺杆泵状态变化: 运行 -> 停止
+2025-12-20T22:08:19,338793+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:19.338] 自动停机 - 步骤6: 关闭电磁阀4
+2025-12-20T22:08:20,115804+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:20.115] 自动停机 - 步骤7: 关闭闸板阀4和5
+2025-12-20T22:08:20,243584+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀1 = false (地址: %Q8.1)
+2025-12-20T22:08:20,244374+0800 DEBUG (vacuum_system_device.cpp:3345) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀1 开到位=0, 关到位=1
+2025-12-20T22:08:20,245006+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀2 = false (地址: %Q8.2)
+2025-12-20T22:08:20,245931+0800 DEBUG (vacuum_system_device.cpp:3350) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀2 开到位=0, 关到位=1
+2025-12-20T22:08:20,245950+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:20.245] 自动停机 - 步骤8: 关闭放气阀1-2
+2025-12-20T22:08:20,376144+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:20.376] 自动停机完成
+2025-12-20T22:08:26,025969+0800 DEBUG (vacuum_system_device.cpp:1170) sys/vacuum/2 [DEBUG] ChamberVent: 调用，当前模式=自动
+2025-12-20T22:08:26,026014+0800 DEBUG (vacuum_system_device.cpp:1179) sys/vacuum/2 [DEBUG] ChamberVent: 状态已设置为 VENTING, 步骤=1
+2025-12-20T22:08:26,026024+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:26.026] 腔室放气启动
+2025-12-20T22:08:26,052447+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=1, 已耗时=0秒
+2025-12-20T22:08:26,052510+0800 DEBUG (vacuum_system_device.cpp:2859) sys/vacuum/2 [DEBUG] 放气步骤1: 检查闸板阀状态
+2025-12-20T22:08:26,052513+0800 DEBUG (vacuum_system_device.cpp:2878) sys/vacuum/2 [DEBUG] 放气步骤1: 所有闸板阀已关闭，开启放气阀2
+2025-12-20T22:08:26,053925+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀2 = true (地址: %Q8.2)
+2025-12-20T22:08:26,055103+0800 DEBUG (vacuum_system_device.cpp:3350) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀2 开到位=0, 关到位=1
+2025-12-20T22:08:26,056829+0800 DEBUG (vacuum_system_device.cpp:2884) sys/vacuum/2 [DEBUG] 放气步骤1: 已更新放气阀2状态 - 开=0, 关=1
+2025-12-20T22:08:26,056867+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:26.056] 腔室放气 - 开启放气阀2
+2025-12-20T22:08:26,184273+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=2, 已耗时=0秒
+2025-12-20T22:08:26,184343+0800 DEBUG (vacuum_system_device.cpp:2900) sys/vacuum/2 [DEBUG] 放气步骤2: 等待压力达到大气压 (当前: G1=71670.8, G2=71670.8 Pa)
+2025-12-20T22:08:26,308970+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=2, 已耗时=0秒
+2025-12-20T22:08:26,309032+0800 DEBUG (vacuum_system_device.cpp:2900) sys/vacuum/2 [DEBUG] 放气步骤2: 等待压力达到大气压 (当前: G1=76834.4, G2=76834.4 Pa)
+2025-12-20T22:08:26,432661+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=2, 已耗时=0秒
+2025-12-20T22:08:26,432717+0800 DEBUG (vacuum_system_device.cpp:2900) sys/vacuum/2 [DEBUG] 放气步骤2: 等待压力达到大气压 (当前: G1=81163.4, G2=81163.4 Pa)
+2025-12-20T22:08:26,432720+0800 DEBUG (vacuum_system_device.cpp:2904) sys/vacuum/2 [DEBUG] 放气步骤2: 压力已达标，关闭放气阀，流程完成
+2025-12-20T22:08:26,433373+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀2 = false (地址: %Q8.2)
+2025-12-20T22:08:26,434379+0800 DEBUG (vacuum_system_device.cpp:3350) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀2 开到位=0, 关到位=1
+2025-12-20T22:08:26,434402+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:26.434] 腔室放气完成
+2025-12-20T22:08:42,485950+0800 DEBUG (vacuum_system_device.cpp:1170) sys/vacuum/2 [DEBUG] ChamberVent: 调用，当前模式=自动
+2025-12-20T22:08:42,486012+0800 DEBUG (vacuum_system_device.cpp:1179) sys/vacuum/2 [DEBUG] ChamberVent: 状态已设置为 VENTING, 步骤=1
+2025-12-20T22:08:42,486024+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:42.486] 腔室放气启动
+2025-12-20T22:08:42,503072+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=1, 已耗时=0秒
+2025-12-20T22:08:42,503134+0800 DEBUG (vacuum_system_device.cpp:2859) sys/vacuum/2 [DEBUG] 放气步骤1: 检查闸板阀状态
+2025-12-20T22:08:42,503137+0800 DEBUG (vacuum_system_device.cpp:2878) sys/vacuum/2 [DEBUG] 放气步骤1: 所有闸板阀已关闭，开启放气阀2
+2025-12-20T22:08:42,504129+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀2 = true (地址: %Q8.2)
+2025-12-20T22:08:42,505338+0800 DEBUG (vacuum_system_device.cpp:3350) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀2 开到位=0, 关到位=1
+2025-12-20T22:08:42,507380+0800 DEBUG (vacuum_system_device.cpp:2884) sys/vacuum/2 [DEBUG] 放气步骤1: 已更新放气阀2状态 - 开=0, 关=1
+2025-12-20T22:08:42,507419+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:42.507] 腔室放气 - 开启放气阀2
+2025-12-20T22:08:42,630826+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=2, 已耗时=0秒
+2025-12-20T22:08:42,630913+0800 DEBUG (vacuum_system_device.cpp:2900) sys/vacuum/2 [DEBUG] 放气步骤2: 等待压力达到大气压 (当前: G1=98951.5, G2=98951.5 Pa)
+2025-12-20T22:08:42,630919+0800 DEBUG (vacuum_system_device.cpp:2904) sys/vacuum/2 [DEBUG] 放气步骤2: 压力已达标，关闭放气阀，流程完成
+2025-12-20T22:08:42,631644+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀2 = false (地址: %Q8.2)
+2025-12-20T22:08:42,633111+0800 DEBUG (vacuum_system_device.cpp:3350) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀2 开到位=0, 关到位=1
+2025-12-20T22:08:42,633153+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:42.633] 腔室放气完成
+2025-12-20T22:08:46,250142+0800 DEBUG (vacuum_system_device.cpp:1170) sys/vacuum/2 [DEBUG] ChamberVent: 调用，当前模式=自动
+2025-12-20T22:08:46,250196+0800 DEBUG (vacuum_system_device.cpp:1179) sys/vacuum/2 [DEBUG] ChamberVent: 状态已设置为 VENTING, 步骤=1
+2025-12-20T22:08:46,250209+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:46.250] 腔室放气启动
+2025-12-20T22:08:46,285429+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=1, 已耗时=0秒
+2025-12-20T22:08:46,285492+0800 DEBUG (vacuum_system_device.cpp:2859) sys/vacuum/2 [DEBUG] 放气步骤1: 检查闸板阀状态
+2025-12-20T22:08:46,285495+0800 DEBUG (vacuum_system_device.cpp:2878) sys/vacuum/2 [DEBUG] 放气步骤1: 所有闸板阀已关闭，开启放气阀2
+2025-12-20T22:08:46,286203+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀2 = true (地址: %Q8.2)
+2025-12-20T22:08:46,288577+0800 DEBUG (vacuum_system_device.cpp:3350) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀2 开到位=0, 关到位=1
+2025-12-20T22:08:46,289936+0800 DEBUG (vacuum_system_device.cpp:2884) sys/vacuum/2 [DEBUG] 放气步骤1: 已更新放气阀2状态 - 开=0, 关=1
+2025-12-20T22:08:46,289962+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:46.289] 腔室放气 - 开启放气阀2
+2025-12-20T22:08:46,423840+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=2, 已耗时=0秒
+2025-12-20T22:08:46,423900+0800 DEBUG (vacuum_system_device.cpp:2900) sys/vacuum/2 [DEBUG] 放气步骤2: 等待压力达到大气压 (当前: G1=99509.3, G2=99509.3 Pa)
+2025-12-20T22:08:46,423904+0800 DEBUG (vacuum_system_device.cpp:2904) sys/vacuum/2 [DEBUG] 放气步骤2: 压力已达标，关闭放气阀，流程完成
+2025-12-20T22:08:46,424542+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀2 = false (地址: %Q8.2)
+2025-12-20T22:08:46,425365+0800 DEBUG (vacuum_system_device.cpp:3350) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀2 开到位=0, 关到位=1
+2025-12-20T22:08:46,425386+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:46.425] 腔室放气完成
+2025-12-20T22:08:48,810452+0800 DEBUG (vacuum_system_device.cpp:1170) sys/vacuum/2 [DEBUG] ChamberVent: 调用，当前模式=自动
+2025-12-20T22:08:48,810507+0800 DEBUG (vacuum_system_device.cpp:1179) sys/vacuum/2 [DEBUG] ChamberVent: 状态已设置为 VENTING, 步骤=1
+2025-12-20T22:08:48,810518+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:48.810] 腔室放气启动
+2025-12-20T22:08:48,842985+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=1, 已耗时=0秒
+2025-12-20T22:08:48,843049+0800 DEBUG (vacuum_system_device.cpp:2859) sys/vacuum/2 [DEBUG] 放气步骤1: 检查闸板阀状态
+2025-12-20T22:08:48,843052+0800 DEBUG (vacuum_system_device.cpp:2878) sys/vacuum/2 [DEBUG] 放气步骤1: 所有闸板阀已关闭，开启放气阀2
+2025-12-20T22:08:48,843790+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀2 = true (地址: %Q8.2)
+2025-12-20T22:08:48,845203+0800 DEBUG (vacuum_system_device.cpp:3350) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀2 开到位=0, 关到位=1
+2025-12-20T22:08:48,846422+0800 DEBUG (vacuum_system_device.cpp:2884) sys/vacuum/2 [DEBUG] 放气步骤1: 已更新放气阀2状态 - 开=0, 关=1
+2025-12-20T22:08:48,846459+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:48.846] 腔室放气 - 开启放气阀2
+2025-12-20T22:08:48,968896+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=2, 已耗时=0秒
+2025-12-20T22:08:48,968971+0800 DEBUG (vacuum_system_device.cpp:2900) sys/vacuum/2 [DEBUG] 放气步骤2: 等待压力达到大气压 (当前: G1=99789.4, G2=99789.4 Pa)
+2025-12-20T22:08:48,968975+0800 DEBUG (vacuum_system_device.cpp:2904) sys/vacuum/2 [DEBUG] 放气步骤2: 压力已达标，关闭放气阀，流程完成
+2025-12-20T22:08:48,969707+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀2 = false (地址: %Q8.2)
+2025-12-20T22:08:48,970393+0800 DEBUG (vacuum_system_device.cpp:3350) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀2 开到位=0, 关到位=1
+2025-12-20T22:08:48,970414+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:48.970] 腔室放气完成
+2025-12-20T22:08:52,320372+0800 DEBUG (vacuum_system_device.cpp:1170) sys/vacuum/2 [DEBUG] ChamberVent: 调用，当前模式=自动
+2025-12-20T22:08:52,320423+0800 DEBUG (vacuum_system_device.cpp:1179) sys/vacuum/2 [DEBUG] ChamberVent: 状态已设置为 VENTING, 步骤=1
+2025-12-20T22:08:52,320433+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:52.320] 腔室放气启动
+2025-12-20T22:08:52,343327+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=1, 已耗时=0秒
+2025-12-20T22:08:52,343386+0800 DEBUG (vacuum_system_device.cpp:2859) sys/vacuum/2 [DEBUG] 放气步骤1: 检查闸板阀状态
+2025-12-20T22:08:52,343389+0800 DEBUG (vacuum_system_device.cpp:2878) sys/vacuum/2 [DEBUG] 放气步骤1: 所有闸板阀已关闭，开启放气阀2
+2025-12-20T22:08:52,346471+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀2 = true (地址: %Q8.2)
+2025-12-20T22:08:52,348035+0800 DEBUG (vacuum_system_device.cpp:3350) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀2 开到位=0, 关到位=1
+2025-12-20T22:08:52,350002+0800 DEBUG (vacuum_system_device.cpp:2884) sys/vacuum/2 [DEBUG] 放气步骤1: 已更新放气阀2状态 - 开=0, 关=1
+2025-12-20T22:08:52,350042+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:52.350] 腔室放气 - 开启放气阀2
+2025-12-20T22:08:52,484734+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=2, 已耗时=0秒
+2025-12-20T22:08:52,484799+0800 DEBUG (vacuum_system_device.cpp:2900) sys/vacuum/2 [DEBUG] 放气步骤2: 等待压力达到大气压 (当前: G1=99859.6, G2=99859.6 Pa)
+2025-12-20T22:08:52,484802+0800 DEBUG (vacuum_system_device.cpp:2904) sys/vacuum/2 [DEBUG] 放气步骤2: 压力已达标，关闭放气阀，流程完成
+2025-12-20T22:08:52,485575+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀2 = false (地址: %Q8.2)
+2025-12-20T22:08:52,487105+0800 DEBUG (vacuum_system_device.cpp:3350) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀2 开到位=0, 关到位=1
+2025-12-20T22:08:52,487129+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:08:52.487] 腔室放气完成
+2025-12-20T22:09:00,748716+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:00.748] 切换至手动模式
+2025-12-20T22:09:01,808925+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:01.808] 电磁阀4开启
+2025-12-20T22:09:03,714557+0800 DEBUG (vacuum_system_device.cpp:1296) sys/vacuum/2 [DEBUG] SetScrewPumpPower: 调用，参数=true, 当前模式=手动
+2025-12-20T22:09:03,714642+0800 DEBUG (vacuum_system_device.cpp:1319) sys/vacuum/2 [DEBUG] SetScrewPumpPower: 正常模式，写入PLC
+2025-12-20T22:09:03,760595+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:03.760] 螺杆泵上电
+2025-12-20T22:09:03,867136+0800 DEBUG (vacuum_system_device.cpp:656) sys/vacuum/2 [DEBUG] 螺杆泵状态变化: 停止 -> 运行
+2025-12-20T22:09:12,109131+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:12.109] 切换至自动模式
+2025-12-20T22:09:13,607473+0800 DEBUG (vacuum_system_device.cpp:1061) sys/vacuum/2 [DEBUG] OneKeyVacuumStart: 调用，当前模式=自动, 当前状态=0
+2025-12-20T22:09:13,623857+0800 DEBUG (vacuum_system_device.cpp:1100) sys/vacuum/2 [DEBUG] OneKeyVacuumStart: 判断流程类型 - 当前真空度G2=100000Pa, 判断条件: 100000 >= 3000Pa, 结果=非真空, 起始步骤=1
+2025-12-20T22:09:13,623922+0800 DEBUG (vacuum_system_device.cpp:1111) sys/vacuum/2 [DEBUG] OneKeyVacuumStart: 启动成功，状态=PUMPING, 流程类型=非真空状态, 当前真空度=100000Pa, 步骤=1, 流程类型已保存=非真空
+2025-12-20T22:09:13,623935+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:13.623] 一键抽真空启动 - 非真空状态流程
+2025-12-20T22:09:13,743800+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=1, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:13,743852+0800 DEBUG (vacuum_system_device.cpp:2231) sys/vacuum/2 [DEBUG] 自动抽真空步骤1: 开启电磁阀4
+2025-12-20T22:09:13,744309+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:13.744] 自动抽真空 - 步骤1: 开启电磁阀4
+2025-12-20T22:09:13,874172+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=2, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:13,874231+0800 DEBUG (vacuum_system_device.cpp:2239) sys/vacuum/2 [DEBUG] 自动抽真空步骤2: 开启电磁阀1、2、3
+2025-12-20T22:09:13,876266+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:13.876] 自动抽真空 - 步骤2: 开启电磁阀1、2、3
+2025-12-20T22:09:14,002118+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=3, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:14,002165+0800 DEBUG (vacuum_system_device.cpp:2250) sys/vacuum/2 [DEBUG] 自动抽真空步骤3: 等待电磁阀1、2、3全部开到位 (已等待=0秒, EMV1=关, EMV2=关, EMV3=关)
+2025-12-20T22:09:14,124124+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=3, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:14,124173+0800 DEBUG (vacuum_system_device.cpp:2250) sys/vacuum/2 [DEBUG] 自动抽真空步骤3: 等待电磁阀1、2、3全部开到位 (已等待=0秒, EMV1=关, EMV2=关, EMV3=关)
+2025-12-20T22:09:14,247139+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=3, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:14,247184+0800 DEBUG (vacuum_system_device.cpp:2250) sys/vacuum/2 [DEBUG] 自动抽真空步骤3: 等待电磁阀1、2、3全部开到位 (已等待=0秒, EMV1=关, EMV2=关, EMV3=关)
+2025-12-20T22:09:14,370989+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=3, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:14,371049+0800 DEBUG (vacuum_system_device.cpp:2250) sys/vacuum/2 [DEBUG] 自动抽真空步骤3: 等待电磁阀1、2、3全部开到位 (已等待=0秒, EMV1=关, EMV2=关, EMV3=关)
+2025-12-20T22:09:14,492081+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=3, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:14,492127+0800 DEBUG (vacuum_system_device.cpp:2250) sys/vacuum/2 [DEBUG] 自动抽真空步骤3: 等待电磁阀1、2、3全部开到位 (已等待=0秒, EMV1=关, EMV2=关, EMV3=关)
+2025-12-20T22:09:14,615841+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=3, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:14,615895+0800 DEBUG (vacuum_system_device.cpp:2250) sys/vacuum/2 [DEBUG] 自动抽真空步骤3: 等待电磁阀1、2、3全部开到位 (已等待=0秒, EMV1=开, EMV2=开, EMV3=开)
+2025-12-20T22:09:14,615897+0800 DEBUG (vacuum_system_device.cpp:2256) sys/vacuum/2 [DEBUG] 自动抽真空步骤3: 电磁阀1、2、3已全部开启，开启闸板阀1、2、3
+2025-12-20T22:09:14,618631+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:14.618] 自动抽真空 - 步骤3: 开启闸板阀1、2、3
+2025-12-20T22:09:14,740277+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:14,740323+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:09:14,861564+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:14,861616+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:09:14,986377+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:14,986434+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:09:15,111414+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:15,111473+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:09:15,236191+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:15,236254+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:09:15,368073+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:15,368118+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:09:15,491074+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:15,491124+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:09:15,612993+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:15,613042+0800 DEBUG (vacuum_system_device.cpp:2278) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 等待闸板阀1、2、3全部开到位 (已等待=0秒, GV1=关, GV2=关, GV3=关)
+2025-12-20T22:09:15,737240+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:15,860867+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:15,987439+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=4, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=100000Pa
+2025-12-20T22:09:15,987492+0800 DEBUG (vacuum_system_device.cpp:2284) sys/vacuum/2 [DEBUG] 自动抽真空步骤4: 闸板阀1、2、3已全部开启，启动螺杆泵
+2025-12-20T22:09:15,988762+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:15.988] 自动抽真空 - 步骤4: 启动螺杆泵
+2025-12-20T22:09:16,113456+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=5, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=89302.8Pa
+2025-12-20T22:09:16,113510+0800 DEBUG (vacuum_system_device.cpp:2304) sys/vacuum/2 [DEBUG] 自动抽真空步骤5: 等待螺杆泵达110Hz稳定 (已等待=0秒, 当前=110 Hz, 目标≥110 Hz, 进度=100%)
+2025-12-20T22:09:16,113514+0800 DEBUG (vacuum_system_device.cpp:2309) sys/vacuum/2 [DEBUG] 自动抽真空步骤5: 螺杆泵已达110Hz稳定 (耗时=0秒)，进入下一步
+2025-12-20T22:09:16,113524+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:16.113] 自动抽真空 - 步骤5: 螺杆泵已达110Hz稳定
+2025-12-20T22:09:16,238326+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=79693.9Pa
+2025-12-20T22:09:16,238384+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=79693.9 Pa, 目标<7000 Pa, 进度=-1038.48%)
+2025-12-20T22:09:16,362124+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=71168.9Pa
+2025-12-20T22:09:16,362171+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=71168.9 Pa, 目标<7000 Pa, 进度=-916.699%)
+2025-12-20T22:09:16,489245+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=63511.2Pa
+2025-12-20T22:09:16,489309+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=63511.2 Pa, 目标<7000 Pa, 进度=-807.303%)
+2025-12-20T22:09:16,610571+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=56717.3Pa
+2025-12-20T22:09:16,610623+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=56717.3 Pa, 目标<7000 Pa, 进度=-710.247%)
+2025-12-20T22:09:16,735088+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=50650.2Pa
+2025-12-20T22:09:16,735145+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=50650.2 Pa, 目标<7000 Pa, 进度=-623.574%)
+2025-12-20T22:09:16,858910+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=45168.5Pa
+2025-12-20T22:09:16,858970+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=45168.5 Pa, 目标<7000 Pa, 进度=-545.264%)
+2025-12-20T22:09:16,982008+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=40421.9Pa
+2025-12-20T22:09:16,982073+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=40421.9 Pa, 目标<7000 Pa, 进度=-477.455%)
+2025-12-20T22:09:17,106425+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=36123.2Pa
+2025-12-20T22:09:17,106479+0800 DEBUG (vacuum_system_device.cpp:2328) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 等待真空度达标 (已等待=0秒, 当前G3=36123.2 Pa, 目标<7000 Pa, 进度=-416.046%)
+2025-12-20T22:09:17,229099+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=32304.5Pa
+2025-12-20T22:09:17,357236+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=28889.4Pa
+2025-12-20T22:09:17,478632+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=25817.2Pa
+2025-12-20T22:09:17,609505+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=23087.9Pa
+2025-12-20T22:09:17,734507+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=20661.6Pa
+2025-12-20T22:09:17,857544+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=18503.4Pa
+2025-12-20T22:09:17,983412+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=16570.5Pa
+2025-12-20T22:09:18,107462+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=14850Pa
+2025-12-20T22:09:18,231639+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=13336.3Pa
+2025-12-20T22:09:18,357454+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=11985.2Pa
+2025-12-20T22:09:18,481318+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=10755.9Pa
+2025-12-20T22:09:18,600893+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=9673.08Pa
+2025-12-20T22:09:18,728667+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=8693.14Pa
+2025-12-20T22:09:18,851439+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=7828.96Pa
+2025-12-20T22:09:18,977621+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=7055.64Pa
+2025-12-20T22:09:19,110831+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=6, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=6390.07Pa
+2025-12-20T22:09:19,110930+0800 DEBUG (vacuum_system_device.cpp:2333) sys/vacuum/2 [DEBUG] 自动抽真空步骤6: 真空度达标 (G3=6390.07 Pa, 耗时=2秒)，启动罗茨泵
+2025-12-20T22:09:19,111807+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:19.111] 自动抽真空 - 步骤6: 启动罗茨泵
+2025-12-20T22:09:19,217059+0800 DEBUG (vacuum_system_device.cpp:660) sys/vacuum/2 [DEBUG] 罗茨泵状态变化: 停止 -> 运行
+2025-12-20T22:09:19,242893+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=5844.5Pa
+2025-12-20T22:09:19,242953+0800 DEBUG (vacuum_system_device.cpp:2355) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 等待真空度达标 (已等待=0秒, 当前: G1=5844.5 Pa, G2=5844.5 Pa, 目标<=45 Pa)
+2025-12-20T22:09:19,365476+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=5345.5Pa
+2025-12-20T22:09:19,365533+0800 DEBUG (vacuum_system_device.cpp:2355) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 等待真空度达标 (已等待=0秒, 当前: G1=5345.5 Pa, G2=5345.5 Pa, 目标<=45 Pa)
+2025-12-20T22:09:19,490996+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=4895.99Pa
+2025-12-20T22:09:19,491054+0800 DEBUG (vacuum_system_device.cpp:2355) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 等待真空度达标 (已等待=0秒, 当前: G1=4895.99 Pa, G2=4895.99 Pa, 目标<=45 Pa)
+2025-12-20T22:09:19,617226+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=4474.83Pa
+2025-12-20T22:09:19,617283+0800 DEBUG (vacuum_system_device.cpp:2355) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 等待真空度达标 (已等待=0秒, 当前: G1=4474.83 Pa, G2=4474.83 Pa, 目标<=45 Pa)
+2025-12-20T22:09:19,739080+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=4095.66Pa
+2025-12-20T22:09:19,739193+0800 DEBUG (vacuum_system_device.cpp:2355) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 等待真空度达标 (已等待=0秒, 当前: G1=4095.66 Pa, G2=4095.66 Pa, 目标<=45 Pa)
+2025-12-20T22:09:19,861763+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=3748.61Pa
+2025-12-20T22:09:19,861811+0800 DEBUG (vacuum_system_device.cpp:2355) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 等待真空度达标 (已等待=0秒, 当前: G1=3748.61 Pa, G2=3748.61 Pa, 目标<=45 Pa)
+2025-12-20T22:09:19,999766+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=3428.56Pa
+2025-12-20T22:09:19,999827+0800 DEBUG (vacuum_system_device.cpp:2355) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 等待真空度达标 (已等待=0秒, 当前: G1=3428.56 Pa, G2=3428.56 Pa, 目标<=45 Pa)
+2025-12-20T22:09:20,122163+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=3142.45Pa
+2025-12-20T22:09:20,243121+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=2876.17Pa
+2025-12-20T22:09:20,366102+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=2632.46Pa
+2025-12-20T22:09:20,486499+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=2407.71Pa
+2025-12-20T22:09:20,613467+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=2202.14Pa
+2025-12-20T22:09:20,738755+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=2015.54Pa
+2025-12-20T22:09:20,860451+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=1846.05Pa
+2025-12-20T22:09:20,981746+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=1689.62Pa
+2025-12-20T22:09:21,106784+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=1547.54Pa
+2025-12-20T22:09:21,230967+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=1418.4Pa
+2025-12-20T22:09:21,352634+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=1299.12Pa
+2025-12-20T22:09:21,476759+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=1189.04Pa
+2025-12-20T22:09:21,597881+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=1089.05Pa
+2025-12-20T22:09:21,728550+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=998.175Pa
+2025-12-20T22:09:21,851391+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=914.879Pa
+2025-12-20T22:09:21,975679+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=837.356Pa
+2025-12-20T22:09:22,098629+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=768.02Pa
+2025-12-20T22:09:22,218764+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=703.93Pa
+2025-12-20T22:09:22,341658+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=644.735Pa
+2025-12-20T22:09:22,461101+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=590.518Pa
+2025-12-20T22:09:22,589258+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=540.86Pa
+2025-12-20T22:09:22,714302+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=496.424Pa
+2025-12-20T22:09:22,836524+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=454.678Pa
+2025-12-20T22:09:22,960121+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=416.151Pa
+2025-12-20T22:09:23,085532+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=381.692Pa
+2025-12-20T22:09:23,209378+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=350.087Pa
+2025-12-20T22:09:23,334482+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=321.098Pa
+2025-12-20T22:09:23,457340+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=294.51Pa
+2025-12-20T22:09:23,581863+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=269.744Pa
+2025-12-20T22:09:23,707124+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=247.408Pa
+2025-12-20T22:09:23,830480+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=226.762Pa
+2025-12-20T22:09:23,955000+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=207.84Pa
+2025-12-20T22:09:24,079475+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=190.63Pa
+2025-12-20T22:09:24,204256+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=175.091Pa
+2025-12-20T22:09:24,326014+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=160.48Pa
+2025-12-20T22:09:24,449966+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=147.502Pa
+2025-12-20T22:09:24,601821+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=135.479Pa
+2025-12-20T22:09:24,752110+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=120.055Pa
+2025-12-20T22:09:24,874314+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=110.89Pa
+2025-12-20T22:09:24,996416+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=5秒, 流程类型=非真空, 当前真空度G2=101.851Pa
+2025-12-20T22:09:25,119277+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=93.7462Pa
+2025-12-20T22:09:25,243115+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=86.2863Pa
+2025-12-20T22:09:25,365414+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=79.3642Pa
+2025-12-20T22:09:25,487376+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=72.9974Pa
+2025-12-20T22:09:25,609487+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=67.2359Pa
+2025-12-20T22:09:25,731029+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=61.929Pa
+2025-12-20T22:09:25,855840+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=57.1213Pa
+2025-12-20T22:09:25,977134+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=52.6498Pa
+2025-12-20T22:09:26,098286+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=6秒, 流程类型=非真空, 当前真空度G2=48.5965Pa
+2025-12-20T22:09:26,221406+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=7, 已耗时=7秒, 流程类型=非真空, 当前真空度G2=44.9816Pa
+2025-12-20T22:09:26,221464+0800 DEBUG (vacuum_system_device.cpp:2361) sys/vacuum/2 [DEBUG] 自动抽真空步骤7: 真空度达标 (G1=44.9816 Pa, G2=44.9816 Pa, 耗时=7秒)，启动启用的分子泵
+2025-12-20T22:09:26,223935+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:26.223] 自动抽真空 - 步骤7: 启动分子泵1 2 3 (根据配置)
+2025-12-20T22:09:26,329534+0800 DEBUG (vacuum_system_device.cpp:664) sys/vacuum/2 [DEBUG] 分子泵1状态变化: 停止 -> 运行
+2025-12-20T22:09:26,329596+0800 DEBUG (vacuum_system_device.cpp:668) sys/vacuum/2 [DEBUG] 分子泵2状态变化: 停止 -> 运行
+2025-12-20T22:09:26,329599+0800 DEBUG (vacuum_system_device.cpp:672) sys/vacuum/2 [DEBUG] 分子泵3状态变化: 停止 -> 运行
+2025-12-20T22:09:26,330190+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 0 -> 994 RPM
+2025-12-20T22:09:26,330648+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 0 -> 994 RPM
+2025-12-20T22:09:26,331205+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 0 -> 994 RPM
+2025-12-20T22:09:26,351152+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=42.5525Pa
+2025-12-20T22:09:26,351206+0800 DEBUG (vacuum_system_device.cpp:2389) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 等待分子泵满转 (已等待=0秒, MP1=994 RPM (3%), MP2=994 RPM (3%), MP3=994 RPM (3%), 目标≥30000 RPM)
+2025-12-20T22:09:26,455313+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 994 -> 1997 RPM
+2025-12-20T22:09:26,456152+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 994 -> 1997 RPM
+2025-12-20T22:09:26,456686+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 994 -> 1997 RPM
+2025-12-20T22:09:26,475700+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=40.2546Pa
+2025-12-20T22:09:26,475748+0800 DEBUG (vacuum_system_device.cpp:2389) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 等待分子泵满转 (已等待=0秒, MP1=1997 RPM (6%), MP2=1997 RPM (6%), MP3=1997 RPM (6%), 目标≥30000 RPM)
+2025-12-20T22:09:26,580749+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 1997 -> 2982 RPM
+2025-12-20T22:09:26,581691+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 1997 -> 2982 RPM
+2025-12-20T22:09:26,582360+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 1997 -> 2982 RPM
+2025-12-20T22:09:26,606800+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=38.1076Pa
+2025-12-20T22:09:26,606861+0800 DEBUG (vacuum_system_device.cpp:2389) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 等待分子泵满转 (已等待=0秒, MP1=2982 RPM (9%), MP2=2982 RPM (9%), MP3=2982 RPM (9%), 目标≥30000 RPM)
+2025-12-20T22:09:26,711278+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 2982 -> 3967 RPM
+2025-12-20T22:09:26,712488+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 2982 -> 3967 RPM
+2025-12-20T22:09:26,712921+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 2982 -> 3967 RPM
+2025-12-20T22:09:26,737778+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=36.0751Pa
+2025-12-20T22:09:26,737838+0800 DEBUG (vacuum_system_device.cpp:2389) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 等待分子泵满转 (已等待=0秒, MP1=3967 RPM (13%), MP2=3967 RPM (13%), MP3=3967 RPM (13%), 目标≥30000 RPM)
+2025-12-20T22:09:26,841641+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 3967 -> 4947 RPM
+2025-12-20T22:09:26,842330+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 3967 -> 4947 RPM
+2025-12-20T22:09:26,843071+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 3967 -> 4947 RPM
+2025-12-20T22:09:26,864251+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=34.1509Pa
+2025-12-20T22:09:26,864305+0800 DEBUG (vacuum_system_device.cpp:2389) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 等待分子泵满转 (已等待=0秒, MP1=4947 RPM (16%), MP2=4947 RPM (16%), MP3=4947 RPM (16%), 目标≥30000 RPM)
+2025-12-20T22:09:26,968819+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 4947 -> 5954 RPM
+2025-12-20T22:09:26,969453+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 4947 -> 5954 RPM
+2025-12-20T22:09:26,970050+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 4947 -> 5954 RPM
+2025-12-20T22:09:26,988207+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=32.3067Pa
+2025-12-20T22:09:26,988269+0800 DEBUG (vacuum_system_device.cpp:2389) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 等待分子泵满转 (已等待=0秒, MP1=5954 RPM (19%), MP2=5954 RPM (19%), MP3=5954 RPM (19%), 目标≥30000 RPM)
+2025-12-20T22:09:27,092341+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 5954 -> 6939 RPM
+2025-12-20T22:09:27,092999+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 5954 -> 6939 RPM
+2025-12-20T22:09:27,093733+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 5954 -> 6939 RPM
+2025-12-20T22:09:27,113348+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=30.5836Pa
+2025-12-20T22:09:27,113404+0800 DEBUG (vacuum_system_device.cpp:2389) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 等待分子泵满转 (已等待=0秒, MP1=6939 RPM (23%), MP2=6939 RPM (23%), MP3=6939 RPM (23%), 目标≥30000 RPM)
+2025-12-20T22:09:27,217965+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 6939 -> 7919 RPM
+2025-12-20T22:09:27,218627+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 6939 -> 7919 RPM
+2025-12-20T22:09:27,219145+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 6939 -> 7919 RPM
+2025-12-20T22:09:27,238895+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=28.9524Pa
+2025-12-20T22:09:27,343292+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 7919 -> 8914 RPM
+2025-12-20T22:09:27,343916+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 7919 -> 8914 RPM
+2025-12-20T22:09:27,344534+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 7919 -> 8914 RPM
+2025-12-20T22:09:27,361124+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=27.3889Pa
+2025-12-20T22:09:27,466023+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 8914 -> 9900 RPM
+2025-12-20T22:09:27,466920+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 8914 -> 9900 RPM
+2025-12-20T22:09:27,467546+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 8914 -> 9900 RPM
+2025-12-20T22:09:27,483180+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=25.9281Pa
+2025-12-20T22:09:27,588580+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 9900 -> 10892 RPM
+2025-12-20T22:09:27,589017+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 9900 -> 10892 RPM
+2025-12-20T22:09:27,589398+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 9900 -> 10892 RPM
+2025-12-20T22:09:27,605154+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=24.5451Pa
+2025-12-20T22:09:27,710491+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 10892 -> 11899 RPM
+2025-12-20T22:09:27,711263+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 10892 -> 11899 RPM
+2025-12-20T22:09:27,711619+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 10892 -> 11899 RPM
+2025-12-20T22:09:27,736021+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=23.2034Pa
+2025-12-20T22:09:27,840515+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 11899 -> 12875 RPM
+2025-12-20T22:09:27,841887+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 11899 -> 12875 RPM
+2025-12-20T22:09:27,842914+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 11899 -> 12875 RPM
+2025-12-20T22:09:27,861942+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=21.9812Pa
+2025-12-20T22:09:27,967725+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 12875 -> 13858 RPM
+2025-12-20T22:09:27,968364+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 12875 -> 13858 RPM
+2025-12-20T22:09:27,969174+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 12875 -> 13858 RPM
+2025-12-20T22:09:27,991220+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=20.8088Pa
+2025-12-20T22:09:28,095473+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 13858 -> 14729 RPM
+2025-12-20T22:09:28,099400+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 13858 -> 15152 RPM
+2025-12-20T22:09:28,100155+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 13858 -> 15152 RPM
+2025-12-20T22:09:28,122260+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=19.3695Pa
+2025-12-20T22:09:28,226305+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 14729 -> 16112 RPM
+2025-12-20T22:09:28,226918+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 15152 -> 16112 RPM
+2025-12-20T22:09:28,227379+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 15152 -> 16112 RPM
+2025-12-20T22:09:28,243812+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=18.3622Pa
+2025-12-20T22:09:28,348385+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 16112 -> 17090 RPM
+2025-12-20T22:09:28,348870+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 16112 -> 17090 RPM
+2025-12-20T22:09:28,349444+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 16112 -> 17090 RPM
+2025-12-20T22:09:28,363700+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=17.3828Pa
+2025-12-20T22:09:28,470254+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 17090 -> 18087 RPM
+2025-12-20T22:09:28,470995+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 17090 -> 18087 RPM
+2025-12-20T22:09:28,471394+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 17090 -> 18087 RPM
+2025-12-20T22:09:28,490211+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=16.4557Pa
+2025-12-20T22:09:28,594698+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 18087 -> 19086 RPM
+2025-12-20T22:09:28,595258+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 18087 -> 19086 RPM
+2025-12-20T22:09:28,595679+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 18087 -> 19086 RPM
+2025-12-20T22:09:28,614643+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=15.567Pa
+2025-12-20T22:09:28,719060+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 19086 -> 20083 RPM
+2025-12-20T22:09:28,720298+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 19086 -> 20083 RPM
+2025-12-20T22:09:28,720955+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 19086 -> 20083 RPM
+2025-12-20T22:09:28,741916+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=14.7264Pa
+2025-12-20T22:09:28,846152+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 20083 -> 21083 RPM
+2025-12-20T22:09:28,846637+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 20083 -> 21083 RPM
+2025-12-20T22:09:28,847162+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 20083 -> 21083 RPM
+2025-12-20T22:09:28,864500+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=13.9311Pa
+2025-12-20T22:09:28,968933+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 21083 -> 22080 RPM
+2025-12-20T22:09:28,969631+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 21083 -> 22080 RPM
+2025-12-20T22:09:28,970044+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 21083 -> 22080 RPM
+2025-12-20T22:09:28,990784+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=13.1788Pa
+2025-12-20T22:09:29,094304+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 22080 -> 23078 RPM
+2025-12-20T22:09:29,094866+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 22080 -> 23078 RPM
+2025-12-20T22:09:29,095270+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 22080 -> 23078 RPM
+2025-12-20T22:09:29,115322+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=12.4671Pa
+2025-12-20T22:09:29,220452+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 23078 -> 24080 RPM
+2025-12-20T22:09:29,221218+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 23078 -> 24080 RPM
+2025-12-20T22:09:29,221888+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 23078 -> 24080 RPM
+2025-12-20T22:09:29,247070+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=11.7856Pa
+2025-12-20T22:09:29,351843+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 24080 -> 25075 RPM
+2025-12-20T22:09:29,352543+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 24080 -> 25075 RPM
+2025-12-20T22:09:29,353351+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 24080 -> 25075 RPM
+2025-12-20T22:09:29,373729+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=11.157Pa
+2025-12-20T22:09:29,478375+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 25075 -> 26054 RPM
+2025-12-20T22:09:29,479384+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 25075 -> 26054 RPM
+2025-12-20T22:09:29,480223+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 25075 -> 26054 RPM
+2025-12-20T22:09:29,499638+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=10.5619Pa
+2025-12-20T22:09:29,604567+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 26054 -> 27051 RPM
+2025-12-20T22:09:29,605484+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 26054 -> 27051 RPM
+2025-12-20T22:09:29,606353+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 26054 -> 27051 RPM
+2025-12-20T22:09:29,627354+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=9.99157Pa
+2025-12-20T22:09:29,731842+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 27051 -> 28042 RPM
+2025-12-20T22:09:29,732602+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 27051 -> 28042 RPM
+2025-12-20T22:09:29,733314+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 27051 -> 28042 RPM
+2025-12-20T22:09:29,751346+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=9.45865Pa
+2025-12-20T22:09:29,855246+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 28042 -> 29027 RPM
+2025-12-20T22:09:29,855874+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 28042 -> 29027 RPM
+2025-12-20T22:09:29,856965+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 28042 -> 29027 RPM
+2025-12-20T22:09:29,877053+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=8.95416Pa
+2025-12-20T22:09:29,981455+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 29027 -> 30024 RPM
+2025-12-20T22:09:29,982373+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 29027 -> 30024 RPM
+2025-12-20T22:09:29,982750+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 29027 -> 30024 RPM
+2025-12-20T22:09:30,000385+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=8, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=8.47062Pa
+2025-12-20T22:09:30,000428+0800 DEBUG (vacuum_system_device.cpp:2408) sys/vacuum/2 [DEBUG] 自动抽真空步骤8: 启用的分子泵已满转 (MP1=30024, MP2=30024, MP3=30024 RPM, 耗时=3秒)，等待1分钟后关闭罗茨泵
+2025-12-20T22:09:30,000440+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:30.000] 自动抽真空 - 步骤8: 启用的分子泵已满转，等待1分钟后关闭罗茨泵
+2025-12-20T22:09:30,104798+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 30024 -> 31018 RPM
+2025-12-20T22:09:30,105620+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 30024 -> 31018 RPM
+2025-12-20T22:09:30,106288+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 30024 -> 31018 RPM
+2025-12-20T22:09:30,126952+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=8.01883Pa
+2025-12-20T22:09:30,127002+0800 DEBUG (vacuum_system_device.cpp:2421) sys/vacuum/2 [DEBUG] 自动抽真空步骤9: 等待1分钟后关闭罗茨泵 (已等待=0秒, 还需等待=60秒)
+2025-12-20T22:09:30,232257+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 31018 -> 32000 RPM
+2025-12-20T22:09:30,232754+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 31018 -> 32000 RPM
+2025-12-20T22:09:30,233356+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 31018 -> 32000 RPM
+2025-12-20T22:09:30,251419+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=7.59113Pa
+2025-12-20T22:09:30,251466+0800 DEBUG (vacuum_system_device.cpp:2421) sys/vacuum/2 [DEBUG] 自动抽真空步骤9: 等待1分钟后关闭罗茨泵 (已等待=0秒, 还需等待=60秒)
+2025-12-20T22:09:30,356361+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 32000 -> 32996 RPM
+2025-12-20T22:09:30,357056+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 32000 -> 32996 RPM
+2025-12-20T22:09:30,357692+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 32000 -> 32996 RPM
+2025-12-20T22:09:30,373849+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=7.1812Pa
+2025-12-20T22:09:30,373906+0800 DEBUG (vacuum_system_device.cpp:2421) sys/vacuum/2 [DEBUG] 自动抽真空步骤9: 等待1分钟后关闭罗茨泵 (已等待=0秒, 还需等待=60秒)
+2025-12-20T22:09:30,477872+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 32996 -> 33990 RPM
+2025-12-20T22:09:30,478410+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 32996 -> 33990 RPM
+2025-12-20T22:09:30,479263+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 32996 -> 33990 RPM
+2025-12-20T22:09:30,498689+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=6.7934Pa
+2025-12-20T22:09:30,498749+0800 DEBUG (vacuum_system_device.cpp:2421) sys/vacuum/2 [DEBUG] 自动抽真空步骤9: 等待1分钟后关闭罗茨泵 (已等待=0秒, 还需等待=60秒)
+2025-12-20T22:09:30,603362+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 33990 -> 34969 RPM
+2025-12-20T22:09:30,603903+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 33990 -> 34969 RPM
+2025-12-20T22:09:30,604433+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 33990 -> 34969 RPM
+2025-12-20T22:09:30,622854+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=6.43558Pa
+2025-12-20T22:09:30,622908+0800 DEBUG (vacuum_system_device.cpp:2421) sys/vacuum/2 [DEBUG] 自动抽真空步骤9: 等待1分钟后关闭罗茨泵 (已等待=0秒, 还需等待=60秒)
+2025-12-20T22:09:30,727007+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 34969 -> 35985 RPM
+2025-12-20T22:09:30,727581+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 34969 -> 35985 RPM
+2025-12-20T22:09:30,728114+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 34969 -> 35985 RPM
+2025-12-20T22:09:30,746471+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=6.08377Pa
+2025-12-20T22:09:30,746502+0800 DEBUG (vacuum_system_device.cpp:2421) sys/vacuum/2 [DEBUG] 自动抽真空步骤9: 等待1分钟后关闭罗茨泵 (已等待=0秒, 还需等待=60秒)
+2025-12-20T22:09:30,851774+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 35985 -> 36986 RPM
+2025-12-20T22:09:30,852495+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 35985 -> 36986 RPM
+2025-12-20T22:09:30,853042+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 35985 -> 36986 RPM
+2025-12-20T22:09:30,871724+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=5.75524Pa
+2025-12-20T22:09:30,871781+0800 DEBUG (vacuum_system_device.cpp:2421) sys/vacuum/2 [DEBUG] 自动抽真空步骤9: 等待1分钟后关闭罗茨泵 (已等待=0秒, 还需等待=60秒)
+2025-12-20T22:09:30,976935+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 36986 -> 37984 RPM
+2025-12-20T22:09:30,977758+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 36986 -> 37984 RPM
+2025-12-20T22:09:30,978313+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 36986 -> 37984 RPM
+2025-12-20T22:09:30,993452+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=0秒, 流程类型=非真空, 当前真空度G2=5.44445Pa
+2025-12-20T22:09:30,993491+0800 DEBUG (vacuum_system_device.cpp:2421) sys/vacuum/2 [DEBUG] 自动抽真空步骤9: 等待1分钟后关闭罗茨泵 (已等待=0秒, 还需等待=60秒)
+2025-12-20T22:09:31,098722+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 37984 -> 38977 RPM
+2025-12-20T22:09:31,099662+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 37984 -> 38977 RPM
+2025-12-20T22:09:31,100842+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 37984 -> 38977 RPM
+2025-12-20T22:09:31,120519+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=5.15044Pa
+2025-12-20T22:09:31,224667+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 38977 -> 39949 RPM
+2025-12-20T22:09:31,225477+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 38977 -> 39949 RPM
+2025-12-20T22:09:31,226377+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 38977 -> 39949 RPM
+2025-12-20T22:09:31,241926+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=4.87916Pa
+2025-12-20T22:09:31,345173+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 39949 -> 40933 RPM
+2025-12-20T22:09:31,345708+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 39949 -> 40933 RPM
+2025-12-20T22:09:31,346691+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 39949 -> 40933 RPM
+2025-12-20T22:09:31,363094+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=4.62217Pa
+2025-12-20T22:09:31,468698+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 40933 -> 41932 RPM
+2025-12-20T22:09:31,469479+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 40933 -> 41932 RPM
+2025-12-20T22:09:31,470286+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 40933 -> 41932 RPM
+2025-12-20T22:09:31,488165+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=4.37256Pa
+2025-12-20T22:09:31,592684+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 41932 -> 42923 RPM
+2025-12-20T22:09:31,593334+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 41932 -> 42923 RPM
+2025-12-20T22:09:31,594100+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 41932 -> 42923 RPM
+2025-12-20T22:09:31,611194+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=4.13644Pa
+2025-12-20T22:09:31,715965+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 42923 -> 43902 RPM
+2025-12-20T22:09:31,716770+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 42923 -> 43902 RPM
+2025-12-20T22:09:31,717944+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 42923 -> 43902 RPM
+2025-12-20T22:09:31,738269+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=3.91857Pa
+2025-12-20T22:09:31,842525+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 43902 -> 44911 RPM
+2025-12-20T22:09:31,843103+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 43902 -> 44911 RPM
+2025-12-20T22:09:31,843934+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 43902 -> 44911 RPM
+2025-12-20T22:09:31,859999+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=3.70435Pa
+2025-12-20T22:09:31,964328+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 44911 -> 45898 RPM
+2025-12-20T22:09:31,965284+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 44911 -> 45898 RPM
+2025-12-20T22:09:31,965669+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 44911 -> 45898 RPM
+2025-12-20T22:09:31,983788+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=1秒, 流程类型=非真空, 当前真空度G2=3.50678Pa
+2025-12-20T22:09:32,088048+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 45898 -> 46919 RPM
+2025-12-20T22:09:32,088809+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 45898 -> 46919 RPM
+2025-12-20T22:09:32,089249+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 45898 -> 46919 RPM
+2025-12-20T22:09:32,106379+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=3.31274Pa
+2025-12-20T22:09:32,210085+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 46919 -> 47919 RPM
+2025-12-20T22:09:32,211038+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 46919 -> 47919 RPM
+2025-12-20T22:09:32,211404+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 46919 -> 47919 RPM
+2025-12-20T22:09:32,226342+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=3.13385Pa
+2025-12-20T22:09:32,331486+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 47919 -> 48906 RPM
+2025-12-20T22:09:32,332096+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 47919 -> 48906 RPM
+2025-12-20T22:09:32,332655+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 47919 -> 48906 RPM
+2025-12-20T22:09:32,350431+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=2.9667Pa
+2025-12-20T22:09:32,454427+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 48906 -> 49887 RPM
+2025-12-20T22:09:32,455106+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 48906 -> 49887 RPM
+2025-12-20T22:09:32,455912+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 48906 -> 49887 RPM
+2025-12-20T22:09:32,472928+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=2.81044Pa
+2025-12-20T22:09:32,576900+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 49887 -> 50880 RPM
+2025-12-20T22:09:32,577582+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 49887 -> 50880 RPM
+2025-12-20T22:09:32,578451+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 49887 -> 50880 RPM
+2025-12-20T22:09:32,599828+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=2.65867Pa
+2025-12-20T22:09:32,704098+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 50880 -> 51868 RPM
+2025-12-20T22:09:32,704781+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 50880 -> 51868 RPM
+2025-12-20T22:09:32,705446+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 50880 -> 51868 RPM
+2025-12-20T22:09:32,724260+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=2.51687Pa
+2025-12-20T22:09:32,828488+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 51868 -> 52872 RPM
+2025-12-20T22:09:32,829348+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 51868 -> 52872 RPM
+2025-12-20T22:09:32,830777+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 51868 -> 52872 RPM
+2025-12-20T22:09:32,851339+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=2.38095Pa
+2025-12-20T22:09:32,955218+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 52872 -> 53874 RPM
+2025-12-20T22:09:32,955980+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 52872 -> 53874 RPM
+2025-12-20T22:09:32,956938+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 52872 -> 53874 RPM
+2025-12-20T22:09:32,980224+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=2秒, 流程类型=非真空, 当前真空度G2=2.2508Pa
+2025-12-20T22:09:33,086502+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 53874 -> 54865 RPM
+2025-12-20T22:09:33,087311+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 53874 -> 54865 RPM
+2025-12-20T22:09:33,088006+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 53874 -> 54865 RPM
+2025-12-20T22:09:33,116927+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=2.13075Pa
+2025-12-20T22:09:33,222218+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 54865 -> 55857 RPM
+2025-12-20T22:09:33,222721+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 54865 -> 55857 RPM
+2025-12-20T22:09:33,223213+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 54865 -> 55857 RPM
+2025-12-20T22:09:33,247127+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=2.0171Pa
+2025-12-20T22:09:33,351133+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 55857 -> 56735 RPM
+2025-12-20T22:09:33,351830+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 55857 -> 56735 RPM
+2025-12-20T22:09:33,355499+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 55857 -> 57163 RPM
+2025-12-20T22:09:33,378391+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=1.87626Pa
+2025-12-20T22:09:33,482928+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 56735 -> 58096 RPM
+2025-12-20T22:09:33,484018+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 56735 -> 58096 RPM
+2025-12-20T22:09:33,484737+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 57163 -> 58096 RPM
+2025-12-20T22:09:33,505111+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=1.78119Pa
+2025-12-20T22:09:33,610720+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 58096 -> 59091 RPM
+2025-12-20T22:09:33,611467+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 58096 -> 59091 RPM
+2025-12-20T22:09:33,612185+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 58096 -> 59091 RPM
+2025-12-20T22:09:33,636966+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=1.685Pa
+2025-12-20T22:09:33,742182+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 59091 -> 60000 RPM
+2025-12-20T22:09:33,742932+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 59091 -> 60000 RPM
+2025-12-20T22:09:33,743572+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 59091 -> 60000 RPM
+2025-12-20T22:09:33,764665+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=1.59625Pa
+2025-12-20T22:09:33,889250+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=3秒, 流程类型=非真空, 当前真空度G2=1.51217Pa
+2025-12-20T22:09:34,010337+0800 DEBUG (vacuum_system_device.cpp:2221) sys/vacuum/2 [DEBUG] processAutoVacuumSequence: 步骤=9, 已耗时=4秒, 流程类型=非真空, 当前真空度G2=1.42951Pa
+2025-12-20T22:09:34,119679+0800 DEBUG (vacuum_system_device.cpp:1118) sys/vacuum/2 [DEBUG] OneKeyVacuumStop: 调用，当前模式=自动, 当前状态=1
+2025-12-20T22:09:34,119740+0800 DEBUG (vacuum_system_device.cpp:1165) sys/vacuum/2 [DEBUG] OneKeyVacuumStop: 停机流程已启动，流程类型标志已重置
+2025-12-20T22:09:34,119750+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:34.119] 一键停机启动
+2025-12-20T22:09:34,141049+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:34.140] 自动停机 - 步骤1: 停止分子泵1 2 3 (根据配置)
+2025-12-20T22:09:34,244685+0800 DEBUG (vacuum_system_device.cpp:664) sys/vacuum/2 [DEBUG] 分子泵1状态变化: 运行 -> 停止
+2025-12-20T22:09:34,244753+0800 DEBUG (vacuum_system_device.cpp:668) sys/vacuum/2 [DEBUG] 分子泵2状态变化: 运行 -> 停止
+2025-12-20T22:09:34,244756+0800 DEBUG (vacuum_system_device.cpp:672) sys/vacuum/2 [DEBUG] 分子泵3状态变化: 运行 -> 停止
+2025-12-20T22:09:34,245279+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 60000 -> 58493 RPM
+2025-12-20T22:09:34,246246+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 60000 -> 58493 RPM
+2025-12-20T22:09:34,246941+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 60000 -> 58493 RPM
+2025-12-20T22:09:34,381380+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 58493 -> 56534 RPM
+2025-12-20T22:09:34,381790+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 58493 -> 56534 RPM
+2025-12-20T22:09:34,382451+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 58493 -> 56534 RPM
+2025-12-20T22:09:34,505451+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 56534 -> 55104 RPM
+2025-12-20T22:09:34,505949+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 56534 -> 55104 RPM
+2025-12-20T22:09:34,506641+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 56534 -> 55104 RPM
+2025-12-20T22:09:34,629788+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 55104 -> 53612 RPM
+2025-12-20T22:09:34,630765+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 55104 -> 53612 RPM
+2025-12-20T22:09:34,631514+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 55104 -> 53612 RPM
+2025-12-20T22:09:34,757565+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 53612 -> 52136 RPM
+2025-12-20T22:09:34,758164+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 53612 -> 52136 RPM
+2025-12-20T22:09:34,759033+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 53612 -> 52136 RPM
+2025-12-20T22:09:34,883247+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 52136 -> 50661 RPM
+2025-12-20T22:09:34,884444+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 52136 -> 50661 RPM
+2025-12-20T22:09:34,884940+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 52136 -> 50661 RPM
+2025-12-20T22:09:35,006459+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 50661 -> 49158 RPM
+2025-12-20T22:09:35,006985+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 50661 -> 49158 RPM
+2025-12-20T22:09:35,007457+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 50661 -> 49158 RPM
+2025-12-20T22:09:35,129746+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 49158 -> 47667 RPM
+2025-12-20T22:09:35,130249+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 49158 -> 47667 RPM
+2025-12-20T22:09:35,130696+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 49158 -> 47667 RPM
+2025-12-20T22:09:35,252006+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 47667 -> 46181 RPM
+2025-12-20T22:09:35,253006+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 47667 -> 46181 RPM
+2025-12-20T22:09:35,253644+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 47667 -> 46181 RPM
+2025-12-20T22:09:35,374492+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 46181 -> 44711 RPM
+2025-12-20T22:09:35,375281+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 46181 -> 44711 RPM
+2025-12-20T22:09:35,375626+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 46181 -> 44711 RPM
+2025-12-20T22:09:35,497558+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 44711 -> 43222 RPM
+2025-12-20T22:09:35,497942+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 44711 -> 43222 RPM
+2025-12-20T22:09:35,498424+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 44711 -> 43222 RPM
+2025-12-20T22:09:35,620517+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 43222 -> 41717 RPM
+2025-12-20T22:09:35,621570+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 43222 -> 41717 RPM
+2025-12-20T22:09:35,622213+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 43222 -> 41717 RPM
+2025-12-20T22:09:35,750807+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 41717 -> 40223 RPM
+2025-12-20T22:09:35,751641+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 41717 -> 40223 RPM
+2025-12-20T22:09:35,752097+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 41717 -> 40223 RPM
+2025-12-20T22:09:35,874980+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 40223 -> 38732 RPM
+2025-12-20T22:09:35,875839+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 40223 -> 38732 RPM
+2025-12-20T22:09:35,876516+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 40223 -> 38732 RPM
+2025-12-20T22:09:35,998731+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 38732 -> 37242 RPM
+2025-12-20T22:09:35,999920+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 38732 -> 37242 RPM
+2025-12-20T22:09:36,000525+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 38732 -> 37242 RPM
+2025-12-20T22:09:36,133911+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 37242 -> 35755 RPM
+2025-12-20T22:09:36,136233+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 37242 -> 35755 RPM
+2025-12-20T22:09:36,137694+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 37242 -> 35755 RPM
+2025-12-20T22:09:36,284142+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 35755 -> 33754 RPM
+2025-12-20T22:09:36,285200+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 35755 -> 33754 RPM
+2025-12-20T22:09:36,286062+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 35755 -> 33754 RPM
+2025-12-20T22:09:36,423791+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 33754 -> 32217 RPM
+2025-12-20T22:09:36,424793+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 33754 -> 32217 RPM
+2025-12-20T22:09:36,426055+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 33754 -> 32217 RPM
+2025-12-20T22:09:36,554540+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 32217 -> 30734 RPM
+2025-12-20T22:09:36,555063+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 32217 -> 30734 RPM
+2025-12-20T22:09:36,555487+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 32217 -> 30734 RPM
+2025-12-20T22:09:36,682941+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 30734 -> 29244 RPM
+2025-12-20T22:09:36,684195+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 30734 -> 29244 RPM
+2025-12-20T22:09:36,685067+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 30734 -> 29244 RPM
+2025-12-20T22:09:36,809782+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 29244 -> 27755 RPM
+2025-12-20T22:09:36,810651+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 29244 -> 27755 RPM
+2025-12-20T22:09:36,811003+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 29244 -> 27755 RPM
+2025-12-20T22:09:36,934665+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 27755 -> 26250 RPM
+2025-12-20T22:09:36,935906+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 27755 -> 26250 RPM
+2025-12-20T22:09:36,936578+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 27755 -> 26250 RPM
+2025-12-20T22:09:37,061914+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 26250 -> 24932 RPM
+2025-12-20T22:09:37,062617+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 26250 -> 24932 RPM
+2025-12-20T22:09:37,063398+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 26250 -> 24932 RPM
+2025-12-20T22:09:37,190757+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 24932 -> 22901 RPM
+2025-12-20T22:09:37,191533+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 24932 -> 22901 RPM
+2025-12-20T22:09:37,192420+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 24932 -> 22901 RPM
+2025-12-20T22:09:37,315663+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 22901 -> 21418 RPM
+2025-12-20T22:09:37,316599+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 22901 -> 21418 RPM
+2025-12-20T22:09:37,317332+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 22901 -> 21418 RPM
+2025-12-20T22:09:37,440404+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 21418 -> 19951 RPM
+2025-12-20T22:09:37,441153+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 21418 -> 19951 RPM
+2025-12-20T22:09:37,441722+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 21418 -> 19951 RPM
+2025-12-20T22:09:37,568003+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 19951 -> 18454 RPM
+2025-12-20T22:09:37,568710+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 19951 -> 18454 RPM
+2025-12-20T22:09:37,569137+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 19951 -> 18454 RPM
+2025-12-20T22:09:37,695463+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 18454 -> 16955 RPM
+2025-12-20T22:09:37,696118+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 18454 -> 16955 RPM
+2025-12-20T22:09:37,697252+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 18454 -> 16955 RPM
+2025-12-20T22:09:37,827899+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 16955 -> 15453 RPM
+2025-12-20T22:09:37,828452+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 16955 -> 15453 RPM
+2025-12-20T22:09:37,828921+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 16955 -> 15453 RPM
+2025-12-20T22:09:37,960031+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 15453 -> 13985 RPM
+2025-12-20T22:09:37,961076+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 15453 -> 13985 RPM
+2025-12-20T22:09:37,962079+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 15453 -> 13985 RPM
+2025-12-20T22:09:38,092510+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 13985 -> 12060 RPM
+2025-12-20T22:09:38,093164+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 13985 -> 12060 RPM
+2025-12-20T22:09:38,094051+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 13985 -> 12060 RPM
+2025-12-20T22:09:38,215087+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 12060 -> 10645 RPM
+2025-12-20T22:09:38,215808+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 12060 -> 10645 RPM
+2025-12-20T22:09:38,216396+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 12060 -> 10645 RPM
+2025-12-20T22:09:38,343304+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 10645 -> 9143 RPM
+2025-12-20T22:09:38,344170+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 10645 -> 9143 RPM
+2025-12-20T22:09:38,344574+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 10645 -> 9143 RPM
+2025-12-20T22:09:38,469117+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 9143 -> 7677 RPM
+2025-12-20T22:09:38,469660+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 9143 -> 7677 RPM
+2025-12-20T22:09:38,470354+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 9143 -> 7677 RPM
+2025-12-20T22:09:38,593779+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 7677 -> 6182 RPM
+2025-12-20T22:09:38,594470+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 7677 -> 6182 RPM
+2025-12-20T22:09:38,595267+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 7677 -> 6182 RPM
+2025-12-20T22:09:38,721746+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 6182 -> 4679 RPM
+2025-12-20T22:09:38,722615+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 6182 -> 4679 RPM
+2025-12-20T22:09:38,722949+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 6182 -> 4679 RPM
+2025-12-20T22:09:38,849014+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 4679 -> 3153 RPM
+2025-12-20T22:09:38,850436+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 4679 -> 3153 RPM
+2025-12-20T22:09:38,851959+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 4679 -> 3153 RPM
+2025-12-20T22:09:38,985031+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 3153 -> 1654 RPM
+2025-12-20T22:09:38,985670+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 3153 -> 1654 RPM
+2025-12-20T22:09:38,986108+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 3153 -> 1654 RPM
+2025-12-20T22:09:39,112666+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 1654 -> 173 RPM
+2025-12-20T22:09:39,113355+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 1654 -> 173 RPM
+2025-12-20T22:09:39,113705+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 1654 -> 173 RPM
+2025-12-20T22:09:39,249522+0800 DEBUG (vacuum_system_device.cpp:680) sys/vacuum/2 [DEBUG] 分子泵1转速变化: 173 -> 0 RPM
+2025-12-20T22:09:39,249916+0800 DEBUG (vacuum_system_device.cpp:686) sys/vacuum/2 [DEBUG] 分子泵2转速变化: 173 -> 0 RPM
+2025-12-20T22:09:39,250821+0800 DEBUG (vacuum_system_device.cpp:692) sys/vacuum/2 [DEBUG] 分子泵3转速变化: 173 -> 0 RPM
+2025-12-20T22:09:39,272799+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:39.272] 自动停机 - 步骤2: 关闭闸板阀1-3
+2025-12-20T22:09:40,639316+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:40.639] 自动停机 - 步骤3: 关闭电磁阀1-3
+2025-12-20T22:09:41,389059+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:41.389] 自动停机 - 步骤4: 停止罗茨泵
+2025-12-20T22:09:41,496442+0800 DEBUG (vacuum_system_device.cpp:660) sys/vacuum/2 [DEBUG] 罗茨泵状态变化: 运行 -> 停止
+2025-12-20T22:09:41,515810+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:41.515] 自动停机 - 步骤5: 停止螺杆泵
+2025-12-20T22:09:41,620046+0800 DEBUG (vacuum_system_device.cpp:656) sys/vacuum/2 [DEBUG] 螺杆泵状态变化: 运行 -> 停止
+2025-12-20T22:09:41,642148+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:41.642] 自动停机 - 步骤6: 关闭电磁阀4
+2025-12-20T22:09:42,390665+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:42.390] 自动停机 - 步骤7: 关闭闸板阀4和5
+2025-12-20T22:09:42,512663+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀1 = false (地址: %Q8.1)
+2025-12-20T22:09:42,513446+0800 DEBUG (vacuum_system_device.cpp:3345) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀1 开到位=0, 关到位=1
+2025-12-20T22:09:42,514041+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀2 = false (地址: %Q8.2)
+2025-12-20T22:09:42,515144+0800 DEBUG (vacuum_system_device.cpp:3350) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀2 开到位=0, 关到位=1
+2025-12-20T22:09:42,515167+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:42.515] 自动停机 - 步骤8: 关闭放气阀1-2
+2025-12-20T22:09:42,640733+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:42.640] 自动停机完成
+2025-12-20T22:09:43,892149+0800 DEBUG (vacuum_system_device.cpp:1170) sys/vacuum/2 [DEBUG] ChamberVent: 调用，当前模式=自动
+2025-12-20T22:09:43,892200+0800 DEBUG (vacuum_system_device.cpp:1179) sys/vacuum/2 [DEBUG] ChamberVent: 状态已设置为 VENTING, 步骤=1
+2025-12-20T22:09:43,892210+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:43.892] 腔室放气启动
+2025-12-20T22:09:44,015031+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=1, 已耗时=0秒
+2025-12-20T22:09:44,015092+0800 DEBUG (vacuum_system_device.cpp:2859) sys/vacuum/2 [DEBUG] 放气步骤1: 检查闸板阀状态
+2025-12-20T22:09:44,015096+0800 DEBUG (vacuum_system_device.cpp:2878) sys/vacuum/2 [DEBUG] 放气步骤1: 所有闸板阀已关闭，开启放气阀2
+2025-12-20T22:09:44,015591+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀2 = true (地址: %Q8.2)
+2025-12-20T22:09:44,016600+0800 DEBUG (vacuum_system_device.cpp:3350) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀2 开到位=0, 关到位=1
+2025-12-20T22:09:44,017875+0800 DEBUG (vacuum_system_device.cpp:2884) sys/vacuum/2 [DEBUG] 放气步骤1: 已更新放气阀2状态 - 开=0, 关=1
+2025-12-20T22:09:44,017899+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:44.017] 腔室放气 - 开启放气阀2
+2025-12-20T22:09:44,143395+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=2, 已耗时=0秒
+2025-12-20T22:09:44,143495+0800 DEBUG (vacuum_system_device.cpp:2900) sys/vacuum/2 [DEBUG] 放气步骤2: 等待压力达到大气压 (当前: G1=42489.8, G2=42489.8 Pa)
+2025-12-20T22:09:44,267790+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=2, 已耗时=0秒
+2025-12-20T22:09:44,267846+0800 DEBUG (vacuum_system_device.cpp:2900) sys/vacuum/2 [DEBUG] 放气步骤2: 等待压力达到大气压 (当前: G1=52720.1, G2=52720.1 Pa)
+2025-12-20T22:09:44,388716+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=2, 已耗时=0秒
+2025-12-20T22:09:44,388774+0800 DEBUG (vacuum_system_device.cpp:2900) sys/vacuum/2 [DEBUG] 放气步骤2: 等待压力达到大气压 (当前: G1=61318.5, G2=61318.5 Pa)
+2025-12-20T22:09:44,509841+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=2, 已耗时=0秒
+2025-12-20T22:09:44,509899+0800 DEBUG (vacuum_system_device.cpp:2900) sys/vacuum/2 [DEBUG] 放气步骤2: 等待压力达到大气压 (当前: G1=68422.7, G2=68422.7 Pa)
+2025-12-20T22:09:44,633095+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=2, 已耗时=0秒
+2025-12-20T22:09:44,633159+0800 DEBUG (vacuum_system_device.cpp:2900) sys/vacuum/2 [DEBUG] 放气步骤2: 等待压力达到大气压 (当前: G1=74233.8, G2=74233.8 Pa)
+2025-12-20T22:09:44,754128+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=2, 已耗时=0秒
+2025-12-20T22:09:44,754188+0800 DEBUG (vacuum_system_device.cpp:2900) sys/vacuum/2 [DEBUG] 放气步骤2: 等待压力达到大气压 (当前: G1=79024.7, G2=79024.7 Pa)
+2025-12-20T22:09:44,877952+0800 DEBUG (vacuum_system_device.cpp:2854) sys/vacuum/2 [DEBUG] processVentSequence: 步骤=2, 已耗时=0秒
+2025-12-20T22:09:44,878014+0800 DEBUG (vacuum_system_device.cpp:2900) sys/vacuum/2 [DEBUG] 放气步骤2: 等待压力达到大气压 (当前: G1=82892.6, G2=82892.6 Pa)
+2025-12-20T22:09:44,878017+0800 DEBUG (vacuum_system_device.cpp:2904) sys/vacuum/2 [DEBUG] 放气步骤2: 压力已达标，关闭放气阀，流程完成
+2025-12-20T22:09:44,878847+0800 DEBUG (vacuum_system_device.cpp:3336) sys/vacuum/2 [DEBUG] ctrlVentValve: 已发送PLC命令，放气阀2 = false (地址: %Q8.2)
+2025-12-20T22:09:44,879579+0800 DEBUG (vacuum_system_device.cpp:3350) sys/vacuum/2 [DEBUG] ctrlVentValve: 读取反馈 - 放气阀2 开到位=1, 关到位=0
+2025-12-20T22:09:44,879604+0800 INFO (vacuum_system_device.cpp:2920) sys/vacuum/2 [2025-12-20 22:09:44.879] 腔室放气完成
+[2025-12-20 22:12:09.432 (UTC+0800)] [33mwarn/channel[0m	Connection 21 | SecureChannel 11 | Receiving the response failed with StatusCode BadConnectionClosed
+[2025-12-20 22:12:09.432 (UTC+0800)] [32minfo/client[0m	Client Status: ChannelState: Closed, SessionState: Created, ConnectStatus: Good
+[OPC-UA] readBool FAILED: %I0.0 status=0x80ae0000
+2025-12-20T22:12:09,432856+0800 WARN (vacuum_system_device.cpp:389) sys/vacuum/2 PLC 连接断开（读取 %I0.0 失败时检测到）
+2025-12-20T22:12:09,533080+0800 DEBUG (vacuum_system_device.cpp:563) sys/vacuum/2 [DEBUG] pollPLCStatus: PLC 未连接，尝试重连 (距离上次尝试 280 秒)
+2025-12-20T22:12:09,533327+0800 DEBUG (vacuum_system_device.cpp:346) sys/vacuum/2 [DEBUG] connectPLC_locked: 尝试连接 PLC (127.0.0.1:4840)
+[OPC-UA] ========== OPC UA CONNECT ==========
+[OPC-UA] Connecting to: 127.0.0.1:4840
+[OPC-UA] Server URL: opc.tcp://127.0.0.1:4840

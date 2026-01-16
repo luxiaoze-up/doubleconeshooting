@@ -1,0 +1,18 @@
+Warning: Qt5 not available, using default configuration values.
+  Controller IP: 192.168.1.177
+  PLC IP: 192.168.1.177
+  Tango Host: 192.168.80.98:10000
+  ORB Timeouts: call=5000ms, connect=3000ms
+MotionControllerDeviceClass::device_factory() called with 1 device(s)
+  Creating device: sys/motion/2
+2026-01-16T15:51:09,952007+0800 INFO (motion_controller_device.cpp:100) sys/motion/2 MotionControllerDevice::init_device() sys/motion/2
+2026-01-16T15:51:09,955172+0800 INFO (motion_controller_device.cpp:192) sys/motion/2 [DEBUG] 运行模式: 真实模式 (从配置文件加载, SIM_MODE=false)
+2026-01-16T15:51:09,955194+0800 INFO (motion_controller_device.cpp:193) sys/motion/2 [DEBUG] 提示: 可通过 simSwitch 命令或GUI动态切换模拟模式
+2026-01-16T15:51:09,955280+0800 DEBUG (motion_controller_device.cpp:196) sys/motion/2 [SMC] smc_board_init(card_id=0, ip=192.168.1.12)
+2026-01-16T15:51:09,964575+0800 DEBUG (motion_controller_device.cpp:198) sys/motion/2 [SMC] smc_board_init() returned: 0
+2026-01-16T15:51:09,965133+0800 INFO (motion_controller_device.cpp:213) sys/motion/2 MotionControllerDevice::init_device() completed for sys/motion/2 [State: ON]
+  Exporting device: sys/motion/2
+  ✓ Device sys/motion/2 exported successfully
+MotionControllerDeviceClass::device_factory() completed. Total devices: 1
+MotionController Server Ready - Exported 1 device(s):
+  [1] sys/motion/2

@@ -1,0 +1,54 @@
+Loaded configuration from config/system_config.json
+  Controller IP: 127.0.0.1
+  PLC IP: 127.0.0.1
+  Tango Host: 127.0.0.1:10000
+2025-12-11T00:55:43,450241+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:55:43] MultiAxisDevice (辅助支撑类) initialized
+2025-12-11T00:55:43,450251+0800 INFO (multi_axis_device.cpp:104) sys/auxiliary/1 MultiAxisDevice initialized. Motion: sys/motion/1, Encoder: sys/encoder/1
+2025-12-11T00:55:43,452606+0800 ERROR (multi_axis_device.cpp:134) sys/auxiliary/1 Proxy connection failed: Device sys/motion/1 is not exported (hint: try starting the device server)
+2025-12-11T00:55:43,479604+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:55:43] MultiAxisDevice (辅助支撑类) initialized
+2025-12-11T00:55:43,479611+0800 INFO (multi_axis_device.cpp:104) sys/backlight/1 MultiAxisDevice initialized. Motion: sys/motion/1, Encoder: sys/encoder/1
+2025-12-11T00:55:43,481812+0800 ERROR (multi_axis_device.cpp:134) sys/backlight/1 Proxy connection failed: Device sys/motion/1 is not exported (hint: try starting the device server)
+MultiAxis (辅助支撑) Server Ready
+2025-12-11T00:56:07,395253+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:07] Stop
+2025-12-11T00:56:08,035713+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:08] Reset started
+2025-12-11T00:56:08,035733+0800 INFO (standard_system_device.cpp:138) sys/backlight/1 StandardSystemDevice::reset() called
+2025-12-11T00:56:08,035737+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:08] Stop
+2025-12-11T00:56:08,035776+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:08] Reset completed
+2025-12-11T00:56:08,367651+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:08] Reset started
+2025-12-11T00:56:08,367666+0800 INFO (standard_system_device.cpp:138) sys/backlight/1 StandardSystemDevice::reset() called
+2025-12-11T00:56:08,367672+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:08] Stop
+2025-12-11T00:56:08,367712+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:08] Reset completed
+2025-12-11T00:56:08,907114+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:08] Reset started
+2025-12-11T00:56:08,907131+0800 INFO (standard_system_device.cpp:138) sys/backlight/1 StandardSystemDevice::reset() called
+2025-12-11T00:56:08,907138+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:08] Stop
+2025-12-11T00:56:08,909371+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:08] Reset completed
+2025-12-11T00:56:09,407053+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:09] Reset started
+2025-12-11T00:56:09,407069+0800 INFO (standard_system_device.cpp:138) sys/backlight/1 StandardSystemDevice::reset() called
+2025-12-11T00:56:09,407075+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:09] Stop
+2025-12-11T00:56:09,407115+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:09] Reset completed
+2025-12-11T00:56:09,709971+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:09] Stop
+2025-12-11T00:56:10,114420+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:10] Stop
+2025-12-11T00:56:10,806669+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:10] Stop
+2025-12-11T00:56:11,352474+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:11] Stop
+2025-12-11T00:56:11,581300+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:11] Reset started
+2025-12-11T00:56:11,581315+0800 INFO (standard_system_device.cpp:138) sys/backlight/1 StandardSystemDevice::reset() called
+2025-12-11T00:56:11,581320+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:11] Stop
+2025-12-11T00:56:11,581359+0800 INFO (multi_axis_device.cpp:690) sys/backlight/1 [2025-12-11 00:56:11] Reset completed
+2025-12-11T00:56:13,667052+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:56:13] Stop
+2025-12-11T00:56:13,961121+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:56:13] Stop
+2025-12-11T00:56:14,255104+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:56:14] Reset started
+2025-12-11T00:56:14,255118+0800 INFO (standard_system_device.cpp:138) sys/auxiliary/1 StandardSystemDevice::reset() called
+2025-12-11T00:56:14,255122+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:56:14] Stop
+2025-12-11T00:56:14,255151+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:56:14] Reset completed
+2025-12-11T00:56:14,999215+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:56:14] Reset started
+2025-12-11T00:56:14,999229+0800 INFO (standard_system_device.cpp:138) sys/auxiliary/1 StandardSystemDevice::reset() called
+2025-12-11T00:56:14,999233+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:56:14] Stop
+2025-12-11T00:56:14,999266+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:56:14] Reset completed
+2025-12-11T00:56:15,305984+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:56:15] Reset started
+2025-12-11T00:56:15,307474+0800 INFO (standard_system_device.cpp:138) sys/auxiliary/1 StandardSystemDevice::reset() called
+2025-12-11T00:56:15,307495+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:56:15] Stop
+2025-12-11T00:56:15,310347+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:56:15] Reset completed
+2025-12-11T00:56:15,558764+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:56:15] Reset started
+2025-12-11T00:56:15,558781+0800 INFO (standard_system_device.cpp:138) sys/auxiliary/1 StandardSystemDevice::reset() called
+2025-12-11T00:56:15,558788+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:56:15] Stop
+2025-12-11T00:56:15,558833+0800 INFO (multi_axis_device.cpp:690) sys/auxiliary/1 [2025-12-11 00:56:15] Reset completed

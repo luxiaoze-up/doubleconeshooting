@@ -1,0 +1,27 @@
+{
+    // CMake Tools 设置
+    // 禁用配置后自动编译
+    "cmake.buildAfterConfigure": false,
+    
+    // 禁用保存后自动配置
+    "cmake.configureOnEdit": false,
+    
+    // 禁用打开文件夹时自动配置
+    "cmake.configureOnOpen": false,
+    
+    // 其他CMake设置
+    "cmake.configureSettings": {
+        // 可以在这里添加自定义的CMake变量
+    },
+    
+    // 文件关联
+    "files.associations": {
+        "*.h": "cpp",
+        "*.cpp": "cpp"
+    },
+
+    "python-envs.defaultEnvManager": "ms-python.python:conda",
+    "python-envs.defaultPackageManager": "ms-python.python:conda",
+    "python-envs.pythonProjects": []
+}
+

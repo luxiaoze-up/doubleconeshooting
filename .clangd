@@ -1,0 +1,15 @@
+CompileFlags:
+  Add: 
+    - -ID:/00.My_workspace/DoubleConeShooting/include
+    - -ID:/00.My_workspace/DoubleConeShooting/src
+    - -Wno-error
+    - -Wno-unknown-pragmas
+    - -std=c++17
+    # 如果确实没有 tango.h，定义 HAS_TANGO 并使用占位文件
+    - -DHAS_TANGO
+  
+Diagnostics:
+  UnusedIncludes: None
+  MissingIncludes: None
+  # 忽略找不到文件的错误，继续解析代码
+  Suppress: [missing-includes]
