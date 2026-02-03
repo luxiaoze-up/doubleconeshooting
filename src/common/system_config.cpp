@@ -32,8 +32,8 @@ namespace SystemConfig {
 
 // Initialize with defaults
 std::string DEFAULT_CONTROLLER_IP = "192.168.1.177";
-std::string DEFAULT_PLC_IP = "192.168.1.177";
-std::string DEFAULT_TANGO_HOST = "192.168.80.98:10000";
+std::string DEFAULT_PLC_IP = "192.168.1.100";
+std::string DEFAULT_TANGO_HOST = "192.168.1.177:10000";
 bool SIM_MODE = false;  // 默认关闭模拟模式
 int PROXY_RECONNECT_INTERVAL_SEC = 5;
 

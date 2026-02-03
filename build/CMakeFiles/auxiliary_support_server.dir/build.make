@@ -98,6 +98,8 @@ auxiliary_support_server: /usr/local/lib/libomniDynamic4.so
 auxiliary_support_server: /usr/local/lib/libomnithread.so
 auxiliary_support_server: /usr/local/lib/libzmq.so
 auxiliary_support_server: libcommon_lib.a
+auxiliary_support_server: /usr/local/lib/libopen62541.so
+auxiliary_support_server: /usr/local/lib/libsnap7.so
 auxiliary_support_server: /usr/local/lib/libtango.so
 auxiliary_support_server: CMakeFiles/auxiliary_support_server.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable auxiliary_support_server"

@@ -19,12 +19,12 @@ _output_threads = []  # 输出处理线程
 # 三台运动控制器：ctrl1(192.168.1.11), ctrl2(192.168.1.12), ctrl3(192.168.1.13)
 DEVICE_SERVERS = [
     # ========== 运动控制器 (3台) ==========
-    # {
-    #     'name': 'MotionController-1',
-    #     'executable': 'motion_controller_server',
-    #     'instance': 'ctrl1',
-    #     'device': 'sys/motion/1'
-    # },
+    {
+        'name': 'MotionController-1',
+        'executable': 'motion_controller_server',
+        'instance': 'ctrl1',
+        'device': 'sys/motion/1'
+    },
     {
         'name': 'MotionController-2',
         'executable': 'motion_controller_server',
@@ -73,18 +73,18 @@ DEVICE_SERVERS = [
         'device': 'sys/reflection/1'
     },
     # ========== 真空系统 ==========
-    # {
-    #     'name': 'Vacuum',
-    #     'executable': 'vacuum_server',
-    #     'instance': 'vacuum',
-    #     'device': 'sys/vacuum/1'
-    # },
-    # {
-    #     'name': 'VacuumSystem',
-    #     'executable': 'vacuum_system_server',
-    #     'instance': 'vacuum2',
-    #     'device': 'sys/vacuum/2'
-    # },
+    {
+        'name': 'Vacuum',
+        'executable': 'vacuum_server',
+        'instance': 'vacuum',
+        'device': 'sys/vacuum/1'
+    },
+    {
+        'name': 'VacuumSystem',
+        'executable': 'vacuum_system_server',
+        'instance': 'vacuum2',
+        'device': 'sys/vacuum/2'
+    },
     # ========== 联锁服务 ==========
     {
         'name': 'Interlock',
@@ -146,7 +146,9 @@ def start_device_servers():
         'SixDof',
         'AuxiliarySupport',
         'ReflectionImaging',
-        'Interlock'
+        'Interlock',
+        # 'Vacuum',
+        'VacuumSystem'
     ]
     
     # 创建名称到服务器配置的映射

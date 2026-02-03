@@ -56,6 +56,11 @@ private:
     bool driver_power_enabled_;       // 驱动器电源状态
     bool brake_released_;             // 刹车释放状态
     
+    // Cavity light power control (NEW - 腔体灯光控制：OUT7)
+    short cavity_light_port_;         // cavityLightPort - 腔体灯光端口号
+    std::string cavity_light_controller_; // cavityLightController - 控制腔体灯光的运动控制器名称
+    bool cavity_light_enabled_;       // 腔体灯光状态
+    
     // Runtime state
     double large_range_pos_;      // largeRangePos - encoder position
     double dire_pos_;             // direPos - command position
@@ -69,7 +74,6 @@ private:
     std::string alarm_state_;     // alarmState
     std::string axis_parameter_;  // axisParameter JSON
     short result_value_;          // resultValue
-    std::string position_unit_;   // positionUnit
     long self_check_result_;      // selfCheckResult: -1未自检, 0正常, 1电机异常, 2相机异常, 3光源异常, 4其他异常
     bool sim_mode_;
     
@@ -79,7 +83,6 @@ private:
     
     // Shadow variables for attribute reading to prevent pointer escaping
     Tango::DevLong attr_self_check_result_read;
-    Tango::DevString attr_position_unit_read;
     Tango::DevString attr_group_attribute_json_read;
     Tango::DevString attr_host_plug_state_read;
     Tango::DevDouble attr_large_range_pos_read;
@@ -118,7 +121,7 @@ private:
     int parse_json_int(const std::string& json, const std::string& key, int default_val = 0);
     
     // Unit conversion helpers
-    double convert_to_steps(double value);   // Convert from positionUnit to steps
+    int convert_to_steps(double value);   // Convert from positionUnit to steps
     double convert_from_steps(double steps); // Convert from steps to positionUnit
     
 public:
@@ -155,6 +158,13 @@ public:
     Tango::DevBoolean readOrg();
     Tango::DevShort readEL();
     
+    // Encoder position save/load
+    void saveEncoderPosition();
+    void loadEncoderPosition();
+    
+    // Zero position calibration
+    void moveToZero();  // Move to negative limit and save encoder position to database
+    
     // Auto/Valve (15-17, 20)
     void largeMoveAuto();
     void openValue(Tango::DevShort state);
@@ -174,6 +184,8 @@ public:
     void disableDriverPower();        // 手动关闭驱动器电源
     void releaseBrake();              // 手动释放刹车
     void engageBrake();               // 手动启用刹车
+    void enableCavityLight();         // 手动启动腔体灯光
+    void disableCavityLight();        // 手动关闭腔体灯光
     Tango::DevString queryPowerStatus();  // 查询电源状态（返回JSON）
     
     // State machine check
@@ -189,8 +201,6 @@ public:
     virtual void read_attr(Tango::Attribute &attr) override;
     virtual void write_attr(Tango::WAttribute &attr);  // 处理可写属性
     void read_self_check_result(Tango::Attribute &attr);
-    void read_position_unit(Tango::Attribute &attr);
-    void write_position_unit(Tango::WAttribute &attr);
     void read_group_attribute_json(Tango::Attribute &attr);
     void read_host_plug_state(Tango::Attribute &attr);
     void read_large_range_pos(Tango::Attribute &attr);
@@ -235,6 +245,8 @@ private:
     bool disable_driver_power();      // 关闭驱动器电源
     bool release_brake();             // 释放刹车
     bool engage_brake();              // 启用刹车
+    bool enable_cavity_light();       // 启动腔体灯光
+    bool disable_cavity_light();      // 关闭腔体灯光
 };
 
 class LargeStrokeDeviceClass : public Tango::DeviceClass {

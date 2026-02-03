@@ -494,13 +494,8 @@ void VacuumSystemDevice::synchronizeStateFromPLC() {
     updatePumpStatus();
     updateValveStatus();
     
-    // 同步分子泵启用配置到PLC（确保PLC配置与设备端一致）
-    if (!sim_mode_ && plc_comm_ && plc_comm_->isConnected()) {
-        writePLCBool(VacuumSystemPLCMapping::MolecularPump1Enabled(), molecular_pump1_enabled_);
-        writePLCBool(VacuumSystemPLCMapping::MolecularPump2Enabled(), molecular_pump2_enabled_);
-        writePLCBool(VacuumSystemPLCMapping::MolecularPump3Enabled(), molecular_pump3_enabled_);
-        DEBUG_STREAM << "[DEBUG] synchronizeStateFromPLC: 已同步分子泵启用配置到PLC" << std::endl;
-    }
+    // 注意：分子泵启用配置不需要同步到PLC，PLC只需要接收开关命令
+    // 启用配置仅在Tango设备端管理，用于决定自动流程中是否操作对应的分子泵
     
     // 推断系统状态
     if (screw_pump_power_ || roots_pump_power_ || 
@@ -650,6 +645,18 @@ void VacuumSystemDevice::updatePumpStatus() {
     readPLCBool(VacuumSystemPLCMapping::MolecularPump1PowerFeedback(), molecular_pump1_power_);
     readPLCBool(VacuumSystemPLCMapping::MolecularPump2PowerFeedback(), molecular_pump2_power_);
     readPLCBool(VacuumSystemPLCMapping::MolecularPump3PowerFeedback(), molecular_pump3_power_);
+    
+    // 定期打印所有上电状态（每10次循环打印一次）
+    static int print_counter = 0;
+    if (++print_counter >= 10) {
+        print_counter = 0;
+        std::cout << "[状态监控] 泵上电状态: "
+                  << "螺杆泵=" << (screw_pump_power_ ? "ON" : "OFF") << " "
+                  << "罗茨泵=" << (roots_pump_power_ ? "ON" : "OFF") << " "
+                  << "分子泵1=" << (molecular_pump1_power_ ? "ON" : "OFF") << " "
+                  << "分子泵2=" << (molecular_pump2_power_ ? "ON" : "OFF") << " "
+                  << "分子泵3=" << (molecular_pump3_power_ ? "ON" : "OFF") << std::endl;
+    }
     
     // 记录状态变化
     if (old_screw != screw_pump_power_) {
@@ -825,20 +832,20 @@ void VacuumSystemDevice::checkAlarmConditions() {
 /**
  * @brief 更新水电磁阀和气主电磁阀状态
  * 
- * 读取水电磁阀1-6和气主电磁阀的输出状态
+ * 读取水电磁阀1-6和气主电磁阀的输出状态反馈
  */
 void VacuumSystemDevice::updateWaterValveStatus() {
-    // 注意：这些是输出状态，从PLC读取当前输出值
-    // 水电磁阀 %Q12.0-%Q12.5
-    readPLCBool(VacuumSystemPLCMapping::WaterValve1Output(), water_valve1_state_);
-    readPLCBool(VacuumSystemPLCMapping::WaterValve2Output(), water_valve2_state_);
-    readPLCBool(VacuumSystemPLCMapping::WaterValve3Output(), water_valve3_state_);
-    readPLCBool(VacuumSystemPLCMapping::WaterValve4Output(), water_valve4_state_);
-    readPLCBool(VacuumSystemPLCMapping::WaterValve5Output(), water_valve5_state_);
-    readPLCBool(VacuumSystemPLCMapping::WaterValve6Output(), water_valve6_state_);
+    // 注意：这些是输出状态反馈，从PLC读取当前实际输出状态
+    // 水电磁阀状态反馈 %I85.2-%I85.7
+    readPLCBool(VacuumSystemPLCMapping::WaterElectromagneticValve1State(), water_valve1_state_);
+    readPLCBool(VacuumSystemPLCMapping::WaterElectromagneticValve2State(), water_valve2_state_);
+    readPLCBool(VacuumSystemPLCMapping::WaterElectromagneticValve3State(), water_valve3_state_);
+    readPLCBool(VacuumSystemPLCMapping::WaterElectromagneticValve4State(), water_valve4_state_);
+    readPLCBool(VacuumSystemPLCMapping::WaterElectromagneticValve5State(), water_valve5_state_);
+    readPLCBool(VacuumSystemPLCMapping::WaterElectromagneticValve6State(), water_valve6_state_);
     
-    // 气主电磁阀 %Q12.6
-    readPLCBool(VacuumSystemPLCMapping::AirMainValveOutput(), air_main_valve_state_);
+    // 气主电磁阀状态反馈 %I86.0
+    readPLCBool(VacuumSystemPLCMapping::AirMainElectromagneticValveState(), air_main_valve_state_);
 }
 
 // ============================================================================
@@ -1183,11 +1190,11 @@ void VacuumSystemDevice::ChamberVent() {
 void VacuumSystemDevice::FaultReset() {
     INFO_STREAM << "VacuumSystemDevice::FaultReset - 故障复位执行" << std::endl;
     
-    // 螺杆泵故障复位
+    // 螺杆泵故障复位（使用自动输出的成对控制）
     if (!sim_mode_) {
-        writePLCBool(VacuumSystemPLCMapping::ScrewPumpFaultReset(), true);
+        writePLCBool(VacuumSystemPLCMapping::ScrewPumpFaultResetOpen(), true);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        writePLCBool(VacuumSystemPLCMapping::ScrewPumpFaultReset(), false);
+        writePLCBool(VacuumSystemPLCMapping::ScrewPumpFaultResetClose(), true);
     }
     
     // 清除所有报警
@@ -1317,7 +1324,11 @@ void VacuumSystemDevice::SetScrewPumpPower(Tango::DevBoolean state) {
         screw_pump_power_ = state;
     } else {
         DEBUG_STREAM << "[DEBUG] SetScrewPumpPower: 正常模式，写入PLC" << std::endl;
-        writePLCBool(VacuumSystemPLCMapping::ScrewPumpPowerOutput(), state);
+        // 手动模式：使用本地手动输出 PowerLocalOn/PowerLocalOff
+        Common::PLC::PLCAddress addr = state ? 
+            VacuumSystemPLCMapping::ScrewPumpPowerLocalOn() : 
+            VacuumSystemPLCMapping::ScrewPumpPowerLocalOff();
+        writePLCBool(addr, true);  // 写true触发动作
     }
     logEvent(state ? "螺杆泵上电" : "螺杆泵断电");
 }
@@ -1334,7 +1345,11 @@ void VacuumSystemDevice::SetScrewPumpStartStop(Tango::DevBoolean state) {
         // 模拟模式下，启停信号直接影响电源状态
         screw_pump_power_ = state;
     } else {
-        writePLCBool(VacuumSystemPLCMapping::ScrewPumpStartStop(), state);
+        // 手动模式：使用本地手动输出 LocalOn/LocalOff
+        Common::PLC::PLCAddress addr = state ? 
+            VacuumSystemPLCMapping::ScrewPumpLocalOn() : 
+            VacuumSystemPLCMapping::ScrewPumpLocalOff();
+        writePLCBool(addr, true);  // 写true触发动作
     }
     logEvent(state ? "螺杆泵启动" : "螺杆泵停止");
 }
@@ -1357,7 +1372,11 @@ void VacuumSystemDevice::SetRootsPumpPower(Tango::DevBoolean state) {
     if (sim_mode_) {
         roots_pump_power_ = state;
     } else {
-        writePLCBool(VacuumSystemPLCMapping::RootsPumpPowerOutput(), state);
+        // 手动模式：使用本地手动输出 PowerLocalOn/PowerLocalOff
+        Common::PLC::PLCAddress addr = state ? 
+            VacuumSystemPLCMapping::RootsPumpPowerLocalOn() : 
+            VacuumSystemPLCMapping::RootsPumpPowerLocalOff();
+        writePLCBool(addr, true);  // 写true触发动作
     }
     logEvent(state ? "罗茨泵上电" : "罗茨泵断电");
 }
@@ -1388,13 +1407,22 @@ void VacuumSystemDevice::SetMolecularPumpPower(const Tango::DevVarShortArray* ar
             case 3: molecular_pump3_power_ = state; break;
         }
     } else {
+        // 手动模式：使用本地手动输出 PowerLocalOn/PowerLocalOff
         Common::PLC::PLCAddress addr(Common::PLC::PLCAddressType::OUTPUT, 0, 0);
-        switch (index) {
-            case 1: addr = VacuumSystemPLCMapping::MolecularPump1PowerOutput(); break;
-            case 2: addr = VacuumSystemPLCMapping::MolecularPump2PowerOutput(); break;
-            case 3: addr = VacuumSystemPLCMapping::MolecularPump3PowerOutput(); break;
+        if (state) {
+            switch (index) {
+                case 1: addr = VacuumSystemPLCMapping::MolecularPump1PowerLocalOn(); break;
+                case 2: addr = VacuumSystemPLCMapping::MolecularPump2PowerLocalOn(); break;
+                case 3: addr = VacuumSystemPLCMapping::MolecularPump3PowerLocalOn(); break;
+            }
+        } else {
+            switch (index) {
+                case 1: addr = VacuumSystemPLCMapping::MolecularPump1PowerLocalOff(); break;
+                case 2: addr = VacuumSystemPLCMapping::MolecularPump2PowerLocalOff(); break;
+                case 3: addr = VacuumSystemPLCMapping::MolecularPump3PowerLocalOff(); break;
+            }
         }
-        writePLCBool(addr, state);
+        writePLCBool(addr, true);  // 写true触发动作
     }
     logEvent("分子泵" + std::to_string(index) + (state ? "上电" : "断电"));
 }
@@ -1425,13 +1453,22 @@ void VacuumSystemDevice::SetMolecularPumpStartStop(const Tango::DevVarShortArray
             case 3: molecular_pump3_power_ = state; break;
         }
     } else {
+        // 手动模式：使用本地手动输出 LocalOn/LocalOff
         Common::PLC::PLCAddress addr(Common::PLC::PLCAddressType::OUTPUT, 0, 0);
-        switch (index) {
-            case 1: addr = VacuumSystemPLCMapping::MolecularPump1StartStop(); break;
-            case 2: addr = VacuumSystemPLCMapping::MolecularPump2StartStop(); break;
-            case 3: addr = VacuumSystemPLCMapping::MolecularPump3StartStop(); break;
+        if (state) {
+            switch (index) {
+                case 1: addr = VacuumSystemPLCMapping::MolecularPump1LocalOn(); break;
+                case 2: addr = VacuumSystemPLCMapping::MolecularPump2LocalOn(); break;
+                case 3: addr = VacuumSystemPLCMapping::MolecularPump3LocalOn(); break;
+            }
+        } else {
+            switch (index) {
+                case 1: addr = VacuumSystemPLCMapping::MolecularPump1LocalOff(); break;
+                case 2: addr = VacuumSystemPLCMapping::MolecularPump2LocalOff(); break;
+                case 3: addr = VacuumSystemPLCMapping::MolecularPump3LocalOff(); break;
+            }
         }
-        writePLCBool(addr, state);
+        writePLCBool(addr, true);  // 写true触发动作
     }
     logEvent("分子泵" + std::to_string(index) + (state ? "启动" : "停止"));
 }
@@ -1470,26 +1507,27 @@ void VacuumSystemDevice::SetGateValve(const Tango::DevVarShortArray* argin) {
     Common::PLC::PLCAddress open_addr(Common::PLC::PLCAddressType::OUTPUT, 0, 0);
     Common::PLC::PLCAddress close_addr(Common::PLC::PLCAddressType::OUTPUT, 0, 0);
     
+    // 手动模式：使用本地手动输出 LocalOpen/LocalClose
     switch (index) {
         case 1:
-            open_addr = VacuumSystemPLCMapping::GateValve1OpenOutput();
-            close_addr = VacuumSystemPLCMapping::GateValve1CloseOutput();
+            open_addr = VacuumSystemPLCMapping::GateValve1LocalOpen();
+            close_addr = VacuumSystemPLCMapping::GateValve1LocalClose();
             break;
         case 2:
-            open_addr = VacuumSystemPLCMapping::GateValve2OpenOutput();
-            close_addr = VacuumSystemPLCMapping::GateValve2CloseOutput();
+            open_addr = VacuumSystemPLCMapping::GateValve2LocalOpen();
+            close_addr = VacuumSystemPLCMapping::GateValve2LocalClose();
             break;
         case 3:
-            open_addr = VacuumSystemPLCMapping::GateValve3OpenOutput();
-            close_addr = VacuumSystemPLCMapping::GateValve3CloseOutput();
+            open_addr = VacuumSystemPLCMapping::GateValve3LocalOpen();
+            close_addr = VacuumSystemPLCMapping::GateValve3LocalClose();
             break;
         case 4:
-            open_addr = VacuumSystemPLCMapping::GateValve4OpenOutput();
-            close_addr = VacuumSystemPLCMapping::GateValve4CloseOutput();
+            open_addr = VacuumSystemPLCMapping::GateValve4LocalOpen();
+            close_addr = VacuumSystemPLCMapping::GateValve4LocalClose();
             break;
         case 5:
-            open_addr = VacuumSystemPLCMapping::GateValve5OpenOutput();
-            close_addr = VacuumSystemPLCMapping::GateValve5CloseOutput();
+            open_addr = VacuumSystemPLCMapping::GateValve5LocalOpen();
+            close_addr = VacuumSystemPLCMapping::GateValve5LocalClose();
             break;
     }
     
@@ -1538,14 +1576,26 @@ void VacuumSystemDevice::SetElectromagneticValve(const Tango::DevVarShortArray* 
             case 4: electromagnetic_valve4_open_ = state; electromagnetic_valve4_close_ = !state; break;
         }
     } else {
+        // 手动模式：电磁阀使用本地手动输出 LocalOpen/LocalClose
         Common::PLC::PLCAddress addr(Common::PLC::PLCAddressType::OUTPUT, 0, 0);
-        switch (index) {
-            case 1: addr = VacuumSystemPLCMapping::ElectromagneticValve1Output(); break;
-            case 2: addr = VacuumSystemPLCMapping::ElectromagneticValve2Output(); break;
-            case 3: addr = VacuumSystemPLCMapping::ElectromagneticValve3Output(); break;
-            case 4: addr = VacuumSystemPLCMapping::ElectromagneticValve4Output(); break;
+        if (state) {
+            // 打开电磁阀
+            switch (index) {
+                case 1: addr = VacuumSystemPLCMapping::ElectromagneticValve1LocalOpen(); break;
+                case 2: addr = VacuumSystemPLCMapping::ElectromagneticValve2LocalOpen(); break;
+                case 3: addr = VacuumSystemPLCMapping::ElectromagneticValve3LocalOpen(); break;
+                case 4: addr = VacuumSystemPLCMapping::ElectromagneticValve4LocalOpen(); break;
+            }
+        } else {
+            // 关闭电磁阀
+            switch (index) {
+                case 1: addr = VacuumSystemPLCMapping::ElectromagneticValve1LocalClose(); break;
+                case 2: addr = VacuumSystemPLCMapping::ElectromagneticValve2LocalClose(); break;
+                case 3: addr = VacuumSystemPLCMapping::ElectromagneticValve3LocalClose(); break;
+                case 4: addr = VacuumSystemPLCMapping::ElectromagneticValve4LocalClose(); break;
+            }
         }
-        writePLCBool(addr, state);
+        writePLCBool(addr, true);  // 写true触发动作
     }
     logEvent("电磁阀" + std::to_string(index) + (state ? "开启" : "关闭"));
 }
@@ -1575,12 +1625,22 @@ void VacuumSystemDevice::SetVentValve(const Tango::DevVarShortArray* argin) {
             case 2: vent_valve2_open_ = state; vent_valve2_close_ = !state; break;
         }
     } else {
+        // 手动模式：放气阀使用本地手动输出 LocalOpen/LocalClose
         Common::PLC::PLCAddress addr(Common::PLC::PLCAddressType::OUTPUT, 0, 0);
-        switch (index) {
-            case 1: addr = VacuumSystemPLCMapping::VentValve1Output(); break;
-            case 2: addr = VacuumSystemPLCMapping::VentValve2Output(); break;
+        if (state) {
+            // 打开放气阀
+            switch (index) {
+                case 1: addr = VacuumSystemPLCMapping::VentValve1LocalOpen(); break;
+                case 2: addr = VacuumSystemPLCMapping::VentValve2LocalOpen(); break;
+            }
+        } else {
+            // 关闭放气阀
+            switch (index) {
+                case 1: addr = VacuumSystemPLCMapping::VentValve1LocalClose(); break;
+                case 2: addr = VacuumSystemPLCMapping::VentValve2LocalClose(); break;
+            }
         }
-        writePLCBool(addr, state);
+        writePLCBool(addr, true);  // 写true触发动作
     }
     logEvent("放气阀" + std::to_string(index) + (state ? "开启" : "关闭"));
 }
@@ -1614,16 +1674,30 @@ void VacuumSystemDevice::SetWaterValve(const Tango::DevVarShortArray* argin) {
             case 6: water_valve6_state_ = state; break;
         }
     } else {
+        // 手动模式：水电磁阀使用本地手动输出 LocalOpen/LocalClose
         Common::PLC::PLCAddress addr(Common::PLC::PLCAddressType::OUTPUT, 0, 0);
-        switch (index) {
-            case 1: addr = VacuumSystemPLCMapping::WaterValve1Output(); break;
-            case 2: addr = VacuumSystemPLCMapping::WaterValve2Output(); break;
-            case 3: addr = VacuumSystemPLCMapping::WaterValve3Output(); break;
-            case 4: addr = VacuumSystemPLCMapping::WaterValve4Output(); break;
-            case 5: addr = VacuumSystemPLCMapping::WaterValve5Output(); break;
-            case 6: addr = VacuumSystemPLCMapping::WaterValve6Output(); break;
+        if (state) {
+            // 打开水电磁阀
+            switch (index) {
+                case 1: addr = VacuumSystemPLCMapping::WaterElectromagneticValve1LocalOpen(); break;
+                case 2: addr = VacuumSystemPLCMapping::WaterElectromagneticValve2LocalOpen(); break;
+                case 3: addr = VacuumSystemPLCMapping::WaterElectromagneticValve3LocalOpen(); break;
+                case 4: addr = VacuumSystemPLCMapping::WaterElectromagneticValve4LocalOpen(); break;
+                case 5: addr = VacuumSystemPLCMapping::WaterElectromagneticValve5LocalOpen(); break;
+                case 6: addr = VacuumSystemPLCMapping::WaterElectromagneticValve6LocalOpen(); break;
+            }
+        } else {
+            // 关闭水电磁阀
+            switch (index) {
+                case 1: addr = VacuumSystemPLCMapping::WaterElectromagneticValve1LocalClose(); break;
+                case 2: addr = VacuumSystemPLCMapping::WaterElectromagneticValve2LocalClose(); break;
+                case 3: addr = VacuumSystemPLCMapping::WaterElectromagneticValve3LocalClose(); break;
+                case 4: addr = VacuumSystemPLCMapping::WaterElectromagneticValve4LocalClose(); break;
+                case 5: addr = VacuumSystemPLCMapping::WaterElectromagneticValve5LocalClose(); break;
+                case 6: addr = VacuumSystemPLCMapping::WaterElectromagneticValve6LocalClose(); break;
+            }
         }
-        writePLCBool(addr, state);
+        writePLCBool(addr, true);  // 写true触发动作
     }
     logEvent("水电磁阀" + std::to_string(index) + (state ? "开启" : "关闭"));
 }
@@ -1632,7 +1706,14 @@ void VacuumSystemDevice::SetAirMainValve(Tango::DevBoolean state) {
     if (sim_mode_) {
         air_main_valve_state_ = state;
     } else {
-        writePLCBool(VacuumSystemPLCMapping::AirMainValveOutput(), state);
+        // 手动模式：气主电磁阀使用本地手动输出 LocalOpen/LocalClose
+        Common::PLC::PLCAddress addr(Common::PLC::PLCAddressType::OUTPUT, 0, 0);
+        if (state) {
+            addr = VacuumSystemPLCMapping::AirMainElectromagneticValveLocalOpen();
+        } else {
+            addr = VacuumSystemPLCMapping::AirMainElectromagneticValveLocalClose();
+        }
+        writePLCBool(addr, true);  // 写true触发动作
     }
     logEvent(state ? "气主电磁阀开启" : "气主电磁阀关闭");
 }
@@ -1806,13 +1887,10 @@ void VacuumSystemDevice::write_molecularPump1Enabled(Tango::WAttribute& attr) {
     attr.get_write_value(val);
     molecular_pump1_enabled_ = val;
     
-    // 发送到PLC
-    if (!sim_mode_) {
-        writePLCBool(VacuumSystemPLCMapping::MolecularPump1Enabled(), val);
-        DEBUG_STREAM << "[DEBUG] write_molecularPump1Enabled: 已发送到PLC " 
-                     << VacuumSystemPLCMapping::MolecularPump1Enabled().address_string 
-                     << " = " << (val ? "true" : "false") << std::endl;
-    }
+    // 注意：分子泵启用配置仅在设备端管理，不写入PLC
+    // PLC只接收实际的开关命令，该配置用于自动流程中决定是否操作该泵
+    DEBUG_STREAM << "[DEBUG] write_molecularPump1Enabled: 设置为 " 
+                 << (val ? "true" : "false") << std::endl;
     
     logEvent("分子泵1启用配置: " + std::string(val ? "启用" : "禁用"));
 }
@@ -1822,13 +1900,9 @@ void VacuumSystemDevice::write_molecularPump2Enabled(Tango::WAttribute& attr) {
     attr.get_write_value(val);
     molecular_pump2_enabled_ = val;
     
-    // 发送到PLC
-    if (!sim_mode_) {
-        writePLCBool(VacuumSystemPLCMapping::MolecularPump2Enabled(), val);
-        DEBUG_STREAM << "[DEBUG] write_molecularPump2Enabled: 已发送到PLC " 
-                     << VacuumSystemPLCMapping::MolecularPump2Enabled().address_string 
-                     << " = " << (val ? "true" : "false") << std::endl;
-    }
+    // 注意：分子泵启用配置仅在设备端管理，不写入PLC
+    DEBUG_STREAM << "[DEBUG] write_molecularPump2Enabled: 设置为 " 
+                 << (val ? "true" : "false") << std::endl;
     
     logEvent("分子泵2启用配置: " + std::string(val ? "启用" : "禁用"));
 }
@@ -1838,13 +1912,9 @@ void VacuumSystemDevice::write_molecularPump3Enabled(Tango::WAttribute& attr) {
     attr.get_write_value(val);
     molecular_pump3_enabled_ = val;
     
-    // 发送到PLC
-    if (!sim_mode_) {
-        writePLCBool(VacuumSystemPLCMapping::MolecularPump3Enabled(), val);
-        DEBUG_STREAM << "[DEBUG] write_molecularPump3Enabled: 已发送到PLC " 
-                     << VacuumSystemPLCMapping::MolecularPump3Enabled().address_string 
-                     << " = " << (val ? "true" : "false") << std::endl;
-    }
+    // 注意：分子泵启用配置仅在设备端管理，不写入PLC
+    DEBUG_STREAM << "[DEBUG] write_molecularPump3Enabled: 设置为 " 
+                 << (val ? "true" : "false") << std::endl;
     
     logEvent("分子泵3启用配置: " + std::string(val ? "启用" : "禁用"));
 }
@@ -3215,8 +3285,15 @@ void VacuumSystemDevice::ctrlScrewPump(bool power) {
     if (sim_mode_) {
         screw_pump_power_ = power;
     } else {
-        writePLCBool(VacuumSystemPLCMapping::ScrewPumpPowerOutput(), power);
-        writePLCBool(VacuumSystemPLCMapping::ScrewPumpStartStop(), power);
+        // 螺杆泵电源和启停都使用成对控制
+        Common::PLC::PLCAddress power_addr = power ? 
+            VacuumSystemPLCMapping::ScrewPumpPowerOn() : 
+            VacuumSystemPLCMapping::ScrewPumpPowerOff();
+        Common::PLC::PLCAddress start_addr = power ? 
+            VacuumSystemPLCMapping::ScrewPumpStart() : 
+            VacuumSystemPLCMapping::ScrewPumpStop();
+        writePLCBool(power_addr, true);
+        writePLCBool(start_addr, true);
     }
 }
 
@@ -3224,7 +3301,11 @@ void VacuumSystemDevice::ctrlRootsPump(bool power) {
     if (sim_mode_) {
         roots_pump_power_ = power;
     } else {
-        writePLCBool(VacuumSystemPLCMapping::RootsPumpPowerOutput(), power);
+        // 罗茨泵电源使用成对控制
+        Common::PLC::PLCAddress addr = power ? 
+            VacuumSystemPLCMapping::RootsPumpPowerOn() : 
+            VacuumSystemPLCMapping::RootsPumpPowerOff();
+        writePLCBool(addr, true);
     }
 }
 
@@ -3236,24 +3317,25 @@ void VacuumSystemDevice::ctrlMolecularPump(int index, bool power) {
             case 3: molecular_pump3_power_ = power; break;
         }
     } else {
+        // 自动流程：分子泵使用自动输出的成对控制
         Common::PLC::PLCAddress power_addr(Common::PLC::PLCAddressType::OUTPUT, 0, 0);
         Common::PLC::PLCAddress start_addr(Common::PLC::PLCAddressType::OUTPUT, 0, 0);
         switch (index) {
             case 1: 
-                power_addr = VacuumSystemPLCMapping::MolecularPump1PowerOutput();
-                start_addr = VacuumSystemPLCMapping::MolecularPump1StartStop();
+                power_addr = power ? VacuumSystemPLCMapping::MolecularPump1PowerOn() : VacuumSystemPLCMapping::MolecularPump1PowerOff();
+                start_addr = power ? VacuumSystemPLCMapping::MolecularPump1Start() : VacuumSystemPLCMapping::MolecularPump1Stop();
                 break;
             case 2: 
-                power_addr = VacuumSystemPLCMapping::MolecularPump2PowerOutput();
-                start_addr = VacuumSystemPLCMapping::MolecularPump2StartStop();
+                power_addr = power ? VacuumSystemPLCMapping::MolecularPump2PowerOn() : VacuumSystemPLCMapping::MolecularPump2PowerOff();
+                start_addr = power ? VacuumSystemPLCMapping::MolecularPump2Start() : VacuumSystemPLCMapping::MolecularPump2Stop();
                 break;
             case 3: 
-                power_addr = VacuumSystemPLCMapping::MolecularPump3PowerOutput();
-                start_addr = VacuumSystemPLCMapping::MolecularPump3StartStop();
+                power_addr = power ? VacuumSystemPLCMapping::MolecularPump3PowerOn() : VacuumSystemPLCMapping::MolecularPump3PowerOff();
+                start_addr = power ? VacuumSystemPLCMapping::MolecularPump3Start() : VacuumSystemPLCMapping::MolecularPump3Stop();
                 break;
         }
-        writePLCBool(power_addr, power);
-        writePLCBool(start_addr, power);
+        writePLCBool(power_addr, true);
+        writePLCBool(start_addr, true);
     }
 }
 
@@ -3266,14 +3348,24 @@ void VacuumSystemDevice::ctrlElectromagneticValve(int index, bool state) {
             case 4: electromagnetic_valve4_open_ = state; electromagnetic_valve4_close_ = !state; break;
         }
     } else {
+        // 电磁阀使用自动控制Open/Close成对线圈
         Common::PLC::PLCAddress addr(Common::PLC::PLCAddressType::OUTPUT, 0, 0);
-        switch (index) {
-            case 1: addr = VacuumSystemPLCMapping::ElectromagneticValve1Output(); break;
-            case 2: addr = VacuumSystemPLCMapping::ElectromagneticValve2Output(); break;
-            case 3: addr = VacuumSystemPLCMapping::ElectromagneticValve3Output(); break;
-            case 4: addr = VacuumSystemPLCMapping::ElectromagneticValve4Output(); break;
+        if (state) {
+            switch (index) {
+                case 1: addr = VacuumSystemPLCMapping::ElectromagneticValve1OpenOutput(); break;
+                case 2: addr = VacuumSystemPLCMapping::ElectromagneticValve2OpenOutput(); break;
+                case 3: addr = VacuumSystemPLCMapping::ElectromagneticValve3OpenOutput(); break;
+                case 4: addr = VacuumSystemPLCMapping::ElectromagneticValve4OpenOutput(); break;
+            }
+        } else {
+            switch (index) {
+                case 1: addr = VacuumSystemPLCMapping::ElectromagneticValve1CloseOutput(); break;
+                case 2: addr = VacuumSystemPLCMapping::ElectromagneticValve2CloseOutput(); break;
+                case 3: addr = VacuumSystemPLCMapping::ElectromagneticValve3CloseOutput(); break;
+                case 4: addr = VacuumSystemPLCMapping::ElectromagneticValve4CloseOutput(); break;
+            }
         }
-        writePLCBool(addr, state);
+        writePLCBool(addr, true);  // 写true触发动作
     }
 }
 
@@ -3333,12 +3425,20 @@ void VacuumSystemDevice::ctrlVentValve(int index, bool state) {
         DEBUG_STREAM << "[DEBUG] ctrlVentValve: 模拟模式，放气阀" << index 
                      << " 状态设置为 " << (state ? "开启" : "关闭") << std::endl;
     } else {
+        // 放气阀使用自动控制Open/Close成对线圈
         Common::PLC::PLCAddress addr(Common::PLC::PLCAddressType::OUTPUT, 0, 0);
-        switch (index) {
-            case 1: addr = VacuumSystemPLCMapping::VentValve1Output(); break;
-            case 2: addr = VacuumSystemPLCMapping::VentValve2Output(); break;
+        if (state) {
+            switch (index) {
+                case 1: addr = VacuumSystemPLCMapping::VentValve1OpenOutput(); break;
+                case 2: addr = VacuumSystemPLCMapping::VentValve2OpenOutput(); break;
+            }
+        } else {
+            switch (index) {
+                case 1: addr = VacuumSystemPLCMapping::VentValve1CloseOutput(); break;
+                case 2: addr = VacuumSystemPLCMapping::VentValve2CloseOutput(); break;
+            }
         }
-        writePLCBool(addr, state);
+        writePLCBool(addr, true);  // 写true触发动作
         DEBUG_STREAM << "[DEBUG] ctrlVentValve: 已发送PLC命令，放气阀" << index 
                      << " = " << (state ? "true" : "false") 
                      << " (地址: " << addr.address_string << ")" << std::endl;

@@ -11,6 +11,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/app/src/common/device_interface.cpp" "CMakeFiles/common_lib.dir/src/common/device_interface.cpp.o" "gcc" "CMakeFiles/common_lib.dir/src/common/device_interface.cpp.o.d"
   "/app/src/common/encoder_acquisition.cpp" "CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o" "gcc" "CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o.d"
   "/app/src/common/kinematics.cpp" "CMakeFiles/common_lib.dir/src/common/kinematics.cpp.o" "gcc" "CMakeFiles/common_lib.dir/src/common/kinematics.cpp.o.d"
+  "/app/src/common/plc_communication.cpp" "CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.o" "gcc" "CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.o.d"
   "/app/src/common/standard_system_device.cpp" "CMakeFiles/common_lib.dir/src/common/standard_system_device.cpp.o" "gcc" "CMakeFiles/common_lib.dir/src/common/standard_system_device.cpp.o.d"
   "/app/src/common/system_config.cpp" "CMakeFiles/common_lib.dir/src/common/system_config.cpp.o" "gcc" "CMakeFiles/common_lib.dir/src/common/system_config.cpp.o.d"
   "/app/src/common/tango_device_wrapper.cpp" "CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o" "gcc" "CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o.d"

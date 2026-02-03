@@ -29730,3 +29730,10 @@ DevError[
   reason = API_CantConnectToDevice
 severity = ERR]
 ]
+2026-01-22 10:27:45 - tango_worker - ERROR - 连接 PLC 192.168.1.100:4840 失败 (第 1 次): PLC 连接失败
+Traceback (most recent call last):
+  File "/Users/luxiaoze/Documents/tango/DoubleConeShooting/gui/vacuum_system_gui/tango_worker.py", line 1394, in _connect_device
+    raise Exception("PLC 连接失败")
+Exception: PLC 连接失败
+2026-01-22 10:27:48 - tango_worker - INFO - 已重新连接到 PLC 192.168.1.100:4840（之前失败 1 次）
+2026-01-22 10:29:55 - tango_worker - INFO - 已连接到 PLC 192.168.1.100:4840

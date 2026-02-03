@@ -24,7 +24,8 @@ struct EncoderReading {
 class EncoderAcquisitionClient {
 public:
     EncoderAcquisitionClient(const std::string &ip, int port, int channel_offset,
-                             int channel_count, std::vector<EncoderReading> &shared_readings,
+                             int channel_count, const std::vector<int> &skip_channels,
+                             std::vector<EncoderReading> &shared_readings,
                              std::mutex &shared_mutex);
     ~EncoderAcquisitionClient();
 
@@ -45,6 +46,7 @@ private:
     const int port_;
     const int channel_offset_;
     const int channel_count_;
+    const std::vector<int> skip_channels_;  // 要跳过的物理通道列表（1-based）
 
     int socket_fd_;
     std::atomic<bool> running_{false};
@@ -65,6 +67,7 @@ struct EncoderCollectorConfig {
     int port;
     int channel_offset;   // 全局通道偏移
     int channel_count;    // 通道数量
+    std::vector<int> skip_channels;  // 要跳过的物理通道列表（1-based）
 };
 
 class EncoderAcquisitionManager {

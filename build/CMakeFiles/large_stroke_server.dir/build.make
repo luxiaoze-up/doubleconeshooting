@@ -98,6 +98,8 @@ large_stroke_server: /usr/local/lib/libomniDynamic4.so
 large_stroke_server: /usr/local/lib/libomnithread.so
 large_stroke_server: /usr/local/lib/libzmq.so
 large_stroke_server: libcommon_lib.a
+large_stroke_server: /usr/local/lib/libopen62541.so
+large_stroke_server: /usr/local/lib/libsnap7.so
 large_stroke_server: /usr/local/lib/libtango.so
 large_stroke_server: CMakeFiles/large_stroke_server.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable large_stroke_server"

@@ -114,6 +114,8 @@ reflection_imaging_server: /usr/local/lib/libomniDynamic4.so
 reflection_imaging_server: /usr/local/lib/libomnithread.so
 reflection_imaging_server: /usr/local/lib/libzmq.so
 reflection_imaging_server: libcommon_lib.a
+reflection_imaging_server: /usr/local/lib/libopen62541.so
+reflection_imaging_server: /usr/local/lib/libsnap7.so
 reflection_imaging_server: /usr/local/lib/libtango.so
 reflection_imaging_server: CMakeFiles/reflection_imaging_server.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable reflection_imaging_server"

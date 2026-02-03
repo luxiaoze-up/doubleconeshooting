@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 # 默认配置常量
 DEFAULT_CONTROLLER_IP = "192.168.1.11"
-DEFAULT_PLC_IP = "127.0.0.1"  # 与 config/system_config.json 保持一致
+DEFAULT_PLC_IP = "192.168.1.100"  # 与 config/system_config.json 保持一致
 DEFAULT_AXIS_ID = "0"
 
 def connect_to_db(retries: int = 5) -> tango.Database:

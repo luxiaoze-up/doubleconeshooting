@@ -5,6 +5,8 @@
 #include <iomanip>
 #include <sstream>
 #include <chrono>
+#include <algorithm>
+#include <cctype>
 #ifdef _WIN32
 #include <windows.h>
 #else
@@ -12,7 +14,8 @@
 #endif
 
 namespace Common {
-namespace PLC {
+namespace 
+PLC {
 
 // ========== OPCUACommunication (open62541 implementation) ==========
 
@@ -151,13 +154,124 @@ std::string OPCUACommunication::buildNodeId(const PLCAddress& address) {
         return it->second;
     }
     
-    // 使用不带引号的标准 NodeId 格式
-    // 模拟器创建：ua.NodeId('%I0.0', 3) -> ns=3;s=%I0.0
-    // UA_NODEID_STRING_ALLOC(3, identifier) 的第二个参数应该是 identifier 字符串（不带引号）
-    // 标准格式：ns=3;s=%I0.0（而不是 ns=3;s="%I0.0"）
-    std::string identifier = address.address_string;
+    // S7-1200 DB1 四层结构映射
+    // 格式: "DB1"."Static"."二级结构名"."三级变量名"
     
-    // std::cout << "[OPC-UA] Built NodeId identifier: " << identifier << " for address: " << address.address_string << std::endl;
+    std::string identifier;
+    const char* format_env = std::getenv("OPCUA_NODE_FORMAT");
+    std::string format = format_env ? format_env : "s7_1200_db1_struct";
+    
+    if (format == "s7_1200_db1_struct") {
+        // 固化映射（来源：docs/2025.12.22接口.xml）
+        // 根据 byte_offset 和 bit_offset 直接映射到 Numeric NodeId
+        
+        if (address.type == PLCAddressType::INPUT) {
+            // %I0.x 系列
+            if (address.byte_offset == 0) {
+                if (address.bit_offset == 0) identifier = "153";      // %I0.0 螺杆泵上电反馈输入状态
+                else if (address.bit_offset == 1) identifier = "154"; // %I0.1 罗茨泵上电反馈输入信号
+                else if (address.bit_offset == 2) identifier = "155"; // %I0.2 分子泵1上电反馈输入信号
+                else if (address.bit_offset == 3) identifier = "156"; // %I0.3 分子泵2上电反馈输入信号
+                else if (address.bit_offset == 4) identifier = "157"; // %I0.4 分子泵3上电反馈输入信号
+                else if (address.bit_offset == 5) identifier = "158"; // %I0.5 Static_1
+                else if (address.bit_offset == 6) identifier = "172"; // %I0.6 电磁阀1开到位输入信号
+                else if (address.bit_offset == 7) identifier = "173"; // %I0.7 电磁阀1关到位输入信号
+            }
+            // %I1.x 系列
+            else if (address.byte_offset == 1) {
+                if (address.bit_offset == 0) identifier = "174";      // %I1.0 电磁阀2开到位输入信号
+                else if (address.bit_offset == 1) identifier = "175"; // %I1.1 电磁阀2关到位输入信号
+                else if (address.bit_offset == 2) identifier = "176"; // %I1.2 电磁阀3开到位输入信号
+                else if (address.bit_offset == 3) identifier = "177"; // %I1.3 电磁阀3关到位输入信号
+                else if (address.bit_offset == 4) identifier = "178"; // %I1.4 电磁阀4开到位输入信号
+                else if (address.bit_offset == 5) identifier = "179"; // %I1.5 电磁阀4关到位输入信号
+            }
+            // %I8.x 系列
+            else if (address.byte_offset == 8) {
+                if (address.bit_offset == 0) identifier = "180";      // %I8.0 放气阀1开到位输入信号
+                else if (address.bit_offset == 1) identifier = "181"; // %I8.1 放气阀1关到位输入信号
+                else if (address.bit_offset == 2) identifier = "182"; // %I8.2 放气阀2开到位输入信号
+                else if (address.bit_offset == 3) identifier = "183"; // %I8.3 放气阀2关到位输入信号
+                else if (address.bit_offset == 4) identifier = "160"; // %I8.4 闸板阀1开到位
+                else if (address.bit_offset == 5) identifier = "161"; // %I8.5 闸板阀1关到位
+                else if (address.bit_offset == 6) identifier = "162"; // %I8.6 闸板阀2开到位
+                else if (address.bit_offset == 7) identifier = "163"; // %I8.7 闸板阀2关到位
+            }
+            // %I9.x 系列
+            else if (address.byte_offset == 9) {
+                if (address.bit_offset == 0) identifier = "164";      // %I9.0 闸板阀3开到位
+                else if (address.bit_offset == 1) identifier = "165"; // %I9.1 闸板阀3关到位
+                else if (address.bit_offset == 2) identifier = "166"; // %I9.2 闸板阀4开到位
+                else if (address.bit_offset == 3) identifier = "167"; // %I9.3 闸板阀4关到位
+                else if (address.bit_offset == 4) identifier = "168"; // %I9.4 闸板阀5开到位
+                else if (address.bit_offset == 5) identifier = "169"; // %I9.5 闸板阀5关到位
+                else if (address.bit_offset == 6) identifier = "254"; // %I9.6 运动控制系统设备在线
+                else if (address.bit_offset == 7) identifier = "255"; // %I9.7 闸板阀5动作允许信号
+            }
+            // %I12.x 系列
+            else if (address.byte_offset == 12) {
+                if (address.bit_offset == 0) identifier = "256";      // %I12.0 运动控制系统请求开闸板阀5
+                else if (address.bit_offset == 1) identifier = "257"; // %I12.1 运动控制系统请求关闸板阀5
+            }
+            // %I79.x 系列
+            else if (address.byte_offset == 79) {
+                if (address.bit_offset == 7) identifier = "184";      // %I79.7 水流量计1有水信号
+            }
+            // %I80.x 系列
+            else if (address.byte_offset == 80) {
+                if (address.bit_offset == 0) identifier = "185";      // %I80.0 水流量计2有水信号
+                else if (address.bit_offset == 1) identifier = "186"; // %I80.1 水流量计3有水信号
+                else if (address.bit_offset == 2) identifier = "187"; // %I80.2 水流量计4有水信号
+                else if (address.bit_offset == 3) identifier = "188"; // %I80.3 水流量计5有水信号
+                else if (address.bit_offset == 4) identifier = "189"; // %I80.4 水流量计6有水信号
+                else if (address.bit_offset == 5) identifier = "190"; // %I80.5 本地允许放大气
+                else if (address.bit_offset == 6) identifier = "191"; // %I80.6 本地允许抽真空
+                else if (address.bit_offset == 7) identifier = "192"; // %I80.7 本地允许靶室连通
+            }
+            // %I85.x 系列
+            else if (address.byte_offset == 85) {
+                if (address.bit_offset == 2) identifier = "243";      // %I85.2 真空规1通讯异常
+                else if (address.bit_offset == 3) identifier = "244"; // %I85.3 真空规2通讯异常
+                else if (address.bit_offset == 4) identifier = "251"; // %I85.4 分子泵1通信异常标志位
+                else if (address.bit_offset == 5) identifier = "252"; // %I85.5 分子泵2通信异常标志位
+                else if (address.bit_offset == 6) identifier = "253"; // %I85.6 分子泵3通信异常标志位
+                else if (address.bit_offset == 7) identifier = "254"; // %I85.7 运动控制系统设备在线
+            }
+            // %I86.x 系列
+            else if (address.byte_offset == 86) {
+                if (address.bit_offset == 0) identifier = "255";      // %I86.0 闸板阀5动作允许信号
+            }
+            // %I106.x 系列
+            else if (address.byte_offset == 106) {
+                if (address.bit_offset == 0) identifier = "236";      // %I106.0 螺杆泵通信异常标志位
+                else if (address.bit_offset == 1) identifier = "237"; // %I106.1 螺杆泵故障复位状态
+            }
+        }
+        // INPUT_WORD 类型（模拟量输入）
+        else if (address.type == PLCAddressType::INPUT_WORD) {
+            if (address.byte_offset == 24) identifier = "245";        // %IW24 分子泵1转速
+            else if (address.byte_offset == 36) identifier = "246";   // %IW36 分子泵2转速
+            else if (address.byte_offset == 48) identifier = "247";   // %IW48 分子泵3转速
+            else if (address.byte_offset == 130) identifier = "240";  // %IW130 前级电阻规示数输出
+            else if (address.byte_offset == 132) identifier = "238";  // %IW132 水压力传感器
+        }
+        
+        // 如果未找到映射，降级使用 DB1.Static 路径
+        if (identifier.empty()) {
+            std::string addr = address.address_string;
+            if (!addr.empty() && addr[0] == '%') addr = addr.substr(1);
+            for (char& c : addr) {
+                if (c == '.') c = '_';
+            }
+            identifier = "\"DB1\".\"Static\".\"" + addr + "\"";
+        }
+    } else {
+        // 默认格式（模拟器）
+        identifier = address.address_string;
+    }
+    
+    // std::cout << "[OPC-UA DEBUG] buildNodeId: " << address.address_string 
+    //           << " -> format=" << format << " -> identifier=" << identifier << std::endl;
     
     return identifier;
 }
@@ -178,7 +292,18 @@ bool OPCUACommunication::readBool(const PLCAddress& address, bool& value) {
     }
     
     std::string node_id_str = buildNodeId(address);
-    UA_NodeId nodeId = UA_NODEID_STRING_ALLOC(3, node_id_str.c_str());
+    UA_NodeId nodeId;
+    bool isNumeric = !node_id_str.empty() && std::all_of(node_id_str.begin(), node_id_str.end(), [](unsigned char c){ return std::isdigit(c); });
+    if (isNumeric) {
+        UA_UInt32 numericId = static_cast<UA_UInt32>(std::stoul(node_id_str));
+        nodeId = UA_NODEID_NUMERIC(4, numericId);
+        // std::cout << "[OPC-UA DEBUG] readBool: address=" << address.address_string
+        //           << " -> NodeId=ns=4;i=" << numericId << std::endl;
+    } else {
+        nodeId = UA_NODEID_STRING_ALLOC(4, node_id_str.c_str());
+        // std::cout << "[OPC-UA DEBUG] readBool: address=" << address.address_string
+        //           << " -> NodeId=ns=4;s=" << node_id_str << std::endl;
+    }
     
     UA_Variant variant;
     UA_Variant_init(&variant);
@@ -223,19 +348,48 @@ bool OPCUACommunication::readWord(const PLCAddress& address, uint16_t& value) {
     }
     
     std::string node_id_str = buildNodeId(address);
-    UA_NodeId nodeId = UA_NODEID_STRING_ALLOC(3, node_id_str.c_str());
+    UA_NodeId nodeId;
+    bool isNumeric = !node_id_str.empty() && std::all_of(node_id_str.begin(), node_id_str.end(), [](unsigned char c){ return std::isdigit(c); });
+    if (isNumeric) {
+        UA_UInt32 numericId = static_cast<UA_UInt32>(std::stoul(node_id_str));
+        nodeId = UA_NODEID_NUMERIC(4, numericId);
+            // std::cout << "[OPC-UA DEBUG] readWord: address=" << address.address_string
+            //           << " -> NodeId=ns=4;i=" << numericId << std::endl;
+    } else {
+        nodeId = UA_NODEID_STRING_ALLOC(4, node_id_str.c_str());
+        // std::cout << "[OPC-UA DEBUG] readWord: address=" << address.address_string
+        //           << " -> NodeId=ns=4;s=" << node_id_str << std::endl;
+    }
     
     UA_Variant variant;
     UA_Variant_init(&variant);
     
     UA_StatusCode status = UA_Client_readValueAttribute(client_, nodeId, &variant);
     
-    if (status == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&variant, &UA_TYPES[UA_TYPES_UINT16])) {
-        value = *(UA_UInt16*)variant.data;
-        // std::cout << "[OPC-UA] readWord SUCCESS: " << value << std::endl;
-        UA_Variant_clear(&variant);
-        UA_NodeId_clear(&nodeId);
-        return true;
+    // 接受 UINT16、INT16 或 REAL 类型
+    if (status == UA_STATUSCODE_GOOD) {
+        if (UA_Variant_hasScalarType(&variant, &UA_TYPES[UA_TYPES_UINT16])) {
+            value = *(UA_UInt16*)variant.data;
+            // std::cout << "[OPC-UA] readWord SUCCESS (UINT16): " << value << std::endl;
+            UA_Variant_clear(&variant);
+            UA_NodeId_clear(&nodeId);
+            return true;
+        } else if (UA_Variant_hasScalarType(&variant, &UA_TYPES[UA_TYPES_INT16])) {
+            int16_t int_val = *(UA_Int16*)variant.data;
+            value = static_cast<uint16_t>(int_val);
+            // std::cout << "[OPC-UA] readWord SUCCESS (INT16): " << value << std::endl;
+            UA_Variant_clear(&variant);
+            UA_NodeId_clear(&nodeId);
+            return true;
+        } else if (UA_Variant_hasScalarType(&variant, &UA_TYPES[UA_TYPES_FLOAT])) {
+            // PLC 中某些 WORD 地址实际存储的是 REAL 类型，需要转换
+            float float_val = *(UA_Float*)variant.data;
+            value = static_cast<uint16_t>(float_val);
+            // std::cout << "[OPC-UA] readWord SUCCESS (FLOAT->UINT16): " << value << std::endl;
+            UA_Variant_clear(&variant);
+            UA_NodeId_clear(&nodeId);
+            return true;
+        }
     }
     
     std::cerr << "[OPC-UA] readWord FAILED: " << address.address_string << " status=0x" << std::hex << status << std::dec << std::endl;
@@ -266,7 +420,18 @@ bool OPCUACommunication::readInt(const PLCAddress& address, int16_t& value) {
     }
     
     std::string node_id_str = buildNodeId(address);
-    UA_NodeId nodeId = UA_NODEID_STRING_ALLOC(3, node_id_str.c_str());
+    UA_NodeId nodeId;
+    bool isNumeric = !node_id_str.empty() && std::all_of(node_id_str.begin(), node_id_str.end(), [](unsigned char c){ return std::isdigit(c); });
+    if (isNumeric) {
+        UA_UInt32 numericId = static_cast<UA_UInt32>(std::stoul(node_id_str));
+        nodeId = UA_NODEID_NUMERIC(4, numericId);
+        std::cout << "[OPC-UA DEBUG] readInt: address=" << address.address_string
+                  << " -> NodeId=ns=4;i=" << numericId << std::endl;
+    } else {
+        nodeId = UA_NODEID_STRING_ALLOC(4, node_id_str.c_str());
+        std::cout << "[OPC-UA DEBUG] readInt: address=" << address.address_string
+                  << " -> NodeId=ns=4;s=" << node_id_str << std::endl;
+    }
     
     UA_Variant variant;
     UA_Variant_init(&variant);
@@ -309,7 +474,18 @@ bool OPCUACommunication::readReal(const PLCAddress& address, float& value) {
     }
     
     std::string node_id_str = buildNodeId(address);
-    UA_NodeId nodeId = UA_NODEID_STRING_ALLOC(3, node_id_str.c_str());
+    UA_NodeId nodeId;
+    bool isNumeric = !node_id_str.empty() && std::all_of(node_id_str.begin(), node_id_str.end(), [](unsigned char c){ return std::isdigit(c); });
+    if (isNumeric) {
+        UA_UInt32 numericId = static_cast<UA_UInt32>(std::stoul(node_id_str));
+        nodeId = UA_NODEID_NUMERIC(4, numericId);
+        std::cout << "[OPC-UA DEBUG] readReal: address=" << address.address_string
+                  << " -> NodeId=ns=4;i=" << numericId << std::endl;
+    } else {
+        nodeId = UA_NODEID_STRING_ALLOC(4, node_id_str.c_str());
+        std::cout << "[OPC-UA DEBUG] readReal: address=" << address.address_string
+                  << " -> NodeId=ns=4;s=" << node_id_str << std::endl;
+    }
     
     UA_Variant variant;
     UA_Variant_init(&variant);
@@ -352,7 +528,18 @@ bool OPCUACommunication::readDWord(const PLCAddress& address, uint32_t& value) {
     }
     
     std::string node_id_str = buildNodeId(address);
-    UA_NodeId nodeId = UA_NODEID_STRING_ALLOC(3, node_id_str.c_str());
+    UA_NodeId nodeId;
+    bool isNumeric = !node_id_str.empty() && std::all_of(node_id_str.begin(), node_id_str.end(), [](unsigned char c){ return std::isdigit(c); });
+    if (isNumeric) {
+        UA_UInt32 numericId = static_cast<UA_UInt32>(std::stoul(node_id_str));
+        nodeId = UA_NODEID_NUMERIC(4, numericId);
+        std::cout << "[OPC-UA DEBUG] readDWord: address=" << address.address_string
+                  << " -> NodeId=ns=4;i=" << numericId << std::endl;
+    } else {
+        nodeId = UA_NODEID_STRING_ALLOC(4, node_id_str.c_str());
+        std::cout << "[OPC-UA DEBUG] readDWord: address=" << address.address_string
+                  << " -> NodeId=ns=4;s=" << node_id_str << std::endl;
+    }
     
     UA_Variant variant;
     UA_Variant_init(&variant);
@@ -396,7 +583,18 @@ bool OPCUACommunication::writeBool(const PLCAddress& address, bool value) {
     }
     
     std::string node_id_str = buildNodeId(address);
-    UA_NodeId nodeId = UA_NODEID_STRING_ALLOC(3, node_id_str.c_str());
+    UA_NodeId nodeId;
+    bool isNumeric = !node_id_str.empty() && std::all_of(node_id_str.begin(), node_id_str.end(), [](unsigned char c){ return std::isdigit(c); });
+    if (isNumeric) {
+        UA_UInt32 numericId = static_cast<UA_UInt32>(std::stoul(node_id_str));
+        nodeId = UA_NODEID_NUMERIC(4, numericId);
+        std::cout << "[OPC-UA DEBUG] writeBool: address=" << address.address_string
+                  << " -> NodeId=ns=4;i=" << numericId << std::endl;
+    } else {
+        nodeId = UA_NODEID_STRING_ALLOC(4, node_id_str.c_str());
+        std::cout << "[OPC-UA DEBUG] writeBool: address=" << address.address_string
+                  << " -> NodeId=ns=4;s=" << node_id_str << std::endl;
+    }
     
     UA_Boolean ua_value = value;
     UA_Variant variant;
@@ -441,7 +639,18 @@ bool OPCUACommunication::writeWord(const PLCAddress& address, uint16_t value) {
     }
     
     std::string node_id_str = buildNodeId(address);
-    UA_NodeId nodeId = UA_NODEID_STRING_ALLOC(3, node_id_str.c_str());
+    UA_NodeId nodeId;
+    bool isNumeric = !node_id_str.empty() && std::all_of(node_id_str.begin(), node_id_str.end(), [](unsigned char c){ return std::isdigit(c); });
+    if (isNumeric) {
+        UA_UInt32 numericId = static_cast<UA_UInt32>(std::stoul(node_id_str));
+        nodeId = UA_NODEID_NUMERIC(4, numericId);
+        std::cout << "[OPC-UA DEBUG] writeWord: address=" << address.address_string
+                  << " -> NodeId=ns=4;i=" << numericId << std::endl;
+    } else {
+        nodeId = UA_NODEID_STRING_ALLOC(4, node_id_str.c_str());
+        std::cout << "[OPC-UA DEBUG] writeWord: address=" << address.address_string
+                  << " -> NodeId=ns=4;s=" << node_id_str << std::endl;
+    }
     
     UA_UInt16 ua_value = value;
     UA_Variant variant;
@@ -485,7 +694,18 @@ bool OPCUACommunication::writeInt(const PLCAddress& address, int16_t value) {
     }
     
     std::string node_id_str = buildNodeId(address);
-    UA_NodeId nodeId = UA_NODEID_STRING_ALLOC(3, node_id_str.c_str());
+    UA_NodeId nodeId;
+    bool isNumeric = !node_id_str.empty() && std::all_of(node_id_str.begin(), node_id_str.end(), [](unsigned char c){ return std::isdigit(c); });
+    if (isNumeric) {
+        UA_UInt32 numericId = static_cast<UA_UInt32>(std::stoul(node_id_str));
+        nodeId = UA_NODEID_NUMERIC(4, numericId);
+        std::cout << "[OPC-UA DEBUG] writeInt: address=" << address.address_string
+                  << " -> NodeId=ns=4;i=" << numericId << std::endl;
+    } else {
+        nodeId = UA_NODEID_STRING_ALLOC(4, node_id_str.c_str());
+        std::cout << "[OPC-UA DEBUG] writeInt: address=" << address.address_string
+                  << " -> NodeId=ns=4;s=" << node_id_str << std::endl;
+    }
     
     UA_Int16 ua_value = value;
     UA_Variant variant;
@@ -529,7 +749,18 @@ bool OPCUACommunication::writeReal(const PLCAddress& address, float value) {
     }
     
     std::string node_id_str = buildNodeId(address);
-    UA_NodeId nodeId = UA_NODEID_STRING_ALLOC(3, node_id_str.c_str());
+    UA_NodeId nodeId;
+    bool isNumeric = !node_id_str.empty() && std::all_of(node_id_str.begin(), node_id_str.end(), [](unsigned char c){ return std::isdigit(c); });
+    if (isNumeric) {
+        UA_UInt32 numericId = static_cast<UA_UInt32>(std::stoul(node_id_str));
+        nodeId = UA_NODEID_NUMERIC(4, numericId);
+        std::cout << "[OPC-UA DEBUG] writeReal: address=" << address.address_string
+                  << " -> NodeId=ns=4;i=" << numericId << std::endl;
+    } else {
+        nodeId = UA_NODEID_STRING_ALLOC(4, node_id_str.c_str());
+        std::cout << "[OPC-UA DEBUG] writeReal: address=" << address.address_string
+                  << " -> NodeId=ns=4;s=" << node_id_str << std::endl;
+    }
     
     UA_Float ua_value = value;
     UA_Variant variant;
@@ -573,7 +804,18 @@ bool OPCUACommunication::writeDWord(const PLCAddress& address, uint32_t value) {
     }
     
     std::string node_id_str = buildNodeId(address);
-    UA_NodeId nodeId = UA_NODEID_STRING_ALLOC(3, node_id_str.c_str());
+    UA_NodeId nodeId;
+    bool isNumeric = !node_id_str.empty() && std::all_of(node_id_str.begin(), node_id_str.end(), [](unsigned char c){ return std::isdigit(c); });
+    if (isNumeric) {
+        UA_UInt32 numericId = static_cast<UA_UInt32>(std::stoul(node_id_str));
+        nodeId = UA_NODEID_NUMERIC(4, numericId);
+        std::cout << "[OPC-UA DEBUG] writeDWord: address=" << address.address_string
+                  << " -> NodeId=ns=4;i=" << numericId << std::endl;
+    } else {
+        nodeId = UA_NODEID_STRING_ALLOC(4, node_id_str.c_str());
+        std::cout << "[OPC-UA DEBUG] writeDWord: address=" << address.address_string
+                  << " -> NodeId=ns=4;s=" << node_id_str << std::endl;
+    }
     
     UA_UInt32 ua_value = value;
     UA_Variant variant;
@@ -785,6 +1027,7 @@ bool S7Communication::attemptReconnect() {
     return false;
 }
 
+#ifdef USE_SNAP7
 int S7Communication::getAreaCode(PLCAddressType type) {
     switch (type) {
         case PLCAddressType::INPUT:
@@ -801,6 +1044,12 @@ int S7Communication::getAreaCode(PLCAddressType type) {
             return S7AreaMK;
     }
 }
+#else
+int S7Communication::getAreaCode(PLCAddressType type) {
+    // SNAP7 not available, return dummy value
+    return 0;
+}
+#endif
 
 bool S7Communication::readBool(const PLCAddress& address, bool& value) {
     std::lock_guard<std::mutex> lock(comm_mutex_);

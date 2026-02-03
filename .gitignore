@@ -1,8 +1,123 @@
-# Clangd placeholder files (if you don't want to commit them)
-# Uncomment the line below if you want to ignore the tango.h placeholder
-# include/tango.h
+# ========================================
+# Build artifacts
+# ========================================
+build/
+lib/
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+*.out
+*.app
 
-# 临时测试文件
+# ========================================
+# CMake generated files
+# ========================================
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+
+# ========================================
+# Python
+# ========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# ========================================
+# IDEs and Editors
+# ========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+.clangd/
+.cache/
+
+# ========================================
+# Logs
+# ========================================
+logs/
+*.log
 linear_logs_*.json
 axis_params_*.json
+
+# ========================================
+# Database and temporary files
+# ========================================
 test_db_conn
+*.db
+*.sqlite
+*.sqlite3
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# ========================================
+# System files
+# ========================================
+Thumbs.db
+.DS_Store
+*.swp
+*.swo
+
+# ========================================
+# OPC UA specific
+# ========================================
+*.uasession
+
+# ========================================
+# Compiled executables (project specific)
+# ========================================
+auxiliary_support_server
+encoder_server
+interlock_server
+large_stroke_server
+motion_controller_server
+reflection_imaging_server
+six_dof_server
+
+# ========================================
+# Optional: Clangd placeholder files
+# ========================================
+# Uncomment if you don't want to commit clangd placeholders
+# include/tango.h

@@ -28,7 +28,7 @@ CMAKE_BUILD_TYPE:STRING=
 CMAKE_COLOR_MAKEFILE:BOOL=ON
 
 //CXX compiler
-CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++
+CMAKE_CXX_COMPILER:STRING=/usr/bin/c++
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
@@ -54,7 +54,7 @@ CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -DNDEBUG
 CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 
 //C compiler
-CMAKE_C_COMPILER:FILEPATH=/usr/bin/cc
+CMAKE_C_COMPILER:STRING=/usr/bin/cc
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
@@ -233,11 +233,20 @@ OMNIORB4_LIB:FILEPATH=/usr/local/lib/libomniORB4.so
 //Path to a library.
 OMNITHREAD_LIB:FILEPATH=/usr/local/lib/libomnithread.so
 
+//Path to a library.
+OPEN62541_LIB:FILEPATH=/usr/local/lib/libopen62541.so
+
 //The directory containing a CMake configuration file for Qt5.
 Qt5_DIR:PATH=Qt5_DIR-NOTFOUND
 
 //Path to a library.
+SNAP7_LIB:FILEPATH=/usr/local/lib/libsnap7.so
+
+//Path to a library.
 ZMQ_LIB:FILEPATH=/usr/local/lib/libzmq.so
+
+//The directory containing a CMake configuration file for nlohmann_json.
+nlohmann_json_DIR:PATH=/usr/local/share/cmake/nlohmann_json
 
 
 ########################

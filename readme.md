@@ -194,14 +194,57 @@ scripts\run_tests.bat
 ## 6. 待开发事项（基于仓库内 TODO/文档）
 
 > 这里聚合“代码内 TODO + 文档中待确认/待实现项”，方便排期。
+### 最近更新（2026-02-03）
 
+**✅ 六自由度服务、大行程服务、反射光成像服务、辅助支撑服务刹车控制完善**
+
+- 位置：`six_dof_device.cpp`、`large_stroke_device.cpp`、`reflection_imaging_device.cpp`、`auxiliary_support_device.cpp`
+
+**✅ 真空系统plc的opcua通讯实现**
+
+- 位置：`vacuum_device.cpp`、`opcua_plc_interface.cpp`
+
+**✅ 腔体灯光电源控制实现**
+- 位置：大行程设备（large_stroke_device）
+- 新增功能：
+  - 添加 `cavityLightPort` 和 `cavityLightController` 配置项（OUT7端口控制）
+  - 实现 `enableCavityLight()` / `disableCavityLight()` 命令
+  - 服务启动时自动启用腔体灯光（在驱动器上电和刹车释放后）
+  - 更新 `queryPowerStatus()` 命令输出，包含腔体灯光状态
+- 配置：`config/devices_config.json` 中 large_stroke 设备已添加 `cavityLightPort: 7` 和 `cavityLightController: sys/motion/3`
+
+**✅ 编码器接口梳理和读取统一实现**
+
+- 位置：`encoder_device.cpp`、`encoder_interface.cpp`
+
+**✅ 大行程服务回零（负限位）实现**
+
+- 位置：`large_stroke_device.cpp`
+
+**✅ 运动完成后自动启用刹车（安全增强）**
+- 影响设备：large_stroke、six_dof、reflection_imaging、auxiliary_support
+- 改进内容：
+  - **运动前**：自动释放刹车，允许运动（已有功能）
+  - **运动后**：自动启用刹车，提供安全保护（新增）
+  - **故障时**：自动启用刹车（已有功能）
+- 安全优势：
+  - 防止运动停止后的位置漂移
+  - 断电时提供机械锁定保护
+  - 减少人工干预，提升安全性
+- 修改位置：
+  - [large_stroke_device.cpp](src/device_services/large_stroke_device.cpp) - 运动完成状态转换时自动启用刹车
+  - [six_dof_device.cpp](src/device_services/six_dof_device.cpp) - MOVING→ON状态转换时自动启用刹车
+  - [reflection_imaging_device.cpp](src/device_services/reflection_imaging_device.cpp) - Z轴运动完成后自动启用刹车
+  - [auxiliary_support_device.cpp](src/device_services/auxiliary_support_device.cpp) - 添加刹车控制预留注释
+
+**✅ 相机上电控制实现**
+- 位置：反射光成像设备（reflection_imaging_device）
+- 新增功能：
+  - 实现 `enableCameraPower()` / `disableCameraPower()` 命令
+  - 更新 `queryPowerStatus()` 命令输出，包含相机电源状态
 ### P0 / 需要尽快落实
-1) **相机上电控制纳入联调验证**
-- 已确认：相机供电需要软件控制。
-- 配置依据：`config/devices_config.json` 中反射光成像设备的 `cameraPowerPort` 与 `cameraPowerController`（以及对应的 IO 映射）。
-- 建议补充：在联调/验收测试中加入“相机上电→相机初始化→抓图”闭环用例。
 
-2) **真空系统保持单独启动的操作固化**
+1) **真空系统保持单独启动的操作固化**
 - 已确认：真空系统不并入 `scripts/start_servers.py`，继续使用 `scripts/start_vacuum_system.sh` 独立管理。
 - 建议补充：在现场 SOP/快速操作卡中明确启动顺序（先数据库/设备服务，再真空服务，再 GUI）。
 

@@ -98,6 +98,8 @@ interlock_server: /usr/local/lib/libomniDynamic4.so
 interlock_server: /usr/local/lib/libomnithread.so
 interlock_server: /usr/local/lib/libzmq.so
 interlock_server: libcommon_lib.a
+interlock_server: /usr/local/lib/libopen62541.so
+interlock_server: /usr/local/lib/libsnap7.so
 interlock_server: /usr/local/lib/libtango.so
 interlock_server: CMakeFiles/interlock_server.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable interlock_server"

@@ -2079,8 +2079,13 @@ void SixDofDevice::read_attr_hardware(std::vector<long> &/*attr_list*/) {
                 set_state(Tango::FAULT);
             } else {
                 // 运动完成：从MOVING状态变为ON状态
-                // 注意：正常运动完成后不自动启用刹车，保持刹车释放状态以便快速继续运动
-                // 刹车只在故障、限位触发、断电、设备关闭等安全场景下自动启用
+                // 运动完成后自动启用刹车（安全保护）
+                if (get_state() == Tango::MOVING && brake_power_port_ >= 0 && brake_released_) {
+                    INFO_STREAM << "[BrakeControl] Motion completed, auto-engaging brake (safety)" << endl;
+                    if (!engage_brake()) {
+                        WARN_STREAM << "[BrakeControl] Failed to engage brake after motion completion" << endl;
+                    }
+                }
                 set_state(Tango::ON);
             }
         } catch (...) {

@@ -35,24 +35,24 @@ endif()
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # Find open62541 OPC UA library
-# find_library(OPEN62541_LIB open62541 PATHS /usr/local/lib)
-# if(OPEN62541_LIB)
-#     message(STATUS "Found open62541 library: ${OPEN62541_LIB}")
-#     add_definitions(-DUSE_OPEN62541)
-#     include_directories(/usr/local/include)
-# else()
-#     message(WARNING "open62541 library not found - OPC UA communication disabled")
-# endif()
+find_library(OPEN62541_LIB open62541 PATHS /usr/local/lib)
+if(OPEN62541_LIB)
+    message(STATUS "Found open62541 library: ${OPEN62541_LIB}")
+    add_definitions(-DUSE_OPEN62541)
+    include_directories(/usr/local/include)
+else()
+    message(WARNING "open62541 library not found - OPC UA communication disabled")
+endif()
 
-# Find snap7 S7 protocol library
-# find_library(SNAP7_LIB snap7 PATHS /usr/local/lib)
-# if(SNAP7_LIB)
-#     message(STATUS "Found snap7 library: ${SNAP7_LIB}")
-#     add_definitions(-DUSE_SNAP7)
-#     include_directories(/usr/local/include)
-# else()
-#     message(WARNING "snap7 library not found - S7 communication disabled")
-# endif()
+#Find snap7 S7 protocol library
+find_library(SNAP7_LIB snap7 PATHS /usr/local/lib)
+if(SNAP7_LIB)
+    message(STATUS "Found snap7 library: ${SNAP7_LIB}")
+    add_definitions(-DUSE_SNAP7)
+    include_directories(/usr/local/include)
+else()
+    message(WARNING "snap7 library not found - S7 communication disabled")
+endif()
 
 # Create common library (always build)
 add_library(common_lib
@@ -60,21 +60,21 @@ add_library(common_lib
     src/common/kinematics.cpp
     src/common/system_config.cpp
     src/common/standard_system_device.cpp
-    # src/common/plc_communication.cpp
+    src/common/plc_communication.cpp
     src/common/encoder_acquisition.cpp
 )
 
 # Link open62541 to common_lib if found
-# if(OPEN62541_LIB)
-#     target_link_libraries(common_lib PUBLIC ${OPEN62541_LIB})
-# endif()
-# if(SNAP7_LIB)
-#     target_link_libraries(common_lib PUBLIC ${SNAP7_LIB})
-# endif()
+if(OPEN62541_LIB)
+    target_link_libraries(common_lib PUBLIC ${OPEN62541_LIB})
+endif()
+if(SNAP7_LIB)
+    target_link_libraries(common_lib PUBLIC ${SNAP7_LIB})
+endif()
 
-# if(MSVC)
-#     target_link_libraries(common_lib PUBLIC ws2_32)
-# endif()
+if(MSVC)
+    target_link_libraries(common_lib PUBLIC ws2_32)
+endif()
 
 # Add Tango include directories early for common_lib
 if(EXISTS "/usr/include/tango/tango.h")
@@ -167,35 +167,38 @@ if(TANGO_FOUND)
         target_compile_options(auxiliary_support_server PRIVATE -Wno-deprecated)
     endif()
 
-    # add_executable(vacuum_server
-    #     src/device_services/vacuum_device.cpp
-    # )
-    # target_link_libraries(vacuum_server ${TANGO_LIBRARIES} common_lib ${SNAP7_LIB})
+    add_executable(vacuum_server
+        src/device_services/vacuum_device.cpp
+    )
+    target_link_libraries(vacuum_server ${TANGO_LIBRARIES} ${OMNIORB4_LIB} ${OMNIDYNAMIC4_LIB} ${OMNITHREAD_LIB} ${ZMQ_LIB} common_lib)
+    if(SNAP7_LIB)
+        target_link_libraries(vacuum_server ${SNAP7_LIB})
+    endif()
     # 链接网络库（Windows需要ws2_32，Linux不需要）
-    # if(MSVC)
-    #     target_link_libraries(vacuum_server ws2_32)
-    # endif()
-    # if(NOT MSVC)
-    #     target_compile_options(vacuum_server PRIVATE -Wno-deprecated)
-    # endif()
+    if(MSVC)
+        target_link_libraries(vacuum_server ws2_32)
+    endif()
+    if(NOT MSVC)
+        target_compile_options(vacuum_server PRIVATE -Wno-deprecated)
+    endif()
 
     # New Vacuum System Server (Replaces old vacuum_server)
-    # add_executable(vacuum_system_server
-    #     src/device_services/vacuum_system_device.cpp
-    # )
-    # target_link_libraries(vacuum_system_server ${TANGO_LIBRARIES} common_lib)
-    # if(MSVC)
-    #     target_link_libraries(vacuum_system_server ws2_32)
-    # endif()
-    # if(NOT MSVC)
-    #     target_compile_options(vacuum_system_server PRIVATE -Wno-deprecated)
-    # endif()
+    add_executable(vacuum_system_server
+        src/device_services/vacuum_system_device.cpp
+    )
+    target_link_libraries(vacuum_system_server ${TANGO_LIBRARIES} ${OMNIORB4_LIB} ${OMNIDYNAMIC4_LIB} ${OMNITHREAD_LIB} ${ZMQ_LIB} common_lib)
+    if(MSVC)
+        target_link_libraries(vacuum_system_server ws2_32)
+    endif()
+    if(NOT MSVC)
+        target_compile_options(vacuum_system_server PRIVATE -Wno-deprecated)
+    endif()
     
     # Link nlohmann_json if found, otherwise assume it's in include path
-    # find_package(nlohmann_json QUIET)
-    # if(nlohmann_json_FOUND)
-    #     target_link_libraries(vacuum_system_server nlohmann_json::nlohmann_json)
-    # endif()
+    find_package(nlohmann_json QUIET)
+    if(nlohmann_json_FOUND)
+        target_link_libraries(vacuum_system_server nlohmann_json::nlohmann_json)
+    endif()
 
     add_executable(interlock_server
         src/system_services/interlock_service.cpp

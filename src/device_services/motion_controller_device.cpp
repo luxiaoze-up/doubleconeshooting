@@ -293,7 +293,7 @@ bool MotionControllerDevice::try_reconnect() {
     if (ret == 0) {
         is_connected_ = true;
         reconnect_attempts_ = 0;  // 重置重连计数
-        set_state(Tango::STANDBY);
+        set_state(Tango::ON);
         set_status("Reconnected successfully");
         INFO_STREAM << "[Reconnect] 重连成功!" << std::endl;
         log_event("Reconnection successful");
@@ -454,7 +454,7 @@ void MotionControllerDevice::connect() {
         is_disabled_ = false;
         moving_axes_.clear();
         reconnect_attempts_ = 0;  // 重置重连计数
-        set_state(Tango::STANDBY);
+        set_state(Tango::ON);
         set_status("Simulation Mode - Connected");
         log_event("Controller connected (Simulation)");
         return;
@@ -468,7 +468,7 @@ void MotionControllerDevice::connect() {
     is_disabled_ = false;
     moving_axes_.clear();
     reconnect_attempts_ = 0;  // 重置重连计数
-    set_state(Tango::STANDBY);
+    set_state(Tango::ON);
     set_status("Connected - Ready");
     log_event("Controller connected");
 }
@@ -483,7 +483,7 @@ void MotionControllerDevice::setDisabled(bool disabled) {
         log_event("Motion disabled by interlock");
     } else {
         if (moving_axes_.empty()) {
-            set_state(Tango::STANDBY);
+            set_state(Tango::ON);
             set_status("Ready - Interlock released");
         }
         log_event("Motion enabled, interlock released");
@@ -519,7 +519,7 @@ void MotionControllerDevice::reset(Tango::DevShort axis_id) {
         moving_axes_.erase(axis_id);
         fault_state_ = "";
         if (moving_axes_.empty()) {
-            set_state(Tango::STANDBY);
+            set_state(Tango::ON);
             set_status("Ready - Reset completed (Simulation)");
         }
         log_event("Simulation: Axis " + std::to_string(axis_id) + " reset");
@@ -544,7 +544,7 @@ void MotionControllerDevice::reset(Tango::DevShort axis_id) {
         if (get_state() == Tango::FAULT || get_state() == Tango::ALARM) {
             fault_state_ = "";
             if (moving_axes_.empty()) {
-                set_state(Tango::STANDBY);
+                set_state(Tango::ON);
                 set_status("Ready - Reset completed");
             } else {
                 set_state(Tango::MOVING);
@@ -583,6 +583,11 @@ void MotionControllerDevice::moveZero(Tango::DevShort axis_id) {
         moving_axes_.insert(axis_id);
         set_state(Tango::MOVING);
         set_status("Moving - Home axis " + std::to_string(axis_id));
+        
+        // 清除该轴的旧跟踪数据
+        axis_move_start_time_.erase(axis_id);
+        axis_last_position_.erase(axis_id);
+        axis_position_stable_time_.erase(axis_id);
     }
     
     // 自动检查并使能电机（如果未使能）
@@ -640,6 +645,11 @@ void MotionControllerDevice::moveRelative(const Tango::DevVarDoubleArray *argin)
         moving_axes_.insert(axis);
         set_state(Tango::MOVING);
         set_status("Moving - Relative axis " + std::to_string(axis));
+        
+        // 清除该轴的旧跟踪数据
+        axis_move_start_time_.erase(axis);
+        axis_last_position_.erase(axis);
+        axis_position_stable_time_.erase(axis);
     }
     
     // 自动检查并使能电机（如果未使能）
@@ -697,6 +707,11 @@ void MotionControllerDevice::moveAbsolute(const Tango::DevVarDoubleArray *argin)
         moving_axes_.insert(axis);
         set_state(Tango::MOVING);
         set_status("Moving - Absolute axis " + std::to_string(axis) + " to " + std::to_string(pos));
+        
+        // 清除该轴的旧跟踪数据
+        axis_move_start_time_.erase(axis);
+        axis_last_position_.erase(axis);
+        axis_position_stable_time_.erase(axis);
     }
     
     // 自动检查并使能电机（如果未使能）
@@ -735,7 +750,7 @@ void MotionControllerDevice::stopMove(Tango::DevShort axis_id) {
         std::lock_guard<std::mutex> lock(state_mutex_);
         moving_axes_.erase(axis_id);
         if (moving_axes_.empty()) {
-            set_state(Tango::STANDBY);
+            set_state(Tango::ON);
             set_status("Ready - Stopped (Simulation)");
         }
         log_event("Simulation: Stop axis " + std::to_string(axis_id));
@@ -753,7 +768,7 @@ void MotionControllerDevice::stopMove(Tango::DevShort axis_id) {
         std::lock_guard<std::mutex> lock(state_mutex_);
         moving_axes_.erase(axis_id);
         if (moving_axes_.empty()) {
-            set_state(Tango::STANDBY);
+            set_state(Tango::ON);
             set_status("Ready - Stopped");
         }
     }
@@ -1450,32 +1465,83 @@ void MotionControllerDevice::always_executed_hook() {
     // 如果当前是 MOVING 状态，检查所有运动中的轴
     if (get_state() == Tango::MOVING && !moving_axes_.empty()) {
         if (sim_mode_) {
+        INFO_STREAM << "[Hook] always_executed_hook: checking motion for " << moving_axes_.size() << " axes" << std::endl;
             // 模拟模式：立即完成运动
             moving_axes_.clear();
-            set_state(Tango::STANDBY);
+            set_state(Tango::ON);
             set_status("Ready - Motion completed (Simulation)");
-            log_event("Simulation: All axes stopped, state -> STANDBY");
+            log_event("Simulation: All axes stopped, state -> ON");
             return;
         }
         
         // 真实模式：轮询硬件状态
         std::set<short> still_moving;
+        auto now = std::chrono::steady_clock::now();
+        
         for (short axis : moving_axes_) {
+            INFO_STREAM << "[SMC] Checking axis " << axis << " motion status..." << std::endl;
             DEBUG_STREAM << "[SMC] smc_check_done(card_id=" << card_id_ << ", axis=" << axis << ") [always_executed_hook]" << std::endl;
             short state = smc_check_done(card_id_, axis);
             // smc_check_done 返回值: 0=运动中, 1=已停止
             DEBUG_STREAM << "[SMC] smc_check_done() returned: " << state << " (0=moving, 1=stopped)" << std::endl;
-            if (state == 0) {  // 0 = still moving
+            
+            if (state == 0) {  // 0 = still moving (根据smc_check_done)
+                // 额外的位置稳定性检查：如果位置长时间不变，强制认为运动完成
+                double current_pos = 0.0;
+                smc_get_position_unit(card_id_, axis, &current_pos);
+                
+                // 检查是否刚开始运动
+                if (axis_move_start_time_.find(axis) == axis_move_start_time_.end()) {
+                    axis_move_start_time_[axis] = now;
+                    axis_last_position_[axis] = current_pos;
+                    axis_position_stable_time_[axis] = now;
+                    still_moving.insert(axis);
+                    continue;
+                }
+                
+                // 检查位置是否稳定
+                double position_change = std::abs(current_pos - axis_last_position_[axis]);
+                if (position_change < POSITION_STABLE_THRESHOLD) {
+                    // 位置稳定，检查稳定时间
+                    auto stable_duration = std::chrono::duration_cast<std::chrono::milliseconds>(
+                        now - axis_position_stable_time_[axis]).count();
+                    
+                    if (stable_duration > POSITION_STABLE_TIMEOUT_MS) {
+                        // 位置稳定时间超过阈值，强制认为运动完成
+                        WARN_STREAM << "[SMC] Axis " << axis << " position stable for " << stable_duration 
+                                   << "ms (threshold=" << POSITION_STABLE_TIMEOUT_MS 
+                                   << "ms), forcing motion complete despite smc_check_done=0" << std::endl;
+                        INFO_STREAM << "[SMC] Position: " << current_pos << ", last: " << axis_last_position_[axis]
+                                   << ", change: " << position_change << std::endl;
+                        
+                        // 清除该轴的跟踪信息
+                        axis_move_start_time_.erase(axis);
+                        axis_last_position_.erase(axis);
+                        axis_position_stable_time_.erase(axis);
+                        // 不添加到still_moving，让它停止
+                        continue;
+                    }
+                } else {
+                    // 位置有变化，更新记录
+                    axis_last_position_[axis] = current_pos;
+                    axis_position_stable_time_[axis] = now;
+                }
+                
                 still_moving.insert(axis);
+            } else {
+                // smc_check_done返回1（已停止），清除跟踪信息
+                axis_move_start_time_.erase(axis);
+                axis_last_position_.erase(axis);
+                axis_position_stable_time_.erase(axis);
             }
         }
         moving_axes_ = still_moving;
         
-        // 如果所有轴都停止了，恢复到 STANDBY 状态
+        // 如果所有轴都停止了，恢复到 ON 状态（与初始化状态一致）
         if (moving_axes_.empty()) {
-            set_state(Tango::STANDBY);
+            set_state(Tango::ON);
             set_status("Ready - Motion completed");
-            log_event("All axes stopped, state -> STANDBY");
+            log_event("All axes stopped, state -> ON");
         }
     }
 }

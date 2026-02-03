@@ -798,7 +798,7 @@ void AuxiliarySupportDevice::moveRelative(Tango::DevDouble distance) {
         Tango::DevVarDoubleArray args;
         args.length(2);
         args[0] = static_cast<double>(axis_ids_[0]);
-        args[1] = distance;
+        args[1] = static_cast<int>(std::round(distance * 4000 / (3 / 3.6)));
         auto motion = get_motion_controller_proxy();
         if (!motion) {
             throw std::runtime_error("Motion controller proxy not available");
@@ -952,6 +952,64 @@ Tango::DevDouble AuxiliarySupportDevice::readEncoder() {
     } catch (Tango::DevFailed &e) {
         WARN_STREAM << "readEncoder failed: " << e.errors[0].desc << " - returning cached value" << std::endl;
         return token_assist_pos_;
+    }
+}
+
+void AuxiliarySupportDevice::saveEncoderPosition() {
+    INFO_STREAM << "[saveEncoderPosition] Saving current encoder position to database" << std::endl;
+    
+    try {
+        // 读取当前编码器位置
+        double position = readEncoder();
+        
+        INFO_STREAM << "[saveEncoderPosition] Current position: " << position << " mm" << std::endl;
+        
+        // 保存到数据库
+        Tango::DbData db_data;
+        db_data.push_back(Tango::DbDatum("encoderPosition"));
+        db_data[0] << position;
+        
+        Tango::DbDevice db_dev(get_name());
+        db_dev.put_property(db_data);
+        
+        INFO_STREAM << "[saveEncoderPosition] ✓ Encoder position saved successfully" << std::endl;
+        
+    } catch (Tango::DevFailed &e) {
+        ERROR_STREAM << "[saveEncoderPosition] Failed to save: " << e.errors[0].desc << std::endl;
+        Tango::Except::re_throw_exception(e, "API_DatabaseError",
+            "Failed to save encoder position", 
+            "AuxiliarySupportDevice::saveEncoderPosition");
+    }
+}
+
+void AuxiliarySupportDevice::loadEncoderPosition() {
+    INFO_STREAM << "[loadEncoderPosition] Loading encoder position from database" << std::endl;
+    
+    try {
+        // 从数据库读取
+        Tango::DbData db_data;
+        db_data.push_back(Tango::DbDatum("encoderPosition"));
+        
+        Tango::DbDevice db_dev(get_name());
+        db_dev.get_property(db_data);
+        
+        if (db_data[0].is_empty()) {
+            WARN_STREAM << "[loadEncoderPosition] No saved position found in database" << std::endl;
+            return;
+        }
+        
+        double position;
+        db_data[0] >> position;
+        
+        token_assist_pos_ = position;
+        
+        INFO_STREAM << "[loadEncoderPosition] ✓ Loaded position: " << position << " mm" << std::endl;
+        
+    } catch (Tango::DevFailed &e) {
+        ERROR_STREAM << "[loadEncoderPosition] Failed to load: " << e.errors[0].desc << std::endl;
+        Tango::Except::re_throw_exception(e, "API_DatabaseError",
+            "Failed to load encoder position", 
+            "AuxiliarySupportDevice::loadEncoderPosition");
     }
 }
 
@@ -1680,6 +1738,7 @@ void AuxiliarySupportDevice::always_executed_hook() {
                 if (mc_state != Tango::MOVING) {
                     // 运动控制器已停止运动，同步本设备状态
                     INFO_STREAM << "[DEBUG] always_executed_hook: Motion controller stopped, syncing state" << std::endl;
+                    // 注意：辅助支撑设备通常无刹车配置，此处预留刹车控制代码以备将来使用
                     assist_state_ = false;
                     if (get_state() == Tango::MOVING) {
                         if (!limit_fault_latched_.load()) {
@@ -1982,6 +2041,12 @@ void AuxiliarySupportDeviceClass::command_factory() {
         static_cast<Tango::DevBoolean (Tango::DeviceImpl::*)()>(&AuxiliarySupportDevice::readOrg)));
     command_list.push_back(new Tango::TemplCommandOut<Tango::DevShort>("readEL",
         static_cast<Tango::DevShort (Tango::DeviceImpl::*)()>(&AuxiliarySupportDevice::readEL)));
+    
+    // Encoder position save/load commands
+    command_list.push_back(new Tango::TemplCommand("saveEncoderPosition",
+        static_cast<void (Tango::DeviceImpl::*)()>(&AuxiliarySupportDevice::saveEncoderPosition)));
+    command_list.push_back(new Tango::TemplCommand("loadEncoderPosition",
+        static_cast<void (Tango::DeviceImpl::*)()>(&AuxiliarySupportDevice::loadEncoderPosition)));
     
     // Auto/Force commands (15-16, 18)
     command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("assistAuto",

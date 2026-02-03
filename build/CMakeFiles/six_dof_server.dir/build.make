@@ -98,6 +98,8 @@ six_dof_server: /usr/local/lib/libomniDynamic4.so
 six_dof_server: /usr/local/lib/libomnithread.so
 six_dof_server: /usr/local/lib/libzmq.so
 six_dof_server: libcommon_lib.a
+six_dof_server: /usr/local/lib/libopen62541.so
+six_dof_server: /usr/local/lib/libsnap7.so
 six_dof_server: /usr/local/lib/libtango.so
 six_dof_server: CMakeFiles/six_dof_server.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable six_dof_server"

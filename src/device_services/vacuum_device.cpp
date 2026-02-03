@@ -454,38 +454,41 @@ void VacuumDevice::ventStop() {
 // 泵控制
 void VacuumDevice::setScrewPumpPower(Tango::DevBoolean state) {
     ensure_unlocked("VacuumDevice::setScrewPumpPower");
-    auto addr = PLC::VacuumPLCMapping::ScrewPumpPowerOutput();
-    INFO_STREAM << "===[CMD] setScrewPumpPower: state=" << (state ? "ON" : "OFF") 
+    bool turn_on = state != 0;
+    auto addr = turn_on ? PLC::VacuumPLCMapping::ScrewPumpPowerOn() : PLC::VacuumPLCMapping::ScrewPumpPowerOff();
+    INFO_STREAM << "===[CMD] setScrewPumpPower: state=" << (turn_on ? "ON" : "OFF") 
                 << " -> PLC地址: " << addr.address_string << std::endl;
     bool plc_connected = plc_comm_ && plc_comm_->isConnected();
-    bool ok = writePLCBool(addr, state != 0);
+    bool ok = writePLCBool(addr, true);  // separate ON/OFF coils
     log_event("Screw pump power: " + std::string(state ? "ON" : "OFF"));
     result_value_ = ok ? 0 : 1;
-    log_command_result("setScrewPumpPower", state ? "1" : "0", ok, plc_connected);
+    log_command_result("setScrewPumpPower", turn_on ? "1" : "0", ok, plc_connected);
 }
 
 void VacuumDevice::setScrewPumpStartStop(Tango::DevBoolean state) {
     ensure_unlocked("VacuumDevice::setScrewPumpStartStop");
-    auto addr = PLC::VacuumPLCMapping::ScrewPumpStartStop();
-    INFO_STREAM << "===[CMD] setScrewPumpStartStop: state=" << (state ? "START" : "STOP") 
+    bool start = state != 0;
+    auto addr = start ? PLC::VacuumPLCMapping::ScrewPumpStart() : PLC::VacuumPLCMapping::ScrewPumpStop();
+    INFO_STREAM << "===[CMD] setScrewPumpStartStop: state=" << (start ? "START" : "STOP") 
                 << " -> PLC地址: " << addr.address_string << std::endl;
     bool plc_connected = plc_comm_ && plc_comm_->isConnected();
-    bool ok = writePLCBool(addr, state != 0);
+    bool ok = writePLCBool(addr, true);  // separate START/STOP coils
     log_event("Screw pump start/stop: " + std::string(state ? "START" : "STOP"));
     result_value_ = ok ? 0 : 1;
-    log_command_result("setScrewPumpStartStop", state ? "1" : "0", ok, plc_connected);
+    log_command_result("setScrewPumpStartStop", start ? "1" : "0", ok, plc_connected);
 }
 
 void VacuumDevice::setRootsPumpPower(Tango::DevBoolean state) {
     ensure_unlocked("VacuumDevice::setRootsPumpPower");
-    auto addr = PLC::VacuumPLCMapping::RootsPumpPowerOutput();
-    INFO_STREAM << "===[CMD] setRootsPumpPower: state=" << (state ? "ON" : "OFF") 
+    bool turn_on = state != 0;
+    auto addr = turn_on ? PLC::VacuumPLCMapping::RootsPumpPowerOn() : PLC::VacuumPLCMapping::RootsPumpPowerOff();
+    INFO_STREAM << "===[CMD] setRootsPumpPower: state=" << (turn_on ? "ON" : "OFF") 
                 << " -> PLC地址: " << addr.address_string << std::endl;
     bool plc_connected = plc_comm_ && plc_comm_->isConnected();
-    bool ok = writePLCBool(addr, state != 0);
+    bool ok = writePLCBool(addr, true);
     log_event("Roots pump power: " + std::string(state ? "ON" : "OFF"));
     result_value_ = ok ? 0 : 1;
-    log_command_result("setRootsPumpPower", state ? "1" : "0", ok, plc_connected);
+    log_command_result("setRootsPumpPower", turn_on ? "1" : "0", ok, plc_connected);
 }
 
 void VacuumDevice::setMolecularPumpPower(const Tango::DevVarShortArray *argin) {
@@ -503,18 +506,18 @@ void VacuumDevice::setMolecularPumpPower(const Tango::DevVarShortArray *argin) {
     }
     
     // 根据索引选择对应的PLC地址
-    Common::PLC::PLCAddress addr = PLC::VacuumPLCMapping::MolecularPump1PowerOutput();
+    Common::PLC::PLCAddress addr = PLC::VacuumPLCMapping::MolecularPump1PowerOn();
     switch (index) {
-        case 1: addr = PLC::VacuumPLCMapping::MolecularPump1PowerOutput(); break;
-        case 2: addr = PLC::VacuumPLCMapping::MolecularPump2PowerOutput(); break;
-        case 3: addr = PLC::VacuumPLCMapping::MolecularPump3PowerOutput(); break;
+        case 1: addr = state ? PLC::VacuumPLCMapping::MolecularPump1PowerOn() : PLC::VacuumPLCMapping::MolecularPump1PowerOff(); break;
+        case 2: addr = state ? PLC::VacuumPLCMapping::MolecularPump2PowerOn() : PLC::VacuumPLCMapping::MolecularPump2PowerOff(); break;
+        case 3: addr = state ? PLC::VacuumPLCMapping::MolecularPump3PowerOn() : PLC::VacuumPLCMapping::MolecularPump3PowerOff(); break;
         default: break;
     }
     
     INFO_STREAM << "===[CMD] setMolecularPumpPower: index=" << index << ", state=" << (state ? "ON" : "OFF") 
                 << " -> PLC地址: " << addr.address_string << std::endl;
     bool plc_connected = plc_comm_ && plc_comm_->isConnected();
-    bool ok = writePLCBool(addr, state != 0);
+    bool ok = writePLCBool(addr, true);
     log_event("分子泵" + std::to_string(index) + "电源: " + (state ? "开" : "关"));
     result_value_ = ok ? 0 : 1;
     log_command_result("setMolecularPumpPower", std::to_string(index) + "," + std::to_string(state), ok, plc_connected);
@@ -534,22 +537,23 @@ void VacuumDevice::setMolecularPumpStartStop(const Tango::DevVarShortArray *argi
             "分子泵索引超出范围(1-3)", "VacuumDevice::setMolecularPumpStartStop");
     }
     
-    // 根据索引选择对应的PLC地址
-    Common::PLC::PLCAddress addr = PLC::VacuumPLCMapping::MolecularPump1StartStop();
+    // 根据索引选择对应的开/关线圈
+    Common::PLC::PLCAddress addr = PLC::VacuumPLCMapping::MolecularPump1Start();
+    bool start = state != 0;
     switch (index) {
-        case 1: addr = PLC::VacuumPLCMapping::MolecularPump1StartStop(); break;
-        case 2: addr = PLC::VacuumPLCMapping::MolecularPump2StartStop(); break;
-        case 3: addr = PLC::VacuumPLCMapping::MolecularPump3StartStop(); break;
+        case 1: addr = start ? PLC::VacuumPLCMapping::MolecularPump1Start() : PLC::VacuumPLCMapping::MolecularPump1Stop(); break;
+        case 2: addr = start ? PLC::VacuumPLCMapping::MolecularPump2Start() : PLC::VacuumPLCMapping::MolecularPump2Stop(); break;
+        case 3: addr = start ? PLC::VacuumPLCMapping::MolecularPump3Start() : PLC::VacuumPLCMapping::MolecularPump3Stop(); break;
         default: break;
     }
     
-    INFO_STREAM << "===[CMD] setMolecularPumpStartStop: index=" << index << ", state=" << (state ? "START" : "STOP") 
+    INFO_STREAM << "===[CMD] setMolecularPumpStartStop: index=" << index << ", state=" << (start ? "START" : "STOP") 
                 << " -> PLC地址: " << addr.address_string << std::endl;
     bool plc_connected = plc_comm_ && plc_comm_->isConnected();
-    bool ok = writePLCBool(addr, state != 0);
+    bool ok = writePLCBool(addr, true);
     log_event("分子泵" + std::to_string(index) + "启停: " + (state ? "启动" : "停止"));
     result_value_ = ok ? 0 : 1;
-    log_command_result("setMolecularPumpStartStop", std::to_string(index) + "," + std::to_string(state), ok, plc_connected);
+    log_command_result("setMolecularPumpStartStop", std::to_string(index) + "," + std::to_string(start), ok, plc_connected);
 }
 
 void VacuumDevice::setScrewPumpSpeed(Tango::DevDouble speed) {
@@ -571,9 +575,12 @@ void VacuumDevice::setScrewPumpSpeed(Tango::DevDouble speed) {
 
 void VacuumDevice::resetScrewPumpFault() {
     ensure_unlocked("VacuumDevice::resetScrewPumpFault");
-    auto addr = PLC::VacuumPLCMapping::ScrewPumpFaultReset();
-    INFO_STREAM << "===[CMD] resetScrewPumpFault -> PLC地址: " << addr.address_string << std::endl;
-    writePLCBool(addr, true);
+    auto addr_open = PLC::VacuumPLCMapping::ScrewPumpFaultResetOpen();
+    auto addr_close = PLC::VacuumPLCMapping::ScrewPumpFaultResetClose();
+    INFO_STREAM << "===[CMD] resetScrewPumpFault -> PLC地址Open: " << addr_open.address_string
+                << ", Close: " << addr_close.address_string << std::endl;
+    writePLCBool(addr_open, true);
+    writePLCBool(addr_close, false);
     log_event("螺杆泵故障复位");
     result_value_ = 0;
 }
@@ -679,20 +686,35 @@ void VacuumDevice::setElectromagneticValve(const Tango::DevVarShortArray *argin)
             "电磁阀索引超出范围(1-4)", "VacuumDevice::setElectromagneticValve");
     }
     
-    // 根据索引选择对应的PLC地址
-    Common::PLC::PLCAddress addr = PLC::VacuumPLCMapping::ElectromagneticValve1Output();
+    // 根据索引选择对应的本地手动输出PLC地址（成对控制）
+    auto addr_open = PLC::VacuumPLCMapping::ElectromagneticValve1LocalOpen();
+    auto addr_close = PLC::VacuumPLCMapping::ElectromagneticValve1LocalClose();
     switch (index) {
-        case 1: addr = PLC::VacuumPLCMapping::ElectromagneticValve1Output(); break;
-        case 2: addr = PLC::VacuumPLCMapping::ElectromagneticValve2Output(); break;
-        case 3: addr = PLC::VacuumPLCMapping::ElectromagneticValve3Output(); break;
-        case 4: addr = PLC::VacuumPLCMapping::ElectromagneticValve4Output(); break;
+        case 1: 
+            addr_open = PLC::VacuumPLCMapping::ElectromagneticValve1LocalOpen();
+            addr_close = PLC::VacuumPLCMapping::ElectromagneticValve1LocalClose();
+            break;
+        case 2:
+            addr_open = PLC::VacuumPLCMapping::ElectromagneticValve2LocalOpen();
+            addr_close = PLC::VacuumPLCMapping::ElectromagneticValve2LocalClose();
+            break;
+        case 3:
+            addr_open = PLC::VacuumPLCMapping::ElectromagneticValve3LocalOpen();
+            addr_close = PLC::VacuumPLCMapping::ElectromagneticValve3LocalClose();
+            break;
+        case 4:
+            addr_open = PLC::VacuumPLCMapping::ElectromagneticValve4LocalOpen();
+            addr_close = PLC::VacuumPLCMapping::ElectromagneticValve4LocalClose();
+            break;
         default: break;
     }
     
     bool plc_connected = plc_comm_ && plc_comm_->isConnected();
     INFO_STREAM << "===[CMD] setElectromagneticValve: index=" << index << ", state=" << (state ? "ON" : "OFF")
-                << " -> PLC地址: " << addr.address_string << std::endl;
-    bool ok = writePLCBool(addr, state != 0);
+                << " -> LocalOpen: " << addr_open.address_string
+                << ", LocalClose: " << addr_close.address_string << std::endl;
+    bool ok = writePLCBool(addr_open, state != 0);
+    writePLCBool(addr_close, state == 0);
     // 模拟模式下更新内部状态
     if (sim_mode_) {
         switch (index) {
@@ -734,18 +756,27 @@ void VacuumDevice::setVentValve(const Tango::DevVarShortArray *argin) {
             "放气阀索引超出范围(1-2)", "VacuumDevice::setVentValve");
     }
     
-    // 根据索引选择对应的PLC地址
-    Common::PLC::PLCAddress addr = PLC::VacuumPLCMapping::VentValve1Output();
+    // 根据索引选择对应的本地手动输出PLC地址（成对控制）
+    auto addr_open = PLC::VacuumPLCMapping::VentValve1LocalOpen();
+    auto addr_close = PLC::VacuumPLCMapping::VentValve1LocalClose();
     switch (index) {
-        case 1: addr = PLC::VacuumPLCMapping::VentValve1Output(); break;
-        case 2: addr = PLC::VacuumPLCMapping::VentValve2Output(); break;
+        case 1:
+            addr_open = PLC::VacuumPLCMapping::VentValve1LocalOpen();
+            addr_close = PLC::VacuumPLCMapping::VentValve1LocalClose();
+            break;
+        case 2:
+            addr_open = PLC::VacuumPLCMapping::VentValve2LocalOpen();
+            addr_close = PLC::VacuumPLCMapping::VentValve2LocalClose();
+            break;
         default: break;
     }
     
     bool plc_connected = plc_comm_ && plc_comm_->isConnected();
     INFO_STREAM << "===[CMD] setVentValve: index=" << index << ", state=" << (state ? "ON" : "OFF")
-                << " -> PLC地址: " << addr.address_string << std::endl;
-    bool ok = writePLCBool(addr, state != 0);
+                << " -> LocalOpen: " << addr_open.address_string
+                << ", LocalClose: " << addr_close.address_string << std::endl;
+    bool ok = writePLCBool(addr_open, state != 0);
+    writePLCBool(addr_close, state == 0);
     // 模拟模式下更新内部状态
     if (sim_mode_) {
         switch (index) {
@@ -779,22 +810,33 @@ void VacuumDevice::setWaterElectromagneticValve(const Tango::DevVarShortArray *a
             "水电磁阀索引超出范围(1-2)", "VacuumDevice::setWaterElectromagneticValve");
     }
     
-    // 根据索引选择对应的PLC地址
-    Common::PLC::PLCAddress addr = PLC::VacuumPLCMapping::WaterElectromagneticValve1Output();
+    // 根据索引选择对应的本地手动输出PLC地址（成对控制）
+    auto addr_open = PLC::VacuumPLCMapping::WaterElectromagneticValve1LocalOpen();
+    auto addr_close = PLC::VacuumPLCMapping::WaterElectromagneticValve1LocalClose();
     switch (index) {
-        case 1: addr = PLC::VacuumPLCMapping::WaterElectromagneticValve1Output(); break;
-        case 2: addr = PLC::VacuumPLCMapping::WaterElectromagneticValve2Output(); break;
+        case 1:
+            addr_open = PLC::VacuumPLCMapping::WaterElectromagneticValve1LocalOpen();
+            addr_close = PLC::VacuumPLCMapping::WaterElectromagneticValve1LocalClose();
+            break;
+        case 2:
+            addr_open = PLC::VacuumPLCMapping::WaterElectromagneticValve2LocalOpen();
+            addr_close = PLC::VacuumPLCMapping::WaterElectromagneticValve2LocalClose();
+            break;
         default: break;
     }
     
-    writePLCBool(addr, state != 0);
+    writePLCBool(addr_open, state != 0);
+    writePLCBool(addr_close, state == 0);
     log_event("水电磁阀" + std::to_string(index) + ": " + (state ? "开" : "关"));
     result_value_ = 0;
 }
 
 void VacuumDevice::setAirMainElectromagneticValve(Tango::DevBoolean state) {
     ensure_unlocked("VacuumDevice::setAirMainElectromagneticValve");
-    writePLCBool(PLC::VacuumPLCMapping::AirMainElectromagneticValveOutput(), state != 0);
+    auto addr_open = PLC::VacuumPLCMapping::AirMainElectromagneticValveLocalOpen();
+    auto addr_close = PLC::VacuumPLCMapping::AirMainElectromagneticValveLocalClose();
+    writePLCBool(addr_open, state != 0);
+    writePLCBool(addr_close, state == 0);
     log_event("气路总电磁阀: " + std::string(state ? "开" : "关"));
     result_value_ = 0;
 }

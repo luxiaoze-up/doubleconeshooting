@@ -1,6 +1,48 @@
 Warning: Qt5 not available, using default configuration values.
   Controller IP: 192.168.1.177
-  PLC IP: 192.168.1.177
-  Tango Host: 192.168.80.98:10000
+  PLC IP: 192.168.1.100
+  Tango Host: 192.168.1.177:10000
   ORB Timeouts: call=5000ms, connect=3000ms
 New device: sys/reflection/1
+[DEBUG] init_device() started
+[DEBUG] StandardSystemDevice::init_device() completed
+2026-02-02T16:33:51,942607+0800 INFO (reflection_imaging_device.cpp:320) sys/reflection/1 Loaded upper platform encoder positions: [0, 0, 0]
+2026-02-02T16:33:51,944283+0800 INFO (reflection_imaging_device.cpp:335) sys/reflection/1 Loaded lower platform encoder positions: [0, 0, 0]
+[DEBUG] Device properties loaded
+[DEBUG] CCD and image properties initialized
+[DEBUG] Loading SIM_MODE...
+2026-02-02T16:33:51,944431+0800 INFO (reflection_imaging_device.cpp:416) sys/reflection/1 [DEBUG] 运行模式: 真实模式 (从配置文件加载, SIM_MODE=false)
+2026-02-02T16:33:51,944442+0800 INFO (reflection_imaging_device.cpp:417) sys/reflection/1 [DEBUG] 提示: 可通过 simSwitch 命令或GUI动态切换模拟模式
+2026-02-02T16:33:51,944459+0800 INFO (reflection_imaging_device.cpp:420) sys/reflection/1 ReflectionImagingDevice initialized. Motion Controller: sys/motion/2
+[DEBUG] About to call connect_proxies()
+2026-02-02T16:33:51,944996+0800 INFO (reflection_imaging_device.cpp:643) sys/reflection/1 [DEBUG] connect_proxies() called. sim_mode=0
+2026-02-02T16:33:51,945105+0800 INFO (reflection_imaging_device.cpp:659) sys/reflection/1 [DEBUG] Rebuilding proxies (encoder=sys/encoder/1, motion=sys/motion/2)
+2026-02-02T16:33:51,954123+0800 INFO (reflection_imaging_device.cpp:672) sys/reflection/1 [DEBUG] All proxies connected. Device state: ON, status: Connected
+2026-02-02T16:33:51,954895+0800 INFO (reflection_imaging_device.cpp:701) sys/reflection/1 Applying motor subdivision parameters to upper platform axes (stepAngle=1.8, gearRatio=1, subdivision=4000)
+2026-02-02T16:33:51,959840+0800 WARN (reflection_imaging_device.cpp:717) sys/reflection/1 Failed to apply motor subdivision parameters to upper platform: setStructParameter failed with error code 1008
+2026-02-02T16:33:51,959869+0800 INFO (reflection_imaging_device.cpp:721) sys/reflection/1 Applying motor subdivision parameters to lower platform axes (stepAngle=1.8, gearRatio=1, subdivision=4000)
+2026-02-02T16:33:51,961071+0800 WARN (reflection_imaging_device.cpp:737) sys/reflection/1 Failed to apply motor subdivision parameters to lower platform: setStructParameter failed with error code 1008
+2026-02-02T16:33:51,961088+0800 INFO (reflection_imaging_device.cpp:741) sys/reflection/1 Restoring relay configuration and enabling driver power after reconnection...
+2026-02-02T16:33:51,961157+0800 INFO (reflection_imaging_device.cpp:6347) sys/reflection/1 [PowerControl] enable_driver_power() called
+2026-02-02T16:33:51,961184+0800 INFO (reflection_imaging_device.cpp:6348) sys/reflection/1 [PowerControl] driver_power_port_=2, driver_power_controller_=sys/motion/3
+2026-02-02T16:33:51,962454+0800 INFO (reflection_imaging_device.cpp:6375) sys/reflection/1 [PowerControl] Calling writeIO on sys/motion/3 with port=2, value=1
+2026-02-02T16:33:51,962472+0800 INFO (reflection_imaging_device.cpp:6377) sys/reflection/1 [PowerControl] Executing hardware writeIO command...
+2026-02-02T16:33:51,963419+0800 INFO (reflection_imaging_device.cpp:6379) sys/reflection/1 [PowerControl] writeIO command executed successfully
+2026-02-02T16:33:51,963441+0800 INFO (reflection_imaging_device.cpp:6382) sys/reflection/1 ✓ Driver power enabled on sys/motion/3 port OUT2
+2026-02-02T16:33:51,963878+0800 INFO (reflection_imaging_device.cpp:743) sys/reflection/1 Driver power enabled successfully after reconnection
+2026-02-02T16:33:51,963892+0800 INFO (reflection_imaging_device.cpp:750) sys/reflection/1 [BrakeControl] Platform reconnected, auto-releasing brake
+2026-02-02T16:33:51,964013+0800 INFO (reflection_imaging_device.cpp:6437) sys/reflection/1 [BrakeControl] release_brake() called
+2026-02-02T16:33:51,964027+0800 INFO (reflection_imaging_device.cpp:6438) sys/reflection/1 [BrakeControl] brake_power_port_=5, brake_power_controller_=sys/motion/3
+2026-02-02T16:33:51,964788+0800 INFO (reflection_imaging_device.cpp:6461) sys/reflection/1 [BrakeControl] Using dedicated brake controller: sys/motion/3
+2026-02-02T16:33:51,964838+0800 INFO (reflection_imaging_device.cpp:6482) sys/reflection/1 [BrakeControl] Calling writeIO for brake with port=5, value=1
+2026-02-02T16:33:51,965672+0800 INFO (reflection_imaging_device.cpp:6488) sys/reflection/1 ✓ Brake released on port OUT5
+2026-02-02T16:33:51,965699+0800 INFO (reflection_imaging_device.cpp:759) sys/reflection/1 Synchronizing encoder positions to motion controller...
+2026-02-02T16:33:51,967611+0800 INFO (reflection_imaging_device.cpp:784) sys/reflection/1 Upper platform axis 0 (encoder channel 8): synced position 32761.8 to motion controller
+2026-02-02T16:33:51,968411+0800 INFO (reflection_imaging_device.cpp:784) sys/reflection/1 Upper platform axis 2 (encoder channel 9): synced position 32753.5 to motion controller
+2026-02-02T16:33:51,969138+0800 INFO (reflection_imaging_device.cpp:784) sys/reflection/1 Upper platform axis 4 (encoder channel 12): synced position 32765.3 to motion controller
+2026-02-02T16:33:51,970003+0800 INFO (reflection_imaging_device.cpp:816) sys/reflection/1 Lower platform axis 1 (encoder channel 10): synced position 32744.3 to motion controller
+2026-02-02T16:33:51,971048+0800 INFO (reflection_imaging_device.cpp:816) sys/reflection/1 Lower platform axis 3 (encoder channel 11): synced position 32749.7 to motion controller
+2026-02-02T16:33:51,972014+0800 INFO (reflection_imaging_device.cpp:816) sys/reflection/1 Lower platform axis 5 (encoder channel 13): synced position 391.561 to motion controller
+2026-02-02T16:33:51,972028+0800 INFO (reflection_imaging_device.cpp:825) sys/reflection/1 Encoder positions synchronized to motion controller successfully
+[DEBUG] connect_proxies() completed
+ReflectionImaging Server Ready

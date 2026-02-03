@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o.d"
   "CMakeFiles/common_lib.dir/src/common/kinematics.cpp.o"
   "CMakeFiles/common_lib.dir/src/common/kinematics.cpp.o.d"
+  "CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.o"
+  "CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.o.d"
   "CMakeFiles/common_lib.dir/src/common/standard_system_device.cpp.o"
   "CMakeFiles/common_lib.dir/src/common/standard_system_device.cpp.o.d"
   "CMakeFiles/common_lib.dir/src/common/system_config.cpp.o"

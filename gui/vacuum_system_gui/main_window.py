@@ -15,9 +15,9 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QFont, QIcon
 
-from config import VACUUM_SYSTEM_DEVICE, UI_CONFIG
+from config import VACUUM_SYSTEM_DEVICE, UI_CONFIG, PLC_CONNECTION
 from styles import MAIN_STYLE, COLORS
-from tango_worker import VacuumTangoWorker, MockTangoWorker
+from tango_worker import VacuumTangoWorker, MockTangoWorker, DirectPLCWorker
 from alarm_manager import AlarmManager, AlarmIntegration
 from main_page import VacuumSystemMainPage
 from digital_twin_page import DigitalTwinPage
@@ -66,10 +66,11 @@ class OperationLogger:
 class VacuumSystemMainWindow(QMainWindow):
     """真空系统主窗口"""
     
-    def __init__(self, use_mock: bool = False):
+    def __init__(self, use_mock: bool = False, use_direct: bool = False):
         super().__init__()
         
         self._use_mock = use_mock
+        self._use_direct = use_direct
         self._tango_connected = False
         self._plc_connected = False
         
@@ -86,10 +87,18 @@ class VacuumSystemMainWindow(QMainWindow):
         self._start_time_update()
         
     def _init_worker(self):
-        """初始化 Tango Worker"""
+        """初始化 Worker"""
         if self._use_mock:
             self._worker = MockTangoWorker(VACUUM_SYSTEM_DEVICE, self)
+        elif self._use_direct:
+            # Direct PLC 模式
+            self._worker = DirectPLCWorker(
+                PLC_CONNECTION['ip'], 
+                PLC_CONNECTION['port'], 
+                self
+            )
         else:
+            # Tango 模式
             self._worker = VacuumTangoWorker(VACUUM_SYSTEM_DEVICE, self)
             
         self._worker.start()
@@ -111,7 +120,14 @@ class VacuumSystemMainWindow(QMainWindow):
         
     def _init_ui(self):
         """初始化 UI"""
-        self.setWindowTitle("真空系统控制 - sys/vacuum/2")
+        # 根据模式设置窗口标题
+        if self._use_mock:
+            title = "真空系统控制 - sys/vacuum/2 [模拟模式]"
+        elif self._use_direct:
+            title = f"真空系统控制 - PLC直连 ({PLC_CONNECTION['ip']}) [Direct模式]"
+        else:
+            title = "真空系统控制 - sys/vacuum/2 [Tango模式]"
+        self.setWindowTitle(title)
         self.setMinimumSize(UI_CONFIG['window_min_width'], UI_CONFIG['window_min_height'])
         self.resize(1400, 900)
         
@@ -343,6 +359,7 @@ def main():
     
     parser = argparse.ArgumentParser(description="真空系统控制 GUI")
     parser.add_argument("--mock", action="store_true", help="使用模拟模式")
+    parser.add_argument("--direct", action="store_true", help="直接连接PLC（不通过Tango）")
     args = parser.parse_args()
     
     # ---------------------------------------------------------------------
@@ -393,7 +410,7 @@ def main():
     app.setFont(default_font)
     
     # 创建主窗口
-    window = VacuumSystemMainWindow(use_mock=args.mock)
+    window = VacuumSystemMainWindow(use_mock=args.mock, use_direct=args.direct)
     window.show()
     
     sys.exit(app.exec_())

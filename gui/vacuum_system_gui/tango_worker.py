@@ -1267,3 +1267,402 @@ class MockTangoWorker(VacuumTangoWorker):
         # 现在由 _process_auto_sequence 驱动
         self._last_step_time = time.time()
         self._mock_status['autoSequenceStep'] = 1
+
+
+# =============================================================================
+# DirectPLCWorker - 直接连接 PLC（不通过Tango）
+# =============================================================================
+
+class DirectPLCWorker(VacuumTangoWorker):
+    """直接连接 PLC Worker（不通过Tango，使用OPC UA）"""
+    
+    def __init__(self, plc_ip: str = "192.168.1.100", plc_port: int = 4840, parent=None):
+        """
+        初始化 Direct PLC Worker
+        
+        Args:
+            plc_ip: PLC IP地址
+            plc_port: OPC UA端口
+            parent: 父对象
+        """
+        # 不调用父类的__init__，因为父类会初始化Tango相关的东西
+        QThread.__init__(self, parent)
+        
+        self.plc_ip = plc_ip
+        self.plc_port = plc_port
+        
+        from plc_opcua_client import PLCOPCUAClient
+        import plc_nodes_mapping as plc_nodes
+
+        self.plc_client = PLCOPCUAClient(plc_ip, plc_port)
+        self._nodes = plc_nodes  # 导入节点映射（使用模块命名空间，避免 import * 问题）
+        
+        self._running = True
+        self._poll_interval = 0.1  # 100ms
+        
+        # 状态缓存
+        self._status_cache: Dict[str, Any] = {}
+        self._last_plc_connected = False
+        self._last_tango_connected = False
+        self._cache_mutex = QMutex()
+        
+        # 命令队列
+        self._command_queue: Queue = Queue()
+        
+        # 上次报警
+        self._last_alarm_count = 0
+        self._alarm_count_mutex = QMutex()
+        
+        # 连接重试控制
+        self._last_connect_attempt = 0.0
+        self._min_connect_interval = 1.2
+        self._connect_fail_count = 0
+        self._last_connect_error = None
+        
+        # 设置 device 为客户端对象（兼容父类逻辑）
+        self.device = None
+        
+    # 信号定义（继承自父类）
+    connection_changed = pyqtSignal(bool)
+    plc_connection_changed = pyqtSignal(bool)
+    alarm_received = pyqtSignal(dict)
+    command_result = pyqtSignal(str, bool, str)
+        
+    def run(self):
+        """主循环"""
+        self._connect_device()
+        
+        while self._running:
+            try:
+                # 处理命令队列
+                self._process_commands()
+                
+                # 轮询状态
+                if self.device:
+                    self._poll_status()
+                    self._check_alarms()
+                else:
+                    # 尝试重连
+                    self._connect_device()
+                    
+            except Exception as e:
+                # 设备断开或通信失败，更新连接状态
+                if self.device is not None:
+                    logger.warning(f"PLC 连接失败，更新连接状态: {e}")
+                    self.device = None
+                    self.plc_client.disconnect()
+                    if self._last_tango_connected:
+                        self._last_tango_connected = False
+                        self.connection_changed.emit(False)
+                    if self._last_plc_connected:
+                        self._last_plc_connected = False
+                        self.plc_connection_changed.emit(False)
+                else:
+                    logger.debug(f"Direct PLC Worker 错误（设备已断开）: {e}")
+                
+            time.sleep(self._poll_interval)
+            
+    def _connect_device(self):
+        """连接 PLC"""
+        current_time = time.time()
+        time_since_last_attempt = current_time - self._last_connect_attempt
+        if time_since_last_attempt < self._min_connect_interval:
+            return
+        
+        self._last_connect_attempt = current_time
+            
+        try:
+            if self.plc_client.connect():
+                self.device = self.plc_client  # 设置为客户端对象
+                
+                if self._connect_fail_count > 0:
+                    logger.info(f"已重新连接到 PLC {self.plc_ip}:{self.plc_port}（之前失败 {self._connect_fail_count} 次）")
+                else:
+                    logger.info(f"已连接到 PLC {self.plc_ip}:{self.plc_port}")
+                    
+                self._connect_fail_count = 0
+                self._last_connect_error = None
+                
+                # 发送连接成功信号
+                if not self._last_tango_connected:
+                    self._last_tango_connected = True
+                    self.connection_changed.emit(True)
+                if not self._last_plc_connected:
+                    self._last_plc_connected = True
+                    self.plc_connection_changed.emit(True)
+            else:
+                raise Exception("PLC 连接失败")
+                
+        except Exception as e:
+            self._connect_fail_count += 1
+            error_msg = str(e)
+            
+            should_print_traceback = (
+                self._connect_fail_count == 1 or
+                error_msg != self._last_connect_error or
+                self._connect_fail_count % 10 == 0
+            )
+            
+            if should_print_traceback:
+                logger.error(
+                    f"连接 PLC {self.plc_ip}:{self.plc_port} 失败 (第 {self._connect_fail_count} 次): {e}",
+                    exc_info=True
+                )
+            else:
+                logger.warning(
+                    f"连接 PLC {self.plc_ip}:{self.plc_port} 失败 (第 {self._connect_fail_count} 次): {error_msg}"
+                )
+            
+            self._last_connect_error = error_msg
+            self.device = None
+            
+            if self._last_tango_connected:
+                self._last_tango_connected = False
+                self.connection_changed.emit(False)
+            if self._last_plc_connected:
+                self._last_plc_connected = False
+                self.plc_connection_changed.emit(False)
+            
+    def _poll_status(self):
+        """轮询设备状态"""
+        if not self.device or not self.plc_client.is_connected():
+            return
+            
+        try:
+            status = {}
+            nodes = self._nodes
+            
+            # 系统状态
+            status['operationMode'] = 0 if self.plc_client.read_bool(nodes.AUTO_STATE) else 1
+            status['systemState'] = self.plc_client.read_int(nodes.SYSTEM_STATE) or 0
+            status['simulatorMode'] = False  # Direct模式不是模拟器
+            status['autoSequenceStep'] = self.plc_client.read_int(nodes.AUTO_SEQUENCE_STEP) or 0
+            status['plcConnected'] = True  # 能读到就说明连接着
+            
+            # 泵状态
+            status['screwPumpPower'] = self.plc_client.read_bool(nodes.SCREW_PUMP_POWER) or False
+            status['rootsPumpPower'] = self.plc_client.read_bool(nodes.ROOTS_PUMP_POWER) or False
+            status['molecularPump1Power'] = self.plc_client.read_bool(nodes.MOLECULAR_PUMP1_POWER) or False
+            status['molecularPump2Power'] = self.plc_client.read_bool(nodes.MOLECULAR_PUMP2_POWER) or False
+            status['molecularPump3Power'] = self.plc_client.read_bool(nodes.MOLECULAR_PUMP3_POWER) or False
+            
+            status['screwPumpFrequency'] = self.plc_client.read_int(nodes.SCREW_PUMP_FREQUENCY) or 0
+            status['rootsPumpFrequency'] = self.plc_client.read_int(nodes.ROOTS_PUMP_FREQUENCY) or 0
+            status['molecularPump1Speed'] = self.plc_client.read_int(nodes.MOLECULAR_PUMP1_SPEED) or 0
+            status['molecularPump2Speed'] = self.plc_client.read_int(nodes.MOLECULAR_PUMP2_SPEED) or 0
+            status['molecularPump3Speed'] = self.plc_client.read_int(nodes.MOLECULAR_PUMP3_SPEED) or 0
+            
+            # 分子泵启用配置
+            status['molecularPump1Enabled'] = self.plc_client.read_bool(nodes.CFG_MOLECULAR_PUMP1_ENABLED) or True
+            status['molecularPump2Enabled'] = self.plc_client.read_bool(nodes.CFG_MOLECULAR_PUMP2_ENABLED) or True
+            status['molecularPump3Enabled'] = self.plc_client.read_bool(nodes.CFG_MOLECULAR_PUMP3_ENABLED) or True
+            
+            # 闸板阀状态
+            for i in range(1, 6):
+                open_node = getattr(nodes, f'GATE_VALVE{i}_OPEN')
+                close_node = getattr(nodes, f'GATE_VALVE{i}_CLOSE')
+                status[f'gateValve{i}Open'] = self.plc_client.read_bool(open_node) or False
+                status[f'gateValve{i}Close'] = self.plc_client.read_bool(close_node) or False
+                status[f'gateValve{i}ActionState'] = 0  # 暂不支持动作状态
+                
+            # 电磁阀状态
+            for i in range(1, 5):
+                open_node = getattr(nodes, f'EM_VALVE{i}_OPEN')
+                close_node = getattr(nodes, f'EM_VALVE{i}_CLOSE')
+                status[f'electromagneticValve{i}Open'] = self.plc_client.read_bool(open_node) or False
+                status[f'electromagneticValve{i}Close'] = self.plc_client.read_bool(close_node) or False
+                
+            # 放气阀状态
+            for i in range(1, 3):
+                open_node = getattr(nodes, f'VENT_VALVE{i}_OPEN')
+                close_node = getattr(nodes, f'VENT_VALVE{i}_CLOSE')
+                status[f'ventValve{i}Open'] = self.plc_client.read_bool(open_node) or False
+                status[f'ventValve{i}Close'] = self.plc_client.read_bool(close_node) or False
+                
+            # 传感器
+            status['vacuumGauge1'] = self.plc_client.read_real(nodes.VACUUM_GAUGE1) or 101325.0
+            status['vacuumGauge2'] = self.plc_client.read_real(nodes.VACUUM_GAUGE2) or 101325.0
+            status['vacuumGauge3'] = self.plc_client.read_real(nodes.VACUUM_GAUGE3) or 101325.0
+            status['airPressure'] = self.plc_client.read_real(nodes.AIR_PRESSURE) or 0.5
+            
+            # 水电磁阀状态
+            for i in range(1, 7):
+                valve_node = getattr(nodes, f'WATER_VALVE{i}_STATE')
+                status[f'waterValve{i}State'] = self.plc_client.read_bool(valve_node) or False
+            status['airMainValveState'] = self.plc_client.read_bool(nodes.AIR_MAIN_VALVE_STATE) or False
+            
+            # 从水电磁阀状态推导水路状态（兼容现有代码）
+            for i in range(1, 5):
+                status[f'waterFlow{i}'] = status.get(f'waterValve{i}State', False)
+            
+            # 从气源压力推导气路状态（兼容现有代码）
+            air_pressure = status.get('airPressure', 0)
+            status['airSupplyOk'] = air_pressure >= 0.4
+            
+            # 系统联锁状态
+            status['phaseSequenceOk'] = self.plc_client.read_bool(nodes.PHASE_SEQUENCE_OK) or True
+            status['motionSystemOnline'] = self.plc_client.read_bool(nodes.MOTION_SYSTEM_ONLINE) or False
+            status['gateValve5Permit'] = self.plc_client.read_bool(nodes.GATE_VALVE5_PERMIT) or False
+            
+            # 报警
+            status['activeAlarmCount'] = self.plc_client.read_int(nodes.ACTIVE_ALARM_COUNT) or 0
+            status['hasUnacknowledgedAlarm'] = self.plc_client.read_bool(nodes.HAS_UNACKNOWLEDGED_ALARM) or False
+            
+            # 更新缓存
+            self._cache_mutex.lock()
+            self._status_cache = status
+            self._cache_mutex.unlock()
+            
+        except Exception as e:
+            logger.warning(f"轮询 PLC 状态失败: {e}")
+            raise
+            
+    def _check_alarms(self):
+        """检查新报警"""
+        if not self.device or not self.plc_client.is_connected():
+            return
+            
+        try:
+            current_count = self.plc_client.read_int(self._nodes.ACTIVE_ALARM_COUNT) or 0
+            
+            self._alarm_count_mutex.lock()
+            last_count = self._last_alarm_count
+            self._alarm_count_mutex.unlock()
+            
+            if current_count > last_count:
+                # 有新报警 - 读取最新报警信息
+                alarm_code = self.plc_client.read_int(self._nodes.LATEST_ALARM_CODE) or 0
+                alarm_type = self.plc_client.read_int(self._nodes.LATEST_ALARM_TYPE) or 0
+                alarm_desc = "PLC报警"  # 如果PLC没有描述字符串，使用默认值
+                
+                alarm_data = {
+                    "alarm_code": alarm_code,
+                    "alarm_type": "ERROR" if alarm_type > 0 else "WARNING",
+                    "description": alarm_desc,
+                    "device_name": f"PLC_{self.plc_ip}",
+                    "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S")
+                }
+                self.alarm_received.emit(alarm_data)
+            
+            self._alarm_count_mutex.lock()
+            self._last_alarm_count = current_count
+            self._alarm_count_mutex.unlock()
+            
+        except Exception as e:
+            logger.error(f"检查 PLC 报警失败: {e}", exc_info=True)
+            
+    def _execute_command(self, cmd_name: str, args):
+        """执行单个命令"""
+        logger.info(f"执行 PLC 命令: {cmd_name}, args={args}")
+        
+        if not self.device or not self.plc_client.is_connected():
+            logger.warning(f"PLC 未连接，命令 {cmd_name} 被拒绝")
+            self.command_result.emit(cmd_name, False, "PLC 未连接")
+            return
+            
+        try:
+            nodes = self._nodes
+            success = False
+            
+            # 系统控制命令
+            if cmd_name == "SwitchToAuto":
+                success = self.plc_client.write_bool(nodes.CMD_SWITCH_TO_AUTO, True)
+                time.sleep(0.1)
+                self.plc_client.write_bool(nodes.CMD_SWITCH_TO_AUTO, False)  # 脉冲信号
+            elif cmd_name == "SwitchToManual":
+                success = self.plc_client.write_bool(nodes.CMD_SWITCH_TO_MANUAL, True)
+                time.sleep(0.1)
+                self.plc_client.write_bool(nodes.CMD_SWITCH_TO_MANUAL, False)
+            elif cmd_name == "OneKeyVacuumStart":
+                success = self.plc_client.write_bool(nodes.CMD_ONE_KEY_VACUUM_START, True)
+                time.sleep(0.1)
+                self.plc_client.write_bool(nodes.CMD_ONE_KEY_VACUUM_START, False)
+            elif cmd_name == "OneKeyVacuumStop":
+                success = self.plc_client.write_bool(nodes.CMD_ONE_KEY_VACUUM_STOP, True)
+                time.sleep(0.1)
+                self.plc_client.write_bool(nodes.CMD_ONE_KEY_VACUUM_STOP, False)
+            elif cmd_name == "ChamberVent":
+                success = self.plc_client.write_bool(nodes.CMD_CHAMBER_VENT, True)
+                time.sleep(0.1)
+                self.plc_client.write_bool(nodes.CMD_CHAMBER_VENT, False)
+            elif cmd_name == "FaultReset":
+                success = self.plc_client.write_bool(nodes.CMD_FAULT_RESET, True)
+                time.sleep(0.1)
+                self.plc_client.write_bool(nodes.CMD_FAULT_RESET, False)
+                
+            # 泵控制命令
+            elif cmd_name == "SetScrewPumpPower":
+                success = self.plc_client.write_bool(nodes.CMD_SCREW_PUMP_POWER, bool(args))
+            elif cmd_name == "SetRootsPumpPower":
+                success = self.plc_client.write_bool(nodes.CMD_ROOTS_PUMP_POWER, bool(args))
+            elif cmd_name == "SetMolecularPumpPower":
+                index, state = args
+                node_name = f'CMD_MOLECULAR_PUMP{index}_POWER'
+                node = getattr(nodes, node_name)
+                success = self.plc_client.write_bool(node, bool(state))
+            elif cmd_name == "SetScrewPumpStartStop":
+                success = self.plc_client.write_bool(nodes.CMD_SCREW_PUMP_START_STOP, bool(args))
+            elif cmd_name == "SetMolecularPumpStartStop":
+                index, state = args
+                node_name = f'CMD_MOLECULAR_PUMP{index}_START_STOP'
+                node = getattr(nodes, node_name)
+                success = self.plc_client.write_bool(node, bool(state))
+                
+            # 阀门控制命令
+            elif cmd_name == "SetGateValve":
+                index, open_valve = args
+                if open_valve:
+                    node_name = f'CMD_GATE_VALVE{index}_OPEN'
+                else:
+                    node_name = f'CMD_GATE_VALVE{index}_CLOSE'
+                node = getattr(nodes, node_name)
+                success = self.plc_client.write_bool(node, True)
+                time.sleep(0.1)
+                self.plc_client.write_bool(node, False)  # 脉冲信号
+            elif cmd_name == "SetElectromagneticValve":
+                index, state = args
+                node_name = f'CMD_EM_VALVE{index}'
+                node = getattr(nodes, node_name)
+                success = self.plc_client.write_bool(node, bool(state))
+            elif cmd_name == "SetVentValve":
+                index, state = args
+                node_name = f'CMD_VENT_VALVE{index}'
+                node = getattr(nodes, node_name)
+                success = self.plc_client.write_bool(node, bool(state))
+            elif cmd_name == "SetWaterValve":
+                index, state = args
+                node_name = f'CMD_WATER_VALVE{index}'
+                node = getattr(nodes, node_name)
+                success = self.plc_client.write_bool(node, bool(state))
+            elif cmd_name == "SetAirMainValve":
+                success = self.plc_client.write_bool(nodes.CMD_AIR_MAIN_VALVE, bool(args))
+                
+            # 报警控制
+            elif cmd_name == "AcknowledgeAlarm":
+                # 先写报警码，再发送确认命令
+                self.plc_client.write_int(nodes.CMD_ALARM_CODE_TO_ACK, int(args))
+                success = self.plc_client.write_bool(nodes.CMD_ACKNOWLEDGE_ALARM, True)
+                time.sleep(0.1)
+                self.plc_client.write_bool(nodes.CMD_ACKNOWLEDGE_ALARM, False)
+            elif cmd_name == "AcknowledgeAllAlarms":
+                self.plc_client.write_int(nodes.CMD_ALARM_CODE_TO_ACK, 0)  # 0表示全部
+                success = self.plc_client.write_bool(nodes.CMD_ACKNOWLEDGE_ALARM, True)
+                time.sleep(0.1)
+                self.plc_client.write_bool(nodes.CMD_ACKNOWLEDGE_ALARM, False)
+            else:
+                logger.warning(f"未知的 PLC 命令: {cmd_name}")
+                self.command_result.emit(cmd_name, False, f"未知命令: {cmd_name}")
+                return
+            
+            if success:
+                time.sleep(0.05)
+                self._poll_status()  # 立即轮询状态
+                logger.info(f"PLC 命令 {cmd_name} 执行成功")
+                self.command_result.emit(cmd_name, True, "执行成功")
+            else:
+                logger.error(f"PLC 命令 {cmd_name} 执行失败")
+                self.command_result.emit(cmd_name, False, "执行失败")
+                
+        except Exception as e:
+            logger.error(f"执行 PLC 命令 {cmd_name} 失败: {e}", exc_info=True)
+            self.command_result.emit(cmd_name, False, str(e))

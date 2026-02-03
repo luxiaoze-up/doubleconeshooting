@@ -1,30 +1,48 @@
 Warning: Qt5 not available, using default configuration values.
   Controller IP: 192.168.1.177
-  PLC IP: 192.168.1.177
-  Tango Host: 192.168.80.98:10000
+  PLC IP: 192.168.1.100
+  Tango Host: 192.168.1.177:10000
   ORB Timeouts: call=5000ms, connect=3000ms
 MotionControllerDeviceClass::device_factory() called with 1 device(s)
   Creating device: sys/motion/1
-2026-01-09T19:54:52,359904+0800 INFO (motion_controller_device.cpp:97) sys/motion/1 MotionControllerDevice::init_device() sys/motion/1
-2026-01-09T19:54:52,363205+0800 INFO (motion_controller_device.cpp:189) sys/motion/1 [DEBUG] 运行模式: 真实模式 (从配置文件加载, SIM_MODE=false)
-2026-01-09T19:54:52,363230+0800 INFO (motion_controller_device.cpp:190) sys/motion/1 [DEBUG] 提示: 可通过 simSwitch 命令或GUI动态切换模拟模式
-2026-01-09T19:54:52,363262+0800 DEBUG (motion_controller_device.cpp:193) sys/motion/1 [SMC] smc_board_init(card_id=0, ip=192.168.1.11)
-09/01/2026  19:54:57:368 src/smcxxx.c,L:1441,smc_board_init:ConnectNo:0,type:2, pconnectstring:192.168.1.11,dwBaudRate:0,return:3
-
-2026-01-09T19:54:57,369037+0800 DEBUG (motion_controller_device.cpp:195) sys/motion/1 [SMC] smc_board_init() returned: 3
-2026-01-09T19:54:57,369082+0800 ERROR (motion_controller_device.cpp:197) sys/motion/1 MotionControllerDevice: Failed to init board. Ret=3
-2026-01-09T19:54:57,369755+0800 INFO (motion_controller_device.cpp:210) sys/motion/1 MotionControllerDevice::init_device() completed for sys/motion/1 [State: FAULT]
+2026-02-02T16:33:44,859039+0800 INFO (motion_controller_device.cpp:100) sys/motion/1 MotionControllerDevice::init_device() sys/motion/1
+2026-02-02T16:33:44,863477+0800 INFO (motion_controller_device.cpp:192) sys/motion/1 [DEBUG] 运行模式: 真实模式 (从配置文件加载, SIM_MODE=false)
+2026-02-02T16:33:44,863498+0800 INFO (motion_controller_device.cpp:193) sys/motion/1 [DEBUG] 提示: 可通过 simSwitch 命令或GUI动态切换模拟模式
+2026-02-02T16:33:44,863530+0800 DEBUG (motion_controller_device.cpp:196) sys/motion/1 [SMC] smc_board_init(card_id=0, ip=192.168.1.11)
+2026-02-02T16:33:44,873282+0800 DEBUG (motion_controller_device.cpp:198) sys/motion/1 [SMC] smc_board_init() returned: 0
+2026-02-02T16:33:44,873948+0800 INFO (motion_controller_device.cpp:213) sys/motion/1 MotionControllerDevice::init_device() completed for sys/motion/1 [State: ON]
   Exporting device: sys/motion/1
   ✓ Device sys/motion/1 exported successfully
 MotionControllerDeviceClass::device_factory() completed. Total devices: 1
 MotionController Server Ready - Exported 1 device(s):
   [1] sys/motion/1
-2026-01-09T19:54:58,408500+0800 INFO (motion_controller_device.cpp:276) sys/motion/1 [Reconnect] 尝试重连控制器 (第 1 次)...
-2026-01-09T19:54:58,408562+0800 DEBUG (motion_controller_device.cpp:280) sys/motion/1 [SMC] smc_board_close(card_id=0) [reconnect cleanup]
-09/01/2026  19:54:58:408 src/smcxxx.c,L:1555,smc_board_close:ConnectNo:0,return:9
+2026-02-02T16:33:50,891823+0800 DEBUG (motion_controller_device.cpp:1015) sys/motion/1 [SMC] smc_set_equiv(card_id=0, axis=0, equiv=1.25e-06 [step_angle=1.8, gear_ratio=1, subdivision=4000])
+02/02/2026  16:33:50:893 src/smcxxx.c,L:6098,smc_set_equiv:ConnectNo:0,axis:0,new_equiv:0.000001,return:1008
 
-2026-01-09T19:54:58,408621+0800 DEBUG (motion_controller_device.cpp:284) sys/motion/1 [SMC] smc_board_init(card_id=0, ip=192.168.1.11) [reconnect]
-09/01/2026  19:54:58:409 src/smcxxx.c,L:1441,smc_board_init:ConnectNo:0,type:2, pconnectstring:192.168.1.11,dwBaudRate:0,return:9
+2026-02-02T16:33:50,893375+0800 DEBUG (motion_controller_device.cpp:1019) sys/motion/1 [SMC] smc_set_equiv() returned: 1008
+2026-02-02T16:33:50,897460+0800 DEBUG (motion_controller_device.cpp:1151) sys/motion/1 [SMC] smc_set_encoder_unit(card_id=0, axis=0, pos=601.211)
+2026-02-02T16:33:50,897984+0800 DEBUG (motion_controller_device.cpp:1153) sys/motion/1 [SMC] smc_set_encoder_unit() returned: 0
+2026-02-02T16:33:50,916425+0800 DEBUG (motion_controller_device.cpp:1015) sys/motion/1 [SMC] smc_set_equiv(card_id=0, axis=1, equiv=1.25e-06 [step_angle=1.8, gear_ratio=1, subdivision=4000])
+02/02/2026  16:33:50:917 src/smcxxx.c,L:6098,smc_set_equiv:ConnectNo:0,axis:1,new_equiv:0.000001,return:1008
 
-2026-01-09T19:54:58,409722+0800 DEBUG (motion_controller_device.cpp:286) sys/motion/1 [SMC] smc_board_init() returned: 9
-2026-01-09T19:54:58,409864+0800 ERROR (motion_controller_device.cpp:302) sys/motion/1 [Reconnect] 重连失败, 错误码: 9
+2026-02-02T16:33:50,917527+0800 DEBUG (motion_controller_device.cpp:1019) sys/motion/1 [SMC] smc_set_equiv() returned: 1008
+2026-02-02T16:33:50,919277+0800 DEBUG (motion_controller_device.cpp:1151) sys/motion/1 [SMC] smc_set_encoder_unit(card_id=0, axis=1, pos=558.443)
+2026-02-02T16:33:50,919800+0800 DEBUG (motion_controller_device.cpp:1153) sys/motion/1 [SMC] smc_set_encoder_unit() returned: 0
+2026-02-02T16:33:50,931060+0800 DEBUG (motion_controller_device.cpp:1015) sys/motion/1 [SMC] smc_set_equiv(card_id=0, axis=2, equiv=1.25e-06 [step_angle=1.8, gear_ratio=1, subdivision=4000])
+02/02/2026  16:33:50:932 src/smcxxx.c,L:6098,smc_set_equiv:ConnectNo:0,axis:2,new_equiv:0.000001,return:1008
+
+2026-02-02T16:33:50,932060+0800 DEBUG (motion_controller_device.cpp:1019) sys/motion/1 [SMC] smc_set_equiv() returned: 1008
+2026-02-02T16:33:50,933943+0800 DEBUG (motion_controller_device.cpp:1151) sys/motion/1 [SMC] smc_set_encoder_unit(card_id=0, axis=2, pos=409.969)
+2026-02-02T16:33:50,934441+0800 DEBUG (motion_controller_device.cpp:1153) sys/motion/1 [SMC] smc_set_encoder_unit() returned: 0
+2026-02-02T16:33:50,947187+0800 DEBUG (motion_controller_device.cpp:1015) sys/motion/1 [SMC] smc_set_equiv(card_id=0, axis=3, equiv=1.25e-06 [step_angle=1.8, gear_ratio=1, subdivision=4000])
+02/02/2026  16:33:50:948 src/smcxxx.c,L:6098,smc_set_equiv:ConnectNo:0,axis:3,new_equiv:0.000001,return:1008
+
+2026-02-02T16:33:50,948195+0800 DEBUG (motion_controller_device.cpp:1019) sys/motion/1 [SMC] smc_set_equiv() returned: 1008
+2026-02-02T16:33:50,949911+0800 DEBUG (motion_controller_device.cpp:1151) sys/motion/1 [SMC] smc_set_encoder_unit(card_id=0, axis=3, pos=265.588)
+2026-02-02T16:33:50,950474+0800 DEBUG (motion_controller_device.cpp:1153) sys/motion/1 [SMC] smc_set_encoder_unit() returned: 0
+2026-02-02T16:33:50,962686+0800 DEBUG (motion_controller_device.cpp:1015) sys/motion/1 [SMC] smc_set_equiv(card_id=0, axis=4, equiv=1.25e-06 [step_angle=1.8, gear_ratio=1, subdivision=4000])
+02/02/2026  16:33:50:963 src/smcxxx.c,L:6098,smc_set_equiv:ConnectNo:0,axis:4,new_equiv:0.000001,return:1008
+
+2026-02-02T16:33:50,963498+0800 DEBUG (motion_controller_device.cpp:1019) sys/motion/1 [SMC] smc_set_equiv() returned: 1008
+2026-02-02T16:33:50,965144+0800 DEBUG (motion_controller_device.cpp:1151) sys/motion/1 [SMC] smc_set_encoder_unit(card_id=0, axis=4, pos=0)
+2026-02-02T16:33:50,965611+0800 DEBUG (motion_controller_device.cpp:1153) sys/motion/1 [SMC] smc_set_encoder_unit() returned: 0

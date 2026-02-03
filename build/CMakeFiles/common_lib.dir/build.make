@@ -125,10 +125,24 @@ CMakeFiles/common_lib.dir/src/common/standard_system_device.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/common_lib.dir/src/common/standard_system_device.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /app/src/common/standard_system_device.cpp -o CMakeFiles/common_lib.dir/src/common/standard_system_device.cpp.s
 
+CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.o: CMakeFiles/common_lib.dir/flags.make
+CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.o: /app/src/common/plc_communication.cpp
+CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.o: CMakeFiles/common_lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.o -MF CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.o.d -o CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.o -c /app/src/common/plc_communication.cpp
+
+CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /app/src/common/plc_communication.cpp > CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.i
+
+CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /app/src/common/plc_communication.cpp -o CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.s
+
 CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o: CMakeFiles/common_lib.dir/flags.make
 CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o: /app/src/common/encoder_acquisition.cpp
 CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o: CMakeFiles/common_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o -MF CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o.d -o CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o -c /app/src/common/encoder_acquisition.cpp
 
 CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.i: cmake_force
@@ -142,7 +156,7 @@ CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.s: cmake_force
 CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o: CMakeFiles/common_lib.dir/flags.make
 CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o: /app/src/common/tango_device_wrapper.cpp
 CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o: CMakeFiles/common_lib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o -MF CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o.d -o CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o -c /app/src/common/tango_device_wrapper.cpp
 
 CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.i: cmake_force
@@ -159,6 +173,7 @@ common_lib_OBJECTS = \
 "CMakeFiles/common_lib.dir/src/common/kinematics.cpp.o" \
 "CMakeFiles/common_lib.dir/src/common/system_config.cpp.o" \
 "CMakeFiles/common_lib.dir/src/common/standard_system_device.cpp.o" \
+"CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.o" \
 "CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o" \
 "CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o"
 
@@ -169,11 +184,12 @@ libcommon_lib.a: CMakeFiles/common_lib.dir/src/common/device_interface.cpp.o
 libcommon_lib.a: CMakeFiles/common_lib.dir/src/common/kinematics.cpp.o
 libcommon_lib.a: CMakeFiles/common_lib.dir/src/common/system_config.cpp.o
 libcommon_lib.a: CMakeFiles/common_lib.dir/src/common/standard_system_device.cpp.o
+libcommon_lib.a: CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.o
 libcommon_lib.a: CMakeFiles/common_lib.dir/src/common/encoder_acquisition.cpp.o
 libcommon_lib.a: CMakeFiles/common_lib.dir/src/common/tango_device_wrapper.cpp.o
 libcommon_lib.a: CMakeFiles/common_lib.dir/build.make
 libcommon_lib.a: CMakeFiles/common_lib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX static library libcommon_lib.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX static library libcommon_lib.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/common_lib.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/common_lib.dir/link.txt --verbose=$(VERBOSE)
 

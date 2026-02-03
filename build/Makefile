@@ -182,6 +182,32 @@ auxiliary_support_server/fast:
 .PHONY : auxiliary_support_server/fast
 
 #=============================================================================
+# Target rules for targets named vacuum_server
+
+# Build rule for target.
+vacuum_server: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 vacuum_server
+.PHONY : vacuum_server
+
+# fast build rule for target.
+vacuum_server/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vacuum_server.dir/build.make CMakeFiles/vacuum_server.dir/build
+.PHONY : vacuum_server/fast
+
+#=============================================================================
+# Target rules for targets named vacuum_system_server
+
+# Build rule for target.
+vacuum_system_server: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 vacuum_system_server
+.PHONY : vacuum_system_server
+
+# fast build rule for target.
+vacuum_system_server/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vacuum_system_server.dir/build.make CMakeFiles/vacuum_system_server.dir/build
+.PHONY : vacuum_system_server/fast
+
+#=============================================================================
 # Target rules for targets named interlock_server
 
 # Build rule for target.
@@ -291,6 +317,30 @@ src/common/kinematics.s: src/common/kinematics.cpp.s
 src/common/kinematics.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/common_lib.dir/build.make CMakeFiles/common_lib.dir/src/common/kinematics.cpp.s
 .PHONY : src/common/kinematics.cpp.s
+
+src/common/plc_communication.o: src/common/plc_communication.cpp.o
+.PHONY : src/common/plc_communication.o
+
+# target to build an object file
+src/common/plc_communication.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/common_lib.dir/build.make CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.o
+.PHONY : src/common/plc_communication.cpp.o
+
+src/common/plc_communication.i: src/common/plc_communication.cpp.i
+.PHONY : src/common/plc_communication.i
+
+# target to preprocess a source file
+src/common/plc_communication.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/common_lib.dir/build.make CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.i
+.PHONY : src/common/plc_communication.cpp.i
+
+src/common/plc_communication.s: src/common/plc_communication.cpp.s
+.PHONY : src/common/plc_communication.s
+
+# target to generate assembly for a file
+src/common/plc_communication.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/common_lib.dir/build.make CMakeFiles/common_lib.dir/src/common/plc_communication.cpp.s
+.PHONY : src/common/plc_communication.cpp.s
 
 src/common/standard_system_device.o: src/common/standard_system_device.cpp.o
 .PHONY : src/common/standard_system_device.o
@@ -508,6 +558,54 @@ src/device_services/six_dof_device.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/six_dof_server.dir/build.make CMakeFiles/six_dof_server.dir/src/device_services/six_dof_device.cpp.s
 .PHONY : src/device_services/six_dof_device.cpp.s
 
+src/device_services/vacuum_device.o: src/device_services/vacuum_device.cpp.o
+.PHONY : src/device_services/vacuum_device.o
+
+# target to build an object file
+src/device_services/vacuum_device.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vacuum_server.dir/build.make CMakeFiles/vacuum_server.dir/src/device_services/vacuum_device.cpp.o
+.PHONY : src/device_services/vacuum_device.cpp.o
+
+src/device_services/vacuum_device.i: src/device_services/vacuum_device.cpp.i
+.PHONY : src/device_services/vacuum_device.i
+
+# target to preprocess a source file
+src/device_services/vacuum_device.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vacuum_server.dir/build.make CMakeFiles/vacuum_server.dir/src/device_services/vacuum_device.cpp.i
+.PHONY : src/device_services/vacuum_device.cpp.i
+
+src/device_services/vacuum_device.s: src/device_services/vacuum_device.cpp.s
+.PHONY : src/device_services/vacuum_device.s
+
+# target to generate assembly for a file
+src/device_services/vacuum_device.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vacuum_server.dir/build.make CMakeFiles/vacuum_server.dir/src/device_services/vacuum_device.cpp.s
+.PHONY : src/device_services/vacuum_device.cpp.s
+
+src/device_services/vacuum_system_device.o: src/device_services/vacuum_system_device.cpp.o
+.PHONY : src/device_services/vacuum_system_device.o
+
+# target to build an object file
+src/device_services/vacuum_system_device.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vacuum_system_server.dir/build.make CMakeFiles/vacuum_system_server.dir/src/device_services/vacuum_system_device.cpp.o
+.PHONY : src/device_services/vacuum_system_device.cpp.o
+
+src/device_services/vacuum_system_device.i: src/device_services/vacuum_system_device.cpp.i
+.PHONY : src/device_services/vacuum_system_device.i
+
+# target to preprocess a source file
+src/device_services/vacuum_system_device.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vacuum_system_server.dir/build.make CMakeFiles/vacuum_system_server.dir/src/device_services/vacuum_system_device.cpp.i
+.PHONY : src/device_services/vacuum_system_device.cpp.i
+
+src/device_services/vacuum_system_device.s: src/device_services/vacuum_system_device.cpp.s
+.PHONY : src/device_services/vacuum_system_device.s
+
+# target to generate assembly for a file
+src/device_services/vacuum_system_device.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vacuum_system_server.dir/build.make CMakeFiles/vacuum_system_server.dir/src/device_services/vacuum_system_device.cpp.s
+.PHONY : src/device_services/vacuum_system_device.cpp.s
+
 src/drivers/mv_cu020_19gc.o: src/drivers/mv_cu020_19gc.cpp.o
 .PHONY : src/drivers/mv_cu020_19gc.o
 
@@ -572,6 +670,8 @@ help:
 	@echo "... motion_controller_server"
 	@echo "... reflection_imaging_server"
 	@echo "... six_dof_server"
+	@echo "... vacuum_server"
+	@echo "... vacuum_system_server"
 	@echo "... src/common/device_interface.o"
 	@echo "... src/common/device_interface.i"
 	@echo "... src/common/device_interface.s"
@@ -581,6 +681,9 @@ help:
 	@echo "... src/common/kinematics.o"
 	@echo "... src/common/kinematics.i"
 	@echo "... src/common/kinematics.s"
+	@echo "... src/common/plc_communication.o"
+	@echo "... src/common/plc_communication.i"
+	@echo "... src/common/plc_communication.s"
 	@echo "... src/common/standard_system_device.o"
 	@echo "... src/common/standard_system_device.i"
 	@echo "... src/common/standard_system_device.s"
@@ -608,6 +711,12 @@ help:
 	@echo "... src/device_services/six_dof_device.o"
 	@echo "... src/device_services/six_dof_device.i"
 	@echo "... src/device_services/six_dof_device.s"
+	@echo "... src/device_services/vacuum_device.o"
+	@echo "... src/device_services/vacuum_device.i"
+	@echo "... src/device_services/vacuum_device.s"
+	@echo "... src/device_services/vacuum_system_device.o"
+	@echo "... src/device_services/vacuum_system_device.i"
+	@echo "... src/device_services/vacuum_system_device.s"
 	@echo "... src/drivers/mv_cu020_19gc.o"
 	@echo "... src/drivers/mv_cu020_19gc.i"
 	@echo "... src/drivers/mv_cu020_19gc.s"

@@ -52,9 +52,11 @@ constexpr int kRecvTimeoutMs = 300;
 } // namespace
 
 EncoderAcquisitionClient::EncoderAcquisitionClient(const std::string &ip, int port, int channel_offset,
-                                                   int channel_count, std::vector<EncoderReading> &shared_readings,
+                                                   int channel_count, const std::vector<int> &skip_channels,
+                                                   std::vector<EncoderReading> &shared_readings,
                                                    std::mutex &shared_mutex)
-    : ip_(ip), port_(port), channel_offset_(channel_offset), channel_count_(channel_count), socket_fd_(-1),
+    : ip_(ip), port_(port), channel_offset_(channel_offset), channel_count_(channel_count),
+      skip_channels_(skip_channels), socket_fd_(-1),
       readings_(shared_readings), readings_mutex_(shared_mutex) {}
 
 EncoderAcquisitionClient::~EncoderAcquisitionClient() { stop(); }
@@ -206,8 +208,14 @@ void EncoderAcquisitionClient::parse_buffer() {
 
 void EncoderAcquisitionClient::handle_frame(const uint8_t *frame) {
     uint8_t channel = frame[1];
-    if (channel >= static_cast<uint8_t>(channel_count_)) {
+    // 硬件通道从1开始，需要先转换为0-based索引
+    if (channel < 1 || channel > static_cast<uint8_t>(channel_count_)) {
         return; // Ignore out-of-range channel
+    }
+    
+    // 检查是否需要跳过此通道
+    if (std::find(skip_channels_.begin(), skip_channels_.end(), static_cast<int>(channel)) != skip_channels_.end()) {
+        return; // Skip this channel
     }
     uint32_t raw = (static_cast<uint32_t>(frame[2]) << 24) |
                    (static_cast<uint32_t>(frame[3]) << 16) |
@@ -222,7 +230,16 @@ void EncoderAcquisitionClient::handle_frame(const uint8_t *frame) {
     // position直接除以1000000作为小数部分 (例: 65535→0.065535, 32768→0.032768)
     double combined_value = static_cast<double>(turns) + (static_cast<double>(position) / 1000000.0);
 
-    int global_channel = channel_offset_ + static_cast<int>(channel);
+    // 硬件通道从1开始，转换为0-based索引再加上偏移
+    int global_channel = channel_offset_ + static_cast<int>(channel) - 1;
+    
+    // 对于跳过的通道之后的通道，需要减去前面被跳过的通道数量
+    for (int skip_ch : skip_channels_) {
+        if (static_cast<int>(channel) > skip_ch) {
+            global_channel--;
+        }
+    }
+    
     auto now = std::chrono::steady_clock::now();
     {
         std::lock_guard<std::mutex> lock(readings_mutex_);
@@ -240,8 +257,8 @@ void EncoderAcquisitionClient::handle_frame(const uint8_t *frame) {
 // 默认构造函数 - 使用硬编码的默认配置
 EncoderAcquisitionManager::EncoderAcquisitionManager() {
     std::vector<EncoderCollectorConfig> default_configs = {
-        {"192.168.1.15", kDefaultPort, 0, kDefaultChannelsPerCollector},   // 通道 0-9
-        {"192.168.1.16", kDefaultPort, 10, kDefaultChannelsPerCollector}   // 通道 10-19
+        {"192.168.1.15", kDefaultPort, 1, kDefaultChannelsPerCollector, {}},   // 通道 1-10
+        {"192.168.1.16", kDefaultPort, 11, kDefaultChannelsPerCollector, {}}   // 通道 11-20
     };
     init_clients(default_configs);
 }
@@ -253,11 +270,16 @@ EncoderAcquisitionManager::EncoderAcquisitionManager(
     int channels_per_collector) {
     
     std::vector<EncoderCollectorConfig> configs;
-    int channel_offset = 0;
+    int channel_offset = 1;  // 从通道1开始
     
     for (size_t i = 0; i < ips.size(); ++i) {
         int port = (i < ports.size()) ? ports[i] : kDefaultPort;
-        configs.push_back({ips[i], port, channel_offset, channels_per_collector});
+        // 为192.168.1.198添加跳过通道5的配置
+        std::vector<int> skip_channels;
+        if (ips[i] == "192.168.1.198") {
+            skip_channels.push_back(5);  // 跳过物理通道5
+        }
+        configs.push_back({ips[i], port, channel_offset, channels_per_collector, skip_channels});
         channel_offset += channels_per_collector;
     }
     
@@ -277,7 +299,7 @@ void EncoderAcquisitionManager::init_clients(
     
     for (const auto& cfg : configs) {
         clients_.emplace_back(std::make_unique<EncoderAcquisitionClient>(
-            cfg.ip, cfg.port, cfg.channel_offset, cfg.channel_count, 
+            cfg.ip, cfg.port, cfg.channel_offset, cfg.channel_count, cfg.skip_channels,
             readings_, readings_mutex_));
     }
 }

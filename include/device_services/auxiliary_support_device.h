@@ -184,6 +184,10 @@ public:
     // Export logs command (状态机24)
     void exportLogs();
     
+    // Encoder position save/load
+    void saveEncoderPosition();
+    void loadEncoderPosition();
+    
     // Hooks
     virtual void specific_self_check() override;
     virtual void always_executed_hook() override;

@@ -1,6 +1,7 @@
 {
-    "controller_ip": "192.168.1.100",
-    "plc_ip": "127.0.0.1",
+    "controller_ip": "192.168.1.177",
+    "plc_ip": "192.168.1.100",
     "tango_host": "localhost:10000",
-    "sim_mode": false
+    "sim_mode": false,
+    "opcua_node_format": "siemens_db1"
 }

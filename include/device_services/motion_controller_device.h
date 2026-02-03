@@ -170,6 +170,13 @@ private:
     std::set<short> moving_axes_;           // 当前正在运动的轴集合
     std::mutex state_mutex_;                 // 状态机互斥锁
     
+    // Motion timeout detection - 运动超时检测
+    std::map<short, std::chrono::steady_clock::time_point> axis_move_start_time_;      // 轴运动开始时间
+    std::map<short, double> axis_last_position_;                                       // 轴上次位置
+    std::map<short, std::chrono::steady_clock::time_point> axis_position_stable_time_; // 位置稳定开始时间
+    static constexpr double POSITION_STABLE_THRESHOLD = 0.1;  // 位置稳定阈值(单位：unit)
+    static constexpr int POSITION_STABLE_TIMEOUT_MS = 2000;   // 位置稳定超时时间(毫秒)
+    
     // ========== Reconnection mechanism ==========
     int reconnect_attempts_;                 // 当前重连尝试次数
     int max_reconnect_attempts_;             // 最大重连尝试次数

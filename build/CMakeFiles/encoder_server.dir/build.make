@@ -98,6 +98,8 @@ encoder_server: /usr/local/lib/libomniDynamic4.so
 encoder_server: /usr/local/lib/libomnithread.so
 encoder_server: /usr/local/lib/libzmq.so
 encoder_server: libcommon_lib.a
+encoder_server: /usr/local/lib/libopen62541.so
+encoder_server: /usr/local/lib/libsnap7.so
 encoder_server: /usr/local/lib/libtango.so
 encoder_server: CMakeFiles/encoder_server.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable encoder_server"

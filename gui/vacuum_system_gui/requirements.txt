@@ -3,12 +3,14 @@
 # 核心依赖
 PyQt5>=5.15.0
 
-# Tango 通信 (可选，模拟模式不需要)
+# Tango 通信 (可选，Tango模式需要)
 # pytango>=9.3.0
+
+# OPC UA 通信 (Direct模式需要)
+opcua>=0.98.13
 
 # 趋势曲线 (可选，但推荐)
 pyqtgraph>=0.12.0
 numpy>=1.20.0
 
 # JSON 处理 (Python 内置，无需安装)
-

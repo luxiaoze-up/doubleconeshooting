@@ -67,7 +67,6 @@ LargeStrokeDevice::LargeStrokeDevice(Tango::DeviceClass *device_class, std::stri
     limit_fault_latched_(false),
     limit_fault_el_state_(0),
     result_value_(0),
-    position_unit_("step"),
     self_check_result_(-1),
     sim_mode_(false),
     steps_per_mm_(100.0),        // 默认值：每毫米100步
@@ -119,6 +118,8 @@ void LargeStrokeDevice::init_device() {
     db_data.push_back(Tango::DbDatum("driverPowerController"));
     db_data.push_back(Tango::DbDatum("brakePowerPort"));
     db_data.push_back(Tango::DbDatum("brakePowerController"));
+    db_data.push_back(Tango::DbDatum("cavityLightPort"));
+    db_data.push_back(Tango::DbDatum("cavityLightController"));
     get_db_device()->get_property(db_data);
     
     int idx = 0;
@@ -150,11 +151,14 @@ void LargeStrokeDevice::init_device() {
     if (!db_data[idx].is_empty()) { db_data[idx] >> driver_power_port_; } else { driver_power_port_ = -1; } idx++;
     if (!db_data[idx].is_empty()) { db_data[idx] >> driver_power_controller_; } idx++;
     if (!db_data[idx].is_empty()) { db_data[idx] >> brake_power_port_; } else { brake_power_port_ = -1; } idx++;
-    if (!db_data[idx].is_empty()) { db_data[idx] >> brake_power_controller_; }
+    if (!db_data[idx].is_empty()) { db_data[idx] >> brake_power_controller_; } idx++;
+    if (!db_data[idx].is_empty()) { db_data[idx] >> cavity_light_port_; } else { cavity_light_port_ = -1; } idx++;
+    if (!db_data[idx].is_empty()) { db_data[idx] >> cavity_light_controller_; }
     
     // 初始化状态
     driver_power_enabled_ = false;
     brake_released_ = false;
+    cavity_light_enabled_ = false;
     
     if (motion_controller_name_.empty()) motion_controller_name_ = "sys/motion/1";  // 默认使用控制器1 (192.168.1.11)
     
@@ -188,7 +192,7 @@ void LargeStrokeDevice::init_device() {
                 << ", Encoder: " << encoder_name_ << ", Axis ID: " << axis_id_ 
                 << ", Encoder Channel: " << encoder_channel_ << std::endl;
     INFO_STREAM << "[DEBUG] Configuration: moveRange=" << move_range_ 
-                << ", limitNumber=" << limit_number_ << ", positionUnit=" << position_unit_ << std::endl;
+                << ", limitNumber=" << limit_number_ << std::endl;
     log_event("Device initialized");
 
     connect_proxies();
@@ -302,6 +306,12 @@ void LargeStrokeDevice::perform_post_motion_reconnect_restore() {
                 INFO_STREAM << "Brake released successfully after reconnection, device ready for operation" << std::endl;
             } else {
                 WARN_STREAM << "Failed to release brake after reconnection, manual intervention may be required" << std::endl;
+            }
+            // Enable cavity light after driver power
+            if (enable_cavity_light()) {
+                INFO_STREAM << "Cavity light enabled successfully after reconnection" << std::endl;
+            } else {
+                WARN_STREAM << "Failed to enable cavity light after reconnection" << std::endl;
             }
         } else {
             WARN_STREAM << "Failed to enable driver power after reconnection" << std::endl;
@@ -545,52 +555,23 @@ int LargeStrokeDevice::parse_json_int(const std::string& json, const std::string
 // urad: 微弧度
 // mrad: 毫弧度
 
-double LargeStrokeDevice::convert_to_steps(double value) {
+int LargeStrokeDevice::convert_to_steps(double value) {
     // 将用户输入值转换为步数（控制器使用的单位）
-    // 使用从数据库配置读取的转换因子
+    // 使用从数据库配置读取的转换因子（统一使用 mm 单位）
+    int result = static_cast<int>(std::round(value * 4000 / (4.5 * M_PI)));
     
-    double result = value;
-    if (position_unit_ == "step") {
-        result = value;
-    } else if (position_unit_ == "mm") {
-        result = value * steps_per_mm_;
-    } else if (position_unit_ == "um") {
-        result = value * steps_per_mm_ / 1000.0;  // um -> mm -> steps
-    } else if (position_unit_ == "rad") {
-        result = value * steps_per_rad_;
-    } else if (position_unit_ == "mrad") {
-        result = value * steps_per_rad_ / 1000.0;  // mrad -> rad -> steps
-    } else if (position_unit_ == "urad") {
-        result = value * steps_per_rad_ / 1000000.0;  // urad -> rad -> steps
-    }
-    
-    INFO_STREAM << "[DEBUG] convert_to_steps: " << value << " " << position_unit_ 
-                << " -> " << result << " steps (stepsPerMm=" << steps_per_mm_ 
-                << ", stepsPerRad=" << steps_per_rad_ << ")" << std::endl;
+    INFO_STREAM << "[DEBUG] convert_to_steps: " << value << " mm"
+                << " -> " << result << " steps (stepsPerMm=" << steps_per_mm_ << ")" << std::endl;
     return result;
 }
 
 double LargeStrokeDevice::convert_from_steps(double steps) {
-    // 将步数转换为用户设置的单位（用于位置反馈）
+    // 将步数转换为 mm（用于位置反馈）
     // 使用从数据库配置读取的转换因子
-    
-    double result = steps;
-    if (position_unit_ == "step") {
-        result = steps;
-    } else if (position_unit_ == "mm") {
-        result = steps / steps_per_mm_;
-    } else if (position_unit_ == "um") {
-        result = steps / steps_per_mm_ * 1000.0;
-    } else if (position_unit_ == "rad") {
-        result = steps / steps_per_rad_;
-    } else if (position_unit_ == "mrad") {
-        result = steps / steps_per_rad_ * 1000.0;
-    } else if (position_unit_ == "urad") {
-        result = steps / steps_per_rad_ * 1000000.0;
-    }
+    double result = steps / steps_per_mm_;
     
     INFO_STREAM << "[DEBUG] convert_from_steps: " << steps << " steps -> " 
-                << result << " " << position_unit_ << std::endl;
+                << result << " mm" << std::endl;
     return result;
 }
 
@@ -893,12 +874,18 @@ void LargeStrokeDevice::init() {
 // ========== Parameter Commands ==========
 void LargeStrokeDevice::moveAxisSet(const Tango::DevVarDoubleArray *params) {
     check_state_for_command("moveAxisSet", false, false);  // OFF/ON/FAULT可用
-    if (params->length() < 5) {
+    if (params->length() < 6) {
         Tango::Except::throw_exception("API_InvalidArgument", 
-            "Need 5 values: startSpeed, maxSpeed, accTime, decTime, stopSpeed", 
+            "Need 6 values: axis, startSpeed, maxSpeed, accTime, decTime, stopSpeed", 
             "LargeStrokeDevice::moveAxisSet");
     }
     log_event("Motion parameters set");
+
+    int axis = static_cast<int>((*params)[0]);
+    if (axis != 6) {
+        Tango::Except::throw_exception("API_InvalidArgument", 
+            "Axis must be 6", "LargeStrokeDevice::moveAxisSet");
+    }
     
     auto motion = get_motion_controller_proxy();
     if (!sim_mode_ && motion) {
@@ -940,7 +927,7 @@ void LargeStrokeDevice::structAxisSet(const Tango::DevVarDoubleArray *params) {
 // ========== Motion Commands ==========
 void LargeStrokeDevice::moveRelative(Tango::DevDouble distance) {
     INFO_STREAM << "[DEBUG] moveRelative() called with distance=" << distance 
-                << " " << position_unit_ << ", current_state=" << Tango::DevStateName[get_state()] 
+                << "mm "  << ", current_state=" << Tango::DevStateName[get_state()] 
                 << ", sim_mode=" << (sim_mode_ ? "true" : "false") << std::endl;
     check_state_for_command("moveRelative", true, false);  // 仅ON状态可用
     
@@ -953,10 +940,10 @@ void LargeStrokeDevice::moveRelative(Tango::DevDouble distance) {
     }
     
     // 单位转换：将用户输入转换为步数
-    double distance_in_steps = convert_to_steps(distance);
-    INFO_STREAM << "[DEBUG] moveRelative: converted " << distance << " " << position_unit_ 
+    int distance_in_steps = convert_to_steps(distance);
+    INFO_STREAM << "[DEBUG] moveRelative: converted " << distance << " mm"
                 << " to " << distance_in_steps << " steps" << std::endl;
-    log_event("Relative move: " + std::to_string(distance) + " " + position_unit_ + 
+    log_event("Relative move: " + std::to_string(distance) + " mm" +
               " (" + std::to_string(distance_in_steps) + " steps)");
     
     // 运动前自动释放刹车（如果配置了刹车）
@@ -968,10 +955,10 @@ void LargeStrokeDevice::moveRelative(Tango::DevDouble distance) {
     }
     
     if (sim_mode_) {
-        INFO_STREAM << "[DEBUG] moveRelative: SIM MODE - updating position (current=" 
-                    << large_range_pos_ << ", adding=" << distance_in_steps << ")" << std::endl;
-        dire_pos_ += distance_in_steps;
-        large_range_pos_ += distance_in_steps;
+        // INFO_STREAM << "[DEBUG] moveRelative: SIM MODE - updating position (current=" 
+        //             << large_range_pos_ << ", adding=" << distance_in_steps << ")" << std::endl;
+        // dire_pos_ += distance_in_steps;
+        // large_range_pos_ += distance_in_steps;
         large_lim_org_state_ = 2;  // Not at origin
         large_range_state_ = false;
         result_value_ = 0;
@@ -995,7 +982,8 @@ void LargeStrokeDevice::moveRelative(Tango::DevDouble distance) {
         move_params[1] = distance_in_steps;  // 发送转换后的步数
         
         INFO_STREAM << "[DEBUG] moveRelative: sending to motion controller (axis=" 
-                    << axis_id_ << ", distance=" << distance_in_steps << " steps)" << std::endl;
+                    << axis_id_ << ", distance = " << distance 
+                    << ", " << distance_in_steps << " steps)" << std::endl;
         
         Tango::DeviceData data_in;
         data_in << move_params;
@@ -1031,7 +1019,7 @@ void LargeStrokeDevice::moveRelative(Tango::DevDouble distance) {
 
 void LargeStrokeDevice::moveAbsolute(Tango::DevDouble position) {
     INFO_STREAM << "[DEBUG] moveAbsolute() called with position=" << position 
-                << " " << position_unit_ << ", current_state=" << Tango::DevStateName[get_state()] 
+                << " mm, current_state=" << Tango::DevStateName[get_state()] 
                 << ", sim_mode=" << (sim_mode_ ? "true" : "false")
                 << ", current_pos=" << large_range_pos_ << std::endl;
     check_state_for_command("moveAbsolute", true, false);  // 仅ON状态可用
@@ -1044,11 +1032,11 @@ void LargeStrokeDevice::moveAbsolute(Tango::DevDouble position) {
             "LargeStrokeDevice::moveAbsolute");
     }
     
-    // 单位转换：将用户输入转换为步数
+    // 单位转换：将用户输入（mm）转换为步数
     double position_in_steps = convert_to_steps(position);
-    INFO_STREAM << "[DEBUG] moveAbsolute: converted " << position << " " << position_unit_ 
+    INFO_STREAM << "[DEBUG] moveAbsolute: converted " << position << " mm"
                 << " to " << position_in_steps << " steps" << std::endl;
-    log_event("Absolute move: " + std::to_string(position) + " " + position_unit_ + 
+    log_event("Absolute move: " + std::to_string(position) + " mm" +
               " (" + std::to_string(position_in_steps) + " steps)");
     
     // 运动前自动释放刹车（如果配置了刹车）
@@ -1274,8 +1262,242 @@ Tango::DevDouble LargeStrokeDevice::readEncoder() {
     INFO_STREAM << "[DEBUG] readEncoder() called" << std::endl;
     check_state_for_command("readEncoder", false, false);  // OFF/ON/FAULT可用
     update_position();
-    INFO_STREAM << "[DEBUG] readEncoder: returning position=" << large_range_pos_ << " steps" << std::endl;
+    INFO_STREAM << "[DEBUG] readEncoder: returning position=" << large_range_pos_  << std::endl;
     return large_range_pos_;
+}
+
+void LargeStrokeDevice::saveEncoderPosition() {
+    INFO_STREAM << "[saveEncoderPosition] Saving current encoder position to database" << std::endl;
+    
+    try {
+        // 读取当前编码器位置
+        update_position();
+        double position = large_range_pos_;
+        
+        INFO_STREAM << "[saveEncoderPosition] Current position: " << position << std::endl;
+        
+        // 保存到数据库
+        Tango::DbData db_data;
+        db_data.push_back(Tango::DbDatum("encoderPosition"));
+        db_data[0] << position;
+        
+        Tango::DbDevice db_dev(get_name());
+        db_dev.put_property(db_data);
+        
+        INFO_STREAM << "[saveEncoderPosition] ✓ Encoder position saved successfully" << std::endl;
+        
+    } catch (Tango::DevFailed &e) {
+        ERROR_STREAM << "[saveEncoderPosition] Failed to save: " << e.errors[0].desc << std::endl;
+        Tango::Except::re_throw_exception(e, "API_DatabaseError",
+            "Failed to save encoder position", 
+            "LargeStrokeDevice::saveEncoderPosition");
+    }
+}
+
+void LargeStrokeDevice::loadEncoderPosition() {
+    INFO_STREAM << "[loadEncoderPosition] Loading encoder position from database" << std::endl;
+    
+    try {
+        // 从数据库读取
+        Tango::DbData db_data;
+        db_data.push_back(Tango::DbDatum("encoderPosition"));
+        
+        Tango::DbDevice db_dev(get_name());
+        db_dev.get_property(db_data);
+        
+        if (db_data[0].is_empty()) {
+            WARN_STREAM << "[loadEncoderPosition] No saved position found in database" << std::endl;
+            return;
+        }
+        
+        double position;
+        db_data[0] >> position;
+        
+        large_range_pos_ = position;
+        
+        INFO_STREAM << "[loadEncoderPosition] ✓ Loaded position: " << position << " steps" << std::endl;
+        
+    } catch (Tango::DevFailed &e) {
+        ERROR_STREAM << "[loadEncoderPosition] Failed to load: " << e.errors[0].desc << std::endl;
+        Tango::Except::re_throw_exception(e, "API_DatabaseError",
+            "Failed to load encoder position", 
+            "LargeStrokeDevice::loadEncoderPosition");
+    }
+}
+
+void LargeStrokeDevice::moveToZero() {
+    INFO_STREAM << "[moveToZero] Starting move to zero (negative limit) for calibration" << std::endl;
+    
+    check_state_for_command("moveToZero", true, false);  // 仅ON状态可用
+    log_event("Move to zero (calibration)");
+    
+    if (sim_mode_) {
+        INFO_STREAM << "[moveToZero] SIM MODE - simulating move to negative limit" << std::endl;
+        large_range_pos_ = 0.0;
+        dire_pos_ = 0.0;
+        large_lim_org_state_ = -1;  // Negative limit
+        result_value_ = 0;
+        
+        // 模拟模式下也保存编码器位置
+        try {
+            Tango::DbData db_data;
+            db_data.push_back(Tango::DbDatum("encoderPosition"));
+            db_data[0] << 0.0;
+            Tango::DbDevice db_dev(get_name());
+            db_dev.put_property(db_data);
+            INFO_STREAM << "[moveToZero] SIM MODE - reached negative limit, encoder position saved: 0.0" << std::endl;
+        } catch (...) {
+            WARN_STREAM << "[moveToZero] SIM MODE - failed to save encoder position" << std::endl;
+        }
+        return;
+    }
+    
+    // 快速连接检查
+    if (!quick_check_connection()) {
+        ERROR_STREAM << "[moveToZero] Connection check failed" << std::endl;
+        result_value_ = 1;
+        Tango::Except::throw_exception("API_ProxyError",
+            "Motion controller not connected. Cannot execute moveToZero.",
+            "LargeStrokeDevice::moveToZero");
+    }
+    
+    // 真实模式：使用相对运动向负方向移动，直到触发负限位自动停止
+    auto motion = get_motion_controller_proxy();
+    if (!motion) {
+        ERROR_STREAM << "[moveToZero] motion_controller_proxy_ is NULL in real mode!" << std::endl;
+        Tango::Except::throw_exception("API_ProxyError",
+            "Motion controller not connected. Cannot execute moveToZero in real mode.",
+            "LargeStrokeDevice::moveToZero");
+    }
+    
+    // 释放刹车（如果配置了刹车控制）
+    if (brake_power_port_ >= 0 && !brake_released_) {
+        INFO_STREAM << "[BrakeControl] Releasing brake before moveToZero" << std::endl;
+        if (!release_brake()) {
+            WARN_STREAM << "[BrakeControl] Failed to release brake before motion, continuing anyway" << std::endl;
+        }
+    }
+    
+    try {
+        // 使用相对运动向负方向移动一个很大的距离（-1000mm）
+        // 运动控制器的限位开关会自动停止运动
+        double large_negative_distance = -1000.0;  // -1000mm，足够到达负限位
+        int distance_in_steps = convert_to_steps(large_negative_distance);
+        
+        INFO_STREAM << "[moveToZero] Moving to negative direction: " 
+                    << large_negative_distance << " mm"
+                    << " (" << distance_in_steps << " steps)" << std::endl;
+        INFO_STREAM << "[moveToZero] Motion will stop automatically when negative limit is triggered" << std::endl;
+        
+        Tango::DevVarDoubleArray move_params;
+        move_params.length(2);
+        move_params[0] = static_cast<double>(axis_id_);
+        move_params[1] = distance_in_steps;
+        
+        Tango::DeviceData data_in;
+        data_in << move_params;
+        
+        // 发送运动命令
+        int original_timeout = motion->get_timeout_millis();
+        motion->set_timeout_millis(800);
+        try {
+            motion->command_inout("moveRelative", data_in);
+        } catch (...) {
+            motion->set_timeout_millis(original_timeout);
+            throw;
+        }
+        motion->set_timeout_millis(original_timeout);
+        
+        large_range_state_ = true;
+        set_state(Tango::MOVING);
+        
+        INFO_STREAM << "[moveToZero] Motion command sent, waiting for completion..." << std::endl;
+        
+        // 等待运动完成或到达负限位（最多120秒）
+        int timeout_seconds = 120;
+        int check_interval_ms = 100;
+        int elapsed_ms = 0;
+        bool limit_reached = false;
+        
+        while (elapsed_ms < timeout_seconds * 1000) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(check_interval_ms));
+            elapsed_ms += check_interval_ms;
+            
+            // 检查是否到达负限位
+            try {
+                Tango::DeviceData el_data_in;
+                el_data_in << static_cast<Tango::DevShort>(axis_id_);
+                Tango::DeviceData el_data_out = motion->command_inout("readEL", el_data_in);
+                Tango::DevShort el_state;
+                el_data_out >> el_state;
+                
+                if (el_state == -1) {  // 负限位触发
+                    limit_reached = true;
+                    INFO_STREAM << "[moveToZero] Negative limit reached after " << (elapsed_ms/1000.0) << " seconds" << std::endl;
+                    break;
+                }
+            } catch (...) {
+                // 忽略读取失败，继续等待
+            }
+            
+            // 检查运动控制器状态
+            try {
+                Tango::DevState mc_state = motion->state();
+                if (mc_state == Tango::ON) {
+                    // 运动完成（可能因限位停止）
+                    INFO_STREAM << "[moveToZero] Motion completed (controller state: ON)" << std::endl;
+                    break;
+                }
+            } catch (...) {
+                // 忽略状态读取失败
+            }
+        }
+        
+        // 等待位置稳定
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        
+        // 读取并保存最终编码器位置
+        try {
+            update_position();
+            double final_position = large_range_pos_;
+            
+            INFO_STREAM << "[moveToZero] Final encoder position: " << final_position << " mm" << std::endl;
+            
+            // 保存到数据库
+            Tango::DbData db_data;
+            db_data.push_back(Tango::DbDatum("encoderPosition"));
+            db_data[0] << final_position;
+            
+            Tango::DbDevice db_dev(get_name());
+            db_dev.put_property(db_data);
+            
+            INFO_STREAM << "[moveToZero] ✓ Encoder position saved to database" << std::endl;
+            
+            if (limit_reached) {
+                INFO_STREAM << "[moveToZero] ✓ Zero calibration completed successfully" << std::endl;
+            } else {
+                WARN_STREAM << "[moveToZero] ⚠ Motion completed but negative limit may not have been reached" << std::endl;
+            }
+            
+        } catch (Tango::DevFailed &e) {
+            ERROR_STREAM << "[moveToZero] Failed to save encoder position: " << e.errors[0].desc << std::endl;
+            // 不抛出异常，运动已完成
+        }
+        
+        large_range_state_ = false;
+        set_state(Tango::ON);
+        result_value_ = 0;
+        
+    } catch (Tango::DevFailed &e) {
+        result_value_ = 1;
+        ERROR_STREAM << "[moveToZero] Command failed - " << e.errors[0].desc << std::endl;
+        connection_healthy_.store(false);
+        reset_motion_controller_proxy();
+        set_state(Tango::FAULT);
+        set_status("Motion controller communication failed");
+        Tango::Except::re_throw_exception(e, "API_ProxyError", 
+            "Failed to move to zero", "LargeStrokeDevice::moveToZero");
+    }
 }
 
 Tango::DevBoolean LargeStrokeDevice::readOrg() {
@@ -1436,7 +1658,6 @@ void LargeStrokeDevice::read_attr(Tango::Attribute &attr) {
     std::string attr_name = attr.get_name();
     
     if (attr_name == "selfCheckResult") read_self_check_result(attr);
-    else if (attr_name == "positionUnit") read_position_unit(attr);
     else if (attr_name == "groupAttributeJson") read_group_attribute_json(attr);
     else if (attr_name == "hostPlugState") read_host_plug_state(attr);
     else if (attr_name == "largeRangePos") read_large_range_pos(attr);
@@ -1464,33 +1685,12 @@ void LargeStrokeDevice::read_brake_status(Tango::Attribute &attr) {
 // 处理可写属性的写操作
 void LargeStrokeDevice::write_attr(Tango::WAttribute &attr) {
     std::string attr_name = attr.get_name();
-    
-    if (attr_name == "positionUnit") {
-        write_position_unit(attr);
-    }
+    // No writable attributes currently
 }
 
 void LargeStrokeDevice::read_self_check_result(Tango::Attribute &attr) {
     attr_self_check_result_read = self_check_result_;
     attr.set_value(&attr_self_check_result_read);
-}
-
-void LargeStrokeDevice::read_position_unit(Tango::Attribute &attr) {
-    attr_position_unit_read = Tango::string_dup(position_unit_.c_str());
-    attr.set_value(&attr_position_unit_read);
-}
-
-void LargeStrokeDevice::write_position_unit(Tango::WAttribute &attr) {
-    Tango::DevString new_unit;
-    attr.get_write_value(new_unit);
-    std::string unit_str(new_unit);
-    
-    if (unit_str != "step" && unit_str != "mm" && unit_str != "um" && 
-        unit_str != "rad" && unit_str != "urad" && unit_str != "mrad") {
-        Tango::Except::throw_exception("API_InvalidValue", 
-            "Invalid position unit", "LargeStrokeDevice::write_position_unit");
-    }
-    position_unit_ = unit_str;
 }
 
 void LargeStrokeDevice::read_group_attribute_json(Tango::Attribute &attr) {
@@ -1505,7 +1705,6 @@ void LargeStrokeDevice::read_group_attribute_json(Tango::Attribute &attr) {
     oss << ",\"LargeLimOrgState\":" << large_lim_org_state_;
     oss << ",\"selfCheckResult\":" << self_check_result_;
     oss << ",\"resultValue\":" << result_value_;
-    oss << ",\"positionUnit\":\"" << position_unit_ << "\"";
     if (!alarm_state_.empty()) {
         oss << ",\"alarmState\":\"" << alarm_state_ << "\"";
     }
@@ -1522,8 +1721,8 @@ void LargeStrokeDevice::read_host_plug_state(Tango::Attribute &attr) {
 
 void LargeStrokeDevice::read_large_range_pos(Tango::Attribute &attr) {
     update_position();
-    // 转换为用户设置的单位（用于位置反馈）
-    // 设备内部存储为步数，需要根据positionUnit转换为用户单位
+    // 转换为 mm 单位（用于位置反馈）
+    // 设备内部存储为步数，转换为 mm
     attr_large_range_pos_read = convert_from_steps(large_range_pos_);
     attr.set_value(&attr_large_range_pos_read);
 }
@@ -1625,6 +1824,7 @@ void LargeStrokeDevice::always_executed_hook() {
 
 void LargeStrokeDevice::read_attr_hardware(std::vector<long> &) {
     auto now = std::chrono::steady_clock::now();
+    static int call_counter = 0; if (++call_counter % 10 == 0) { INFO_STREAM << "[DEBUG] read_attr_hardware called " << call_counter << " times" << std::endl; }
     
     // 周期性报警检测 - 每30ms
     auto alarm_elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_alarm_check_).count();
@@ -1634,9 +1834,10 @@ void LargeStrokeDevice::read_attr_hardware(std::vector<long> &) {
         // 例如检查限位开关、过载等
     }
     
-    // 周期性状态检测 - 每1000ms
+    // 周期性状态检测 - 每100ms（更快的状态响应）
     auto state_elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_state_check_).count();
-    if (state_elapsed >= 1000) {
+    if (state_elapsed >= 100) {
+        INFO_STREAM << "[DEBUG] read_attr_hardware: 100ms state check triggered" << std::endl;
         last_state_check_ = now;
 
         // 连接维护由独立后台线程负责；此处不做 ping/重连，避免属性路径阻塞
@@ -1662,20 +1863,15 @@ void LargeStrokeDevice::read_attr_hardware(std::vector<long> &) {
                         Tango::DevShort el_state_raw;
                         data_out >> el_state_raw;
                         
-                        // 限位开关低电平有效：硬件读取0（低电平）表示触发，1（高电平）表示未触发
-                        // 运动控制器当前逻辑：pos_limit==1返回1(EL+), neg_limit==1返回-1(EL-), 否则返回0
-                        // 如果限位开关是低电平有效，需要反转：当硬件读取0时应该返回限位触发
-                        // 由于运动控制器返回0时无法区分方向，我们在large_stroke_device中反转逻辑
-                        // 反转规则：当readEL返回0时，认为是限位触发（统一处理为EL+）
-                        //          当readEL返回非0时，认为是未触发（转换为0）
-                        Tango::DevShort el_state = 0;
-                        if (el_state_raw == 0) {
-                            // 低电平有效：返回0表示限位触发（但无法区分方向，统一处理为EL+）
-                            el_state = 1;  // 转换为EL+表示限位触发
-                        }
-                        // 如果返回非0（1或-1），说明硬件读取是高电平，限位未触发，el_state保持为0
+                        // 运动控制器已经处理了限位开关的低电平有效逻辑
+                        // 运动控制器 readEL 返回值：
+                        //   1  = EL+（正限位触发）
+                        //   -1 = EL-（负限位触发）
+                        //   0  = 无限位触发
+                        // 直接使用运动控制器返回的值，不需要再反转
+                        Tango::DevShort el_state = el_state_raw;
                         
-                        // readEL返回: 0=none, 1=EL+, -1=EL- (反转后)
+                        // readEL返回: 0=none, 1=EL+, -1=EL-
                         if (el_state != 0) {
                             // 锁存限位故障，避免后续状态同步覆盖为 ON
                             if (!limit_fault_latched_.load()) {
@@ -1692,7 +1888,7 @@ void LargeStrokeDevice::read_attr_hardware(std::vector<long> &) {
                             // 同步 LargeLimOrgState（仅反映限位触发）
                             large_lim_org_state_ = el_state;
                             INFO_STREAM << "[BrakeControl] Limit switch triggered on axis " << axis_id_ 
-                                       << " (el_state_raw=" << el_state_raw << ", inverted to " << el_state << ")" << std::endl;
+                                       << " (el_state=" << el_state << ")" << std::endl;
                             INFO_STREAM << "[BrakeControl] Limit triggered, auto-engaging brake (safety)" << std::endl;
                             if (!engage_brake()) {
                                 WARN_STREAM << "[BrakeControl] Failed to engage brake on limit trigger" << std::endl;
@@ -1744,6 +1940,7 @@ void LargeStrokeDevice::read_attr_hardware(std::vector<long> &) {
                     }
                     large_range_state_ = false;
                 } else if (mc_state == Tango::MOVING) {
+                    // 同步运动控制器的MOVING状态（修复：之前被注释掉导致状态不同步）
                     if (old_state != Tango::MOVING) {
                         set_state(Tango::MOVING);
                         large_range_state_ = true;
@@ -1765,8 +1962,13 @@ void LargeStrokeDevice::read_attr_hardware(std::vector<long> &) {
                 } else {
                     if (old_state == Tango::MOVING) {
                         // 运动完成：从MOVING状态变为ON状态
-                        // 注意：正常运动完成后不自动启用刹车，保持刹车释放状态以便快速继续运动
-                        // 刹车只在故障、限位触发、断电、设备关闭等安全场景下自动启用
+                        // 运动完成后自动启用刹车（安全保护）
+                        if (brake_power_port_ >= 0 && brake_released_) {
+                            INFO_STREAM << "[BrakeControl] Motion completed, auto-engaging brake (safety)" << std::endl;
+                            if (!engage_brake()) {
+                                WARN_STREAM << "[BrakeControl] Failed to engage brake after motion completion" << std::endl;
+                            }
+                        }
                         set_state(Tango::ON);
                         large_range_state_ = false;
                         INFO_STREAM << "[DEBUG] read_attr_hardware: motion controller state changed to ON" << std::endl;
@@ -1886,7 +2088,6 @@ LargeStrokeDeviceClass::LargeStrokeDeviceClass(std::string &class_name) : Tango:
 void LargeStrokeDeviceClass::attribute_factory(std::vector<Tango::Attr *> &att_list) {
     // Standard attributes - 使用自定义属性类以确保 read_attr() 被调用
     att_list.push_back(new LargeStrokeAttr("selfCheckResult", Tango::DEV_LONG, Tango::READ));
-    att_list.push_back(new LargeStrokeAttrRW("positionUnit", Tango::DEV_STRING, Tango::READ_WRITE));
     att_list.push_back(new LargeStrokeAttr("groupAttributeJson", Tango::DEV_STRING, Tango::READ));
     
     // Device-specific attributes
@@ -1948,6 +2149,16 @@ void LargeStrokeDeviceClass::command_factory() {
     command_list.push_back(new Tango::TemplCommandOut<Tango::DevShort>(
         "readEL", static_cast<Tango::DevShort (Tango::DeviceImpl::*)()>(&LargeStrokeDevice::readEL)));
     
+    // Encoder position save/load commands
+    command_list.push_back(new Tango::TemplCommand(
+        "saveEncoderPosition", static_cast<void (Tango::DeviceImpl::*)()>(&LargeStrokeDevice::saveEncoderPosition)));
+    command_list.push_back(new Tango::TemplCommand(
+        "loadEncoderPosition", static_cast<void (Tango::DeviceImpl::*)()>(&LargeStrokeDevice::loadEncoderPosition)));
+    
+    // Zero calibration command
+    command_list.push_back(new Tango::TemplCommand(
+        "moveToZero", static_cast<void (Tango::DeviceImpl::*)()>(&LargeStrokeDevice::moveToZero)));
+    
     // Auto/Valve commands
     command_list.push_back(new Tango::TemplCommand(
         "largeMoveAuto", static_cast<void (Tango::DeviceImpl::*)()>(&LargeStrokeDevice::largeMoveAuto)));
@@ -1977,6 +2188,10 @@ void LargeStrokeDeviceClass::command_factory() {
         "releaseBrake", static_cast<void (Tango::DeviceImpl::*)()>(&LargeStrokeDevice::releaseBrake)));
     command_list.push_back(new Tango::TemplCommand(
         "engageBrake", static_cast<void (Tango::DeviceImpl::*)()>(&LargeStrokeDevice::engageBrake)));
+    command_list.push_back(new Tango::TemplCommand(
+        "enableCavityLight", static_cast<void (Tango::DeviceImpl::*)()>(&LargeStrokeDevice::enableCavityLight)));
+    command_list.push_back(new Tango::TemplCommand(
+        "disableCavityLight", static_cast<void (Tango::DeviceImpl::*)()>(&LargeStrokeDevice::disableCavityLight)));
     command_list.push_back(new Tango::TemplCommandOut<Tango::DevString>(
         "queryPowerStatus", static_cast<Tango::DevString (Tango::DeviceImpl::*)()>(&LargeStrokeDevice::queryPowerStatus)));
 }
@@ -2010,15 +2225,32 @@ void LargeStrokeDevice::engageBrake() {
     }
 }
 
+void LargeStrokeDevice::enableCavityLight() {
+    if (!enable_cavity_light()) {
+        Tango::Except::throw_exception("PowerControlError", 
+            "Failed to enable cavity light", "LargeStrokeDevice::enableCavityLight");
+    }
+}
+
+void LargeStrokeDevice::disableCavityLight() {
+    if (!disable_cavity_light()) {
+        Tango::Except::throw_exception("PowerControlError", 
+            "Failed to disable cavity light", "LargeStrokeDevice::disableCavityLight");
+    }
+}
+
 Tango::DevString LargeStrokeDevice::queryPowerStatus() {
     std::stringstream ss;
     ss << "{"
        << "\"driverPowerEnabled\":" << (driver_power_enabled_ ? "true" : "false") << ","
        << "\"brakeReleased\":" << (brake_released_ ? "true" : "false") << ","
+       << "\"cavityLightEnabled\":" << (cavity_light_enabled_ ? "true" : "false") << ","
        << "\"driverPowerPort\":" << driver_power_port_ << ","
        << "\"brakePowerPort\":" << brake_power_port_ << ","
+       << "\"cavityLightPort\":" << cavity_light_port_ << ","
        << "\"driverPowerController\":\"" << driver_power_controller_ << "\","
-       << "\"brakePowerController\":\"" << brake_power_controller_ << "\""
+       << "\"brakePowerController\":\"" << brake_power_controller_ << "\","
+       << "\"cavityLightController\":\"" << cavity_light_controller_ << "\""
        << "}";
     return CORBA::string_dup(ss.str().c_str());
 }
@@ -2255,6 +2487,123 @@ bool LargeStrokeDevice::engage_brake() {
     } catch (Tango::DevFailed &e) {
         ERROR_STREAM << "✗ Failed to engage brake: " << e.errors[0].desc << std::endl;
         log_event("Failed to engage brake: " + std::string(e.errors[0].desc.in()));
+        return false;
+    }
+}
+
+// ===== Cavity Light Control =====
+bool LargeStrokeDevice::enable_cavity_light() {
+    INFO_STREAM << "[CavityLightControl] enable_cavity_light() called" << std::endl;
+    INFO_STREAM << "[CavityLightControl] cavity_light_port_=" << cavity_light_port_ 
+               << ", cavity_light_controller_=" << cavity_light_controller_ << std::endl;
+    
+    if (sim_mode_) {
+        INFO_STREAM << "Simulation: Cavity light enabled (simulated)" << std::endl;
+        cavity_light_enabled_ = true;
+        return true;
+    }
+    
+    if (cavity_light_port_ < 0) {
+        INFO_STREAM << "[CavityLightControl] Cavity light not configured (port=" 
+                   << cavity_light_port_ << "), skipping" << std::endl;
+        return true;  // 未配置时认为成功
+    }
+    
+    try {
+        std::unique_ptr<Tango::DeviceProxy> light_ctrl_owned;
+        std::shared_ptr<Tango::DeviceProxy> light_ctrl_shared;
+        Tango::DeviceProxy* light_ctrl = nullptr;
+        
+        if (!cavity_light_controller_.empty() && 
+            cavity_light_controller_ != motion_controller_name_) {
+            light_ctrl_owned = std::make_unique<Tango::DeviceProxy>(cavity_light_controller_);
+            light_ctrl = light_ctrl_owned.get();
+            INFO_STREAM << "[CavityLightControl] Using dedicated light controller: " << cavity_light_controller_ << std::endl;
+        } else {
+            light_ctrl_shared = get_motion_controller_proxy();
+            light_ctrl = light_ctrl_shared.get();
+            INFO_STREAM << "[CavityLightControl] Using connected motion controller for cavity light" << std::endl;
+        }
+        if (!light_ctrl) {
+            ERROR_STREAM << "[CavityLightControl] No controller available for cavity light control!" << std::endl;
+            return false;
+        }
+        
+        Tango::DevVarDoubleArray params;
+        params.length(2);
+        params[0] = static_cast<double>(cavity_light_port_);
+        params[1] = 1.0;  // 逻辑1=启用腔体灯光
+        Tango::DeviceData data;
+        data << params;
+        
+        INFO_STREAM << "[CavityLightControl] Calling writeIO for cavity light with port=" << cavity_light_port_ << ", value=1" << std::endl;
+        light_ctrl->command_inout("writeIO", data);
+        
+        cavity_light_enabled_ = true;
+        INFO_STREAM << "✓ Cavity light enabled on port OUT" << cavity_light_port_ << std::endl;
+        log_event("Cavity light enabled on port OUT" + std::to_string(cavity_light_port_));
+        return true;
+    } catch (Tango::DevFailed &e) {
+        ERROR_STREAM << "✗ Failed to enable cavity light: " << e.errors[0].desc << std::endl;
+        log_event("Failed to enable cavity light: " + std::string(e.errors[0].desc.in()));
+        return false;
+    }
+}
+
+bool LargeStrokeDevice::disable_cavity_light() {
+    INFO_STREAM << "[CavityLightControl] disable_cavity_light() called" << std::endl;
+    INFO_STREAM << "[CavityLightControl] cavity_light_port_=" << cavity_light_port_ 
+               << ", cavity_light_controller_=" << cavity_light_controller_ << std::endl;
+    
+    if (sim_mode_) {
+        INFO_STREAM << "Simulation: Cavity light disabled (simulated)" << std::endl;
+        cavity_light_enabled_ = false;
+        return true;
+    }
+    
+    if (cavity_light_port_ < 0) {
+        INFO_STREAM << "[CavityLightControl] Cavity light not configured (port=" 
+                   << cavity_light_port_ << "), skipping" << std::endl;
+        return true;  // 未配置时认为成功
+    }
+    
+    try {
+        std::unique_ptr<Tango::DeviceProxy> light_ctrl_owned;
+        std::shared_ptr<Tango::DeviceProxy> light_ctrl_shared;
+        Tango::DeviceProxy* light_ctrl = nullptr;
+        
+        if (!cavity_light_controller_.empty() && 
+            cavity_light_controller_ != motion_controller_name_) {
+            light_ctrl_owned = std::make_unique<Tango::DeviceProxy>(cavity_light_controller_);
+            light_ctrl = light_ctrl_owned.get();
+            INFO_STREAM << "[CavityLightControl] Using dedicated light controller: " << cavity_light_controller_ << std::endl;
+        } else {
+            light_ctrl_shared = get_motion_controller_proxy();
+            light_ctrl = light_ctrl_shared.get();
+            INFO_STREAM << "[CavityLightControl] Using connected motion controller for cavity light" << std::endl;
+        }
+        if (!light_ctrl) {
+            ERROR_STREAM << "[CavityLightControl] No controller available for cavity light control!" << std::endl;
+            return false;
+        }
+        
+        Tango::DevVarDoubleArray params;
+        params.length(2);
+        params[0] = static_cast<double>(cavity_light_port_);
+        params[1] = 0.0;  // 逻辑0=关闭腔体灯光
+        Tango::DeviceData data;
+        data << params;
+        
+        INFO_STREAM << "[CavityLightControl] Calling writeIO for cavity light with port=" << cavity_light_port_ << ", value=0" << std::endl;
+        light_ctrl->command_inout("writeIO", data);
+        
+        cavity_light_enabled_ = false;
+        INFO_STREAM << "✓ Cavity light disabled on port OUT" << cavity_light_port_ << std::endl;
+        log_event("Cavity light disabled on port OUT" + std::to_string(cavity_light_port_));
+        return true;
+    } catch (Tango::DevFailed &e) {
+        ERROR_STREAM << "✗ Failed to disable cavity light: " << e.errors[0].desc << std::endl;
+        log_event("Failed to disable cavity light: " + std::string(e.errors[0].desc.in()));
         return false;
     }
 }

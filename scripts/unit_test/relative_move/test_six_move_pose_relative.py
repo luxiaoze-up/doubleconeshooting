@@ -6,6 +6,7 @@
 
 import sys
 import time
+import math
 import tango
 
 def test_move_pose_absolute(device_name="sys/six_dof/1", target_pose=None):
@@ -22,7 +23,7 @@ def test_move_pose_absolute(device_name="sys/six_dof/1", target_pose=None):
     
     # 默认目标姿态（可根据实际需求修改）
     if target_pose is None:
-        target_pose = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]  # [x, y, z, rx, ry, rz]
+        target_pose = [0.0, 0.0, 0.0, 0.0, 0.0, 1.0]  # [x, y, z, rx, ry, rz]
     
     try:
         # 1. 连接设备
@@ -69,13 +70,14 @@ def test_move_pose_absolute(device_name="sys/six_dof/1", target_pose=None):
         except Exception as e:
             print(f"  ⚠ 运动控制器初始化失败: {e}")
         
-        # 5. 读取编码器位置
+        # 5. 读取编码器位置（原始圈数）
         print(f"\n[4/9] 读取当前编码器位置...")
         try:
-            encoder_values = device.command_inout("readEncoder")
-            print(f"✓ 当前位置 (6轴): {[f'{val:.2f}' for val in encoder_values]}")
+            initial_encoder = device.command_inout("readEncoder")
+            print(f"✓ 当前编码器圈数 (6轴): {[f'{val:.4f}' for val in initial_encoder]}")
         except Exception as e:
             print(f"⚠ 无法读取编码器: {e}")
+            initial_encoder = None
         
         # 6. 读取当前姿态
         print(f"\n[5/9] 读取当前姿态...")
@@ -194,9 +196,31 @@ def test_move_pose_absolute(device_name="sys/six_dof/1", target_pose=None):
         print(f"\n最终编码器位置:")
         try:
             final_encoder = device.command_inout("readEncoder")
-            print(f"  {[f'{val:.2f}' for val in final_encoder]}")
+            print(f"  最终编码器圈数: {[f'{val:.4f}' for val in final_encoder]}")
         except Exception as e:
             print(f"  ⚠ 无法读取编码器: {e}")
+            final_encoder = None
+        
+        # 编码器圈数差值验证
+        if initial_encoder is not None and final_encoder is not None:
+            print(f"\n编码器圈数差值验证:")
+            print(f"  转换公式: 圈数 × 0.134 = mm")
+            print(f"")
+            
+            axis_labels = ['X', 'Y', 'Z', 'RX', 'RY', 'RZ']
+            for i, label in enumerate(axis_labels):
+                encoder_diff = final_encoder[i] - initial_encoder[i]
+                # 编码器差值转换公式: 圈数 × 0.134 = mm
+                encoder_moved_mm = encoder_diff * 0.134
+                target_movement = target_pose[i]
+                error = encoder_moved_mm - target_movement
+                
+                status = "✓" if abs(error) < 0.5 else "⚠"
+                print(f"  {status} {label}:")
+                print(f"     圈数差值: {encoder_diff:+.6f} 圈")
+                print(f"     编码器换算: {encoder_moved_mm:+.4f} mm")
+                print(f"     目标移动: {target_movement:+.2f} mm")
+                print(f"     误差: {error:+.4f} mm")
         
         print(f"\n{'='*60}")
         print("测试完成!")

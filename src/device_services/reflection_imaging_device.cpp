@@ -172,7 +172,9 @@ ReflectionImagingDevice::~ReflectionImagingDevice() {
 }
 
 void ReflectionImagingDevice::init_device() {
+    std::cout << "[DEBUG] init_device() started" << std::endl;
     Common::StandardSystemDevice::init_device();
+    std::cout << "[DEBUG] StandardSystemDevice::init_device() completed" << std::endl;
 
     Tango::DbData db_data;
     // 标准属性
@@ -227,6 +229,12 @@ void ReflectionImagingDevice::init_device() {
     db_data.push_back(Tango::DbDatum("driverPowerController"));
     db_data.push_back(Tango::DbDatum("brakePowerPort"));
     db_data.push_back(Tango::DbDatum("brakePowerController"));
+    db_data.push_back(Tango::DbDatum("cameraPowerPort"));
+    db_data.push_back(Tango::DbDatum("cameraPowerController"));
+    
+    // 编码器位置保存属性
+    db_data.push_back(Tango::DbDatum("upperPlatformEncoderPos"));
+    db_data.push_back(Tango::DbDatum("lowerPlatformEncoderPos"));
     
     get_db_device()->get_property(db_data);
 
@@ -298,13 +306,47 @@ void ReflectionImagingDevice::init_device() {
     if (!db_data[idx].is_empty()) { db_data[idx] >> driver_power_port_; } else { driver_power_port_ = -1; } idx++;
     if (!db_data[idx].is_empty()) { db_data[idx] >> driver_power_controller_; } idx++;
     if (!db_data[idx].is_empty()) { db_data[idx] >> brake_power_port_; } else { brake_power_port_ = -1; } idx++;
-    if (!db_data[idx].is_empty()) { db_data[idx] >> brake_power_controller_; }
+    if (!db_data[idx].is_empty()) { db_data[idx] >> brake_power_controller_; } idx++;
+    if (!db_data[idx].is_empty()) { db_data[idx] >> camera_power_port_; } else { camera_power_port_ = -1; } idx++;
+    if (!db_data[idx].is_empty()) { db_data[idx] >> camera_power_controller_; } idx++;
     
+    // 读取保存的编码器位置
+    if (!db_data[idx].is_empty()) {
+        std::vector<std::string> pos_str;
+        db_data[idx] >> pos_str;
+        for (size_t i = 0; i < 3 && i < pos_str.size(); ++i) {
+            try {
+                upper_platform_encoder_pos_[i] = std::stod(pos_str[i]);
+            } catch (...) {
+                upper_platform_encoder_pos_[i] = 0.0;
+            }
+        }
+        INFO_STREAM << "Loaded upper platform encoder positions: [" << upper_platform_encoder_pos_[0] 
+                   << ", " << upper_platform_encoder_pos_[1] << ", " << upper_platform_encoder_pos_[2] << "]" << endl;
+    }
+    idx++;
+    
+    if (!db_data[idx].is_empty()) {
+        std::vector<std::string> pos_str;
+        db_data[idx] >> pos_str;
+        for (size_t i = 0; i < 3 && i < pos_str.size(); ++i) {
+            try {
+                lower_platform_encoder_pos_[i] = std::stod(pos_str[i]);
+            } catch (...) {
+                lower_platform_encoder_pos_[i] = 0.0;
+            }
+        }
+        INFO_STREAM << "Loaded lower platform encoder positions: [" << lower_platform_encoder_pos_[0] 
+                   << ", " << lower_platform_encoder_pos_[1] << ", " << lower_platform_encoder_pos_[2] << "]" << endl;
+    }
+    idx++;
+    std::cout << "[DEBUG] Device properties loaded" << std::endl;
     // 初始化状态
     driver_power_enabled_ = false;
     brake_released_ = false;
+    camera_power_enabled_ = false;
 
-    if (motion_controller_name_.empty()) motion_controller_name_ = "sys/motion/1";
+    if (motion_controller_name_.empty()) motion_controller_name_ = "sys/motion/2";
     if (encoder_name_.empty()) encoder_name_ = "sys/encoder/1";
     
     // 编码器通道默认值 - 根据《双锥项目测试数据收集》硬件文档配置
@@ -315,31 +357,21 @@ void ReflectionImagingDevice::init_device() {
     // 编码器采集器 192.168.1.198: 通道1-10 (代码10-19)
     if (upper_platform_encoder_channels_.empty()) {
         // 上平台(设备1): X/Y/Z 对应 199通道8/10, 198通道2 (代码7,9,11)
-        upper_platform_encoder_channels_.push_back(7);   // 设备1-X: 199通道8
+        upper_platform_encoder_channels_.push_back(8);   // 设备1-X: 199通道8
         upper_platform_encoder_channels_.push_back(9);   // 设备1-Y: 199通道10
-        upper_platform_encoder_channels_.push_back(11);  // 设备1-Z: 198通道2
+        upper_platform_encoder_channels_.push_back(12);  // 设备1-Z: 198通道2
         INFO_STREAM << "Using default upper platform encoder channels: 7,9,11 (设备1 X/Y/Z)" << endl;
     }
     if (lower_platform_encoder_channels_.empty()) {
         // 下平台(设备2): X/Y/Z 对应 199通道9, 198通道1/3 (代码8,10,12)
-        lower_platform_encoder_channels_.push_back(8);   // 设备2-X: 199通道9
-        lower_platform_encoder_channels_.push_back(10);  // 设备2-Y: 198通道1
-        lower_platform_encoder_channels_.push_back(12);  // 设备2-Z: 198通道3
+        lower_platform_encoder_channels_.push_back(10);   // 设备2-X: 199通道9
+        lower_platform_encoder_channels_.push_back(11);  // 设备2-Y: 198通道1
+        lower_platform_encoder_channels_.push_back(13);  // 设备2-Z: 198通道3
         INFO_STREAM << "Using default lower platform encoder channels: 8,10,12 (设备2 X/Y/Z)" << endl;
     }
     if (image_save_path_.empty()) image_save_path_ = "./images";
     if (image_format_.empty()) image_format_ = "PNG";
-    
-    // 创建图像保存目录（如果不存在）
-    #ifdef _WIN32
-        std::string mkdir_cmd = "if not exist \"" + image_save_path_ + "\" mkdir \"" + image_save_path_ + "\"";
-        (void)system(mkdir_cmd.c_str());  // 忽略返回值
-    #else
-        std::string mkdir_cmd = "mkdir -p " + image_save_path_;
-        int result = system(mkdir_cmd.c_str());
-        (void)result;  // 忽略返回值
-    #endif
-
+    std::cout << "[DEBUG] CCD and image properties initialized" << std::endl;
     // 解析辅助支撑配置
     if (!upper_support_config_.empty()) {
         try {
@@ -376,7 +408,7 @@ void ReflectionImagingDevice::init_device() {
             WARN_STREAM << "Failed to parse lower support config: " << lower_support_config_ << endl;
         }
     }
-
+    std::cout << "[DEBUG] Loading SIM_MODE..." << std::endl;
     // 从系统配置读取模拟模式设置（启动时的初始默认值）
     // 注意：运行时可以通过 simSwitch 命令或GUI切换，但重启后会恢复配置文件的值（不持久化）
     sim_mode_ = Common::SystemConfig::SIM_MODE;
@@ -393,8 +425,9 @@ void ReflectionImagingDevice::init_device() {
     INFO_STREAM << "ReflectionImagingDevice initialized. Motion Controller: "
                 << motion_controller_name_ << endl;
     log_event("Device initialized");
-
+    std::cout << "[DEBUG] About to call connect_proxies()" << std::endl;
     connect_proxies();
+    std::cout << "[DEBUG] connect_proxies() completed" << std::endl;
 
     // Start LargeStroke-style background connection monitor
     start_connection_monitor();
@@ -717,6 +750,14 @@ void ReflectionImagingDevice::perform_post_motion_reconnect_restore() {
         WARN_STREAM << "Failed to enable driver power after reconnection" << endl;
     }
     
+    // 2.5. 自动开启相机电源
+    INFO_STREAM << "Enabling camera power after reconnection..." << endl;
+    if (enable_camera_power()) {
+        INFO_STREAM << "Camera power enabled successfully after reconnection" << endl;
+    } else {
+        WARN_STREAM << "Failed to enable camera power after reconnection" << endl;
+    }
+    
     // 3. 释放刹车（如果配置了刹车）
     if (brake_power_port_ >= 0) {
         INFO_STREAM << "[BrakeControl] Platform reconnected, auto-releasing brake" << endl;
@@ -1022,6 +1063,9 @@ const std::unordered_map<std::string, AllowedStates> kStateMatrix = {
     {"readtAxis",        {false, true,  true,  true}},
     {"exportAxis",       {false, true,  true,  true}},
     {"simSwitch",        {false, true,  true,  true}},
+    
+    // 编码器位置存档
+    {"saveEncoderPositions", {false, true,  true,  true}},
 };
 } // namespace
 
@@ -1166,6 +1210,14 @@ void ReflectionImagingDevice::update_sub_devices() {
             set_state(Tango::MOVING);
             set_status("Platforms moving");
         } else if (all_ok && !any_moving && get_state() == Tango::MOVING) {
+            // 运动完成：从MOVING状态变为ON状态
+            // 运动完成后自动启用刹车（安全保护）
+            if (brake_power_port_ >= 0 && brake_released_) {
+                INFO_STREAM << "[BrakeControl] Motion completed, auto-engaging brake (safety)" << endl;
+                if (!engage_brake()) {
+                    WARN_STREAM << "[BrakeControl] Failed to engage brake after motion completion" << endl;
+                }
+            }
             set_state(Tango::ON);
             set_status("Running normally");
         } else if (all_ok && get_state() == Tango::ON) {
@@ -1792,7 +1844,7 @@ void ReflectionImagingDevice::upperXMoveRelative(Tango::DevDouble val) {
     Tango::DeviceData arg;
     Tango::DevVarDoubleArray arr; arr.length(2);
     arr[0] = 0.0;  // axis 0 = X
-    arr[1] = val;
+    arr[1] = static_cast<int>(std::round(val * 4000 / 3.175));
     arg << arr;
     upper_platform_proxy_->command_inout("moveRelative", arg);
     upper_platform_state_[0] = true;
@@ -1931,7 +1983,7 @@ void ReflectionImagingDevice::upperYMoveRelative(Tango::DevDouble val) {
     Tango::DeviceData arg;
     Tango::DevVarDoubleArray arr; arr.length(2);
     arr[0] = 2.0;  // axis 2 = Y
-    arr[1] = val;
+    arr[1] = static_cast<int>(std::round(val * 4000 / 3.175));
     arg << arr;
     upper_platform_proxy_->command_inout("moveRelative", arg);
     upper_platform_state_[1] = true;
@@ -2097,7 +2149,7 @@ void ReflectionImagingDevice::upperZMoveRelative(Tango::DevDouble val) {
     Tango::DeviceData arg;
     Tango::DevVarDoubleArray arr; arr.length(2);
     arr[0] = 4.0;  // axis 4 = Z
-    arr[1] = val;
+    arr[1] = static_cast<int>(std::round(val * 4000 / 4));
     arg << arr;
     upper_platform_proxy_->command_inout("moveRelative", arg);
     upper_platform_state_[2] = true;
@@ -2502,6 +2554,74 @@ Tango::DevVarDoubleArray* ReflectionImagingDevice::lowerPlatformReadEncoder() {
     (*result)[1] = lower_platform_pos_[1];
     (*result)[2] = lower_platform_pos_[2];
     return result;
+}
+
+void ReflectionImagingDevice::saveEncoderPositions() {
+    check_state("saveEncoderPositions");
+    
+    try {
+        // 读取上平台编码器值
+        if (!sim_mode_ && encoder_proxy_) {
+            for (size_t i = 0; i < 3 && i < upper_platform_encoder_channels_.size(); ++i) {
+                try {
+                    Tango::DeviceData data_in;
+                    Tango::DevShort channel = upper_platform_encoder_channels_[i];
+                    data_in << channel;
+                    Tango::DeviceData out = encoder_proxy_->command_inout("readEncoder", data_in);
+                    Tango::DevDouble val; out >> val;
+                    upper_platform_encoder_pos_[i] = val;
+                } catch (Tango::DevFailed &e) {
+                    WARN_STREAM << "saveEncoderPositions: Failed to read upper platform channel " 
+                               << upper_platform_encoder_channels_[i] << ": " << e.errors[0].desc << endl;
+                }
+            }
+        }
+        
+        // 读取下平台编码器值
+        if (!sim_mode_ && encoder_proxy_) {
+            for (size_t i = 0; i < 3 && i < lower_platform_encoder_channels_.size(); ++i) {
+                try {
+                    Tango::DeviceData data_in;
+                    Tango::DevShort channel = lower_platform_encoder_channels_[i];
+                    data_in << channel;
+                    Tango::DeviceData out = encoder_proxy_->command_inout("readEncoder", data_in);
+                    Tango::DevDouble val; out >> val;
+                    lower_platform_encoder_pos_[i] = val;
+                } catch (Tango::DevFailed &e) {
+                    WARN_STREAM << "saveEncoderPositions: Failed to read lower platform channel " 
+                               << lower_platform_encoder_channels_[i] << ": " << e.errors[0].desc << endl;
+                }
+            }
+        }
+        
+        // 转换为字符串向量并保存到数据库
+        std::vector<std::string> upper_pos_str, lower_pos_str;
+        for (size_t i = 0; i < 3; ++i) {
+            upper_pos_str.push_back(std::to_string(upper_platform_encoder_pos_[i]));
+            lower_pos_str.push_back(std::to_string(lower_platform_encoder_pos_[i]));
+        }
+        
+        // 保存到数据库属性
+        Tango::DbData db_data;
+        db_data.push_back(Tango::DbDatum("upperPlatformEncoderPos"));
+        db_data.push_back(Tango::DbDatum("lowerPlatformEncoderPos"));
+        db_data[0] << upper_pos_str;
+        db_data[1] << lower_pos_str;
+        get_db_device()->put_property(db_data);
+        
+        INFO_STREAM << "Encoder positions saved - Upper: [" << upper_platform_encoder_pos_[0] << ", "
+                   << upper_platform_encoder_pos_[1] << ", " << upper_platform_encoder_pos_[2] << "], Lower: ["
+                   << lower_platform_encoder_pos_[0] << ", " << lower_platform_encoder_pos_[1] << ", "
+                   << lower_platform_encoder_pos_[2] << "]" << endl;
+        log_event("Encoder positions saved to database");
+        result_value_ = 0;
+        
+    } catch (Tango::DevFailed &e) {
+        result_value_ = 1;
+        ERROR_STREAM << "Failed to save encoder positions: " << e.errors[0].desc << endl;
+        Tango::Except::re_throw_exception(e, "API_CommandFailed",
+            "Failed to save encoder positions", "ReflectionImagingDevice::saveEncoderPositions");
+    }
 }
 
 Tango::DevVarShortArray* ReflectionImagingDevice::lowerPlatformReadOrg() {
@@ -4453,6 +4573,10 @@ void ReflectionImagingDevice::read_attr(Tango::Attribute &attr) {
     if (name == "lowerPlatformState") { read_lower_platform_state(attr); return; }
     if (name == "lowerPlatformAxisParameter") { read_lower_platform_axis_parameter(attr); return; }
     
+    // 编码器位置属性
+    if (name == "upperPlatformEncoderPos") { read_upper_platform_encoder_pos(attr); return; }
+    if (name == "lowerPlatformEncoderPos") { read_lower_platform_encoder_pos(attr); return; }
+    
     // 单轴属性 (用于GUI单轴独立控制)
     if (name == "upperPlatformPosX") { read_upper_platform_pos_x(attr); return; }
     if (name == "upperPlatformPosY") { read_upper_platform_pos_y(attr); return; }
@@ -4689,6 +4813,17 @@ void ReflectionImagingDevice::read_lower_platform_state(Tango::Attribute& attr) 
 void ReflectionImagingDevice::read_lower_platform_axis_parameter(Tango::Attribute& attr) { 
     attr_lowerPlatformAxisParameter_read = Tango::string_dup(lower_platform_axis_parameter_.c_str()); 
     attr.set_value(&attr_lowerPlatformAxisParameter_read); 
+}
+
+// 编码器位置属性读取实现
+void ReflectionImagingDevice::read_upper_platform_encoder_pos(Tango::Attribute& attr) {
+    for (int i = 0; i < 3; ++i) attr_upperPlatformEncoderPos_read[i] = upper_platform_encoder_pos_[i];
+    attr.set_value(attr_upperPlatformEncoderPos_read, 3);
+}
+
+void ReflectionImagingDevice::read_lower_platform_encoder_pos(Tango::Attribute& attr) {
+    for (int i = 0; i < 3; ++i) attr_lowerPlatformEncoderPos_read[i] = lower_platform_encoder_pos_[i];
+    attr.set_value(attr_lowerPlatformEncoderPos_read, 3);
 }
 
 // 单轴属性读取实现 (用于GUI单轴独立控制)
@@ -5854,6 +5989,10 @@ void ReflectionImagingDeviceClass::attribute_factory(std::vector<Tango::Attr*> &
     att_list.push_back(new ReflectionImagingSpectrumAttr("lowerPlatformState", Tango::DEV_BOOLEAN, Tango::READ, 3));
     att_list.push_back(new ReflectionImagingAttr("lowerPlatformAxisParameter", Tango::DEV_STRING, Tango::READ));
     
+    // 编码器位置属性
+    att_list.push_back(new ReflectionImagingSpectrumAttr("upperPlatformEncoderPos", Tango::DEV_DOUBLE, Tango::READ, 3));
+    att_list.push_back(new ReflectionImagingSpectrumAttr("lowerPlatformEncoderPos", Tango::DEV_DOUBLE, Tango::READ, 3));
+    
     // 单轴属性 (用于GUI单轴独立控制)
     // 上平台单轴
     att_list.push_back(new ReflectionImagingAttr("upperPlatformPosX", Tango::DEV_DOUBLE, Tango::READ));
@@ -6011,6 +6150,10 @@ void ReflectionImagingDeviceClass::command_factory() {
         static_cast<Tango::DevVarShortArray * (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::lowerPlatformReadEL)));
     command_list.push_back(new Tango::TemplCommandIn<const Tango::DevVarDoubleArray *>("lowerPlatformSingleAxisMove",
         static_cast<void (Tango::DeviceImpl::*)(const Tango::DevVarDoubleArray *)>(&ReflectionImagingDevice::lowerPlatformSingleAxisMove)));
+    
+    // 编码器位置保存命令
+    command_list.push_back(new Tango::TemplCommand("saveEncoderPositions",
+        static_cast<void (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::saveEncoderPositions)));
     
     // 上平台单轴控制命令 (用于GUI单轴独立控制)
     command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("upperXMoveAbsolute",
@@ -6174,6 +6317,10 @@ void ReflectionImagingDeviceClass::command_factory() {
         static_cast<void (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::releaseBrake)));
     command_list.push_back(new Tango::TemplCommand("engageBrake",
         static_cast<void (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::engageBrake)));
+    command_list.push_back(new Tango::TemplCommand("enableCameraPower",
+        static_cast<void (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::enableCameraPower)));
+    command_list.push_back(new Tango::TemplCommand("disableCameraPower",
+        static_cast<void (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::disableCameraPower)));
     command_list.push_back(new Tango::TemplCommandOut<Tango::DevString>("queryPowerStatus",
         static_cast<Tango::DevString (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::queryPowerStatus)));
 }
@@ -6207,11 +6354,36 @@ void ReflectionImagingDevice::engageBrake() {
     }
 }
 
+void ReflectionImagingDevice::enableCameraPower() {
+    INFO_STREAM << "[CameraPowerControl] enableCameraPower() command called" << endl;
+    
+    if (!enable_camera_power()) {
+        Tango::Except::throw_exception("CAMERA_POWER_CONTROL_FAILED",
+            "Failed to enable camera power",
+            "ReflectionImagingDevice::enableCameraPower");
+    }
+    
+    INFO_STREAM << "[CameraPowerControl] Camera power enabled successfully" << endl;
+}
+
+void ReflectionImagingDevice::disableCameraPower() {
+    INFO_STREAM << "[CameraPowerControl] disableCameraPower() command called" << endl;
+    
+    if (!disable_camera_power()) {
+        Tango::Except::throw_exception("CAMERA_POWER_CONTROL_FAILED",
+            "Failed to disable camera power",
+            "ReflectionImagingDevice::disableCameraPower");
+    }
+    
+    INFO_STREAM << "[CameraPowerControl] Camera power disabled successfully" << endl;
+}
+
 Tango::DevString ReflectionImagingDevice::queryPowerStatus() {
     std::stringstream ss;
     ss << "{"
        << "\"driverPowerEnabled\":" << (driver_power_enabled_ ? "true" : "false") << ","
        << "\"brakeReleased\":" << (brake_released_ ? "true" : "false") << ","
+       << "\"cameraPowerEnabled\":" << (camera_power_enabled_ ? "true" : "false") << ","
        << "\"driverPowerPort\":" << driver_power_port_ << ","
        << "\"brakePowerPort\":" << brake_power_port_ << ","
        << "\"driverPowerController\":\"" << driver_power_controller_ << "\","
@@ -6307,6 +6479,90 @@ bool ReflectionImagingDevice::disable_driver_power() {
         return true;
     } catch (Tango::DevFailed &e) {
         ERROR_STREAM << "✗ Failed to disable driver power: " << e.errors[0].desc << endl;
+        return false;
+    }
+}
+
+// ========== Camera Power Control ==========
+bool ReflectionImagingDevice::enable_camera_power() {
+    INFO_STREAM << "[CameraPowerControl] enable_camera_power() called" << endl;
+    INFO_STREAM << "[CameraPowerControl] camera_power_port_=" << camera_power_port_ 
+               << ", camera_power_controller_=" << camera_power_controller_ << endl;
+    
+    if (sim_mode_) {
+        INFO_STREAM << "Simulation: Camera power enabled (simulated)" << endl;
+        camera_power_enabled_ = true;
+        return true;
+    }
+    
+    if (camera_power_port_ < 0) {
+        INFO_STREAM << "[CameraPowerControl] Camera power control not configured (port=" 
+                   << camera_power_port_ << "), skipping" << endl;
+        return true;
+    }
+    
+    try {
+        std::string controller = camera_power_controller_.empty() ? motion_controller_name_ : camera_power_controller_;
+        
+        Tango::DeviceProxy power_ctrl(controller);
+        Tango::DevVarDoubleArray params;
+        params.length(2);
+        params[0] = static_cast<double>(camera_power_port_);
+        params[1] = 1.0;  // HIGH = 上电
+        Tango::DeviceData data;
+        data << params;
+        
+        INFO_STREAM << "[CameraPowerControl] Calling writeIO on " << controller
+                   << " port OUT" << camera_power_port_ << " value=1" << endl;
+        power_ctrl.command_inout("writeIO", data);
+        
+        camera_power_enabled_ = true;
+        INFO_STREAM << "✓ Camera power enabled on port OUT" << camera_power_port_ << endl;
+        log_event("Camera power enabled on port OUT" + std::to_string(camera_power_port_));
+        return true;
+    } catch (Tango::DevFailed &e) {
+        ERROR_STREAM << "✗ Failed to enable camera power: " << e.errors[0].desc << endl;
+        log_event("Failed to enable camera power: " + std::string(e.errors[0].desc.in()));
+        return false;
+    }
+}
+
+bool ReflectionImagingDevice::disable_camera_power() {
+    INFO_STREAM << "[CameraPowerControl] disable_camera_power() called" << endl;
+    
+    if (sim_mode_) {
+        INFO_STREAM << "Simulation: Camera power disabled (simulated)" << endl;
+        camera_power_enabled_ = false;
+        return true;
+    }
+    
+    if (camera_power_port_ < 0) {
+        INFO_STREAM << "[CameraPowerControl] Camera power control not configured, skipping" << endl;
+        return true;
+    }
+    
+    try {
+        std::string controller = camera_power_controller_.empty() ? motion_controller_name_ : camera_power_controller_;
+        
+        Tango::DeviceProxy power_ctrl(controller);
+        Tango::DevVarDoubleArray params;
+        params.length(2);
+        params[0] = static_cast<double>(camera_power_port_);
+        params[1] = 0.0;  // LOW = 断电
+        Tango::DeviceData data;
+        data << params;
+        
+        INFO_STREAM << "[CameraPowerControl] Calling writeIO on " << controller
+                   << " port OUT" << camera_power_port_ << " value=0" << endl;
+        power_ctrl.command_inout("writeIO", data);
+        
+        camera_power_enabled_ = false;
+        INFO_STREAM << "✓ Camera power disabled on port OUT" << camera_power_port_ << endl;
+        log_event("Camera power disabled on port OUT" + std::to_string(camera_power_port_));
+        return true;
+    } catch (Tango::DevFailed &e) {
+        ERROR_STREAM << "✗ Failed to disable camera power: " << e.errors[0].desc << endl;
+        log_event("Failed to disable camera power: " + std::string(e.errors[0].desc.in()));
         return false;
     }
 }

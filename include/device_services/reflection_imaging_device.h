@@ -97,6 +97,11 @@ private:
     std::string brake_power_controller_;  // brakePowerController - 控制刹车供电的运动控制器名称
     bool brake_released_;             // 刹车释放状态
     
+    // Camera power control (NEW - 相机供电控制：OUT1)
+    short camera_power_port_;         // cameraPowerPort - 相机供电端口号
+    std::string camera_power_controller_; // cameraPowerController - 控制相机供电的运动控制器名称
+    bool camera_power_enabled_;       // 相机电源状态
+    
     // Cached Support Configuration
     int upper_support_axis_id_;
     double upper_support_work_pos_;
@@ -117,6 +122,10 @@ private:
     std::atomic<short> limit_fault_axis_{-1};      // 4=upper Z, 5=lower Z
     std::atomic<short> limit_fault_el_state_{0};   // 1=EL+, -1=EL-, 0=none
 
+    // 编码器位置记录（用于定期保存）
+    std::array<double, 3> upper_platform_encoder_pos_;  // 上平台 [X, Y, Z] 编码器位置
+    std::array<double, 3> lower_platform_encoder_pos_;  // 下平台 [X, Y, Z] 编码器位置
+    
     // 上三坐标平台状态
     std::array<double, 3> upper_platform_pos_;      // [X, Y, Z]位置
     std::array<double, 3> upper_platform_dire_pos_; // [X, Y, Z]指令位置
@@ -253,6 +262,10 @@ private:
     Tango::DevShort attr_lowerPlatformLimOrgState_read[3];
     Tango::DevBoolean attr_lowerPlatformState_read[3];
     
+    // 编码器位置属性shadow变量
+    Tango::DevDouble attr_upperPlatformEncoderPos_read[3];
+    Tango::DevDouble attr_lowerPlatformEncoderPos_read[3];
+    
     // 单轴属性shadow变量 (用于GUI单轴独立控制)
     Tango::DevDouble attr_upperPlatformPosX_read;
     Tango::DevDouble attr_upperPlatformPosY_read;
@@ -312,6 +325,8 @@ private:
     bool disable_driver_power();      // 关闭驱动器电源
     bool release_brake();             // 释放刹车（用于Z轴）
     bool engage_brake();              // 启用刹车（用于Z轴）
+    bool enable_camera_power();       // 启动相机电源
+    bool disable_camera_power();      // 关闭相机电源
     
     // 辅助支撑辅助函数
     void update_support_states();
@@ -495,11 +510,16 @@ public:
     void exportLogs();
     void simSwitch(Tango::DevShort mode);
     
+    // Encoder Position Archiving (\u7f16\u7801\u5668\u4f4d\u7f6e\u5b58\u6863)
+    void saveEncoderPositions();  // \u4fdd\u5b58\u5f53\u524d\u7f16\u7801\u5668\u4f4d\u7f6e\u5230\u6570\u636e\u5e93
+    
     // Power Control Commands (for GUI)
     void enableDriverPower();         // 手动启动驱动器电源
     void disableDriverPower();        // 手动关闭驱动器电源
     void releaseBrake();              // 手动释放刹车
     void engageBrake();               // 手动启用刹车
+    void enableCameraPower();         // 手动启动相机电源
+    void disableCameraPower();        // 手动关闭相机电源
     Tango::DevString queryPowerStatus();  // 查询电源状态（返回JSON）
 
     // ===== Attributes =====
@@ -530,6 +550,10 @@ public:
     void read_lower_platform_lim_org_state(Tango::Attribute& attr);
     void read_lower_platform_state(Tango::Attribute& attr);
     void read_lower_platform_axis_parameter(Tango::Attribute& attr);
+    
+    // 编码器位置属性
+    void read_upper_platform_encoder_pos(Tango::Attribute& attr);
+    void read_lower_platform_encoder_pos(Tango::Attribute& attr);
     
     // 单轴属性读取方法 (用于GUI单轴独立控制)
     void read_upper_platform_pos_x(Tango::Attribute& attr);
