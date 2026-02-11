@@ -947,7 +947,7 @@ void SixDofDevice::movePoseRelative(const Tango::DevVarDoubleArray *pose) {
             "Target pose out of limits", "SixDofDevice::movePoseRelative");
     }
     
-    log_event("Pose relative move started (PVT synchronized)");
+    log_event("Pose relative move started");
     
     // 运动前自动释放刹车（如果配置了刹车）
     if (brake_power_port_ >= 0 && !brake_released_) {
@@ -957,146 +957,66 @@ void SixDofDevice::movePoseRelative(const Tango::DevVarDoubleArray *pose) {
         }
     }
     
-    // Calculate inverse kinematics for target pose
-    const double rad_to_deg = 180.0 / M_PI;
-    Common::Pose p_target;
-    p_target.x = target_pose[0]; p_target.y = target_pose[1]; p_target.z = target_pose[2];
-    p_target.rx = target_pose[3] * rad_to_deg;
-    p_target.ry = target_pose[4] * rad_to_deg;
-    p_target.rz = target_pose[5] * rad_to_deg;
+    // Calculate inverse kinematics
+    // Note: GUI sends angles in radians, but kinematics expects degrees
+    // const double rad_to_deg = 180.0 / M_PI;
+    Common::Pose p;
+    p.x = target_pose[0]; p.y = target_pose[1]; p.z = target_pose[2];
+    p.rx = target_pose[3];
+    p.ry = target_pose[4];
+    p.rz = target_pose[5];
     
-    std::array<double, 6> target_leg_lengths;
-    if (!kinematics_->calculateInverseKinematics(p_target, target_leg_lengths)) {
+    std::array<double, 6> leg_lengths;
+    if (!kinematics_->calculateInverseKinematics(p, leg_lengths)) {
         Tango::Except::throw_exception("API_KinematicsError", 
             "Unreachable pose", "SixDofDevice::movePoseRelative");
     }
     
     // 对腿长进行4位小数舍入
     for (int i = 0; i < NUM_AXES; ++i) {
-        target_leg_lengths[i] = round_to_decimals(target_leg_lengths[i], 4);
+        leg_lengths[i] = round_to_decimals(leg_lengths[i], 4);
     }
     
     if (sim_mode_) {
         for (int i = 0; i < NUM_AXES; ++i) {
-            current_leg_lengths_[i] = round_to_decimals(target_leg_lengths[i], 4);
-            dire_pos_[i] = target_leg_lengths[i];
-            axis_pos_[i] = target_leg_lengths[i];
+            current_leg_lengths_[i] = round_to_decimals(leg_lengths[i], 4);
+            dire_pos_[i] = leg_lengths[i];
+            axis_pos_[i] = leg_lengths[i];
             sdof_state_[i] = false;
         }
         six_freedom_pose_ = target_pose;
         result_value_ = 0;
     } else {
-        // 使用PVT方式实现同步运动
-        INFO_STREAM << "[PVT] Starting synchronized move using PVT..." << endl;
-        
+        INFO_STREAM << "Starting sequential motion for all axes" << endl;
         auto motion = get_motion_controller_proxy();
-        if (!motion) {
-            Tango::Except::throw_exception("API_ProxyError",
-                "Motion controller proxy not available", 
-                "SixDofDevice::movePoseRelative");
-        }
-        
-        try {
-            // 步骤1: 检查完成状态并设置当前位置为参考零点
-            INFO_STREAM << "[PVT] Step 1: Pre-check and set position reference" << endl;
-            for (int axis = 0; axis < NUM_AXES; ++axis) {
-                // 使用 setPositionUnit 设置当前位置为0（PVT使用相对位置）
-                Tango::DevVarDoubleArray set_pos_params;
-                set_pos_params.length(2);
-                set_pos_params[0] = static_cast<double>(axis_ids_[axis]);
-                set_pos_params[1] = 0.0;  // 设置当前位置为0，后续PVT增量相对此点
-                Tango::DeviceData set_pos_data;
-                set_pos_data << set_pos_params;
-                motion->command_inout("setPositionUnit", set_pos_data);
-            }
-            
-            // 步骤2: 构建PVT表数据
-            INFO_STREAM << "[PVT] Step 2: Building PVT table..." << endl;
-            
-            // 计算每个轴的相对位移（mm）
-            std::array<double, 6> delta_positions;
-            double max_displacement = 0.0;
+        if (motion) {
             for (int i = 0; i < NUM_AXES; ++i) {
-                delta_positions[i] = target_leg_lengths[i] - current_leg_lengths_[i];
-                max_displacement = std::max(max_displacement, std::abs(delta_positions[i]));
-                INFO_STREAM << "[PVT]   Axis " << i << ": current=" << current_leg_lengths_[i] 
-                           << "mm, target=" << target_leg_lengths[i] 
-                           << "mm, delta=" << delta_positions[i] << "mm" << endl;
-            }
-            
-            // 计算运动时间（基于最大位移和速度限制）
-            const double max_velocity = 50.0;  // mm/s，可根据需要调整
-            double move_time_ms = (max_displacement / max_velocity) * 1000.0;  // 转换为毫秒
-            move_time_ms = std::max(move_time_ms, 100.0);  // 最小100ms
-            
-            INFO_STREAM << "[PVT]   Max displacement: " << max_displacement 
-                       << "mm, move time: " << move_time_ms << "ms" << endl;
-            
-            // 构建两点PVT轨迹：起点（t=0，pos=0）和终点（t=move_time，pos=delta）
-            const int point_count = 2;
-            std::vector<double> times = {0.0, move_time_ms};
-            
-            // 位置和速度数组（按轴组织）
-            std::vector<std::vector<double>> positions(NUM_AXES);
-            std::vector<std::vector<double>> velocities(NUM_AXES);
-            
-            for (int axis = 0; axis < NUM_AXES; ++axis) {
-                // 位置：起点=0（相对当前），终点=delta
-                positions[axis] = {0.0, delta_positions[axis]};
+                // 计算增量：目标腿长 - 当前存储的leg长度
+                double delta = leg_lengths[i] - current_leg_lengths_[i];
+                INFO_STREAM << std::fixed << std::setprecision(4)
+                           << "Axis " << i << ": current=" << current_leg_lengths_[i] 
+                           << "mm, target=" << leg_lengths[i] << "mm, delta=" << delta << "mm" << endl;
                 
-                // 速度：匀速运动的平均速度（mm/s）
-                double avg_velocity = delta_positions[axis] / (move_time_ms / 1000.0);
-                velocities[axis] = {avg_velocity, avg_velocity};
-            }
-            
-            // 构造JSON（按motion_controller的格式）
-            nlohmann::json pvt_data;
-            pvt_data["axes"] = axis_ids_;  // [0,1,2,3,4,5]
-            pvt_data["count"] = point_count;
-            pvt_data["time"] = times;
-            pvt_data["pos"] = positions;
-            pvt_data["vel"] = velocities;
-            
-            std::string pvt_json = pvt_data.dump();
-            INFO_STREAM << "[PVT] PVT table JSON: " << pvt_json << endl;
-            
-            // 步骤3: 下发PVT表
-            INFO_STREAM << "[PVT] Step 3: Setting PVT table (setPvts)..." << endl;
-            Tango::DeviceData pvt_table_data;
-            pvt_table_data << Tango::string_dup(pvt_json.c_str());
-            motion->command_inout("setPvts", pvt_table_data);
-            INFO_STREAM << "[PVT]   PVT table set successfully" << endl;
-            
-            // 步骤4: 启动PVT运动
-            INFO_STREAM << "[PVT] Step 4: Starting PVT motion (movePvts)..." << endl;
-            nlohmann::json move_cmd;
-            move_cmd["axes"] = axis_ids_;  // [0,1,2,3,4,5]
-            std::string move_json = move_cmd.dump();
-            
-            Tango::DeviceData move_data;
-            move_data << Tango::string_dup(move_json.c_str());
-            motion->command_inout("movePvts", move_data);
-            INFO_STREAM << "[PVT]   PVT motion started" << endl;
-            
-            // 更新状态
-            for (int i = 0; i < NUM_AXES; ++i) {
-                current_leg_lengths_[i] = round_to_decimals(target_leg_lengths[i], 4);
-                axis_pos_[i] = target_leg_lengths[i];
+                int pulse = static_cast<int>(std::round(29793.103448275 * delta)); // 四舍五入到最接近的整数步数
+                INFO_STREAM << "Axis " << i << " pulse steps: " << pulse << endl;
+                
+                // 使用相对运动
+                send_move_command(i, pulse, true);
                 sdof_state_[i] = true;
+                // 更新存储的leg长度（保留4位小数）
+                current_leg_lengths_[i] = round_to_decimals(leg_lengths[i], 4);
+                axis_pos_[i] = leg_lengths[i];
             }
             six_freedom_pose_ = target_pose;
             set_state(Tango::MOVING);
             result_value_ = 0;
-            
-            INFO_STREAM << "[PVT] Synchronized motion completed successfully" << endl;
-            
-        } catch (Tango::DevFailed &e) {
-            ERROR_STREAM << "[PVT] Failed to execute PVT move: " << e.errors[0].desc << endl;
-            Tango::Except::re_throw_exception(e, "API_ProxyError", 
-                "Failed to execute PVT synchronized move", "SixDofDevice::movePoseRelative");
+        } else {
+            Tango::Except::throw_exception("API_ProxyError",
+                "Motion controller proxy not available", 
+                "SixDofDevice::movePoseRelative");
         }
     }
-    log_event("Pose relative move initiated");
+    log_event("Pose relative move completed");
 }
 
 void SixDofDevice::movePoseAbsolute(const Tango::DevVarDoubleArray *pose) {
@@ -1401,7 +1321,7 @@ void SixDofDevice::singleMoveAbsolute(const Tango::DevVarDoubleArray *params) {
 void SixDofDevice::movePosePvt(Tango::DevString argin) {
     check_state("movePosePvt");
     
-    log_event("PVT trajectory motion started");
+    log_event("PVT motion started");
     
     // 运动前自动释放刹车（如果配置了刹车）
     if (brake_power_port_ >= 0 && !brake_released_) {
@@ -1412,15 +1332,135 @@ void SixDofDevice::movePosePvt(Tango::DevString argin) {
     }
     
     if (sim_mode_) {
-        INFO_STREAM << "[Simulation] PVT trajectory motion: " << argin << endl;
+        INFO_STREAM << "[Simulation] PVT motion: " << argin << endl;
         set_state(Tango::MOVING);
         result_value_ = 0;
         return;
     }
     
     try {
-        // 解析JSON输入: {"poses": [[x,y,z,rx,ry,rz],...], "times": [t0,t1,...], "velocities": [[vx,vy,vz,vrx,vry,vrz],...]}
+        // 解析JSON输入，支持两种模式：
+        // 1. 单姿态相对运动: {"pose": [x,y,z,rx,ry,rz], "relative": true}
+        // 2. 多点轨迹运动: {"poses": [[x,y,z,rx,ry,rz],...], "times": [t0,t1,...], "velocities": [[...],...] (可选)}
         nlohmann::json j = nlohmann::json::parse(argin);
+        
+        // 模式1: 单姿态相对运动（使用PVT实现同步）
+        if (j.count("pose") > 0 && j.count("relative") > 0 && j["relative"].get<bool>()) {
+            std::array<double, 6> relative_pose = j["pose"].get<std::array<double, 6>>();
+            
+            // 计算目标姿态
+            std::array<double, NUM_AXES> target_pose;
+            for (int i = 0; i < NUM_AXES; ++i) {
+                target_pose[i] = six_freedom_pose_[i] + relative_pose[i];
+            }
+            
+            if (!validate_pose(target_pose)) {
+                Tango::Except::throw_exception("API_OutOfRange", 
+                    "Target pose out of limits", "movePosePvt");
+            }
+            
+            // 逆运动学计算
+            Common::Pose p_target;
+            p_target.x = target_pose[0]; p_target.y = target_pose[1]; p_target.z = target_pose[2];
+            p_target.rx = target_pose[3]; p_target.ry = target_pose[4]; p_target.rz = target_pose[5];
+            
+            std::array<double, 6> target_leg_lengths;
+            if (!kinematics_->calculateInverseKinematics(p_target, target_leg_lengths)) {
+                Tango::Except::throw_exception("API_KinematicsError", 
+                    "Unreachable pose", "movePosePvt");
+            }
+            
+            // 对腿长进行4位小数舍入
+            for (int i = 0; i < NUM_AXES; ++i) {
+                target_leg_lengths[i] = round_to_decimals(target_leg_lengths[i], 4);
+            }
+            
+            // 计算每个轴的相对位移（mm）
+            std::array<double, 6> delta_positions;
+            double max_displacement = 0.0;
+            for (int i = 0; i < NUM_AXES; ++i) {
+                delta_positions[i] = target_leg_lengths[i] - current_leg_lengths_[i];
+                max_displacement = std::max(max_displacement, std::abs(delta_positions[i]));
+                INFO_STREAM << "[PVT]   Axis " << i << ": current=" << current_leg_lengths_[i] 
+                           << "mm, target=" << target_leg_lengths[i] 
+                           << "mm, delta=" << delta_positions[i] << "mm" << endl;
+            }
+            
+            // 计算运动时间（基于最大位移和速度限制）
+            const double max_velocity = 50.0;  // mm/s
+            double move_time_ms = (max_displacement / max_velocity) * 1000.0;
+            move_time_ms = std::max(move_time_ms, 100.0);  // 最小100ms
+            
+            INFO_STREAM << "[PVT] Single pose relative motion: max_displacement=" << max_displacement 
+                       << "mm, move_time=" << move_time_ms << "ms" << endl;
+            
+            // 构建两点PVT轨迹：起点（t=0，pos=0）和终点（t=move_time，pos=delta）
+            const int point_count = 2;
+            std::vector<double> times = {0.0, move_time_ms};
+            
+            // 位置和速度数组（按轴组织）
+            std::vector<std::vector<double>> positions(NUM_AXES);
+            std::vector<std::vector<double>> velocities(NUM_AXES);
+            
+            for (int axis = 0; axis < NUM_AXES; ++axis) {
+                // 位置：起点=0（相对当前），终点=delta
+                positions[axis] = {0.0, delta_positions[axis]};
+                
+                // 速度：匀速运动的平均速度（mm/s）
+                double avg_velocity = (move_time_ms > 0) ? delta_positions[axis] / (move_time_ms / 1000.0) : 0.0;
+                velocities[axis] = {avg_velocity, avg_velocity};
+            }
+            
+            // 构造JSON
+            nlohmann::json pvt_data;
+            pvt_data["axes"] = {0, 1, 2, 3, 4, 5};
+            pvt_data["count"] = point_count;
+            pvt_data["time"] = times;
+            pvt_data["pos"] = positions;
+            pvt_data["vel"] = velocities;
+            
+            std::string pvt_json = pvt_data.dump();
+            
+            auto motion = get_motion_controller_proxy();
+            if (!motion) {
+                Tango::Except::throw_exception("API_ProxyError",
+                    "Motion controller proxy not available", "movePosePvt");
+            }
+            
+            // 下发PVT表
+            INFO_STREAM << "[PVT] Setting PVT table..." << endl;
+            Tango::DeviceData pvt_table_data;
+            pvt_table_data << Tango::string_dup(pvt_json.c_str());
+            motion->command_inout("setPvts", pvt_table_data);
+            
+            // 启动PVT运动
+            INFO_STREAM << "[PVT] Starting PVT motion..." << endl;
+            nlohmann::json move_cmd;
+            move_cmd["axes"] = {0, 1, 2, 3, 4, 5};
+            std::string move_json = move_cmd.dump();
+            Tango::DeviceData move_data;
+            move_data << Tango::string_dup(move_json.c_str());
+            motion->command_inout("movePvts", move_data);
+            
+            // 更新状态
+            for (int i = 0; i < NUM_AXES; ++i) {
+                current_leg_lengths_[i] = round_to_decimals(target_leg_lengths[i], 4);
+                axis_pos_[i] = target_leg_lengths[i];
+                sdof_state_[i] = true;
+            }
+            six_freedom_pose_ = target_pose;
+            set_state(Tango::MOVING);
+            result_value_ = 0;
+            
+            INFO_STREAM << "[PVT] Single pose relative motion started successfully" << endl;
+            return;
+        }
+        
+        // 模式2: 多点轨迹运动
+        if (j.count("poses") == 0 || j.count("times") == 0) {
+            Tango::Except::throw_exception("InvalidJSON",
+                "Required fields: 'poses' and 'times' for trajectory, or 'pose' and 'relative' for single pose", "movePosePvt");
+        }
         
         if (j.count("poses") == 0 || j.count("times") == 0) {
             Tango::Except::throw_exception("InvalidJSON",
@@ -2050,12 +2090,12 @@ void SixDofDevice::always_executed_hook() {
         // 这里保持"零等待"，只根据后台线程更新的 connection_healthy_ 更新设备状态文本。
         if (!connection_healthy_.load() && get_state() == Tango::ON) {
             // 连接丢失时自动启用刹车（安全保护）
-            if (brake_power_port_ >= 0 && brake_released_) {
-                INFO_STREAM << "[BrakeControl] Connection lost, auto-engaging brake (safety)" << endl;
-                if (!engage_brake()) {
-                    WARN_STREAM << "[BrakeControl] Failed to engage brake on connection loss" << endl;
-                }
-            }
+            // if (brake_power_port_ >= 0 && brake_released_) {
+            //     INFO_STREAM << "[BrakeControl] Connection lost, auto-engaging brake (safety)" << endl;
+            //     if (!engage_brake()) {
+            //         WARN_STREAM << "[BrakeControl] Failed to engage brake on connection loss" << endl;
+            //     }
+            // }
             set_state(Tango::FAULT);
             set_status("Network connection lost");
         }
@@ -2166,12 +2206,12 @@ void SixDofDevice::read_attr_hardware(std::vector<long> &/*attr_list*/) {
             } else {
                 // 运动完成：从MOVING状态变为ON状态
                 // 运动完成后自动启用刹车（安全保护）
-                if (get_state() == Tango::MOVING && brake_power_port_ >= 0 && brake_released_) {
-                    INFO_STREAM << "[BrakeControl] Motion completed, auto-engaging brake (safety)" << endl;
-                    if (!engage_brake()) {
-                        WARN_STREAM << "[BrakeControl] Failed to engage brake after motion completion" << endl;
-                    }
-                }
+                // if (get_state() == Tango::MOVING && brake_power_port_ >= 0 && brake_released_) {
+                //     INFO_STREAM << "[BrakeControl] Motion completed, auto-engaging brake (safety)" << endl;
+                //     if (!engage_brake()) {
+                //         WARN_STREAM << "[BrakeControl] Failed to engage brake after motion completion" << endl;
+                //     }
+                // }
                 set_state(Tango::ON);
             }
         } catch (...) {

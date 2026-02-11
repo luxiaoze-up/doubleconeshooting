@@ -23,7 +23,7 @@ def test_move_pose_absolute(device_name="sys/six_dof/1", target_pose=None):
     
     # 默认目标姿态（可根据实际需求修改）
     if target_pose is None:
-        target_pose = [0.0, 0.0, 0.0, 0.0, 0.0, 1.0]  # [x, y, z, rx, ry, rz]
+        target_pose = [0.0, 0.0, 0.0, 0.0, 0.0, 0.35]  # [x, y, z, rx, ry, rz]
     
     try:
         # 1. 连接设备
@@ -83,20 +83,20 @@ def test_move_pose_absolute(device_name="sys/six_dof/1", target_pose=None):
         print(f"\n[5/9] 读取当前姿态...")
         try:
             current_pose = device.read_attribute("sixFreedomPose").value
-            print(f"✓ 当前姿态 [x, y, z, rx, ry, rz]: {[f'{p:.2f}' for p in current_pose]}")
+            print(f"✓ 当前姿态 [x, y, z, rx, ry, rz]: {[f'{p:.3f}' for p in current_pose]}")
         except Exception as e:
             print(f"⚠ 无法读取姿态: {e}")
             current_pose = None
         
         # 7. 显示目标姿态
         print(f"\n[6/9] 设置目标姿态...")
-        print(f"目标姿态 [x, y, z, rx, ry, rz]: {[f'{p:.2f}' for p in target_pose]}")
+        print(f"目标姿态 [x, y, z, rx, ry, rz]: {[f'{p:.3f}' for p in target_pose]}")
         
         if current_pose is not None:
             print(f"姿态差值:")
             for i, (label) in enumerate(['X', 'Y', 'Z', 'RX', 'RY', 'RZ']):
                 diff = target_pose[i] - current_pose[i]
-                print(f"  {label}: {diff:+.2f}")
+                print(f"  {label}: {diff:+.3f}")
         
         # # 用户确认
         # print(f"\n⚠ 即将执行绝对姿态移动")
@@ -151,7 +151,7 @@ def test_move_pose_absolute(device_name="sys/six_dof/1", target_pose=None):
                 # 读取当前姿态
                 try:
                     pose = device.read_attribute("sixFreedomPose").value
-                    pose_str = f"[{pose[0]:.2f}, {pose[1]:.2f}, {pose[2]:.2f}, {pose[3]:.2f}, {pose[4]:.2f}, {pose[5]:.2f}]"
+                    pose_str = f"[{pose[0]:.3f}, {pose[1]:.3f}, {pose[2]:.3f}, {pose[3]:.3f}, {pose[4]:.3f}, {pose[5]:.3f}]"
                     last_pose = pose
                 except:
                     pose_str = "N/A"
@@ -181,8 +181,8 @@ def test_move_pose_absolute(device_name="sys/six_dof/1", target_pose=None):
         print(f"\n最终姿态检查:")
         try:
             final_pose = device.read_attribute("sixFreedomPose").value
-            print(f"  当前姿态: {[f'{p:.2f}' for p in final_pose]}")
-            print(f"  目标姿态: {[f'{p:.2f}' for p in target_pose]}")
+            print(f"  当前姿态: {[f'{p:.3f}' for p in final_pose]}")
+            print(f"  目标姿态: {[f'{p:.3f}' for p in target_pose]}")
             
             print(f"\n姿态误差:")
             for i, (label) in enumerate(['X', 'Y', 'Z', 'RX', 'RY', 'RZ']):
@@ -219,7 +219,7 @@ def test_move_pose_absolute(device_name="sys/six_dof/1", target_pose=None):
                 print(f"  {status} {label}:")
                 print(f"     圈数差值: {encoder_diff:+.6f} 圈")
                 print(f"     编码器换算: {encoder_moved_mm:+.4f} mm")
-                print(f"     目标移动: {target_movement:+.2f} mm")
+                print(f"     目标移动: {target_movement:+.3f} mm")
                 print(f"     误差: {error:+.4f} mm")
         
         print(f"\n{'='*60}")
