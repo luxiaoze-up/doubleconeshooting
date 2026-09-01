@@ -527,7 +527,7 @@ void AuxiliarySupportDevice::perform_post_motion_reconnect_restore() {
 
 // ===== LOCK/UNLOCK COMMANDS =====
 void AuxiliarySupportDevice::devLock(Tango::DevString user_info) {
-    check_state_for_lock_commands();  // 状态机检查: UNKNOWN, OFF, FAULT
+    check_state("devLock");
     std::lock_guard<std::mutex> lock(lock_mutex_);
     if (is_locked_ && lock_user_ != std::string(user_info)) {
         Tango::Except::throw_exception("DEVICE_LOCKED",
@@ -540,7 +540,7 @@ void AuxiliarySupportDevice::devLock(Tango::DevString user_info) {
 }
 
 void AuxiliarySupportDevice::devUnlock(Tango::DevBoolean unlock_all) {
-    check_state_for_lock_commands();  // 状态机检查: UNKNOWN, OFF, FAULT
+    check_state("devUnlock");
     std::lock_guard<std::mutex> lock(lock_mutex_);
     if (unlock_all || is_locked_) {
         log_event("Device unlocked (was " + lock_user_ + ")");
@@ -551,20 +551,20 @@ void AuxiliarySupportDevice::devUnlock(Tango::DevBoolean unlock_all) {
 }
 
 void AuxiliarySupportDevice::devLockVerify() {
-    check_state_for_all_states();  // 状态机检查: 所有状态
+    check_state("devLockVerify");
     std::lock_guard<std::mutex> lock(lock_mutex_);
     result_value_ = is_locked_ ? 1 : 0;
 }
 
 Tango::DevString AuxiliarySupportDevice::devLockQuery() {
-    check_state_for_all_states();  // 状态机检查: 所有状态
+    check_state("devLockQuery");
     std::lock_guard<std::mutex> lock(lock_mutex_);
     std::string result = is_locked_ ? lock_user_ : "UNLOCKED";
     return CORBA::string_dup(result.c_str());
 }
 
 void AuxiliarySupportDevice::devUserConfig(Tango::DevString config) {
-    check_state_for_all_states();  // 状态机检查: 所有状态
+    check_state("devUserConfig");
     std::string cfg(config);
     log_event("User config: " + cfg);
     result_value_ = 0;
@@ -573,7 +573,7 @@ void AuxiliarySupportDevice::devUserConfig(Tango::DevString config) {
 // ===== SYSTEM COMMANDS =====
 void AuxiliarySupportDevice::selfCheck() {
     INFO_STREAM << "[DEBUG] selfCheck() called, current state: " << Tango::DevStateName[get_state()] << std::endl;
-    check_state_for_init_commands();  // 状态机检查: UNKNOWN, OFF, FAULT
+    check_state("selfCheck");
     log_event("Self check started");
     self_check_result_ = 0;
     
@@ -610,7 +610,7 @@ void AuxiliarySupportDevice::selfCheck() {
 
 void AuxiliarySupportDevice::init() {
     INFO_STREAM << "[DEBUG] init() command called, current state: " << Tango::DevStateName[get_state()] << std::endl;
-    check_state_for_init_commands();  // 状态机检查: UNKNOWN, OFF, FAULT
+    check_state("init");
     log_event("Init started");
     
     // 真实模式下，尝试重新连接代理（如果尚未连接）
@@ -698,7 +698,7 @@ void AuxiliarySupportDevice::init() {
 
 void AuxiliarySupportDevice::reset() {
     INFO_STREAM << "[DEBUG] reset() called, current state: " << Tango::DevStateName[get_state()] << std::endl;
-    check_state_for_reset();  // 状态机检查: ON, FAULT
+    check_state("reset");
     log_event("Reset started");
     Common::StandardSystemDevice::reset();
 
@@ -735,7 +735,7 @@ void AuxiliarySupportDevice::reset() {
 
 // ===== PARAMETER COMMANDS =====
 void AuxiliarySupportDevice::moveAxisSet(const Tango::DevVarDoubleArray *params) {
-    check_state_for_param_commands();  // 状态机检查: OFF, ON, FAULT
+    check_state("moveAxisSet");
     // Set movement parameters: [move_range, limit_number]
     if (params->length() >= 2) {
         move_range_ = (short)(*params)[0];
@@ -747,7 +747,7 @@ void AuxiliarySupportDevice::moveAxisSet(const Tango::DevVarDoubleArray *params)
 }
 
 void AuxiliarySupportDevice::structAxisSet(const Tango::DevVarDoubleArray *params) {
-    check_state_for_param_commands();  // 状态机检查: OFF, ON, FAULT
+    check_state("structAxisSet");
     // Set structural parameters
     if (params->length() >= 1) {
         force_range_ = (short)(*params)[0];
@@ -760,7 +760,7 @@ void AuxiliarySupportDevice::structAxisSet(const Tango::DevVarDoubleArray *param
 void AuxiliarySupportDevice::moveRelative(Tango::DevDouble distance) {
     INFO_STREAM << "[DEBUG] moveRelative(" << distance << ") called, current state: " 
                << Tango::DevStateName[get_state()] << std::endl;
-    check_state_for_motion_commands();  // 状态机检查: 仅ON状态
+    check_state("moveRelative");
     log_event("MoveRelative: " + std::to_string(distance));
     
     if (sim_mode_) {
@@ -823,7 +823,7 @@ void AuxiliarySupportDevice::moveRelative(Tango::DevDouble distance) {
 }
 
 void AuxiliarySupportDevice::moveAbsolute(Tango::DevDouble position) {
-    check_state_for_motion_commands();  // 状态机检查: 仅ON状态
+    check_state("moveAbsolute");
     log_event("MoveAbsolute: " + std::to_string(position));
     
     if (sim_mode_) {
@@ -883,7 +883,7 @@ void AuxiliarySupportDevice::moveAbsolute(Tango::DevDouble position) {
 }
 
 void AuxiliarySupportDevice::stop() {
-    check_state_for_operational_commands();  // 状态机检查: OFF, ON, FAULT
+    check_state("Stop");
     log_event("Stop");
     
     if (!sim_mode_) {
@@ -929,7 +929,7 @@ void AuxiliarySupportDevice::stop() {
 
 // ===== READ COMMANDS =====
 Tango::DevDouble AuxiliarySupportDevice::readEncoder() {
-    check_state_for_operational_commands();  // 状态机检查: OFF, ON, FAULT
+    check_state("readEncoder");
     if (sim_mode_) {
         return token_assist_pos_;
     }
@@ -1014,7 +1014,7 @@ void AuxiliarySupportDevice::loadEncoderPosition() {
 }
 
 Tango::DevDouble AuxiliarySupportDevice::readForce() {
-    check_state_for_operational_commands();  // 状态机检查: OFF, ON, FAULT
+    check_state("readForce");
     if (sim_mode_) {
         return target_force_;
     }
@@ -1070,7 +1070,7 @@ Tango::DevDouble AuxiliarySupportDevice::readForce() {
 }
 
 Tango::DevBoolean AuxiliarySupportDevice::readOrg() {
-    check_state_for_operational_commands();  // 状态机检查: OFF, ON, FAULT
+    check_state("readOrg");
     if (sim_mode_) {
         return true;
     }
@@ -1111,7 +1111,7 @@ Tango::DevBoolean AuxiliarySupportDevice::readOrg() {
 }
 
 Tango::DevShort AuxiliarySupportDevice::readEL() {
-    check_state_for_operational_commands();  // 状态机检查: OFF, ON, FAULT
+    check_state("readEL");
     if (sim_mode_) {
         return 0; // No limit triggered
     }
@@ -1184,7 +1184,7 @@ Tango::DevShort AuxiliarySupportDevice::readEL() {
 
 // ===== AUTO/FORCE COMMANDS =====
 void AuxiliarySupportDevice::assistAuto(Tango::DevDouble position) {
-    check_state_for_motion_commands();  // 状态机检查: 仅ON状态
+    check_state("assistAuto");
     log_event("AssistAuto to: " + std::to_string(position));
     assist_state_ = true;
     set_state(Tango::MOVING);
@@ -1202,14 +1202,14 @@ void AuxiliarySupportDevice::assistAuto(Tango::DevDouble position) {
 }
 
 void AuxiliarySupportDevice::setHoldPos(Tango::DevDouble position) {
-    check_state_for_motion_commands();  // 状态机检查: 仅ON状态
+    check_state("setHoldPos");
     hold_pos_ = position;
     log_event("SetHoldPos: " + std::to_string(position));
     result_value_ = 0;
 }
 
 void AuxiliarySupportDevice::setForceZero() {
-    check_state_for_operational_commands();  // 状态机检查: OFF, ON, FAULT
+    check_state("setForceZero");
     target_force_ = 0.0;
     log_event("Force zeroed");
     result_value_ = 0;
@@ -1217,7 +1217,7 @@ void AuxiliarySupportDevice::setForceZero() {
 
 // ===== EXPORT COMMANDS =====
 Tango::DevString AuxiliarySupportDevice::readtAxis() {
-    check_state_for_operational_commands();  // 状态机检查: OFF, ON, FAULT
+    check_state("readtAxis");
     std::ostringstream oss;
     oss << "{\"tokenAssistPos\":" << token_assist_pos_ << ","
         << "\"direPos\":" << dire_pos_ << ","
@@ -1229,13 +1229,13 @@ Tango::DevString AuxiliarySupportDevice::readtAxis() {
 }
 
 void AuxiliarySupportDevice::exportAxis() {
-    check_state_for_operational_commands();  // 状态机检查: OFF, ON, FAULT
+    check_state("exportAxis");
     log_event("Axis parameters exported");
     result_value_ = 0;
 }
 
 void AuxiliarySupportDevice::simSwitch(Tango::DevShort mode) {
-    check_state_for_operational_commands();  // 状态机检查: OFF, ON, FAULT
+    check_state("simSwitch");
     bool was_sim_mode = sim_mode_;
     sim_mode_ = (mode != 0);
     
@@ -1584,7 +1584,7 @@ void AuxiliarySupportDevice::read_force_sensor_channel(Tango::Attribute &attr) {
 
 // ===== 日志导出命令 (状态机22) =====
 void AuxiliarySupportDevice::exportLogs() {
-    check_state_for_operational_commands();  // 状态机检查: OFF, ON, FAULT
+    check_state("exportLogs");
     log_event("Logs exported");
     result_value_ = 0;
 }
@@ -1844,6 +1844,82 @@ void AuxiliarySupportDevice::log_event(const std::string &event) {
     INFO_STREAM << "[" << buf << "] " << log_prefix << event << std::endl;
 }
 
+// ===== 统一状态机查找表 =====
+// allow_unknown / allow_off / allow_on / allow_moving / allow_fault
+struct AuxAllowedStates {
+    bool allow_unknown;
+    bool allow_off;
+    bool allow_on;
+    bool allow_moving;
+    bool allow_fault;
+};
+
+static const std::unordered_map<std::string, AuxAllowedStates> kAuxStateMatrix = {
+    // 锁定命令：允许 UNKNOWN, OFF, FAULT（不允许 ON/MOVING）
+    {"devLock",              {true,  true,  false, false, true }},
+    {"devUnlock",            {true,  true,  false, false, true }},
+    // 查询命令：所有状态
+    {"devLockVerify",        {true,  true,  true,  true,  true }},
+    {"devLockQuery",         {true,  true,  true,  true,  true }},
+    {"devUserConfig",        {true,  true,  true,  true,  true }},
+    // 初始化命令：允许 UNKNOWN, OFF, FAULT
+    {"selfCheck",            {true,  true,  false, false, true }},
+    {"init",                 {true,  true,  false, false, true }},
+    // 复位命令：允许 ON, MOVING, FAULT
+    {"reset",                {false, false, true,  true,  true }},
+    // 参数设置：允许 OFF, ON, FAULT（不允许 UNKNOWN/MOVING）
+    {"moveAxisSet",          {false, true,  true,  false, true }},
+    {"structAxisSet",        {false, true,  true,  false, true }},
+    // 运动命令：仅 ON
+    {"moveRelative",         {false, false, true,  false, false}},
+    {"moveAbsolute",         {false, false, true,  false, false}},
+    {"assistAuto",           {false, false, true,  false, false}},
+    {"setHoldPos",           {false, false, true,  false, false}},
+    // 操作命令：允许 OFF, ON, MOVING, FAULT（不允许 UNKNOWN）
+    {"Stop",                 {false, true,  true,  true,  true }},
+    {"readEncoder",          {false, true,  true,  true,  true }},
+    {"readForce",            {false, true,  true,  true,  true }},
+    {"readOrg",              {false, true,  true,  true,  true }},
+    {"readEL",               {false, true,  true,  true,  true }},
+    {"setForceZero",         {false, true,  true,  true,  true }},
+    {"exportLogs",           {false, true,  true,  true,  true }},
+    {"simSwitch",            {false, true,  true,  true,  true }},
+    {"exportAxis",           {false, true,  true,  true,  true }},
+    {"readtAxis",            {false, true,  true,  true,  true }},
+    // 编码器位置保存/加载：允许 OFF, ON, FAULT
+    {"saveEncoderPosition",  {false, true,  true,  false, true }},
+    {"loadEncoderPosition",  {false, true,  true,  false, true }},
+    // 驱动器上电/断电：允许 ON, FAULT
+    {"enableDriverPower",    {false, false, true,  false, true }},
+    {"disableDriverPower",   {false, false, true,  false, true }},
+    {"queryPowerStatus",     {true,  true,  true,  true,  true }},
+};
+
+void AuxiliarySupportDevice::check_state(const std::string &cmd_name) {
+    auto it = kAuxStateMatrix.find(cmd_name);
+    if (it == kAuxStateMatrix.end()) return;  // 未注册命令不检查
+
+    const AuxAllowedStates &s = it->second;
+    Tango::DevState state = get_state();
+
+    bool allowed = false;
+    switch (state) {
+        case Tango::UNKNOWN: allowed = s.allow_unknown; break;
+        case Tango::OFF:     allowed = s.allow_off;     break;
+        case Tango::ON:      allowed = s.allow_on;      break;
+        case Tango::MOVING:  allowed = s.allow_moving;  break;
+        case Tango::FAULT:   allowed = s.allow_fault;   break;
+        default:             allowed = false;            break;
+    }
+
+    if (!allowed) {
+        std::string msg = "Command '" + cmd_name + "' not allowed in state " +
+                          std::string(Tango::DevStateName[state]);
+        Tango::Except::throw_exception("STATE_NOT_ALLOWED", msg,
+                                       "AuxiliarySupportDevice::check_state");
+    }
+}
+
 // ===== 状态机检查辅助函数 =====
 void AuxiliarySupportDevice::check_state_for_lock_commands() {
     // devLock, devUnlock: 允许 UNKNOWN, OFF, FAULT
@@ -1973,21 +2049,6 @@ void AuxiliarySupportDeviceClass::attribute_factory(std::vector<Tango::Attr *> &
     
     // Power control status attribute (NEW)
     att_list.push_back(new AuxiliarySupportAttr("driverPowerStatus", Tango::DEV_BOOLEAN, Tango::READ));
-    
-    // ===== 固有状态属性 (Property) =====
-    att_list.push_back(new AuxiliarySupportAttr("bundleNo", Tango::DEV_STRING, Tango::READ));
-    att_list.push_back(new AuxiliarySupportAttr("laserNo", Tango::DEV_STRING, Tango::READ));
-    att_list.push_back(new AuxiliarySupportAttr("systemNo", Tango::DEV_STRING, Tango::READ));
-    att_list.push_back(new AuxiliarySupportAttr("subDevList", Tango::DEV_STRING, Tango::READ));
-    att_list.push_back(new AuxiliarySupportAttr("modelList", Tango::DEV_STRING, Tango::READ));
-    att_list.push_back(new AuxiliarySupportAttr("currentModel", Tango::DEV_STRING, Tango::READ));
-    att_list.push_back(new AuxiliarySupportAttr("connectString", Tango::DEV_STRING, Tango::READ));
-    att_list.push_back(new AuxiliarySupportAttr("errorDict", Tango::DEV_STRING, Tango::READ));
-    att_list.push_back(new AuxiliarySupportAttr("deviceName", Tango::DEV_STRING, Tango::READ));
-    att_list.push_back(new AuxiliarySupportAttr("deviceID", Tango::DEV_STRING, Tango::READ));
-    att_list.push_back(new AuxiliarySupportAttr("devicePosition", Tango::DEV_STRING, Tango::READ));
-    att_list.push_back(new AuxiliarySupportAttr("deviceProductDate", Tango::DEV_STRING, Tango::READ));
-    att_list.push_back(new AuxiliarySupportAttr("deviceInstallDate", Tango::DEV_STRING, Tango::READ));
     
     // 新增支撑类型属性
     att_list.push_back(new AuxiliarySupportAttr("supportType", Tango::DEV_STRING, Tango::READ));

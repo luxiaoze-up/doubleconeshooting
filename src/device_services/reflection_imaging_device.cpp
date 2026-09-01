@@ -148,6 +148,16 @@ ReflectionImagingDevice::ReflectionImagingDevice(Tango::DeviceClass *device_clas
       lower_ccd_10x_last_capture_time_(""),
       image_capture_count_(0),
       auto_capture_enabled_(false),
+    upper_ccd_light_controller_(""),
+    lower_ccd_light_controller_(""),
+    upper_ccd_1x_light_da_channel_(-1),
+    upper_ccd_10x_light_da_channel_(-1),
+    lower_ccd_1x_light_da_channel_(-1),
+    lower_ccd_10x_light_da_channel_(-1),
+    upper_ccd_1x_light_current_ma_(0.0),
+    upper_ccd_10x_light_current_ma_(0.0),
+    lower_ccd_1x_light_current_ma_(0.0),
+    lower_ccd_10x_light_current_ma_(0.0),
       upper_support_position_(0.0),
       lower_support_position_(0.0),
       upper_support_state_("LOWERED"),
@@ -231,6 +241,13 @@ void ReflectionImagingDevice::init_device() {
     db_data.push_back(Tango::DbDatum("brakePowerController"));
     db_data.push_back(Tango::DbDatum("cameraPowerPort"));
     db_data.push_back(Tango::DbDatum("cameraPowerController"));
+    // CCD光源DA配置（雷赛模拟量输出，上平台→sys/motion/2，下平台→sys/motion/3）
+    db_data.push_back(Tango::DbDatum("upperCCDLightController"));
+    db_data.push_back(Tango::DbDatum("lowerCCDLightController"));
+    db_data.push_back(Tango::DbDatum("upperCCD1xLightDAChannel"));
+    db_data.push_back(Tango::DbDatum("upperCCD10xLightDAChannel"));
+    db_data.push_back(Tango::DbDatum("lowerCCD1xLightDAChannel"));
+    db_data.push_back(Tango::DbDatum("lowerCCD10xLightDAChannel"));
     
     // 编码器位置保存属性
     db_data.push_back(Tango::DbDatum("upperPlatformEncoderPos"));
@@ -309,6 +326,12 @@ void ReflectionImagingDevice::init_device() {
     if (!db_data[idx].is_empty()) { db_data[idx] >> brake_power_controller_; } idx++;
     if (!db_data[idx].is_empty()) { db_data[idx] >> camera_power_port_; } else { camera_power_port_ = -1; } idx++;
     if (!db_data[idx].is_empty()) { db_data[idx] >> camera_power_controller_; } idx++;
+    if (!db_data[idx].is_empty()) { db_data[idx] >> upper_ccd_light_controller_; } idx++;
+    if (!db_data[idx].is_empty()) { db_data[idx] >> lower_ccd_light_controller_; } idx++;
+    if (!db_data[idx].is_empty()) { db_data[idx] >> upper_ccd_1x_light_da_channel_; } else { upper_ccd_1x_light_da_channel_ = -1; } idx++;
+    if (!db_data[idx].is_empty()) { db_data[idx] >> upper_ccd_10x_light_da_channel_; } else { upper_ccd_10x_light_da_channel_ = -1; } idx++;
+    if (!db_data[idx].is_empty()) { db_data[idx] >> lower_ccd_1x_light_da_channel_; } else { lower_ccd_1x_light_da_channel_ = -1; } idx++;
+    if (!db_data[idx].is_empty()) { db_data[idx] >> lower_ccd_10x_light_da_channel_; } else { lower_ccd_10x_light_da_channel_ = -1; } idx++;
     
     // 读取保存的编码器位置
     if (!db_data[idx].is_empty()) {
@@ -348,6 +371,8 @@ void ReflectionImagingDevice::init_device() {
 
     if (motion_controller_name_.empty()) motion_controller_name_ = "sys/motion/2";
     if (encoder_name_.empty()) encoder_name_ = "sys/encoder/1";
+    if (upper_ccd_light_controller_.empty()) upper_ccd_light_controller_ = motion_controller_name_; // 默认同反射光运动控制器 sys/motion/2
+    if (lower_ccd_light_controller_.empty()) lower_ccd_light_controller_ = "sys/motion/3";
     
     // 编码器通道默认值 - 根据《双锥项目测试数据收集》硬件文档配置
     // 编码器采集器 192.168.1.199: 通道1-10 (代码0-9)
@@ -954,8 +979,6 @@ const std::unordered_map<std::string, AllowedStates> kStateMatrix = {
     {"selfCheck",        {true,  true,  false, true}},
     {"init",             {true,  true,  false, true}},
 
-
-
     // 上平台
     {"upperPlatformAxisSet",      {false, true,  true,  true}},
     {"upperPlatformStructAxisSet",{false, true,  true,  true}},
@@ -1024,28 +1047,46 @@ const std::unordered_map<std::string, AllowedStates> kStateMatrix = {
     {"synchronizedMove", {false, false, true,  false}},
 
     // CCD相机（四CCD：上下各两个，1倍和10倍物镜）
-    {"upperCCD1xSwitch",      {false, true,  true,  true}},
+    {"upperCCDSwitch",      {false, true,  true,  true}},
     {"upperCCD1xRingLightSwitch", {false, true,  true,  true}},
-    {"upperCCD10xSwitch",     {false, true,  true,  true}},
     {"upperCCD10xRingLightSwitch", {false, true,  true,  true}},
-    {"lowerCCD1xSwitch",       {false, true,  true,  true}},
+    {"setUpperCCD1xLightCurrent", {false, true,  true,  false}},
+    {"setUpperCCD10xLightCurrent", {false, true,  true,  false}},
+    {"lowerCCDSwitch",       {false, true,  true,  true}},
     {"lowerCCD1xRingLightSwitch", {false, true,  true,  true}},
-    {"lowerCCD10xSwitch",      {false, true,  true,  true}},
     {"lowerCCD10xRingLightSwitch", {false, true,  true,  true}},
+    {"setLowerCCD1xLightCurrent", {false, true,  true,  false}},
+    {"setLowerCCD10xLightCurrent", {false, true,  true,  false}},
     {"captureUpperCCD1xImage", {false, false, true,  false}},
     {"captureUpperCCD10xImage",{false, false, true,  false}},
     {"captureLowerCCD1xImage", {false, false, true,  false}},
     {"captureLowerCCD10xImage",{false, false, true,  false}},
     {"captureAllImages",       {false, false, true,  false}},
-    {"setUpperCCD1xExposure",  {false, true,  true,  false}},
-    {"setUpperCCD10xExposure", {false, true,  true,  false}},
-    {"setLowerCCD1xExposure",  {false, true,  true,  false}},
-    {"setLowerCCD10xExposure", {false, true,  true,  false}},
-    {"getUpperCCD1xImage",     {false, true,  true,  true}},
-    {"getUpperCCD10xImage",    {false, true,  true,  true}},
-    {"getLowerCCD1xImage",     {false, true,  true,  true}},
-    {"getLowerCCD10xImage",   {false, true,  true,  true}},
-    {"startAutoCapture",       {false, false, true,  false}},
+    {"setUpperCCD1xExposure",   {false, true,  true,  false}},
+    {"setUpperCCD1xGain",       {false, true,  true,  false}},
+    {"setUpperCCD1xBrightness", {false, true,  true,  false}},
+    {"setUpperCCD1xContrast",   {false, true,  true,  false}},
+    {"setUpperCCD10xExposure",  {false, true,  true,  false}},
+    {"setUpperCCD10xGain",      {false, true,  true,  false}},
+    {"setUpperCCD10xBrightness",{false, true,  true,  false}},
+    {"setUpperCCD10xContrast",  {false, true,  true,  false}},
+    {"setLowerCCD1xExposure",   {false, true,  true,  false}},
+    {"setLowerCCD1xGain",       {false, true,  true,  false}},
+    {"setLowerCCD1xBrightness", {false, true,  true,  false}},
+    {"setLowerCCD1xContrast",   {false, true,  true,  false}},
+    {"setLowerCCD10xExposure",  {false, true,  true,  false}},
+    {"setLowerCCD10xGain",      {false, true,  true,  false}},
+    {"setLowerCCD10xBrightness",{false, true,  true,  false}},
+    {"setLowerCCD10xContrast",  {false, true,  true,  false}},
+    {"getUpperCCD1xImage",      {false, true,  true,  true}},
+    {"getUpperCCD1xRawImage",   {false, true,  true,  true}},
+    {"getUpperCCD10xImage",     {false, true,  true,  true}},
+    {"getUpperCCD10xRawImage",  {false, true,  true,  true}},
+    {"getLowerCCD1xImage",      {false, true,  true,  true}},
+    {"getLowerCCD1xRawImage",   {false, true,  true,  true}},
+    {"getLowerCCD10xImage",     {false, true,  true,  true}},
+    {"getLowerCCD10xRawImage",  {false, true,  true,  true}},
+    {"startAutoCapture",        {false, false, true,  false}},
     {"stopAutoCapture",        {false, true,  true,  true}},
 
     // 辅助支撑
@@ -1693,22 +1734,46 @@ Tango::DevVarShortArray* ReflectionImagingDevice::upperPlatformReadOrg() {
                 Tango::DeviceData arg; Tango::DevShort axis = static_cast<Tango::DevShort>(i); arg << axis;
                 Tango::DeviceData out = upper_platform_proxy_->command_inout("readOrg", arg);
                 Tango::DevBoolean v; out >> v;
-                upper_platform_lim_org_state_[i] = v ? 0 : 2;
+                // 1=原点触发, 0=正常（仅当当前不是限位状态时清回0）
+                if (v) {
+                    upper_platform_lim_org_state_[i] = 1;
+                } else if (upper_platform_lim_org_state_[i] == 1) {
+                    upper_platform_lim_org_state_[i] = 0;
+                }
             } catch (...) {
-                upper_platform_lim_org_state_[i] = 2;
+                // 保持当前状态，不覆盖
             }
         }
     }
     Tango::DevVarShortArray* result = new Tango::DevVarShortArray();
     result->length(3);
-    (*result)[0] = (upper_platform_lim_org_state_[0] == 0) ? 1 : 0;
-    (*result)[1] = (upper_platform_lim_org_state_[1] == 0) ? 1 : 0;
-    (*result)[2] = (upper_platform_lim_org_state_[2] == 0) ? 1 : 0;
+    (*result)[0] = (upper_platform_lim_org_state_[0] == 1) ? 1 : 0;
+    (*result)[1] = (upper_platform_lim_org_state_[1] == 1) ? 1 : 0;
+    (*result)[2] = (upper_platform_lim_org_state_[2] == 1) ? 1 : 0;
     return result;
 }
 
 Tango::DevVarShortArray* ReflectionImagingDevice::upperPlatformReadEL() {
     check_state("upperPlatformReadEL");
+    if (!sim_mode_ && upper_platform_proxy_) {
+        for (int i = 0; i < 3; ++i) {
+            try {
+                Tango::DeviceData arg; Tango::DevShort axis = static_cast<Tango::DevShort>(i); arg << axis;
+                Tango::DeviceData out = upper_platform_proxy_->command_inout("readEL", arg);
+                Tango::DevShort v_raw; out >> v_raw;
+                // 运动控制器: 1=EL+(正限位), -1=EL-(负限位), 0=正常
+                if (v_raw == 1) {
+                    upper_platform_lim_org_state_[i] = 3;  // 正限位触发
+                } else if (v_raw == -1) {
+                    upper_platform_lim_org_state_[i] = 2;  // 负限位触发
+                } else if (upper_platform_lim_org_state_[i] == 2 || upper_platform_lim_org_state_[i] == 3) {
+                    upper_platform_lim_org_state_[i] = 0;  // 限位解除，恢复正常
+                }
+            } catch (...) {
+                // 保持当前状态
+            }
+        }
+    }
     Tango::DevVarShortArray* result = new Tango::DevVarShortArray();
     result->length(3);
     (*result)[0] = upper_platform_lim_org_state_[0];
@@ -1719,72 +1784,101 @@ Tango::DevVarShortArray* ReflectionImagingDevice::upperPlatformReadEL() {
 
 void ReflectionImagingDevice::upperPlatformSingleAxisMove(const Tango::DevVarDoubleArray* params) {
     check_state("upperPlatformSingleAxisMove");
+    // 参数格式: [axis, value, mode]
+    //   axis : 0=X, 1=Y, 2=Z
+    //   value: 绝对位置(absolute) 或 相对距离(relative)，单位 mm
+    //   mode : 0=absolute, 1=relative（缺省为 1=relative）
     if (params->length() < 2) {
-        Tango::Except::throw_exception("InvalidParameter", "Need 2 parameters: [axis, distance]", "upperPlatformSingleAxisMove");
+        Tango::Except::throw_exception("InvalidParameter",
+            "Need at least 2 parameters: [axis, value, mode(optional:0=abs,1=rel)]",
+            "upperPlatformSingleAxisMove");
     }
-    
-    int axis = static_cast<int>(std::round((*params)[0]));  // 使用round避免精度问题
-    double distance = (*params)[1];
-    
+
+    int axis = static_cast<int>(std::round((*params)[0]));
+    double value = (*params)[1];
+    int mode = (params->length() >= 3) ? static_cast<int>(std::round((*params)[2])) : 1; // 默认相对
+
     // 轴号验证
     if (axis < 0 || axis > 2) {
-        Tango::Except::throw_exception("InvalidParameter", 
-            "Axis must be 0(X), 1(Y), or 2(Z)", 
+        Tango::Except::throw_exception("InvalidParameter",
+            "Axis must be 0(X), 1(Y), or 2(Z)",
             "upperPlatformSingleAxisMove");
     }
-    
+
+    // mode 验证
+    if (mode != 0 && mode != 1) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Mode must be 0(absolute) or 1(relative)",
+            "upperPlatformSingleAxisMove");
+    }
+
+    // 计算目标位置
+    double target_pos = (mode == 0) ? value : (upper_platform_pos_[axis] + value);
+
     // 限位检查
-    double target_pos = upper_platform_pos_[axis] + distance;
     if (std::abs(target_pos) > upper_platform_range_[axis]) {
-        Tango::Except::throw_exception("API_LimitExceeded", 
-            "Upper platform axis " + std::to_string(axis) + " target " + 
-            std::to_string(target_pos) + " exceeds limit ±" + 
-            std::to_string(upper_platform_range_[axis]), 
+        Tango::Except::throw_exception("API_LimitExceeded",
+            "Upper platform axis " + std::to_string(axis) + " target " +
+            std::to_string(target_pos) + " exceeds limit ±" +
+            std::to_string(upper_platform_range_[axis]),
             "upperPlatformSingleAxisMove");
     }
-    
+
     // Z轴碰撞检测
     if (axis == 2 && checkPlatformCollision(target_pos, lower_platform_pos_[2])) {
-        Tango::Except::throw_exception("API_CollisionRisk", 
-            "Upper platform Z axis move would cause collision", 
+        Tango::Except::throw_exception("API_CollisionRisk",
+            "Upper platform Z axis move would cause collision",
             "upperPlatformSingleAxisMove");
     }
-    
-    // 如果Z轴有运动，运动前自动释放刹车（如果配置了刹车）
+
+    // Z轴运动前自动释放刹车（如果配置了刹车）
     if (axis == 2 && brake_power_port_ >= 0 && !brake_released_) {
         INFO_STREAM << "[BrakeControl] Z-axis motion detected in upperPlatformSingleAxisMove, auto-releasing brake" << endl;
         if (!release_brake()) {
             WARN_STREAM << "[BrakeControl] Failed to release brake before upper platform Z motion, continuing anyway" << endl;
         }
     }
-    
+
+    static const char* axis_name[] = {"X", "Y", "Z"};
+    static const char* mode_name[] = {"absolute", "relative"};
+
     if (sim_mode_) {
         upper_platform_target_[axis] = target_pos;
         upper_platform_dire_pos_[axis] = target_pos;
         upper_platform_state_[axis] = true;
-        
-        sim_motion_duration_ = (std::abs(distance) / 50.0) * 1000.0;
+        double dist = std::abs(target_pos - upper_platform_pos_[axis]);
+        sim_motion_duration_ = (dist / 50.0) * 1000.0;
         sim_motion_start_time_ = std::chrono::steady_clock::now();
-        
-        log_event("Upper platform single axis move (sim): axis=" + std::to_string(axis) + 
-                  ", distance=" + std::to_string(distance));
+        log_event(std::string("Upper platform ") + axis_name[axis] + " move " + mode_name[mode] +
+                  " (sim): value=" + std::to_string(value) + ", target=" + std::to_string(target_pos));
         return;
     }
-    
+
     if (!upper_platform_proxy_) {
-        Tango::Except::throw_exception("API_NoProxy", "Upper platform proxy not connected", 
+        Tango::Except::throw_exception("API_NoProxy", "Upper platform proxy not connected",
             "upperPlatformSingleAxisMove");
     }
-    
-    Tango::DeviceData arg; 
-    Tango::DevVarDoubleArray arr; arr.length(2); 
-    arr[0] = static_cast<double>(axis * 2); 
-    arr[1] = distance;
-    arg << arr; 
-    upper_platform_proxy_->command_inout("singleAxisMove", arg);
+
+    double controller_axis = static_cast<double>(axis * 2); // X→0, Y→2, Z→4
+    Tango::DeviceData arg;
+    Tango::DevVarDoubleArray arr; arr.length(2);
+    arr[0] = controller_axis;
+
+    if (mode == 0) {
+        // 绝对运动：直接传目标位置（mm）
+        arr[1] = target_pos;
+        arg << arr;
+        upper_platform_proxy_->command_inout("moveAbsolute", arg);
+    } else {
+        // 相对运动：直接传 mm（smc_pmove_unit 接受用户单位，无需换算步数）
+        arr[1] = value;
+        arg << arr;
+        upper_platform_proxy_->command_inout("moveRelative", arg);
+    }
+
     upper_platform_state_[axis] = true;
-    log_event("Upper platform single axis move: axis=" + std::to_string(axis) + 
-              ", distance=" + std::to_string(distance));
+    log_event(std::string("Upper platform ") + axis_name[axis] + " move " + mode_name[mode] +
+              ": value=" + std::to_string(value) + ", target=" + std::to_string(target_pos));
 }
 
 // ========== 上平台单轴控制命令 (用于GUI单轴独立控制) ==========
@@ -1844,7 +1938,7 @@ void ReflectionImagingDevice::upperXMoveRelative(Tango::DevDouble val) {
     Tango::DeviceData arg;
     Tango::DevVarDoubleArray arr; arr.length(2);
     arr[0] = 0.0;  // axis 0 = X
-    arr[1] = static_cast<int>(std::round(val * 4000 / 3.175));
+    arr[1] = val;  // smc_pmove_unit 接受用户单位(mm)，无需换算步数
     arg << arr;
     upper_platform_proxy_->command_inout("moveRelative", arg);
     upper_platform_state_[0] = true;
@@ -1903,7 +1997,7 @@ void ReflectionImagingDevice::upperXReset() {
     }
     if (sim_mode_) {
         upper_platform_state_[0] = false;
-        upper_platform_lim_org_state_[0] = 0;
+        upper_platform_lim_org_state_[0] = 1;
         log_event("Upper X reset (sim)");
         // 模拟模式下，如果设备处于FAULT状态，清除故障
         if (get_state() == Tango::FAULT) {
@@ -1983,7 +2077,7 @@ void ReflectionImagingDevice::upperYMoveRelative(Tango::DevDouble val) {
     Tango::DeviceData arg;
     Tango::DevVarDoubleArray arr; arr.length(2);
     arr[0] = 2.0;  // axis 2 = Y
-    arr[1] = static_cast<int>(std::round(val * 4000 / 3.175));
+    arr[1] = val;  // smc_pmove_unit 接受用户单位(mm)，无需换算步数
     arg << arr;
     upper_platform_proxy_->command_inout("moveRelative", arg);
     upper_platform_state_[1] = true;
@@ -2042,7 +2136,7 @@ void ReflectionImagingDevice::upperYReset() {
     }
     if (sim_mode_) {
         upper_platform_state_[1] = false;
-        upper_platform_lim_org_state_[1] = 0;
+        upper_platform_lim_org_state_[1] = 1;
         log_event("Upper Y reset (sim)");
         // 模拟模式下，如果设备处于FAULT状态，清除故障
         if (get_state() == Tango::FAULT) {
@@ -2224,7 +2318,7 @@ void ReflectionImagingDevice::upperZReset() {
     }
     if (sim_mode_) {
         upper_platform_state_[2] = false;
-        upper_platform_lim_org_state_[2] = 0;
+        upper_platform_lim_org_state_[2] = 1;
         log_event("Upper Z reset (sim)");
         // 模拟模式下，如果设备处于FAULT状态，清除故障
         if (get_state() == Tango::FAULT) {
@@ -2632,17 +2726,21 @@ Tango::DevVarShortArray* ReflectionImagingDevice::lowerPlatformReadOrg() {
                 Tango::DeviceData arg; Tango::DevShort axis = static_cast<Tango::DevShort>(i); arg << axis;
                 Tango::DeviceData out = lower_platform_proxy_->command_inout("readOrg", arg);
                 Tango::DevBoolean v; out >> v;
-                lower_platform_lim_org_state_[i] = v ? 0 : 2;
+                if (v) {
+                    lower_platform_lim_org_state_[i] = 1;
+                } else if (lower_platform_lim_org_state_[i] == 1) {
+                    lower_platform_lim_org_state_[i] = 0;
+                }
             } catch (...) {
-                lower_platform_lim_org_state_[i] = 2;
+                // 保持当前状态
             }
         }
     }
     Tango::DevVarShortArray* result = new Tango::DevVarShortArray();
     result->length(3);
-    (*result)[0] = (lower_platform_lim_org_state_[0] == 0) ? 1 : 0;
-    (*result)[1] = (lower_platform_lim_org_state_[1] == 0) ? 1 : 0;
-    (*result)[2] = (lower_platform_lim_org_state_[2] == 0) ? 1 : 0;
+    (*result)[0] = (lower_platform_lim_org_state_[0] == 1) ? 1 : 0;
+    (*result)[1] = (lower_platform_lim_org_state_[1] == 1) ? 1 : 0;
+    (*result)[2] = (lower_platform_lim_org_state_[2] == 1) ? 1 : 0;
     return result;
 }
 
@@ -2654,23 +2752,16 @@ Tango::DevVarShortArray* ReflectionImagingDevice::lowerPlatformReadEL() {
                 Tango::DeviceData arg; Tango::DevShort axis = static_cast<Tango::DevShort>(i); arg << axis;
                 Tango::DeviceData out = lower_platform_proxy_->command_inout("readEL", arg);
                 Tango::DevShort v_raw; out >> v_raw;
-                
-                // 限位开关低电平有效：硬件读取0（低电平）表示触发，1（高电平）表示未触发
-                // 运动控制器当前逻辑：pos_limit==1返回1(EL+), neg_limit==1返回-1(EL-), 否则返回0
-                // 如果限位开关是低电平有效，需要反转：当硬件读取0时应该返回限位触发
-                // 由于运动控制器返回0时无法区分方向，我们在reflection_imaging_device中反转逻辑
-                // 反转规则：当readEL返回0时，认为是限位触发（统一处理为EL+）
-                //          当readEL返回非0时，认为是未触发（转换为0）
-                Tango::DevShort v = 0;
-                if (v_raw == 0) {
-                    // 低电平有效：返回0表示限位触发（但无法区分方向，统一处理为EL+）
-                    v = 1;  // 转换为EL+表示限位触发
+                // 运动控制器: 1=EL+(正限位), -1=EL-(负限位), 0=正常
+                if (v_raw == 1) {
+                    lower_platform_lim_org_state_[i] = 3;  // 正限位触发
+                } else if (v_raw == -1) {
+                    lower_platform_lim_org_state_[i] = 2;  // 负限位触发
+                } else if (lower_platform_lim_org_state_[i] == 2 || lower_platform_lim_org_state_[i] == 3) {
+                    lower_platform_lim_org_state_[i] = 0;  // 限位解除，恢复正常
                 }
-                // 如果返回非0（1或-1），说明硬件读取是高电平，限位未触发，v保持为0
-                
-                lower_platform_lim_org_state_[i] = v;
             } catch (...) {
-                lower_platform_lim_org_state_[i] = 2;
+                // 保持当前状态
             }
         }
     }
@@ -2684,72 +2775,101 @@ Tango::DevVarShortArray* ReflectionImagingDevice::lowerPlatformReadEL() {
 
 void ReflectionImagingDevice::lowerPlatformSingleAxisMove(const Tango::DevVarDoubleArray* params) {
     check_state("lowerPlatformSingleAxisMove");
+    // 参数格式: [axis, value, mode]
+    //   axis : 0=X, 1=Y, 2=Z
+    //   value: 绝对位置(absolute) 或 相对距离(relative)，单位 mm
+    //   mode : 0=absolute, 1=relative（缺省为 1=relative）
     if (params->length() < 2) {
-        Tango::Except::throw_exception("InvalidParameter", "Need 2 parameters: [axis, distance]", "lowerPlatformSingleAxisMove");
+        Tango::Except::throw_exception("InvalidParameter",
+            "Need at least 2 parameters: [axis, value, mode(optional:0=abs,1=rel)]",
+            "lowerPlatformSingleAxisMove");
     }
-    
+
     int axis = static_cast<int>(std::round((*params)[0]));
-    double distance = (*params)[1];
-    
+    double value = (*params)[1];
+    int mode = (params->length() >= 3) ? static_cast<int>(std::round((*params)[2])) : 1; // 默认相对
+
     // 轴号验证
     if (axis < 0 || axis > 2) {
-        Tango::Except::throw_exception("InvalidParameter", 
-            "Axis must be 0(X), 1(Y), or 2(Z)", 
+        Tango::Except::throw_exception("InvalidParameter",
+            "Axis must be 0(X), 1(Y), or 2(Z)",
             "lowerPlatformSingleAxisMove");
     }
-    
+
+    // mode 验证
+    if (mode != 0 && mode != 1) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Mode must be 0(absolute) or 1(relative)",
+            "lowerPlatformSingleAxisMove");
+    }
+
+    // 计算目标位置
+    double target_pos = (mode == 0) ? value : (lower_platform_pos_[axis] + value);
+
     // 限位检查
-    double target_pos = lower_platform_pos_[axis] + distance;
     if (std::abs(target_pos) > lower_platform_range_[axis]) {
-        Tango::Except::throw_exception("API_LimitExceeded", 
-            "Lower platform axis " + std::to_string(axis) + " target " + 
-            std::to_string(target_pos) + " exceeds limit ±" + 
-            std::to_string(lower_platform_range_[axis]), 
+        Tango::Except::throw_exception("API_LimitExceeded",
+            "Lower platform axis " + std::to_string(axis) + " target " +
+            std::to_string(target_pos) + " exceeds limit ±" +
+            std::to_string(lower_platform_range_[axis]),
             "lowerPlatformSingleAxisMove");
     }
-    
+
     // Z轴碰撞检测
     if (axis == 2 && checkPlatformCollision(upper_platform_pos_[2], target_pos)) {
-        Tango::Except::throw_exception("API_CollisionRisk", 
-            "Lower platform Z axis move would cause collision", 
+        Tango::Except::throw_exception("API_CollisionRisk",
+            "Lower platform Z axis move would cause collision",
             "lowerPlatformSingleAxisMove");
     }
-    
-    // 如果Z轴有运动，运动前自动释放刹车（如果配置了刹车）
+
+    // Z轴运动前自动释放刹车（如果配置了刹车）
     if (axis == 2 && brake_power_port_ >= 0 && !brake_released_) {
         INFO_STREAM << "[BrakeControl] Z-axis motion detected in lowerPlatformSingleAxisMove, auto-releasing brake" << endl;
         if (!release_brake()) {
             WARN_STREAM << "[BrakeControl] Failed to release brake before lower platform Z motion, continuing anyway" << endl;
         }
     }
-    
+
+    static const char* axis_name[] = {"X", "Y", "Z"};
+    static const char* mode_name[] = {"absolute", "relative"};
+
     if (sim_mode_) {
         lower_platform_target_[axis] = target_pos;
         lower_platform_dire_pos_[axis] = target_pos;
         lower_platform_state_[axis] = true;
-        
-        sim_motion_duration_ = (std::abs(distance) / 50.0) * 1000.0;
+        double dist = std::abs(target_pos - lower_platform_pos_[axis]);
+        sim_motion_duration_ = (dist / 50.0) * 1000.0;
         sim_motion_start_time_ = std::chrono::steady_clock::now();
-        
-        log_event("Lower platform single axis move (sim): axis=" + std::to_string(axis) + 
-                  ", distance=" + std::to_string(distance));
+        log_event(std::string("Lower platform ") + axis_name[axis] + " move " + mode_name[mode] +
+                  " (sim): value=" + std::to_string(value) + ", target=" + std::to_string(target_pos));
         return;
     }
-    
+
     if (!lower_platform_proxy_) {
-        Tango::Except::throw_exception("API_NoProxy", "Lower platform proxy not connected", 
+        Tango::Except::throw_exception("API_NoProxy", "Lower platform proxy not connected",
             "lowerPlatformSingleAxisMove");
     }
-    
-    Tango::DeviceData arg; 
-    Tango::DevVarDoubleArray arr; arr.length(2); 
-    arr[0] = static_cast<double>(axis * 2 + 1); 
-    arr[1] = distance;
-    arg << arr; 
-    lower_platform_proxy_->command_inout("singleAxisMove", arg);
+
+    double controller_axis = static_cast<double>(axis * 2 + 1); // X→1, Y→3, Z→5
+    Tango::DeviceData arg;
+    Tango::DevVarDoubleArray arr; arr.length(2);
+    arr[0] = controller_axis;
+
+    if (mode == 0) {
+        // 绝对运动：直接传目标位置（mm）
+        arr[1] = target_pos;
+        arg << arr;
+        lower_platform_proxy_->command_inout("moveAbsolute", arg);
+    } else {
+        // 相对运动：直接传 mm（smc_pmove_unit 接受用户单位，无需换算步数）
+        arr[1] = value;
+        arg << arr;
+        lower_platform_proxy_->command_inout("moveRelative", arg);
+    }
+
     lower_platform_state_[axis] = true;
-    log_event("Lower platform single axis move: axis=" + std::to_string(axis) + 
-              ", distance=" + std::to_string(distance));
+    log_event(std::string("Lower platform ") + axis_name[axis] + " move " + mode_name[mode] +
+              ": value=" + std::to_string(value) + ", target=" + std::to_string(target_pos));
 }
 
 // ========== 下平台单轴控制命令 (用于GUI单轴独立控制) ==========
@@ -3350,36 +3470,71 @@ void ReflectionImagingDevice::synchronizedMove(const Tango::DevVarDoubleArray* p
 // 相机型号：海康 MV-CU020-19GC
 
 // 上1倍物镜CCD（粗定位）
-void ReflectionImagingDevice::upperCCD1xSwitch(Tango::DevBoolean on) {
-    check_state("upperCCD1xSwitch");
+void ReflectionImagingDevice::upperCCDSwitch(Tango::DevBoolean on) {
+    check_state("upperCCDSwitch");
     
     if (sim_mode_) {
+        // 上平台两个CCD联动开关
         upper_ccd_1x_state_ = on ? "READY" : "OFF";
-        log_event("Upper CCD 1x (coarse positioning) " + std::string(on ? "ON" : "OFF"));
+        upper_ccd_10x_state_ = on ? "READY" : "OFF";
+        log_event("Upper CCD 1x + 10x (platform pair) " + std::string(on ? "ON" : "OFF") + " (sim)");
         return;
     }
 
     if (!upper_ccd_1x_driver_) {
         Tango::Except::throw_exception("API_DeviceNotReady",
-            "Upper CCD 1x driver not initialized", "upperCCD1xSwitch");
+            "Upper CCD 1x driver not initialized", "upperCCDSwitch");
     }
 
     bool success = false;
     if (on) {
-        success = upper_ccd_1x_driver_->open();
+        // 上平台两个CCD联动开启
+        if (!upper_ccd_10x_driver_) {
+            Tango::Except::throw_exception("API_DeviceNotReady",
+                "Upper CCD 10x driver not initialized", "upperCCDSwitch");
+        }
+
+        bool success_1x = upper_ccd_1x_driver_->open();
+        bool success_10x = upper_ccd_10x_driver_->open();
+        success = success_1x && success_10x;
+
         if (success) {
             upper_ccd_1x_state_ = "READY";
-            log_event("Upper CCD 1x (coarse positioning) ON");
+            upper_ccd_10x_state_ = "READY";
+            log_event("Upper CCD 1x + 10x (platform pair) ON");
+            // 初始化1x原始图像缓冲区
+            {
+                std::lock_guard<std::mutex> lk(upper_ccd_1x_raw_mutex_);
+                upper_ccd_1x_raw_width_  = upper_ccd_1x_width_;
+                upper_ccd_1x_raw_height_ = upper_ccd_1x_height_;
+                upper_ccd_1x_raw_buf_.assign(
+                    static_cast<size_t>(upper_ccd_1x_width_ * upper_ccd_1x_height_), 0);
+            }
+            // 初始化10x原始图像缓冲区
+            {
+                std::lock_guard<std::mutex> lk(upper_ccd_10x_raw_mutex_);
+                upper_ccd_10x_raw_width_  = upper_ccd_10x_width_;
+                upper_ccd_10x_raw_height_ = upper_ccd_10x_height_;
+                upper_ccd_10x_raw_buf_.assign(
+                    static_cast<size_t>(upper_ccd_10x_width_ * upper_ccd_10x_height_), 0);
+            }
         } else {
             upper_ccd_1x_state_ = "ERROR";
+            upper_ccd_10x_state_ = "ERROR";
             Tango::Except::throw_exception("API_DeviceError",
-                "Failed to open upper CCD 1x: " + upper_ccd_1x_driver_->getLastError(),
-                "upperCCD1xSwitch");
+                "Failed to open upper CCD platform pair, 1x=" + upper_ccd_1x_driver_->getLastError() +
+                ", 10x=" + upper_ccd_10x_driver_->getLastError(),
+                "upperCCDSwitch");
         }
     } else {
+        // 上平台两个CCD联动关闭
         upper_ccd_1x_driver_->close();
+        if (upper_ccd_10x_driver_) {
+            upper_ccd_10x_driver_->close();
+        }
         upper_ccd_1x_state_ = "OFF";
-        log_event("Upper CCD 1x (coarse positioning) OFF");
+        upper_ccd_10x_state_ = "OFF";
+        log_event("Upper CCD 1x + 10x (platform pair) OFF");
         success = true;
     }
 }
@@ -3466,6 +3621,57 @@ void ReflectionImagingDevice::setUpperCCD1xExposure(Tango::DevDouble exposure) {
     log_event("Upper CCD 1x exposure set to " + std::to_string(exposure));
 }
 
+void ReflectionImagingDevice::setUpperCCD1xGain(Tango::DevDouble gain) {
+    check_state("setUpperCCD1xGain");
+    if (gain < 0.0 || gain > 100.0) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Gain must be between 0.0 and 100.0", "setUpperCCD1xGain");
+    }
+    upper_ccd_1x_gain_ = gain;
+    if (!sim_mode_ && upper_ccd_1x_driver_) {
+        if (!upper_ccd_1x_driver_->setGain(gain)) {
+            Tango::Except::throw_exception("API_DeviceError",
+                "Failed to set gain: " + upper_ccd_1x_driver_->getLastError(),
+                "setUpperCCD1xGain");
+        }
+    }
+    log_event("Upper CCD 1x gain set to " + std::to_string(gain));
+}
+
+void ReflectionImagingDevice::setUpperCCD1xBrightness(Tango::DevDouble brightness) {
+    check_state("setUpperCCD1xBrightness");
+    if (brightness < -100.0 || brightness > 100.0) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Brightness must be between -100.0 and 100.0", "setUpperCCD1xBrightness");
+    }
+    upper_ccd_1x_brightness_ = brightness;
+    if (!sim_mode_ && upper_ccd_1x_driver_) {
+        if (!upper_ccd_1x_driver_->setBrightness(brightness)) {
+            Tango::Except::throw_exception("API_DeviceError",
+                "Failed to set brightness: " + upper_ccd_1x_driver_->getLastError(),
+                "setUpperCCD1xBrightness");
+        }
+    }
+    log_event("Upper CCD 1x brightness set to " + std::to_string(brightness));
+}
+
+void ReflectionImagingDevice::setUpperCCD1xContrast(Tango::DevDouble contrast) {
+    check_state("setUpperCCD1xContrast");
+    if (contrast < -100.0 || contrast > 100.0) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Contrast must be between -100.0 and 100.0", "setUpperCCD1xContrast");
+    }
+    upper_ccd_1x_contrast_ = contrast;
+    if (!sim_mode_ && upper_ccd_1x_driver_) {
+        if (!upper_ccd_1x_driver_->setContrast(contrast)) {
+            Tango::Except::throw_exception("API_DeviceError",
+                "Failed to set contrast: " + upper_ccd_1x_driver_->getLastError(),
+                "setUpperCCD1xContrast");
+        }
+    }
+    log_event("Upper CCD 1x contrast set to " + std::to_string(contrast));
+}
+
 Tango::DevString ReflectionImagingDevice::getUpperCCD1xImage() {
     check_state("getUpperCCD1xImage");
     if (upper_ccd_1x_state_ != "READY") {
@@ -3492,41 +3698,32 @@ Tango::DevString ReflectionImagingDevice::getUpperCCD1xImage() {
     return Tango::string_dup(base64_data.c_str());
 }
 
-// 上10倍物镜CCD（近距离观察）
-void ReflectionImagingDevice::upperCCD10xSwitch(Tango::DevBoolean on) {
-    check_state("upperCCD10xSwitch");
-    
-    if (sim_mode_) {
-        upper_ccd_10x_state_ = on ? "READY" : "OFF";
-        log_event("Upper CCD 10x (close observation) " + std::string(on ? "ON" : "OFF"));
+// 上1倍物镜 RAW IMAGE 属性读函数
+void ReflectionImagingDevice::read_upper_ccd_1x_raw_image(Tango::Attribute& attr) {
+    std::lock_guard<std::mutex> lk(upper_ccd_1x_raw_mutex_);
+    long w = upper_ccd_1x_raw_width_;
+    long h = upper_ccd_1x_raw_height_;
+    if (w <= 0 || h <= 0 || upper_ccd_1x_raw_buf_.empty()) {
+        // 尚无数据：返回 1×1 零像素
+        static Tango::DevUShort zero = 0;
+        attr.set_value(&zero, 1, 1);
         return;
     }
-
-    if (!upper_ccd_10x_driver_) {
-        Tango::Except::throw_exception("API_DeviceNotReady",
-            "Upper CCD 10x driver not initialized", "upperCCD10xSwitch");
-    }
-
-    bool success = false;
-    if (on) {
-        success = upper_ccd_10x_driver_->open();
-        if (success) {
-            upper_ccd_10x_state_ = "READY";
-            log_event("Upper CCD 10x (close observation) ON");
-        } else {
-            upper_ccd_10x_state_ = "ERROR";
-            Tango::Except::throw_exception("API_DeviceError",
-                "Failed to open upper CCD 10x: " + upper_ccd_10x_driver_->getLastError(),
-                "upperCCD10xSwitch");
-        }
-    } else {
-        upper_ccd_10x_driver_->close();
-        upper_ccd_10x_state_ = "OFF";
-        log_event("Upper CCD 10x (close observation) OFF");
-        success = true;
-    }
+    attr.set_value(upper_ccd_1x_raw_buf_.data(), w, h);
 }
 
+// 上1倍物镜 RAW IMAGE 命令（返回整帧像素数组）
+Tango::DevVarUShortArray* ReflectionImagingDevice::getUpperCCD1xRawImage() {
+    check_state("getUpperCCD1xRawImage");
+    std::lock_guard<std::mutex> lk(upper_ccd_1x_raw_mutex_);
+    auto* arr = new Tango::DevVarUShortArray();
+    arr->length(static_cast<CORBA::ULong>(upper_ccd_1x_raw_buf_.size()));
+    for (size_t i = 0; i < upper_ccd_1x_raw_buf_.size(); ++i)
+        (*arr)[i] = upper_ccd_1x_raw_buf_[i];
+    return arr;
+}
+
+// 上10倍物镜CCD（近距离观察）
 void ReflectionImagingDevice::upperCCD10xRingLightSwitch(Tango::DevBoolean on) {
     check_state("upperCCD10xRingLightSwitch");
     
@@ -3608,6 +3805,57 @@ void ReflectionImagingDevice::setUpperCCD10xExposure(Tango::DevDouble exposure) 
     log_event("Upper CCD 10x exposure set to " + std::to_string(exposure));
 }
 
+void ReflectionImagingDevice::setUpperCCD10xGain(Tango::DevDouble gain) {
+    check_state("setUpperCCD10xGain");
+    if (gain < 0.0 || gain > 100.0) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Gain must be between 0.0 and 100.0", "setUpperCCD10xGain");
+    }
+    upper_ccd_10x_gain_ = gain;
+    if (!sim_mode_ && upper_ccd_10x_driver_) {
+        if (!upper_ccd_10x_driver_->setGain(gain)) {
+            Tango::Except::throw_exception("API_DeviceError",
+                "Failed to set gain: " + upper_ccd_10x_driver_->getLastError(),
+                "setUpperCCD10xGain");
+        }
+    }
+    log_event("Upper CCD 10x gain set to " + std::to_string(gain));
+}
+
+void ReflectionImagingDevice::setUpperCCD10xBrightness(Tango::DevDouble brightness) {
+    check_state("setUpperCCD10xBrightness");
+    if (brightness < -100.0 || brightness > 100.0) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Brightness must be between -100.0 and 100.0", "setUpperCCD10xBrightness");
+    }
+    upper_ccd_10x_brightness_ = brightness;
+    if (!sim_mode_ && upper_ccd_10x_driver_) {
+        if (!upper_ccd_10x_driver_->setBrightness(brightness)) {
+            Tango::Except::throw_exception("API_DeviceError",
+                "Failed to set brightness: " + upper_ccd_10x_driver_->getLastError(),
+                "setUpperCCD10xBrightness");
+        }
+    }
+    log_event("Upper CCD 10x brightness set to " + std::to_string(brightness));
+}
+
+void ReflectionImagingDevice::setUpperCCD10xContrast(Tango::DevDouble contrast) {
+    check_state("setUpperCCD10xContrast");
+    if (contrast < -100.0 || contrast > 100.0) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Contrast must be between -100.0 and 100.0", "setUpperCCD10xContrast");
+    }
+    upper_ccd_10x_contrast_ = contrast;
+    if (!sim_mode_ && upper_ccd_10x_driver_) {
+        if (!upper_ccd_10x_driver_->setContrast(contrast)) {
+            Tango::Except::throw_exception("API_DeviceError",
+                "Failed to set contrast: " + upper_ccd_10x_driver_->getLastError(),
+                "setUpperCCD10xContrast");
+        }
+    }
+    log_event("Upper CCD 10x contrast set to " + std::to_string(contrast));
+}
+
 Tango::DevString ReflectionImagingDevice::getUpperCCD10xImage() {
     check_state("getUpperCCD10xImage");
     if (upper_ccd_10x_state_ != "READY") {
@@ -3634,37 +3882,91 @@ Tango::DevString ReflectionImagingDevice::getUpperCCD10xImage() {
     return Tango::string_dup(base64_data.c_str());
 }
 
+void ReflectionImagingDevice::read_upper_ccd_10x_raw_image(Tango::Attribute& attr) {
+    std::lock_guard<std::mutex> lk(upper_ccd_10x_raw_mutex_);
+    long w = upper_ccd_10x_raw_width_, h = upper_ccd_10x_raw_height_;
+    if (w <= 0 || h <= 0 || upper_ccd_10x_raw_buf_.empty()) {
+        static Tango::DevUShort zero = 0;
+        attr.set_value(&zero, 1, 1);
+        return;
+    }
+    attr.set_value(upper_ccd_10x_raw_buf_.data(), w, h);
+}
+
+Tango::DevVarUShortArray* ReflectionImagingDevice::getUpperCCD10xRawImage() {
+    check_state("getUpperCCD10xRawImage");
+    std::lock_guard<std::mutex> lk(upper_ccd_10x_raw_mutex_);
+    auto* arr = new Tango::DevVarUShortArray();
+    arr->length(static_cast<CORBA::ULong>(upper_ccd_10x_raw_buf_.size()));
+    for (size_t i = 0; i < upper_ccd_10x_raw_buf_.size(); ++i)
+        (*arr)[i] = upper_ccd_10x_raw_buf_[i];
+    return arr;
+}
+
 // 下1倍物镜CCD（粗定位）
-void ReflectionImagingDevice::lowerCCD1xSwitch(Tango::DevBoolean on) {
-    check_state("lowerCCD1xSwitch");
+void ReflectionImagingDevice::lowerCCDSwitch(Tango::DevBoolean on) {
+    check_state("lowerCCDSwitch");
     
     if (sim_mode_) {
+        // 下平台两个CCD联动开关
         lower_ccd_1x_state_ = on ? "READY" : "OFF";
-        log_event("Lower CCD 1x (coarse positioning) " + std::string(on ? "ON" : "OFF"));
+        lower_ccd_10x_state_ = on ? "READY" : "OFF";
+        log_event("Lower CCD 1x + 10x (platform pair) " + std::string(on ? "ON" : "OFF") + " (sim)");
         return;
     }
 
     if (!lower_ccd_1x_driver_) {
         Tango::Except::throw_exception("API_DeviceNotReady",
-            "Lower CCD 1x driver not initialized", "lowerCCD1xSwitch");
+            "Lower CCD 1x driver not initialized", "lowerCCDSwitch");
     }
 
     bool success = false;
     if (on) {
-        success = lower_ccd_1x_driver_->open();
+        // 下平台两个CCD联动开启
+        if (!lower_ccd_10x_driver_) {
+            Tango::Except::throw_exception("API_DeviceNotReady",
+                "Lower CCD 10x driver not initialized", "lowerCCDSwitch");
+        }
+
+        bool success_1x = lower_ccd_1x_driver_->open();
+        bool success_10x = lower_ccd_10x_driver_->open();
+        success = success_1x && success_10x;
+
         if (success) {
             lower_ccd_1x_state_ = "READY";
-            log_event("Lower CCD 1x (coarse positioning) ON");
+            lower_ccd_10x_state_ = "READY";
+            log_event("Lower CCD 1x + 10x (platform pair) ON");
+            {
+                std::lock_guard<std::mutex> lk(lower_ccd_1x_raw_mutex_);
+                lower_ccd_1x_raw_width_  = lower_ccd_1x_width_;
+                lower_ccd_1x_raw_height_ = lower_ccd_1x_height_;
+                lower_ccd_1x_raw_buf_.assign(
+                    static_cast<size_t>(lower_ccd_1x_width_ * lower_ccd_1x_height_), 0);
+            }
+            {
+                std::lock_guard<std::mutex> lk(lower_ccd_10x_raw_mutex_);
+                lower_ccd_10x_raw_width_  = lower_ccd_10x_width_;
+                lower_ccd_10x_raw_height_ = lower_ccd_10x_height_;
+                lower_ccd_10x_raw_buf_.assign(
+                    static_cast<size_t>(lower_ccd_10x_width_ * lower_ccd_10x_height_), 0);
+            }
         } else {
             lower_ccd_1x_state_ = "ERROR";
+            lower_ccd_10x_state_ = "ERROR";
             Tango::Except::throw_exception("API_DeviceError",
-                "Failed to open lower CCD 1x: " + lower_ccd_1x_driver_->getLastError(),
-                "lowerCCD1xSwitch");
+                "Failed to open lower CCD platform pair, 1x=" + lower_ccd_1x_driver_->getLastError() +
+                ", 10x=" + lower_ccd_10x_driver_->getLastError(),
+                "lowerCCDSwitch");
         }
     } else {
+        // 下平台两个CCD联动关闭
         lower_ccd_1x_driver_->close();
+        if (lower_ccd_10x_driver_) {
+            lower_ccd_10x_driver_->close();
+        }
         lower_ccd_1x_state_ = "OFF";
-        log_event("Lower CCD 1x (coarse positioning) OFF");
+        lower_ccd_10x_state_ = "OFF";
+        log_event("Lower CCD 1x + 10x (platform pair) OFF");
         success = true;
     }
 }
@@ -3750,6 +4052,57 @@ void ReflectionImagingDevice::setLowerCCD1xExposure(Tango::DevDouble exposure) {
     log_event("Lower CCD 1x exposure set to " + std::to_string(exposure));
 }
 
+void ReflectionImagingDevice::setLowerCCD1xGain(Tango::DevDouble gain) {
+    check_state("setLowerCCD1xGain");
+    if (gain < 0.0 || gain > 100.0) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Gain must be between 0.0 and 100.0", "setLowerCCD1xGain");
+    }
+    lower_ccd_1x_gain_ = gain;
+    if (!sim_mode_ && lower_ccd_1x_driver_) {
+        if (!lower_ccd_1x_driver_->setGain(gain)) {
+            Tango::Except::throw_exception("API_DeviceError",
+                "Failed to set gain: " + lower_ccd_1x_driver_->getLastError(),
+                "setLowerCCD1xGain");
+        }
+    }
+    log_event("Lower CCD 1x gain set to " + std::to_string(gain));
+}
+
+void ReflectionImagingDevice::setLowerCCD1xBrightness(Tango::DevDouble brightness) {
+    check_state("setLowerCCD1xBrightness");
+    if (brightness < -100.0 || brightness > 100.0) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Brightness must be between -100.0 and 100.0", "setLowerCCD1xBrightness");
+    }
+    lower_ccd_1x_brightness_ = brightness;
+    if (!sim_mode_ && lower_ccd_1x_driver_) {
+        if (!lower_ccd_1x_driver_->setBrightness(brightness)) {
+            Tango::Except::throw_exception("API_DeviceError",
+                "Failed to set brightness: " + lower_ccd_1x_driver_->getLastError(),
+                "setLowerCCD1xBrightness");
+        }
+    }
+    log_event("Lower CCD 1x brightness set to " + std::to_string(brightness));
+}
+
+void ReflectionImagingDevice::setLowerCCD1xContrast(Tango::DevDouble contrast) {
+    check_state("setLowerCCD1xContrast");
+    if (contrast < -100.0 || contrast > 100.0) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Contrast must be between -100.0 and 100.0", "setLowerCCD1xContrast");
+    }
+    lower_ccd_1x_contrast_ = contrast;
+    if (!sim_mode_ && lower_ccd_1x_driver_) {
+        if (!lower_ccd_1x_driver_->setContrast(contrast)) {
+            Tango::Except::throw_exception("API_DeviceError",
+                "Failed to set contrast: " + lower_ccd_1x_driver_->getLastError(),
+                "setLowerCCD1xContrast");
+        }
+    }
+    log_event("Lower CCD 1x contrast set to " + std::to_string(contrast));
+}
+
 Tango::DevString ReflectionImagingDevice::getLowerCCD1xImage() {
     check_state("getLowerCCD1xImage");
     if (lower_ccd_1x_state_ != "READY") {
@@ -3776,41 +4129,28 @@ Tango::DevString ReflectionImagingDevice::getLowerCCD1xImage() {
     return Tango::string_dup(base64_data.c_str());
 }
 
-// 下10倍物镜CCD（近距离观察）
-void ReflectionImagingDevice::lowerCCD10xSwitch(Tango::DevBoolean on) {
-    check_state("lowerCCD10xSwitch");
-    
-    if (sim_mode_) {
-        lower_ccd_10x_state_ = on ? "READY" : "OFF";
-        log_event("Lower CCD 10x (close observation) " + std::string(on ? "ON" : "OFF"));
+void ReflectionImagingDevice::read_lower_ccd_1x_raw_image(Tango::Attribute& attr) {
+    std::lock_guard<std::mutex> lk(lower_ccd_1x_raw_mutex_);
+    long w = lower_ccd_1x_raw_width_, h = lower_ccd_1x_raw_height_;
+    if (w <= 0 || h <= 0 || lower_ccd_1x_raw_buf_.empty()) {
+        static Tango::DevUShort zero = 0;
+        attr.set_value(&zero, 1, 1);
         return;
     }
-
-    if (!lower_ccd_10x_driver_) {
-        Tango::Except::throw_exception("API_DeviceNotReady",
-            "Lower CCD 10x driver not initialized", "lowerCCD10xSwitch");
-    }
-
-    bool success = false;
-    if (on) {
-        success = lower_ccd_10x_driver_->open();
-        if (success) {
-            lower_ccd_10x_state_ = "READY";
-            log_event("Lower CCD 10x (close observation) ON");
-        } else {
-            lower_ccd_10x_state_ = "ERROR";
-            Tango::Except::throw_exception("API_DeviceError",
-                "Failed to open lower CCD 10x: " + lower_ccd_10x_driver_->getLastError(),
-                "lowerCCD10xSwitch");
-        }
-    } else {
-        lower_ccd_10x_driver_->close();
-        lower_ccd_10x_state_ = "OFF";
-        log_event("Lower CCD 10x (close observation) OFF");
-        success = true;
-    }
+    attr.set_value(lower_ccd_1x_raw_buf_.data(), w, h);
 }
 
+Tango::DevVarUShortArray* ReflectionImagingDevice::getLowerCCD1xRawImage() {
+    check_state("getLowerCCD1xRawImage");
+    std::lock_guard<std::mutex> lk(lower_ccd_1x_raw_mutex_);
+    auto* arr = new Tango::DevVarUShortArray();
+    arr->length(static_cast<CORBA::ULong>(lower_ccd_1x_raw_buf_.size()));
+    for (size_t i = 0; i < lower_ccd_1x_raw_buf_.size(); ++i)
+        (*arr)[i] = lower_ccd_1x_raw_buf_[i];
+    return arr;
+}
+
+// 下10倍物镜CCD（近距离观察）
 void ReflectionImagingDevice::lowerCCD10xRingLightSwitch(Tango::DevBoolean on) {
     check_state("lowerCCD10xRingLightSwitch");
     
@@ -3825,6 +4165,71 @@ void ReflectionImagingDevice::lowerCCD10xRingLightSwitch(Tango::DevBoolean on) {
     }
     
     log_event("Lower CCD 10x ring light " + std::string(lower_ccd_10x_ring_light_on_ ? "ON" : "OFF"));
+}
+
+bool ReflectionImagingDevice::set_ccd_light_current_ma(const std::string& cmd_name, const std::string& controller_name, short channel, double current_ma) {
+    if (current_ma < 0.0 || current_ma > 1200.0) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Current must be between 0 and 1200 mA", cmd_name.c_str());
+    }
+    if (channel < 0 || channel > 1) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "DA channel must be 0 or 1 (channel 2 is GND)", cmd_name.c_str());
+    }
+
+    // 0-1200mA -> 0-5V
+    const double voltage = current_ma * 5.0 / 1200.0;
+
+    if (sim_mode_) {
+        log_event(cmd_name + " (sim): " + controller_name + " DA" + std::to_string(channel) + " current=" + std::to_string(current_ma) + "mA");
+        return true;
+    }
+
+    std::string controller = controller_name.empty() ? motion_controller_name_ : controller_name;
+    try {
+        Tango::DeviceProxy da_ctrl(controller);
+        Tango::DevVarDoubleArray params;
+        params.length(2);
+        params[0] = static_cast<double>(channel);
+        params[1] = voltage;
+        Tango::DeviceData data;
+        data << params;
+        da_ctrl.command_inout("setAnalog", data);
+        log_event(cmd_name + ": DA" + std::to_string(channel) + " current=" + std::to_string(current_ma) + "mA (" + std::to_string(voltage) + "V)");
+        return true;
+    } catch (Tango::DevFailed &e) {
+        Tango::Except::throw_exception("API_CommandFailed",
+            "Failed to set DA current: " + std::string(e.errors[0].desc.in()), cmd_name.c_str());
+    }
+    return false;
+}
+
+void ReflectionImagingDevice::setUpperCCD1xLightCurrent(Tango::DevDouble current_ma) {
+    check_state("setUpperCCD1xLightCurrent");
+    if (set_ccd_light_current_ma("setUpperCCD1xLightCurrent", upper_ccd_light_controller_, upper_ccd_1x_light_da_channel_, current_ma)) {
+        upper_ccd_1x_light_current_ma_ = current_ma;
+    }
+}
+
+void ReflectionImagingDevice::setUpperCCD10xLightCurrent(Tango::DevDouble current_ma) {
+    check_state("setUpperCCD10xLightCurrent");
+    if (set_ccd_light_current_ma("setUpperCCD10xLightCurrent", upper_ccd_light_controller_, upper_ccd_10x_light_da_channel_, current_ma)) {
+        upper_ccd_10x_light_current_ma_ = current_ma;
+    }
+}
+
+void ReflectionImagingDevice::setLowerCCD1xLightCurrent(Tango::DevDouble current_ma) {
+    check_state("setLowerCCD1xLightCurrent");
+    if (set_ccd_light_current_ma("setLowerCCD1xLightCurrent", lower_ccd_light_controller_, lower_ccd_1x_light_da_channel_, current_ma)) {
+        lower_ccd_1x_light_current_ma_ = current_ma;
+    }
+}
+
+void ReflectionImagingDevice::setLowerCCD10xLightCurrent(Tango::DevDouble current_ma) {
+    check_state("setLowerCCD10xLightCurrent");
+    if (set_ccd_light_current_ma("setLowerCCD10xLightCurrent", lower_ccd_light_controller_, lower_ccd_10x_light_da_channel_, current_ma)) {
+        lower_ccd_10x_light_current_ma_ = current_ma;
+    }
 }
 
 Tango::DevString ReflectionImagingDevice::captureLowerCCD10xImage() {
@@ -3892,6 +4297,57 @@ void ReflectionImagingDevice::setLowerCCD10xExposure(Tango::DevDouble exposure) 
     log_event("Lower CCD 10x exposure set to " + std::to_string(exposure));
 }
 
+void ReflectionImagingDevice::setLowerCCD10xGain(Tango::DevDouble gain) {
+    check_state("setLowerCCD10xGain");
+    if (gain < 0.0 || gain > 100.0) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Gain must be between 0.0 and 100.0", "setLowerCCD10xGain");
+    }
+    lower_ccd_10x_gain_ = gain;
+    if (!sim_mode_ && lower_ccd_10x_driver_) {
+        if (!lower_ccd_10x_driver_->setGain(gain)) {
+            Tango::Except::throw_exception("API_DeviceError",
+                "Failed to set gain: " + lower_ccd_10x_driver_->getLastError(),
+                "setLowerCCD10xGain");
+        }
+    }
+    log_event("Lower CCD 10x gain set to " + std::to_string(gain));
+}
+
+void ReflectionImagingDevice::setLowerCCD10xBrightness(Tango::DevDouble brightness) {
+    check_state("setLowerCCD10xBrightness");
+    if (brightness < -100.0 || brightness > 100.0) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Brightness must be between -100.0 and 100.0", "setLowerCCD10xBrightness");
+    }
+    lower_ccd_10x_brightness_ = brightness;
+    if (!sim_mode_ && lower_ccd_10x_driver_) {
+        if (!lower_ccd_10x_driver_->setBrightness(brightness)) {
+            Tango::Except::throw_exception("API_DeviceError",
+                "Failed to set brightness: " + lower_ccd_10x_driver_->getLastError(),
+                "setLowerCCD10xBrightness");
+        }
+    }
+    log_event("Lower CCD 10x brightness set to " + std::to_string(brightness));
+}
+
+void ReflectionImagingDevice::setLowerCCD10xContrast(Tango::DevDouble contrast) {
+    check_state("setLowerCCD10xContrast");
+    if (contrast < -100.0 || contrast > 100.0) {
+        Tango::Except::throw_exception("InvalidParameter",
+            "Contrast must be between -100.0 and 100.0", "setLowerCCD10xContrast");
+    }
+    lower_ccd_10x_contrast_ = contrast;
+    if (!sim_mode_ && lower_ccd_10x_driver_) {
+        if (!lower_ccd_10x_driver_->setContrast(contrast)) {
+            Tango::Except::throw_exception("API_DeviceError",
+                "Failed to set contrast: " + lower_ccd_10x_driver_->getLastError(),
+                "setLowerCCD10xContrast");
+        }
+    }
+    log_event("Lower CCD 10x contrast set to " + std::to_string(contrast));
+}
+
 Tango::DevString ReflectionImagingDevice::getLowerCCD10xImage() {
     check_state("getLowerCCD10xImage");
     if (lower_ccd_10x_state_ != "READY") {
@@ -3916,6 +4372,27 @@ Tango::DevString ReflectionImagingDevice::getLowerCCD10xImage() {
     }
     
     return Tango::string_dup(base64_data.c_str());
+}
+
+void ReflectionImagingDevice::read_lower_ccd_10x_raw_image(Tango::Attribute& attr) {
+    std::lock_guard<std::mutex> lk(lower_ccd_10x_raw_mutex_);
+    long w = lower_ccd_10x_raw_width_, h = lower_ccd_10x_raw_height_;
+    if (w <= 0 || h <= 0 || lower_ccd_10x_raw_buf_.empty()) {
+        static Tango::DevUShort zero = 0;
+        attr.set_value(&zero, 1, 1);
+        return;
+    }
+    attr.set_value(lower_ccd_10x_raw_buf_.data(), w, h);
+}
+
+Tango::DevVarUShortArray* ReflectionImagingDevice::getLowerCCD10xRawImage() {
+    check_state("getLowerCCD10xRawImage");
+    std::lock_guard<std::mutex> lk(lower_ccd_10x_raw_mutex_);
+    auto* arr = new Tango::DevVarUShortArray();
+    arr->length(static_cast<CORBA::ULong>(lower_ccd_10x_raw_buf_.size()));
+    for (size_t i = 0; i < lower_ccd_10x_raw_buf_.size(); ++i)
+        (*arr)[i] = lower_ccd_10x_raw_buf_[i];
+    return arr;
 }
 
 // 批量操作
@@ -4521,6 +4998,48 @@ void ReflectionImagingDevice::always_executed_hook() {
         // TODO: 检查硬件采集完成状态
         // 这里可以添加超时检测，如果超过一定时间仍为CAPTURING，则标记为ERROR
     }
+
+    // 持续抓取 upper CCD 1x 原始帧（相机 READY 且非仿真模式）
+    if (upper_ccd_1x_state_ == "READY" && !sim_mode_ && upper_ccd_1x_driver_) {
+        std::vector<uint16_t> tmp;
+        long w = 0, h = 0;
+        if (upper_ccd_1x_driver_->grabRawFrame(tmp, w, h)) {
+            std::lock_guard<std::mutex> lk(upper_ccd_1x_raw_mutex_);
+            upper_ccd_1x_raw_buf_.assign(tmp.begin(), tmp.end());
+            upper_ccd_1x_raw_width_  = w;
+            upper_ccd_1x_raw_height_ = h;
+        }
+    }
+    if (upper_ccd_10x_state_ == "READY" && !sim_mode_ && upper_ccd_10x_driver_) {
+        std::vector<uint16_t> tmp;
+        long w = 0, h = 0;
+        if (upper_ccd_10x_driver_->grabRawFrame(tmp, w, h)) {
+            std::lock_guard<std::mutex> lk(upper_ccd_10x_raw_mutex_);
+            upper_ccd_10x_raw_buf_.assign(tmp.begin(), tmp.end());
+            upper_ccd_10x_raw_width_  = w;
+            upper_ccd_10x_raw_height_ = h;
+        }
+    }
+    if (lower_ccd_1x_state_ == "READY" && !sim_mode_ && lower_ccd_1x_driver_) {
+        std::vector<uint16_t> tmp;
+        long w = 0, h = 0;
+        if (lower_ccd_1x_driver_->grabRawFrame(tmp, w, h)) {
+            std::lock_guard<std::mutex> lk(lower_ccd_1x_raw_mutex_);
+            lower_ccd_1x_raw_buf_.assign(tmp.begin(), tmp.end());
+            lower_ccd_1x_raw_width_  = w;
+            lower_ccd_1x_raw_height_ = h;
+        }
+    }
+    if (lower_ccd_10x_state_ == "READY" && !sim_mode_ && lower_ccd_10x_driver_) {
+        std::vector<uint16_t> tmp;
+        long w = 0, h = 0;
+        if (lower_ccd_10x_driver_->grabRawFrame(tmp, w, h)) {
+            std::lock_guard<std::mutex> lk(lower_ccd_10x_raw_mutex_);
+            lower_ccd_10x_raw_buf_.assign(tmp.begin(), tmp.end());
+            lower_ccd_10x_raw_width_  = w;
+            lower_ccd_10x_raw_height_ = h;
+        }
+    }
     
     // 自动抓取逻辑
     if (auto_capture_enabled_ && auto_capture_interval_ > 0) {
@@ -4606,6 +5125,7 @@ void ReflectionImagingDevice::read_attr(Tango::Attribute &attr) {
     if (name == "upperCCD1xContrast") { read_upper_ccd_1x_contrast(attr); return; }
     if (name == "upperCCD1xImageUrl") { read_upper_ccd_1x_image_url(attr); return; }
     if (name == "upperCCD1xLastCaptureTime") { read_upper_ccd_1x_last_capture_time(attr); return; }
+    if (name == "upperCCD1xRawImage") { read_upper_ccd_1x_raw_image(attr); return; }
     
     // 上10倍物镜CCD属性
     if (name == "upperCCD10xState") { read_upper_ccd_10x_state(attr); return; }
@@ -4620,6 +5140,7 @@ void ReflectionImagingDevice::read_attr(Tango::Attribute &attr) {
     if (name == "upperCCD10xContrast") { read_upper_ccd_10x_contrast(attr); return; }
     if (name == "upperCCD10xImageUrl") { read_upper_ccd_10x_image_url(attr); return; }
     if (name == "upperCCD10xLastCaptureTime") { read_upper_ccd_10x_last_capture_time(attr); return; }
+    if (name == "upperCCD10xRawImage") { read_upper_ccd_10x_raw_image(attr); return; }
     
     // 下1倍物镜CCD属性
     if (name == "lowerCCD1xState") { read_lower_ccd_1x_state(attr); return; }
@@ -4634,6 +5155,7 @@ void ReflectionImagingDevice::read_attr(Tango::Attribute &attr) {
     if (name == "lowerCCD1xContrast") { read_lower_ccd_1x_contrast(attr); return; }
     if (name == "lowerCCD1xImageUrl") { read_lower_ccd_1x_image_url(attr); return; }
     if (name == "lowerCCD1xLastCaptureTime") { read_lower_ccd_1x_last_capture_time(attr); return; }
+    if (name == "lowerCCD1xRawImage") { read_lower_ccd_1x_raw_image(attr); return; }
     
     // 下10倍物镜CCD属性
     if (name == "lowerCCD10xState") { read_lower_ccd_10x_state(attr); return; }
@@ -4648,6 +5170,7 @@ void ReflectionImagingDevice::read_attr(Tango::Attribute &attr) {
     if (name == "lowerCCD10xContrast") { read_lower_ccd_10x_contrast(attr); return; }
     if (name == "lowerCCD10xImageUrl") { read_lower_ccd_10x_image_url(attr); return; }
     if (name == "lowerCCD10xLastCaptureTime") { read_lower_ccd_10x_last_capture_time(attr); return; }
+    if (name == "lowerCCD10xRawImage") { read_lower_ccd_10x_raw_image(attr); return; }
     if (name == "imageCaptureCount") { read_image_capture_count(attr); return; }
     if (name == "autoCaptureEnabled") { read_auto_capture_enabled(attr); return; }
     
@@ -5945,6 +6468,16 @@ public:
     }
 };
 
+class ReflectionImagingImageAttr : public Tango::ImageAttr {
+public:
+    ReflectionImagingImageAttr(const char *name, long data_type, Tango::AttrWriteType w_type, long max_x, long max_y)
+        : Tango::ImageAttr(name, data_type, w_type, max_x, max_y) {}
+
+    virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) override {
+        static_cast<ReflectionImagingDevice *>(dev)->read_attr(att);
+    }
+};
+
 // ========== DeviceClass Implementation ==========
 
 ReflectionImagingDeviceClass *ReflectionImagingDeviceClass::_instance = nullptr;
@@ -6023,6 +6556,7 @@ void ReflectionImagingDeviceClass::attribute_factory(std::vector<Tango::Attr*> &
     att_list.push_back(new ReflectionImagingAttrRW("upperCCD1xContrast", Tango::DEV_DOUBLE, Tango::READ_WRITE));
     att_list.push_back(new ReflectionImagingAttr("upperCCD1xImageUrl", Tango::DEV_STRING, Tango::READ));
     att_list.push_back(new ReflectionImagingAttr("upperCCD1xLastCaptureTime", Tango::DEV_STRING, Tango::READ));
+    att_list.push_back(new ReflectionImagingImageAttr("upperCCD1xRawImage", Tango::DEV_USHORT, Tango::READ, 4096, 4096));
     
     // 上10倍物镜CCD
     att_list.push_back(new ReflectionImagingAttr("upperCCD10xState", Tango::DEV_STRING, Tango::READ));
@@ -6037,6 +6571,7 @@ void ReflectionImagingDeviceClass::attribute_factory(std::vector<Tango::Attr*> &
     att_list.push_back(new ReflectionImagingAttrRW("upperCCD10xContrast", Tango::DEV_DOUBLE, Tango::READ_WRITE));
     att_list.push_back(new ReflectionImagingAttr("upperCCD10xImageUrl", Tango::DEV_STRING, Tango::READ));
     att_list.push_back(new ReflectionImagingAttr("upperCCD10xLastCaptureTime", Tango::DEV_STRING, Tango::READ));
+    att_list.push_back(new ReflectionImagingImageAttr("upperCCD10xRawImage", Tango::DEV_USHORT, Tango::READ, 4096, 4096));
     
     // 下1倍物镜CCD
     att_list.push_back(new ReflectionImagingAttr("lowerCCD1xState", Tango::DEV_STRING, Tango::READ));
@@ -6051,6 +6586,7 @@ void ReflectionImagingDeviceClass::attribute_factory(std::vector<Tango::Attr*> &
     att_list.push_back(new ReflectionImagingAttrRW("lowerCCD1xContrast", Tango::DEV_DOUBLE, Tango::READ_WRITE));
     att_list.push_back(new ReflectionImagingAttr("lowerCCD1xImageUrl", Tango::DEV_STRING, Tango::READ));
     att_list.push_back(new ReflectionImagingAttr("lowerCCD1xLastCaptureTime", Tango::DEV_STRING, Tango::READ));
+    att_list.push_back(new ReflectionImagingImageAttr("lowerCCD1xRawImage", Tango::DEV_USHORT, Tango::READ, 4096, 4096));
     
     // 下10倍物镜CCD
     att_list.push_back(new ReflectionImagingAttr("lowerCCD10xState", Tango::DEV_STRING, Tango::READ));
@@ -6065,6 +6601,7 @@ void ReflectionImagingDeviceClass::attribute_factory(std::vector<Tango::Attr*> &
     att_list.push_back(new ReflectionImagingAttrRW("lowerCCD10xContrast", Tango::DEV_DOUBLE, Tango::READ_WRITE));
     att_list.push_back(new ReflectionImagingAttr("lowerCCD10xImageUrl", Tango::DEV_STRING, Tango::READ));
     att_list.push_back(new ReflectionImagingAttr("lowerCCD10xLastCaptureTime", Tango::DEV_STRING, Tango::READ));
+    att_list.push_back(new ReflectionImagingImageAttr("lowerCCD10xRawImage", Tango::DEV_USHORT, Tango::READ, 4096, 4096));
     
     // 图像捕获统计
     att_list.push_back(new ReflectionImagingAttr("imageCaptureCount", Tango::DEV_LONG, Tango::READ));
@@ -6225,52 +6762,88 @@ void ReflectionImagingDeviceClass::command_factory() {
     
     // CCD Camera commands (四CCD：上下各两个，1倍和10倍物镜，海康MV-CU020-19GC)
     // 上1倍物镜CCD（粗定位）
-    command_list.push_back(new Tango::TemplCommandIn<Tango::DevBoolean>("upperCCD1xSwitch",
-        static_cast<void (Tango::DeviceImpl::*)(Tango::DevBoolean)>(&ReflectionImagingDevice::upperCCD1xSwitch)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevBoolean>("upperCCDSwitch",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevBoolean)>(&ReflectionImagingDevice::upperCCDSwitch)));
     command_list.push_back(new Tango::TemplCommandIn<Tango::DevBoolean>("upperCCD1xRingLightSwitch",
         static_cast<void (Tango::DeviceImpl::*)(Tango::DevBoolean)>(&ReflectionImagingDevice::upperCCD1xRingLightSwitch)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setUpperCCD1xLightCurrent",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setUpperCCD1xLightCurrent)));
     command_list.push_back(new Tango::TemplCommandOut<Tango::DevString>("captureUpperCCD1xImage",
         static_cast<Tango::DevString (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::captureUpperCCD1xImage)));
     command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setUpperCCD1xExposure",
         static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setUpperCCD1xExposure)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setUpperCCD1xGain",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setUpperCCD1xGain)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setUpperCCD1xBrightness",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setUpperCCD1xBrightness)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setUpperCCD1xContrast",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setUpperCCD1xContrast)));
     command_list.push_back(new Tango::TemplCommandOut<Tango::DevString>("getUpperCCD1xImage",
         static_cast<Tango::DevString (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::getUpperCCD1xImage)));
+    command_list.push_back(new Tango::TemplCommandOut<Tango::DevVarUShortArray*>("getUpperCCD1xRawImage",
+        static_cast<Tango::DevVarUShortArray* (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::getUpperCCD1xRawImage)));
     
     // 上10倍物镜CCD（近距离观察）
-    command_list.push_back(new Tango::TemplCommandIn<Tango::DevBoolean>("upperCCD10xSwitch",
-        static_cast<void (Tango::DeviceImpl::*)(Tango::DevBoolean)>(&ReflectionImagingDevice::upperCCD10xSwitch)));
     command_list.push_back(new Tango::TemplCommandIn<Tango::DevBoolean>("upperCCD10xRingLightSwitch",
         static_cast<void (Tango::DeviceImpl::*)(Tango::DevBoolean)>(&ReflectionImagingDevice::upperCCD10xRingLightSwitch)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setUpperCCD10xLightCurrent",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setUpperCCD10xLightCurrent)));
     command_list.push_back(new Tango::TemplCommandOut<Tango::DevString>("captureUpperCCD10xImage",
         static_cast<Tango::DevString (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::captureUpperCCD10xImage)));
     command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setUpperCCD10xExposure",
         static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setUpperCCD10xExposure)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setUpperCCD10xGain",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setUpperCCD10xGain)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setUpperCCD10xBrightness",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setUpperCCD10xBrightness)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setUpperCCD10xContrast",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setUpperCCD10xContrast)));
     command_list.push_back(new Tango::TemplCommandOut<Tango::DevString>("getUpperCCD10xImage",
         static_cast<Tango::DevString (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::getUpperCCD10xImage)));
+    command_list.push_back(new Tango::TemplCommandOut<Tango::DevVarUShortArray*>("getUpperCCD10xRawImage",
+        static_cast<Tango::DevVarUShortArray* (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::getUpperCCD10xRawImage)));
     
     // 下1倍物镜CCD（粗定位）
-    command_list.push_back(new Tango::TemplCommandIn<Tango::DevBoolean>("lowerCCD1xSwitch",
-        static_cast<void (Tango::DeviceImpl::*)(Tango::DevBoolean)>(&ReflectionImagingDevice::lowerCCD1xSwitch)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevBoolean>("lowerCCDSwitch",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevBoolean)>(&ReflectionImagingDevice::lowerCCDSwitch)));
     command_list.push_back(new Tango::TemplCommandIn<Tango::DevBoolean>("lowerCCD1xRingLightSwitch",
         static_cast<void (Tango::DeviceImpl::*)(Tango::DevBoolean)>(&ReflectionImagingDevice::lowerCCD1xRingLightSwitch)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setLowerCCD1xLightCurrent",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setLowerCCD1xLightCurrent)));
     command_list.push_back(new Tango::TemplCommandOut<Tango::DevString>("captureLowerCCD1xImage",
         static_cast<Tango::DevString (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::captureLowerCCD1xImage)));
     command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setLowerCCD1xExposure",
         static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setLowerCCD1xExposure)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setLowerCCD1xGain",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setLowerCCD1xGain)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setLowerCCD1xBrightness",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setLowerCCD1xBrightness)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setLowerCCD1xContrast",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setLowerCCD1xContrast)));
     command_list.push_back(new Tango::TemplCommandOut<Tango::DevString>("getLowerCCD1xImage",
         static_cast<Tango::DevString (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::getLowerCCD1xImage)));
+    command_list.push_back(new Tango::TemplCommandOut<Tango::DevVarUShortArray*>("getLowerCCD1xRawImage",
+        static_cast<Tango::DevVarUShortArray* (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::getLowerCCD1xRawImage)));
     
     // 下10倍物镜CCD（近距离观察）
-    command_list.push_back(new Tango::TemplCommandIn<Tango::DevBoolean>("lowerCCD10xSwitch",
-        static_cast<void (Tango::DeviceImpl::*)(Tango::DevBoolean)>(&ReflectionImagingDevice::lowerCCD10xSwitch)));
     command_list.push_back(new Tango::TemplCommandIn<Tango::DevBoolean>("lowerCCD10xRingLightSwitch",
         static_cast<void (Tango::DeviceImpl::*)(Tango::DevBoolean)>(&ReflectionImagingDevice::lowerCCD10xRingLightSwitch)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setLowerCCD10xLightCurrent",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setLowerCCD10xLightCurrent)));
     command_list.push_back(new Tango::TemplCommandOut<Tango::DevString>("captureLowerCCD10xImage",
         static_cast<Tango::DevString (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::captureLowerCCD10xImage)));
     command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setLowerCCD10xExposure",
         static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setLowerCCD10xExposure)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setLowerCCD10xGain",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setLowerCCD10xGain)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setLowerCCD10xBrightness",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setLowerCCD10xBrightness)));
+    command_list.push_back(new Tango::TemplCommandIn<Tango::DevDouble>("setLowerCCD10xContrast",
+        static_cast<void (Tango::DeviceImpl::*)(Tango::DevDouble)>(&ReflectionImagingDevice::setLowerCCD10xContrast)));
     command_list.push_back(new Tango::TemplCommandOut<Tango::DevString>("getLowerCCD10xImage",
         static_cast<Tango::DevString (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::getLowerCCD10xImage)));
+    command_list.push_back(new Tango::TemplCommandOut<Tango::DevVarUShortArray*>("getLowerCCD10xRawImage",
+        static_cast<Tango::DevVarUShortArray* (Tango::DeviceImpl::*)()>(&ReflectionImagingDevice::getLowerCCD10xRawImage)));
     
     // 批量操作
     command_list.push_back(new Tango::TemplCommandOut<Tango::DevString>("captureAllImages",

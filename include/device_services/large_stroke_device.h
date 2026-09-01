@@ -189,6 +189,7 @@ public:
     Tango::DevString queryPowerStatus();  // 查询电源状态（返回JSON）
     
     // State machine check
+    void check_state(const std::string& cmd_name);  // 查表版统一入口
     void check_state_for_command(const std::string& cmd_name, 
                                  bool require_on = false,
                                  bool allow_unknown = false);

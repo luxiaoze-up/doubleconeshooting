@@ -588,6 +588,122 @@ enum class StateMachineRule {
     ONLY_ON       // moveRelative, moveAbsolute, largeMoveAuto, openValue, runAction
 };
 
+// ============================================================================
+// 命令状态矩阵 {allow_unknown, allow_off, allow_on, allow_fault}
+// allow_off  对应 UNKNOWN/OFF/STANDBY（非联机态）
+// allow_on   对应 ON/MOVING（联机运行态）
+// allow_fault 对应 FAULT
+// ============================================================================
+namespace {
+struct LSAllowedStates {
+    bool allow_unknown;
+    bool allow_off;
+    bool allow_on;
+    bool allow_fault;
+};
+
+const std::unordered_map<std::string, LSAllowedStates> kLSStateMatrix = {
+    // 锁定 / 用户（任意状态可用）
+    {"devLock",              {true,  true,  false, true }},
+    {"devUnlock",            {true,  true,  false, true }},
+    {"devLockVerify",        {true,  true,  true,  true }},
+    {"devLockQuery",         {true,  true,  true,  true }},
+    {"devUserConfig",        {true,  true,  true,  true }},
+
+    // 系统（非 ON 状态才能执行）
+    {"selfCheck",            {false, true,  false, true }},
+    {"init",                 {false, true,  false, true }},
+
+    // 参数设置（OFF/ON/FAULT）
+    {"moveAxisSet",          {false, true,  true,  true }},
+    {"structAxisSet",        {false, true,  true,  true }},
+
+    // 运动（仅 ON）
+    {"moveRelative",         {false, false, true,  false}},
+    {"moveAbsolute",         {false, false, true,  false}},
+    {"moveToZero",           {false, false, true,  false}},
+    {"largeMoveAuto",        {false, false, true,  false}},
+    {"runAction",            {false, false, true,  false}},
+
+    // 停止 / 复位（OFF/ON/MOVING/FAULT）
+    {"stop",                 {false, true,  true,  true }},
+    {"reset",                {false, true,  true,  true }},
+
+    // 读取（OFF/ON/FAULT）
+    {"readEncoder",          {false, true,  true,  true }},
+    {"readOrg",              {false, true,  true,  true }},
+    {"readEL",               {false, true,  true,  true }},
+    {"plugInRead",           {false, true,  true,  true }},
+    {"openValue",            {false, false, true,  false}},
+
+    // 编码器位置存取
+    {"saveEncoderPosition",  {false, true,  true,  true }},
+    {"loadEncoderPosition",  {false, true,  true,  true }},
+
+    // 电源 / 刹车 / 灯光控制（OFF/ON 均可，FAULT 不允许避免误操作）
+    {"enableDriverPower",    {false, true,  true,  false}},
+    {"disableDriverPower",   {false, true,  true,  true }},
+    {"releaseBrake",         {false, false, true,  false}},
+    {"engageBrake",          {false, true,  true,  true }},
+    {"enableCavityLight",    {false, true,  true,  true }},
+    {"disableCavityLight",   {false, true,  true,  true }},
+    {"queryPowerStatus",     {true,  true,  true,  true }},
+
+    // 导出 / 模拟（OFF/ON/FAULT）
+    {"exportLogs",           {false, true,  true,  true }},
+    {"readtAxis",            {false, true,  true,  true }},
+    {"exportAxis",           {false, true,  true,  true }},
+    {"simSwitch",            {false, true,  true,  true }},
+};
+} // namespace
+
+// 查表版状态检查（统一入口，供新增命令使用）
+void LargeStrokeDevice::check_state(const std::string& cmd_name) {
+    auto it = kLSStateMatrix.find(cmd_name);
+    if (it == kLSStateMatrix.end()) {
+        Tango::Except::throw_exception("API_StateViolation",
+            cmd_name + " state rule not defined",
+            "LargeStrokeDevice::check_state");
+    }
+    const auto& allow = it->second;
+    Tango::DevState s = get_state();
+    switch (s) {
+        case Tango::UNKNOWN:
+            if (!allow.allow_unknown)
+                Tango::Except::throw_exception("API_StateViolation",
+                    cmd_name + " blocked: device in UNKNOWN",
+                    "LargeStrokeDevice::check_state");
+            break;
+        case Tango::OFF:
+        case Tango::STANDBY:
+            if (!allow.allow_off)
+                Tango::Except::throw_exception("API_StateViolation",
+                    cmd_name + " blocked: device in OFF/STANDBY",
+                    "LargeStrokeDevice::check_state");
+            break;
+        case Tango::ON:
+        case Tango::MOVING:
+        case Tango::RUNNING:
+            if (!allow.allow_on)
+                Tango::Except::throw_exception("API_StateViolation",
+                    cmd_name + " blocked: device in ON/MOVING",
+                    "LargeStrokeDevice::check_state");
+            break;
+        case Tango::FAULT:
+            if (!allow.allow_fault)
+                Tango::Except::throw_exception("API_StateViolation",
+                    cmd_name + " blocked: device in FAULT",
+                    "LargeStrokeDevice::check_state");
+            break;
+        default:
+            if (!allow.allow_on)
+                Tango::Except::throw_exception("API_StateViolation",
+                    cmd_name + " blocked: state not allowed",
+                    "LargeStrokeDevice::check_state");
+            break;
+    }
+}
+
 void LargeStrokeDevice::check_state_for_command(const std::string& cmd_name, 
                                                  bool require_on,
                                                  bool allow_unknown) {
@@ -1267,6 +1383,7 @@ Tango::DevDouble LargeStrokeDevice::readEncoder() {
 }
 
 void LargeStrokeDevice::saveEncoderPosition() {
+    check_state("saveEncoderPosition");
     INFO_STREAM << "[saveEncoderPosition] Saving current encoder position to database" << std::endl;
     
     try {
@@ -1295,6 +1412,7 @@ void LargeStrokeDevice::saveEncoderPosition() {
 }
 
 void LargeStrokeDevice::loadEncoderPosition() {
+    check_state("loadEncoderPosition");
     INFO_STREAM << "[loadEncoderPosition] Loading encoder position from database" << std::endl;
     
     try {
@@ -2198,6 +2316,7 @@ void LargeStrokeDeviceClass::command_factory() {
 
 // ========== Power Control Commands (for GUI) ==========
 void LargeStrokeDevice::enableDriverPower() {
+    check_state("enableDriverPower");
     if (!enable_driver_power()) {
         Tango::Except::throw_exception("PowerControlError", 
             "Failed to enable driver power", "LargeStrokeDevice::enableDriverPower");
@@ -2205,6 +2324,7 @@ void LargeStrokeDevice::enableDriverPower() {
 }
 
 void LargeStrokeDevice::disableDriverPower() {
+    check_state("disableDriverPower");
     if (!disable_driver_power()) {
         Tango::Except::throw_exception("PowerControlError", 
             "Failed to disable driver power", "LargeStrokeDevice::disableDriverPower");
@@ -2212,6 +2332,7 @@ void LargeStrokeDevice::disableDriverPower() {
 }
 
 void LargeStrokeDevice::releaseBrake() {
+    check_state("releaseBrake");
     if (!release_brake()) {
         Tango::Except::throw_exception("PowerControlError", 
             "Failed to release brake", "LargeStrokeDevice::releaseBrake");
@@ -2219,6 +2340,7 @@ void LargeStrokeDevice::releaseBrake() {
 }
 
 void LargeStrokeDevice::engageBrake() {
+    check_state("engageBrake");
     if (!engage_brake()) {
         Tango::Except::throw_exception("PowerControlError", 
             "Failed to engage brake", "LargeStrokeDevice::engageBrake");
@@ -2226,6 +2348,7 @@ void LargeStrokeDevice::engageBrake() {
 }
 
 void LargeStrokeDevice::enableCavityLight() {
+    check_state("enableCavityLight");
     if (!enable_cavity_light()) {
         Tango::Except::throw_exception("PowerControlError", 
             "Failed to enable cavity light", "LargeStrokeDevice::enableCavityLight");
@@ -2233,6 +2356,7 @@ void LargeStrokeDevice::enableCavityLight() {
 }
 
 void LargeStrokeDevice::disableCavityLight() {
+    check_state("disableCavityLight");
     if (!disable_cavity_light()) {
         Tango::Except::throw_exception("PowerControlError", 
             "Failed to disable cavity light", "LargeStrokeDevice::disableCavityLight");
@@ -2240,6 +2364,7 @@ void LargeStrokeDevice::disableCavityLight() {
 }
 
 Tango::DevString LargeStrokeDevice::queryPowerStatus() {
+    check_state("queryPowerStatus");
     std::stringstream ss;
     ss << "{"
        << "\"driverPowerEnabled\":" << (driver_power_enabled_ ? "true" : "false") << ","

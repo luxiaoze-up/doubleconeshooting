@@ -45,12 +45,60 @@ VacuumSystemDevice::~VacuumSystemDevice() {
 void VacuumSystemDevice::init_device() {
     INFO_STREAM << "VacuumSystemDevice::init_device - 初始化真空系统设备 sys/vacuum/2" << std::endl;
     
-    // 加载配置
+    // 加载配置（默认值）
     plc_ip_ = Common::SystemConfig::DEFAULT_PLC_IP;
     plc_port_ = 4840;  // OPC UA 默认端口
     sim_mode_ = Common::SystemConfig::SIM_MODE;  // 从配置读取模拟模式
     alarm_log_path_ = "logs/vacuum_system_alarms.json";
     poll_interval_ms_ = 100;  // 100ms 轮询
+    valve_timeout_ms_ = 5000;
+
+    // 从 Tango 数据库读取属性（覆盖默认值）
+    {
+        Tango::DbData db_data;
+        db_data.push_back(Tango::DbDatum("bundleNo"));
+        db_data.push_back(Tango::DbDatum("laserNo"));
+        db_data.push_back(Tango::DbDatum("systemNo"));
+        db_data.push_back(Tango::DbDatum("deviceName"));
+        db_data.push_back(Tango::DbDatum("deviceID"));
+        db_data.push_back(Tango::DbDatum("plcIp"));
+        db_data.push_back(Tango::DbDatum("plcPort"));
+        db_data.push_back(Tango::DbDatum("simulatorMode"));
+        db_data.push_back(Tango::DbDatum("pollIntervalMs"));
+        db_data.push_back(Tango::DbDatum("valveTimeoutMs"));
+        try {
+            get_db_device()->get_property(db_data);
+            int idx = 0;
+            if (!db_data[idx].is_empty()) { db_data[idx] >> bundle_no_; }    idx++;
+            if (!db_data[idx].is_empty()) { db_data[idx] >> laser_no_; }     idx++;
+            if (!db_data[idx].is_empty()) { db_data[idx] >> system_no_; }    idx++;
+            if (!db_data[idx].is_empty()) { db_data[idx] >> device_name_; }  idx++;
+            if (!db_data[idx].is_empty()) { db_data[idx] >> device_id_; }    idx++;
+            if (!db_data[idx].is_empty()) { db_data[idx] >> plc_ip_; }       idx++;
+            if (!db_data[idx].is_empty()) {
+                std::string port_str; db_data[idx] >> port_str;
+                try { plc_port_ = std::stoi(port_str); } catch (...) {}
+            } idx++;
+            if (!db_data[idx].is_empty()) {
+                std::string sim_str; db_data[idx] >> sim_str;
+                sim_mode_ = (sim_str == "1" || sim_str == "true");
+            } idx++;
+            if (!db_data[idx].is_empty()) {
+                std::string v; db_data[idx] >> v;
+                try { poll_interval_ms_ = std::stoi(v); } catch (...) {}
+            } idx++;
+            if (!db_data[idx].is_empty()) {
+                std::string v; db_data[idx] >> v;
+                try { valve_timeout_ms_ = std::stoi(v); } catch (...) {}
+            } idx++;
+            INFO_STREAM << "VacuumSystemDevice: Tango DB 属性读取完成"
+                        << " plc_ip=" << plc_ip_ << " plc_port=" << plc_port_
+                        << " sim_mode=" << sim_mode_ << std::endl;
+        } catch (const Tango::DevFailed& e) {
+            WARN_STREAM << "VacuumSystemDevice: 读取 Tango DB 属性失败，使用默认值: "
+                        << e.errors[0].desc << std::endl;
+        }
+    }
     
     if (sim_mode_) {
         INFO_STREAM << "========================================" << std::endl;
@@ -996,11 +1044,13 @@ void VacuumSystemDevice::pushAlarmEvent(const AlarmInfo& alarm) {
 // ============================================================================
 
 void VacuumSystemDevice::Init() {
+    check_state("Init");
     INFO_STREAM << "VacuumSystemDevice::Init()" << std::endl;
     init_device();
 }
 
 void VacuumSystemDevice::Reset() {
+    check_state("Reset");
     INFO_STREAM << "VacuumSystemDevice::Reset()" << std::endl;
     
     std::lock_guard<std::mutex> lock(state_mutex_);
@@ -1012,6 +1062,7 @@ void VacuumSystemDevice::Reset() {
 }
 
 void VacuumSystemDevice::SelfCheck() {
+    check_state("SelfCheck");
     INFO_STREAM << "执行自检..." << std::endl;
     
     // 检查 PLC 连接
@@ -1026,6 +1077,7 @@ void VacuumSystemDevice::SelfCheck() {
 }
 
 void VacuumSystemDevice::SwitchToAuto() {
+    check_state("SwitchToAuto");
     std::lock_guard<std::mutex> lock(state_mutex_);
     
     if (!checkAutoModePrerequisites()) {
@@ -1045,6 +1097,7 @@ void VacuumSystemDevice::SwitchToAuto() {
 }
 
 void VacuumSystemDevice::SwitchToManual() {
+    check_state("SwitchToManual");
     std::lock_guard<std::mutex> lock(state_mutex_);
     
     operation_mode_ = OperationMode::MANUAL;
@@ -1065,6 +1118,7 @@ void VacuumSystemDevice::SwitchToManual() {
 }
 
 void VacuumSystemDevice::OneKeyVacuumStart() {
+    check_state("OneKeyVacuumStart");
     DEBUG_STREAM << "[DEBUG] OneKeyVacuumStart: 调用，当前模式=" 
                  << (operation_mode_ == OperationMode::AUTO ? "自动" : "手动") 
                  << ", 当前状态=" << static_cast<int>(system_state_) << std::endl;
@@ -1122,6 +1176,7 @@ void VacuumSystemDevice::OneKeyVacuumStart() {
 }
 
 void VacuumSystemDevice::OneKeyVacuumStop() {
+    check_state("OneKeyVacuumStop");
     DEBUG_STREAM << "[DEBUG] OneKeyVacuumStop: 调用，当前模式=" 
                  << (operation_mode_ == OperationMode::AUTO ? "自动" : "手动") 
                  << ", 当前状态=" << static_cast<int>(system_state_) << std::endl;
@@ -1174,6 +1229,7 @@ void VacuumSystemDevice::OneKeyVacuumStop() {
 }
 
 void VacuumSystemDevice::ChamberVent() {
+    check_state("ChamberVent");
     DEBUG_STREAM << "[DEBUG] ChamberVent: 调用，当前模式=" 
                  << (operation_mode_ == OperationMode::AUTO ? "自动" : "手动") << std::endl;
     
@@ -1188,6 +1244,7 @@ void VacuumSystemDevice::ChamberVent() {
 }
 
 void VacuumSystemDevice::FaultReset() {
+    check_state("FaultReset");
     INFO_STREAM << "VacuumSystemDevice::FaultReset - 故障复位执行" << std::endl;
     
     // 螺杆泵故障复位（使用自动输出的成对控制）
@@ -1228,6 +1285,7 @@ void VacuumSystemDevice::FaultReset() {
 }
 
 void VacuumSystemDevice::EmergencyStop() {
+    check_state("EmergencyStop");
     INFO_STREAM << "VacuumSystemDevice::EmergencyStop - 紧急停止执行" << std::endl;
     
     // 设置系统状态为紧急停止（需要持有锁）
@@ -1300,6 +1358,7 @@ void VacuumSystemDevice::EmergencyStop() {
 // ============================================================================
 
 void VacuumSystemDevice::SetScrewPumpPower(Tango::DevBoolean state) {
+    check_state("SetScrewPumpPower");
     DEBUG_STREAM << "[DEBUG] SetScrewPumpPower: 调用，参数=" << (state ? "true" : "false") 
                  << ", 当前模式=" << (operation_mode_ == OperationMode::MANUAL ? "手动" : "自动") << std::endl;
     
@@ -1334,6 +1393,7 @@ void VacuumSystemDevice::SetScrewPumpPower(Tango::DevBoolean state) {
 }
 
 void VacuumSystemDevice::SetScrewPumpStartStop(Tango::DevBoolean state) {
+    check_state("SetScrewPumpStartStop");
     if (operation_mode_ != OperationMode::MANUAL) {
         Tango::Except::throw_exception(
             "NOT_MANUAL_MODE",
@@ -1355,6 +1415,7 @@ void VacuumSystemDevice::SetScrewPumpStartStop(Tango::DevBoolean state) {
 }
 
 void VacuumSystemDevice::SetRootsPumpPower(Tango::DevBoolean state) {
+    check_state("SetRootsPumpPower");
     if (operation_mode_ != OperationMode::MANUAL) {
         Tango::Except::throw_exception(
             "NOT_MANUAL_MODE",
@@ -1381,7 +1442,30 @@ void VacuumSystemDevice::SetRootsPumpPower(Tango::DevBoolean state) {
     logEvent(state ? "罗茨泵上电" : "罗茨泵断电");
 }
 
+void VacuumSystemDevice::SetRootsPumpStartStop(Tango::DevBoolean state) {
+    check_state("SetRootsPumpStartStop");
+    if (operation_mode_ != OperationMode::MANUAL) {
+        Tango::Except::throw_exception(
+            "NOT_MANUAL_MODE",
+            "手动模式才能操作",
+            "VacuumSystemDevice::SetRootsPumpStartStop");
+    }
+    
+    if (sim_mode_) {
+        // 模拟模式下，启停信号直接影响电源状态
+        roots_pump_power_ = state;
+    } else {
+        // 手动模式：使用本地手动输出 LocalOn/LocalOff
+        Common::PLC::PLCAddress addr = state ? 
+            VacuumSystemPLCMapping::RootsPumpLocalOn() : 
+            VacuumSystemPLCMapping::RootsPumpLocalOff();
+        writePLCBool(addr, true);  // 写true触发动作
+    }
+    logEvent(state ? "罗茨泵启动" : "罗茨泵停止");
+}
+
 void VacuumSystemDevice::SetMolecularPumpPower(const Tango::DevVarShortArray* argin) {
+    check_state("SetMolecularPumpPower");
     if (argin->length() < 2) {
         Tango::Except::throw_exception(
             "INVALID_ARGUMENT",
@@ -1428,6 +1512,7 @@ void VacuumSystemDevice::SetMolecularPumpPower(const Tango::DevVarShortArray* ar
 }
 
 void VacuumSystemDevice::SetMolecularPumpStartStop(const Tango::DevVarShortArray* argin) {
+    check_state("SetMolecularPumpStartStop");
     if (argin->length() < 2) {
         Tango::Except::throw_exception(
             "INVALID_ARGUMENT",
@@ -1478,10 +1563,11 @@ void VacuumSystemDevice::SetMolecularPumpStartStop(const Tango::DevVarShortArray
 // ============================================================================
 
 void VacuumSystemDevice::SetGateValve(const Tango::DevVarShortArray* argin) {
+    check_state("SetGateValve");
     if (argin->length() < 2) {
         Tango::Except::throw_exception(
-            "INVALID_ARGUMENT",
-            "需要 [index, operation] (operation: 1=开, 0=关)",
+            "INVALID_ARGIN",
+            "第一个值是闸板阀索引（1-5），第二个值是开/关状态（0=关闭，1=开启）",
             "VacuumSystemDevice::SetGateValve");
     }
     
@@ -1550,22 +1636,16 @@ void VacuumSystemDevice::SetGateValve(const Tango::DevVarShortArray* argin) {
 }
 
 void VacuumSystemDevice::SetElectromagneticValve(const Tango::DevVarShortArray* argin) {
+    check_state("SetElectromagneticValve");
     if (argin->length() < 2) {
-        Tango::Except::throw_exception(
-            "INVALID_ARGUMENT",
-            "需要 [index, state]",
-            "VacuumSystemDevice::SetElectromagneticValve");
-    }
-    
-    int index = (*argin)[0];
-    bool state = (*argin)[1] != 0;
-    
-    if (index < 1 || index > 4) {
         Tango::Except::throw_exception(
             "INVALID_INDEX",
             "电磁阀索引 1-4",
             "VacuumSystemDevice::SetElectromagneticValve");
     }
+
+    int index = (*argin)[0];
+    bool state = (*argin)[1] != 0;
     
     if (sim_mode_) {
         // 模拟模式：电磁阀立即响应
@@ -1601,11 +1681,12 @@ void VacuumSystemDevice::SetElectromagneticValve(const Tango::DevVarShortArray* 
 }
 
 void VacuumSystemDevice::SetVentValve(const Tango::DevVarShortArray* argin) {
+    check_state("SetVentValve");
     if (argin->length() < 2) {
         Tango::Except::throw_exception(
-            "INVALID_ARGUMENT",
-            "需要 [index, state]",
-            "VacuumSystemDevice::SetVentValve");
+            "INVALID_ARGIN",
+            "第一个值是放气阀索引（1-5），第二个值是开/关状态（0=关闭，1=开启）",
+            "VacuumSystemDevice::SetGateValve");
     }
     
     int index = (*argin)[0];
@@ -1646,11 +1727,12 @@ void VacuumSystemDevice::SetVentValve(const Tango::DevVarShortArray* argin) {
 }
 
 void VacuumSystemDevice::SetWaterValve(const Tango::DevVarShortArray* argin) {
+    check_state("SetWaterValve");
     if (argin->length() < 2) {
         Tango::Except::throw_exception(
-            "INVALID_ARGUMENT",
-            "需要 [index, state]",
-            "VacuumSystemDevice::SetWaterValve");
+            "INVALID_ARGIN",
+            "第一个值是水电磁阀索引（1-5），第二个值是开/关状态（0=关闭，1=开启）",
+            "VacuumSystemDevice::SetGateValve");
     }
     
     int index = (*argin)[0];
@@ -1703,6 +1785,7 @@ void VacuumSystemDevice::SetWaterValve(const Tango::DevVarShortArray* argin) {
 }
 
 void VacuumSystemDevice::SetAirMainValve(Tango::DevBoolean state) {
+    check_state("SetAirMainValve");
     if (sim_mode_) {
         air_main_valve_state_ = state;
     } else {
@@ -1723,6 +1806,7 @@ void VacuumSystemDevice::SetAirMainValve(Tango::DevBoolean state) {
 // ============================================================================
 
 void VacuumSystemDevice::AcknowledgeAlarm(Tango::DevLong alarm_code) {
+    check_state("AcknowledgeAlarm");
     std::lock_guard<std::mutex> lock(alarm_mutex_);
     
     for (auto& alarm : active_alarms_) {
@@ -1735,6 +1819,7 @@ void VacuumSystemDevice::AcknowledgeAlarm(Tango::DevLong alarm_code) {
 }
 
 void VacuumSystemDevice::AcknowledgeAllAlarms() {
+    check_state("AcknowledgeAllAlarms");
     std::lock_guard<std::mutex> lock(alarm_mutex_);
     
     for (auto& alarm : active_alarms_) {
@@ -1745,9 +1830,8 @@ void VacuumSystemDevice::AcknowledgeAllAlarms() {
 }
 
 void VacuumSystemDevice::ClearAlarmHistory() {
+    check_state("ClearAlarmHistory");
     std::lock_guard<std::mutex> lock(alarm_mutex_);
-    
-    alarm_history_.clear();
     
     // 清空文件
     std::ofstream ofs(alarm_log_path_);
@@ -1758,6 +1842,7 @@ void VacuumSystemDevice::ClearAlarmHistory() {
 }
 
 Tango::DevString VacuumSystemDevice::GetOperationConditions(Tango::DevString device_name) {
+    check_state("GetOperationConditions");
     std::string device(device_name);
     std::string result = getPrerequisiteStatus(device, "all");
     
@@ -1766,6 +1851,7 @@ Tango::DevString VacuumSystemDevice::GetOperationConditions(Tango::DevString dev
 }
 
 Tango::DevString VacuumSystemDevice::GetActiveAlarms() {
+    check_state("GetActiveAlarms");
     std::lock_guard<std::mutex> lock(alarm_mutex_);
     
     json j = json::array();
@@ -1784,6 +1870,7 @@ Tango::DevString VacuumSystemDevice::GetActiveAlarms() {
 }
 
 Tango::DevString VacuumSystemDevice::GetSystemStatus() {
+    check_state("GetSystemStatus");
     json j;
     
     j["operation_mode"] = static_cast<int>(operation_mode_);
@@ -3676,6 +3763,113 @@ public:
     }
 };
 
+// ============================================================================
+// 命令状态门控
+// ============================================================================
+
+namespace {
+
+struct VacuumAllowedStates {
+    bool allow_unknown;
+    bool allow_off;
+    bool allow_on;
+    bool allow_fault;
+};
+
+// {allow_unknown, allow_off(STANDBY), allow_on(ON/RUNNING), allow_fault}
+const std::unordered_map<std::string, VacuumAllowedStates> kVacuumStateMatrix = {
+    // 系统命令
+    {"Init",                   {true,  true,  true,  true }},
+    {"Reset",                  {false, true,  true,  true }},
+    {"SelfCheck",              {false, true,  false, true }},
+
+    // 模式切换
+    {"SwitchToAuto",           {false, true,  true,  false}},
+    {"SwitchToManual",         {false, true,  true,  true }},
+
+    // 自动操作（仅 ON 状态可执行）
+    {"OneKeyVacuumStart",      {false, false, true,  false}},
+    {"OneKeyVacuumStop",       {false, false, true,  false}},
+    {"ChamberVent",            {false, false, true,  false}},
+    {"FaultReset",             {false, true,  true,  true }},
+    {"EmergencyStop",          {false, true,  true,  true }},
+
+    // 泵控制（手动操作，ON 状态可用）
+    {"SetScrewPumpPower",      {false, false, true,  false}},
+    {"SetScrewPumpStartStop",  {false, false, true,  false}},
+    {"SetRootsPumpPower",      {false, false, true,  false}},
+    {"SetRootsPumpStartStop",  {false, false, true,  false}},
+    {"SetMolecularPumpPower",  {false, false, true,  false}},
+    {"SetMolecularPumpStartStop", {false, false, true, false}},
+
+    // 阀门控制（手动操作，ON 状态可用）
+    {"SetGateValve",           {false, false, true,  false}},
+    {"SetElectromagneticValve",{false, false, true,  false}},
+    {"SetVentValve",           {false, false, true,  false}},
+    {"SetWaterValve",          {false, false, true,  false}},
+    {"SetAirMainValve",        {false, false, true,  false}},
+
+    // 报警管理（任何非 UNKNOWN 状态均可操作）
+    {"AcknowledgeAlarm",       {false, true,  true,  true }},
+    {"AcknowledgeAllAlarms",   {false, true,  true,  true }},
+    {"ClearAlarmHistory",      {false, true,  true,  true }},
+
+    // 查询命令（只读，任何状态均可）
+    {"GetOperationConditions", {true,  true,  true,  true }},
+    {"GetActiveAlarms",        {true,  true,  true,  true }},
+    {"GetSystemStatus",        {true,  true,  true,  true }},
+};
+
+} // namespace
+
+void VacuumSystemDevice::check_state(const std::string& cmd_name) {
+    auto it = kVacuumStateMatrix.find(cmd_name);
+    if (it == kVacuumStateMatrix.end()) {
+        Tango::Except::throw_exception("API_StateViolation",
+            cmd_name + " state rule not defined",
+            "VacuumSystemDevice::check_state");
+    }
+    const auto& allow = it->second;
+    Tango::DevState s = get_state();
+    switch (s) {
+        case Tango::UNKNOWN:
+            if (!allow.allow_unknown)
+                Tango::Except::throw_exception("API_StateViolation",
+                    cmd_name + " blocked: device in UNKNOWN",
+                    "VacuumSystemDevice::check_state");
+            break;
+        case Tango::OFF:
+        case Tango::STANDBY:
+            if (!allow.allow_off)
+                Tango::Except::throw_exception("API_StateViolation",
+                    cmd_name + " blocked: device in OFF/STANDBY",
+                    "VacuumSystemDevice::check_state");
+            break;
+        case Tango::ON:
+        case Tango::RUNNING:
+        case Tango::MOVING:
+            if (!allow.allow_on)
+                Tango::Except::throw_exception("API_StateViolation",
+                    cmd_name + " blocked: device in ON/RUNNING",
+                    "VacuumSystemDevice::check_state");
+            break;
+        case Tango::FAULT:
+            if (!allow.allow_fault)
+                Tango::Except::throw_exception("API_StateViolation",
+                    cmd_name + " blocked: device in FAULT",
+                    "VacuumSystemDevice::check_state");
+            break;
+        default:
+            if (!allow.allow_on)
+                Tango::Except::throw_exception("API_StateViolation",
+                    cmd_name + " blocked: state not allowed",
+                    "VacuumSystemDevice::check_state");
+            break;
+    }
+}
+
+// ============================================================================
+
 void VacuumSystemDeviceClass::command_factory() {
     // 系统命令
     command_list.push_back(new VoidVoidCmd("Init", Tango::DEV_VOID, Tango::DEV_VOID, &VacuumSystemDevice::Init));
@@ -3697,6 +3891,7 @@ void VacuumSystemDeviceClass::command_factory() {
     command_list.push_back(new BoolVoidCmd("SetScrewPumpPower", Tango::DEV_BOOLEAN, Tango::DEV_VOID, &VacuumSystemDevice::SetScrewPumpPower));
     command_list.push_back(new BoolVoidCmd("SetScrewPumpStartStop", Tango::DEV_BOOLEAN, Tango::DEV_VOID, &VacuumSystemDevice::SetScrewPumpStartStop));
     command_list.push_back(new BoolVoidCmd("SetRootsPumpPower", Tango::DEV_BOOLEAN, Tango::DEV_VOID, &VacuumSystemDevice::SetRootsPumpPower));
+    command_list.push_back(new BoolVoidCmd("SetRootsPumpStartStop", Tango::DEV_BOOLEAN, Tango::DEV_VOID, &VacuumSystemDevice::SetRootsPumpStartStop));
     command_list.push_back(new ShortArrayVoidCmd("SetMolecularPumpPower", Tango::DEVVAR_SHORTARRAY, Tango::DEV_VOID, &VacuumSystemDevice::SetMolecularPumpPower));
     command_list.push_back(new ShortArrayVoidCmd("SetMolecularPumpStartStop", Tango::DEVVAR_SHORTARRAY, Tango::DEV_VOID, &VacuumSystemDevice::SetMolecularPumpStartStop));
     

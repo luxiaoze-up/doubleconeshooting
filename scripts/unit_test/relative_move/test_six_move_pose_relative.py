@@ -23,7 +23,7 @@ def test_move_pose_absolute(device_name="sys/six_dof/1", target_pose=None):
     
     # 默认目标姿态（可根据实际需求修改）
     if target_pose is None:
-        target_pose = [0.0, 0.0, 0.0, 0.0, 0.0, 0.35]  # [x, y, z, rx, ry, rz]
+        target_pose = [0.0, 0.0, -5.0, 0.0, 0.0, 0.0]  # [x, y, z, rx, ry, rz]
     
     try:
         # 1. 连接设备

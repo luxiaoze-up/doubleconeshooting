@@ -66,6 +66,10 @@ const std::unordered_map<std::string, AllowedStates> kStateMatrix = {
     // 控制
     {"stop",             {false, true,  true,  true}},
     {"openBrake",        {false, false, true,  false}},
+    {"enableDriverPower", {false, true,  true,  true}},
+    {"disableDriverPower", {false, true,  true,  true}},
+    {"releaseBrake",      {false, true,  true,  true}},
+    {"engageBrake",       {false, true,  true,  true}},
 
     // 导出
     {"readtAxis",        {false, true,  true,  true}},
@@ -2524,6 +2528,7 @@ void SixDofDeviceClass::command_factory() {
 
 // ========== Power Control Commands (for GUI) ==========
 void SixDofDevice::enableDriverPower() {
+    check_state("enableDriverPower");
     if (!enable_driver_power()) {
         Tango::Except::throw_exception("PowerControlError", 
             "Failed to enable driver power", "SixDofDevice::enableDriverPower");
@@ -2531,6 +2536,7 @@ void SixDofDevice::enableDriverPower() {
 }
 
 void SixDofDevice::disableDriverPower() {
+    check_state("disableDriverPower");
     if (!disable_driver_power()) {
         Tango::Except::throw_exception("PowerControlError", 
             "Failed to disable driver power", "SixDofDevice::disableDriverPower");
@@ -2538,6 +2544,7 @@ void SixDofDevice::disableDriverPower() {
 }
 
 void SixDofDevice::releaseBrake() {
+    check_state("releaseBrake");
     if (!release_brake()) {
         Tango::Except::throw_exception("PowerControlError", 
             "Failed to release brake", "SixDofDevice::releaseBrake");
@@ -2545,6 +2552,7 @@ void SixDofDevice::releaseBrake() {
 }
 
 void SixDofDevice::engageBrake() {
+    check_state("engageBrake");
     if (!engage_brake()) {
         Tango::Except::throw_exception("PowerControlError", 
             "Failed to engage brake", "SixDofDevice::engageBrake");

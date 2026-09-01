@@ -229,15 +229,17 @@ private:
     std::atomic<int> restore_retry_count_{0};  // 恢复操作重试计数
     static constexpr int MAX_RESTORE_RETRIES = 3;  // 最大重试次数
     
-    // ===== 状态机检查辅助函数 =====
-    // 检查命令在当前状态下是否允许执行
-    void check_state_for_lock_commands();      // devLock, devUnlock: UNKNOWN, OFF, FAULT
-    void check_state_for_all_states();         // devLockVerify, devLockQuery, devUserConfig: 所有状态
-    void check_state_for_init_commands();      // selfCheck, init: UNKNOWN, OFF, FAULT
-    void check_state_for_reset();              // reset: ON, FAULT
-    void check_state_for_param_commands();     // moveAxisSet, structAxisSet: OFF, ON, FAULT
-    void check_state_for_motion_commands();    // moveRelative, moveAbsolute, assistAuto, setHoldPos: ON only
-    void check_state_for_operational_commands();  // Stop, readEncoder, readForce, readOrg, readEL, setForceZero, etc.: OFF, ON, MOVING, FAULT (not UNKNOWN)
+    // ===== 统一状态机 =====
+    void check_state(const std::string &cmd_name);  // 表驱动统一入口
+
+    // ===== 状态机检查辅助函数 (保留，供内部兼容使用) =====
+    void check_state_for_lock_commands();
+    void check_state_for_all_states();
+    void check_state_for_init_commands();
+    void check_state_for_reset();
+    void check_state_for_param_commands();
+    void check_state_for_motion_commands();
+    void check_state_for_operational_commands();
 
     // Tango 影子变量 (确保属性读取时的指针寿命)
     Tango::DevString attr_position_unit_read;

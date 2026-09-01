@@ -19,16 +19,19 @@ sys.path.insert(0, os.path.join(project_root, 'gui'))
 
 import tango
 
-def test_auxiliary_move_relative(device_name="sys/auxiliary/1", distance=None):
-    """测试 MoveRelative 命令
+def test_auxiliary_move_relative(device_name="sys/auxiliary/1", distance=None, force_threshold=None):
+    """测试 MoveRelative 命令 (支持力传感器反馈)
     
     Args:
         device_name: 设备名称 (sys/auxiliary/1 到 sys/auxiliary/5)
         distance: 相对移动距离 (mm)，如果为None则使用默认值
+        force_threshold: 力传感器阈值 (N)，达到此值时停止运动。如果为None则不使用力反馈
     """
     print(f"\n{'='*60}")
     print(f"测试辅助支撑设备 MoveRelative 命令")
     print(f"设备名称: {device_name}")
+    if force_threshold is not None:
+        print(f"力传感器阈值: {force_threshold:.2f} N")
     print(f"{'='*60}\n")
     
     # 默认移动距离（可根据实际需求修改）
@@ -126,6 +129,8 @@ def test_auxiliary_move_relative(device_name="sys/auxiliary/1", distance=None):
         poll_interval = 0.5
         
         last_position = initial_position
+        force_stop_triggered = False
+        
         while time.time() - start_time < timeout:
             try:
                 current_state = device.state()
@@ -144,7 +149,41 @@ def test_auxiliary_move_relative(device_name="sys/auxiliary/1", distance=None):
                 except:
                     position_str = "N/A"
                 
-                print(f"\r  时间: {elapsed:.1f}s | 状态: {current_state} | 位置: {position_str}", end="", flush=True)
+                # 读取力传感器值（如果指定了阈值）
+                force_str = ""
+                if force_threshold is not None:
+                    try:
+                        force_value = device.read_attribute("forceValue").value
+                        force_str = f" | 力值: {force_value:.2f} N"
+                        
+                        # 检查是否达到力阈值
+                        if force_value >= force_threshold and not force_stop_triggered:
+                            print(f"\n✓ 检测到力值达到阈值 ({force_value:.2f} N >= {force_threshold:.2f} N)，正在停止运动...")
+                            force_stop_triggered = True
+                            
+                            # 调用停止命令
+                            try:
+                                device.command_inout("Stop")
+                                print(f"✓ 停止命令已发送")
+                            except Exception as e:
+                                print(f"⚠ 停止命令发送失败: {e}")
+                            
+                            # 继续监控几个周期以确保设备停止
+                            for i in range(5):
+                                time.sleep(0.2)
+                                try:
+                                    state = device.state()
+                                    if state not in [tango.DevState.MOVING, tango.DevState.RUNNING]:
+                                        print(f"✓ 设备已停止 (状态: {state})")
+                                        break
+                                except:
+                                    pass
+                            break
+                    except Exception as e:
+                        if force_threshold is not None:
+                            force_str = f" | 力值: 读取失败"
+                
+                print(f"\r  时间: {elapsed:.1f}s | 状态: {current_state} | 位置: {position_str}{force_str}", end="", flush=True)
                 
                 if current_state not in [tango.DevState.MOVING, tango.DevState.RUNNING]:
                     print()
@@ -223,6 +262,11 @@ def test_auxiliary_move_relative(device_name="sys/auxiliary/1", distance=None):
         try:
             force = device.read_attribute("forceValue").value
             print(f"\n力传感器读数: {force:.2f} N")
+            if force_threshold is not None:
+                if force_stop_triggered:
+                    print(f"✓ 运动因力传感器阈值而停止 (力值: {force:.2f} N >= 阈值: {force_threshold:.2f} N)")
+                else:
+                    print(f"✓ 力值未达到阈值 (力值: {force:.2f} N < 阈值: {force_threshold:.2f} N)")
         except:
             pass
         
@@ -246,7 +290,7 @@ def main():
     """主函数"""
     default_device = "sys/auxiliary/1"
     
-    print(f"\n使用方法: python3 {sys.argv[0]} [设备名称] [距离]")
+    print(f"\n使用方法: python3 {sys.argv[0]} [设备名称] [距离] [力阈值(可选)]")
     print(f"")
     print(f"可用设备:")
     print(f"  sys/auxiliary/1 - 辅助支撑设备1 (AXIS-0)")
@@ -256,21 +300,24 @@ def main():
     print(f"  sys/auxiliary/5 - 辅助支撑设备5 (AXIS-4)")
     print(f"")
     print(f"示例:")
-    print(f"  python3 {sys.argv[0]}                    # 使用默认设备和默认距离 10mm")
-    print(f"  python3 {sys.argv[0]} sys/auxiliary/1    # 指定设备1，使用默认距离")
-    print(f"  python3 {sys.argv[0]} sys/auxiliary/2 5.0  # 设备2移动 5mm")
-    print(f"  python3 {sys.argv[0]} sys/auxiliary/3 -3.0 # 设备3反向移动 3mm")
+    print(f"  python3 {sys.argv[0]}                        # 使用默认设备和默认距离 10mm")
+    print(f"  python3 {sys.argv[0]} sys/auxiliary/1        # 指定设备1，使用默认距离")
+    print(f"  python3 {sys.argv[0]} sys/auxiliary/2 5.0    # 设备2移动 5mm")
+    print(f"  python3 {sys.argv[0]} sys/auxiliary/3 -3.0   # 设备3反向移动 3mm")
+    print(f"  python3 {sys.argv[0]} sys/auxiliary/1 10 50  # 设备1移动10mm，力阈值50N（达到50N时停止）")
     print()
     
     # 解析命令行参数
+    device_name = default_device
+    distance = None
+    force_threshold = None
+    
     if len(sys.argv) == 1:
         # 使用默认设备和默认距离
-        device_name = default_device
-        distance = None
+        pass
     elif len(sys.argv) == 2:
         # 指定设备，使用默认距离
         device_name = sys.argv[1]
-        distance = None
     elif len(sys.argv) == 3:
         # 指定设备和距离
         device_name = sys.argv[1]
@@ -279,12 +326,21 @@ def main():
         except ValueError:
             print("✗ 错误: 距离参数必须是数字")
             sys.exit(1)
+    elif len(sys.argv) == 4:
+        # 指定设备、距离和力阈值
+        device_name = sys.argv[1]
+        try:
+            distance = float(sys.argv[2])
+            force_threshold = float(sys.argv[3])
+        except ValueError:
+            print("✗ 错误: 距离和力阈值参数必须是数字")
+            sys.exit(1)
     else:
         print("✗ 错误: 参数数量不正确")
-        print("请提供 0-2 个参数")
+        print("请提供 0-3 个参数")
         sys.exit(1)
     
-    test_auxiliary_move_relative(device_name, distance)
+    test_auxiliary_move_relative(device_name, distance, force_threshold)
 
 
 if __name__ == "__main__":

@@ -789,10 +789,10 @@ class SwitchControlGroup(QGroupBox):
         
         # 根据CCD类型确定命令名称
         cmd_map = {
-            "upper_1x": "upperCCD1xSwitch",
-            "upper_10x": "upperCCD10xSwitch",
-            "lower_1x": "lowerCCD1xSwitch",
-            "lower_10x": "lowerCCD10xSwitch",
+            "upper_1x": "upperCCDSwitch",
+            "upper_10x": "upperCCDSwitch",
+            "lower_1x": "lowerCCDSwitch",
+            "lower_10x": "lowerCCDSwitch",
         }
         
         cmd_name = cmd_map.get(self.ccd_type)

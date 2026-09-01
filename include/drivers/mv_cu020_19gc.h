@@ -206,6 +206,15 @@ public:
     std::string getLatestImageBase64();
 
     /**
+     * @brief 抓取最新帧原始像素数据（16-bit灰度/Mono12/Mono16）
+     * @param out_buf   输出: 原始像素值数组（按行优先排列）
+     * @param out_width 输出: 图像宽度
+     * @param out_height 输出: 图像高度
+     * @return 成功返回true；失败时 out_buf 不改变
+     */
+    bool grabRawFrame(std::vector<uint16_t>& out_buf, long& out_width, long& out_height);
+
+    /**
      * @brief 获取错误信息
      * @return 错误信息字符串
      */

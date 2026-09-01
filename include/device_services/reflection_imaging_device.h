@@ -101,6 +101,14 @@ private:
     short camera_power_port_;         // cameraPowerPort - 相机供电端口号
     std::string camera_power_controller_; // cameraPowerController - 控制相机供电的运动控制器名称
     bool camera_power_enabled_;       // 相机电源状态
+
+    // CCD光源DA控制配置（雷赛模拟量输出，每台控制器2个DA口: 0/1，通道2为GND）
+    std::string upper_ccd_light_controller_;  // 上平台CCD光源DA控制器（sys/motion/2，通道0/1）
+    std::string lower_ccd_light_controller_;  // 下平台CCD光源DA控制器（sys/motion/3，通道0/1）
+    short upper_ccd_1x_light_da_channel_;   // 上1x光源DA通道（0）
+    short upper_ccd_10x_light_da_channel_;  // 上10x光源DA通道（1）
+    short lower_ccd_1x_light_da_channel_;   // 下1x光源DA通道（0）
+    short lower_ccd_10x_light_da_channel_;  // 下10x光源DA通道（1）
     
     // Cached Support Configuration
     int upper_support_axis_id_;
@@ -154,6 +162,10 @@ private:
     bool upper_ccd_1x_ring_light_on_;
     std::string upper_ccd_1x_image_url_;   // 最新图像URL
     std::string upper_ccd_1x_last_capture_time_;
+    std::vector<Tango::DevUShort> upper_ccd_1x_raw_buf_;   // 图像原始像素缓冲区(DevUShort)
+    long upper_ccd_1x_raw_width_{0};          // 当前 buffer 宽度
+    long upper_ccd_1x_raw_height_{0};         // 当前 buffer 高度
+    mutable std::mutex upper_ccd_1x_raw_mutex_;  // 保护 buffer 的互斥锁
     
     // 上10倍物镜CCD（近距离观察）
     std::string upper_ccd_10x_state_;
@@ -168,6 +180,10 @@ private:
     bool upper_ccd_10x_ring_light_on_;
     std::string upper_ccd_10x_image_url_;
     std::string upper_ccd_10x_last_capture_time_;
+    std::vector<Tango::DevUShort> upper_ccd_10x_raw_buf_;
+    long upper_ccd_10x_raw_width_{0};
+    long upper_ccd_10x_raw_height_{0};
+    mutable std::mutex upper_ccd_10x_raw_mutex_;
     
     // 下1倍物镜CCD（粗定位）
     std::string lower_ccd_1x_state_;
@@ -182,6 +198,10 @@ private:
     bool lower_ccd_1x_ring_light_on_;
     std::string lower_ccd_1x_image_url_;
     std::string lower_ccd_1x_last_capture_time_;
+    std::vector<Tango::DevUShort> lower_ccd_1x_raw_buf_;
+    long lower_ccd_1x_raw_width_{0};
+    long lower_ccd_1x_raw_height_{0};
+    mutable std::mutex lower_ccd_1x_raw_mutex_;
     
     // 下10倍物镜CCD（近距离观察）
     std::string lower_ccd_10x_state_;
@@ -196,9 +216,19 @@ private:
     bool lower_ccd_10x_ring_light_on_;
     std::string lower_ccd_10x_image_url_;
     std::string lower_ccd_10x_last_capture_time_;
+    std::vector<Tango::DevUShort> lower_ccd_10x_raw_buf_;
+    long lower_ccd_10x_raw_width_{0};
+    long lower_ccd_10x_raw_height_{0};
+    mutable std::mutex lower_ccd_10x_raw_mutex_;
     
     long image_capture_count_;
     bool auto_capture_enabled_;
+
+    // CCD光源电流缓存（mA）
+    double upper_ccd_1x_light_current_ma_;
+    double upper_ccd_10x_light_current_ma_;
+    double lower_ccd_1x_light_current_ma_;
+    double lower_ccd_10x_light_current_ma_;
 
     // 辅助支撑状态
     double upper_support_position_;
@@ -319,6 +349,7 @@ private:
     // Camera driver helpers
     void initialize_cameras();  // 初始化所有CCD相机驱动
     void shutdown_cameras();   // 关闭所有CCD相机驱动
+    bool set_ccd_light_current_ma(const std::string& cmd_name, const std::string& controller_name, short channel, double current_ma);
     
     // Power control methods (NEW)
     bool enable_driver_power();       // 启动驱动器电源
@@ -461,33 +492,51 @@ public:
     void synchronizedMove(const Tango::DevVarDoubleArray* params);  // [上X, 上Y, 上Z, 下X, 下Y, 下Z]
 
     // CCD Camera (四CCD相机：上下各两个，1倍和10倍物镜)
-    // 上1倍物镜CCD（粗定位）
-    void upperCCD1xSwitch(Tango::DevBoolean on);
+    // 上平台CCD总开关（1x+10x联动）
+    void upperCCDSwitch(Tango::DevBoolean on);
     void upperCCD1xRingLightSwitch(Tango::DevBoolean on);
     Tango::DevString captureUpperCCD1xImage();
     void setUpperCCD1xExposure(Tango::DevDouble exposure);
+    void setUpperCCD1xGain(Tango::DevDouble gain);
+    void setUpperCCD1xBrightness(Tango::DevDouble brightness);
+    void setUpperCCD1xContrast(Tango::DevDouble contrast);
+    void setUpperCCD1xLightCurrent(Tango::DevDouble current_ma);
     Tango::DevString getUpperCCD1xImage();  // 返回Base64编码
+    Tango::DevVarUShortArray* getUpperCCD1xRawImage();  // 返回原始 DevUShort 像素数组
     
     // 上10倍物镜CCD（近距离观察）
-    void upperCCD10xSwitch(Tango::DevBoolean on);
     void upperCCD10xRingLightSwitch(Tango::DevBoolean on);
     Tango::DevString captureUpperCCD10xImage();
     void setUpperCCD10xExposure(Tango::DevDouble exposure);
+    void setUpperCCD10xGain(Tango::DevDouble gain);
+    void setUpperCCD10xBrightness(Tango::DevDouble brightness);
+    void setUpperCCD10xContrast(Tango::DevDouble contrast);
+    void setUpperCCD10xLightCurrent(Tango::DevDouble current_ma);
     Tango::DevString getUpperCCD10xImage();  // 返回Base64编码
+    Tango::DevVarUShortArray* getUpperCCD10xRawImage();
     
-    // 下1倍物镜CCD（粗定位）
-    void lowerCCD1xSwitch(Tango::DevBoolean on);
+    // 下平台CCD总开关（1x+10x联动）
+    void lowerCCDSwitch(Tango::DevBoolean on);
     void lowerCCD1xRingLightSwitch(Tango::DevBoolean on);
     Tango::DevString captureLowerCCD1xImage();
     void setLowerCCD1xExposure(Tango::DevDouble exposure);
+    void setLowerCCD1xGain(Tango::DevDouble gain);
+    void setLowerCCD1xBrightness(Tango::DevDouble brightness);
+    void setLowerCCD1xContrast(Tango::DevDouble contrast);
+    void setLowerCCD1xLightCurrent(Tango::DevDouble current_ma);
     Tango::DevString getLowerCCD1xImage();  // 返回Base64编码
+    Tango::DevVarUShortArray* getLowerCCD1xRawImage();
     
     // 下10倍物镜CCD（近距离观察）
-    void lowerCCD10xSwitch(Tango::DevBoolean on);
     void lowerCCD10xRingLightSwitch(Tango::DevBoolean on);
     Tango::DevString captureLowerCCD10xImage();
     void setLowerCCD10xExposure(Tango::DevDouble exposure);
+    void setLowerCCD10xGain(Tango::DevDouble gain);
+    void setLowerCCD10xBrightness(Tango::DevDouble brightness);
+    void setLowerCCD10xContrast(Tango::DevDouble contrast);
+    void setLowerCCD10xLightCurrent(Tango::DevDouble current_ma);
     Tango::DevString getLowerCCD10xImage();  // 返回Base64编码
+    Tango::DevVarUShortArray* getLowerCCD10xRawImage();
     
     // 批量操作
     Tango::DevString captureAllImages();  // 同时抓取所有4个CCD图像
@@ -591,6 +640,7 @@ public:
     void write_upper_ccd_1x_contrast(Tango::WAttribute& attr);
     void read_upper_ccd_1x_image_url(Tango::Attribute& attr);
     void read_upper_ccd_1x_last_capture_time(Tango::Attribute& attr);
+    void read_upper_ccd_1x_raw_image(Tango::Attribute& attr);  // IMAGE DevUShort
     
     // 上10倍物镜CCD属性
     void read_upper_ccd_10x_state(Tango::Attribute& attr);
@@ -613,6 +663,7 @@ public:
     void write_upper_ccd_10x_contrast(Tango::WAttribute& attr);
     void read_upper_ccd_10x_image_url(Tango::Attribute& attr);
     void read_upper_ccd_10x_last_capture_time(Tango::Attribute& attr);
+    void read_upper_ccd_10x_raw_image(Tango::Attribute& attr);
     
     // 下1倍物镜CCD属性
     void read_lower_ccd_1x_state(Tango::Attribute& attr);
@@ -635,6 +686,7 @@ public:
     void write_lower_ccd_1x_contrast(Tango::WAttribute& attr);
     void read_lower_ccd_1x_image_url(Tango::Attribute& attr);
     void read_lower_ccd_1x_last_capture_time(Tango::Attribute& attr);
+    void read_lower_ccd_1x_raw_image(Tango::Attribute& attr);
     
     // 下10倍物镜CCD属性
     void read_lower_ccd_10x_state(Tango::Attribute& attr);
@@ -657,6 +709,7 @@ public:
     void write_lower_ccd_10x_contrast(Tango::WAttribute& attr);
     void read_lower_ccd_10x_image_url(Tango::Attribute& attr);
     void read_lower_ccd_10x_last_capture_time(Tango::Attribute& attr);
+    void read_lower_ccd_10x_raw_image(Tango::Attribute& attr);
     
     void read_image_capture_count(Tango::Attribute& attr);
     void read_auto_capture_enabled(Tango::Attribute& attr);

@@ -298,10 +298,10 @@ def ccd_switch(camera_id):
         on = data.get("on", True)
         
         cmd_map = {
-            "upperCCD1x": "upperCCD1xSwitch",
-            "upperCCD10x": "upperCCD10xSwitch",
-            "lowerCCD1x": "lowerCCD1xSwitch",
-            "lowerCCD10x": "lowerCCD10xSwitch",
+            "upperCCD1x": "upperCCDSwitch",
+            "upperCCD10x": "upperCCDSwitch",
+            "lowerCCD1x": "lowerCCDSwitch",
+            "lowerCCD10x": "lowerCCDSwitch",
         }
         
         cmd_name = cmd_map.get(camera_id)

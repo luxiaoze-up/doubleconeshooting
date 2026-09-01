@@ -136,6 +136,7 @@ public:
     void SetScrewPumpPower(Tango::DevBoolean state);
     void SetScrewPumpStartStop(Tango::DevBoolean state);
     void SetRootsPumpPower(Tango::DevBoolean state);
+    void SetRootsPumpStartStop(Tango::DevBoolean state);
     void SetMolecularPumpPower(const Tango::DevVarShortArray* argin);   // [index, state]
     void SetMolecularPumpStartStop(const Tango::DevVarShortArray* argin);
     
@@ -243,11 +244,22 @@ public:
     void read_hasUnacknowledgedAlarm(Tango::Attribute& attr);
     void read_latestAlarmJson(Tango::Attribute& attr);
 
+    // ----- 状态门控 -----
+    void check_state(const std::string& cmd_name);
+
 private:
     // ========================================================================
     // 内部成员变量
     // ========================================================================
     
+    // ----- 设备标识 -----
+    std::string bundle_no_;       // bundleNo - 束组编码
+    std::string laser_no_;        // laserNo - 子束编码
+    std::string system_no_;       // systemNo - 系统/分系统编码
+    std::string device_name_;     // deviceName - 设备名称
+    std::string device_id_;       // deviceID - 设备编号
+    int valve_timeout_ms_;        // 阀门操作超时（毫秒）
+
     // ----- PLC 通信 -----
     std::unique_ptr<Common::PLC::IPLCCommunication> plc_comm_;
     std::string plc_ip_;

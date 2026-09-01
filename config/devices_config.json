@@ -190,6 +190,12 @@
         "brakePowerController": "sys/motion/3",
         "cameraPowerPort": "1",
         "cameraPowerController": "sys/motion/3",
+        "upperCCDLightController": "sys/motion/2",
+        "lowerCCDLightController": "sys/motion/3",
+        "upperCCD1xLightDAChannel": "0",
+        "upperCCD10xLightDAChannel": "1",
+        "lowerCCD1xLightDAChannel": "0",
+        "lowerCCD10xLightDAChannel": "1",
         "upperPlatformEncoderPos": ["0.0", "0.0", "0.0"],
         "lowerPlatformEncoderPos": ["0.0", "0.0", "0.0"]
       }
@@ -380,11 +386,11 @@
         "systemNo": "0001",
         "deviceName": "真空系统",
         "deviceID": "VAC02",
-        "plc_ip": "192.168.1.100",
-        "plc_port": "4840",
-        "simulator_mode": "0",
-        "poll_interval_ms": "100",
-        "valve_timeout_ms": "5000"
+        "plcIp": "192.168.1.100",
+        "plcPort": "4840",
+        "simulatorMode": "0",
+        "pollIntervalMs": "100",
+        "valveTimeoutMs": "5000"
       }
     }
   },

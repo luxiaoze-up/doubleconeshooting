@@ -507,6 +507,39 @@ std::string MV_CU020_19GC::getLatestImageBase64() {
     return "base64_encoded_image_data_" + camera_id_;
 }
 
+bool MV_CU020_19GC::grabRawFrame(std::vector<uint16_t>& out_buf, long& out_width, long& out_height) {
+    std::lock_guard<std::mutex> lock(mutex_);
+
+    if (!checkInitialized() || state_ != CAMERA_READY) {
+        setError("Camera not ready for grabRawFrame");
+        return false;
+    }
+
+    // TODO: 调用 SDK 抓帧接口
+    // 示例（海康 MV SDK）:
+    //   MV_FRAME_OUT stFrame = {0};
+    //   int nRet = MV_CC_GetImageBuffer(camera_handle_, &stFrame, 1000);
+    //   if (MV_OK != nRet) { setError(...); return false; }
+    //   size_t n = (size_t)(stFrame.stFrameInfo.nWidth * stFrame.stFrameInfo.nHeight);
+    //   out_buf.resize(n);
+    //   // Mono16/Mono12Packed -> uint16
+    //   memcpy(out_buf.data(), stFrame.pBufAddr, n * sizeof(uint16_t));
+    //   out_width  = stFrame.stFrameInfo.nWidth;
+    //   out_height = stFrame.stFrameInfo.nHeight;
+    //   MV_CC_FreeImageBuffer(camera_handle_, &stFrame);
+    //   return true;
+
+    // 仿真：生成 width×height 的渐变图案
+    out_width  = width_;
+    out_height = height_;
+    size_t n   = (size_t)(out_width * out_height);
+    out_buf.resize(n);
+    for (size_t i = 0; i < n; ++i) {
+        out_buf[i] = static_cast<uint16_t>((i * 65535UL) / (n > 1 ? n - 1 : 1));
+    }
+    return true;
+}
+
 bool MV_CU020_19GC::applyParameters() {
     // 应用所有参数到硬件
     bool success = true;

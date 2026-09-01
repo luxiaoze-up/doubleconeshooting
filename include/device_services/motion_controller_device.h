@@ -13,7 +13,7 @@ namespace MotionController {
 
 // Maximum number of axes supported
 const int MAX_AXES = 8;
-const int MAX_AD_CHANNELS = 3;
+const int MAX_AD_CHANNELS = 2;
 const int MAX_IO_CHANNELS = 16;
 
 class MotionControllerDevice : public Tango::Device_4Impl {
