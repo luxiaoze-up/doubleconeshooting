@@ -8,7 +8,6 @@ LOCATIONS=(
     "/etc/tango/servers"
     "/usr/local/etc/tango/servers"
     "$HOME/.tango/servers"
-    "/mnt/d/00.My_workspace/DoubleConeShooting"
 )
 
 for loc in "${LOCATIONS[@]}"; do
@@ -28,4 +27,3 @@ if pgrep -f auxiliary_support_server > /dev/null; then
 else
     echo "Server is not running"
 fi
-

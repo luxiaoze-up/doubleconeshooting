@@ -8,7 +8,7 @@
 - 对读请求返回当前缓存值（默认 0），对写请求回显/确认
 - 记录所有访问的寄存器/线圈地址，方便后续反推“位置/状态/运动指令”对应的寄存器映射
 
-## 在 WSL2 下运行（推荐）
+## 在 Ubuntu 24.04 下运行
 
 1) 给 loopback 添加 3 个 IP（让进程能 bind 这三个地址）：
 
@@ -21,26 +21,26 @@ sudo ip addr add 192.168.1.13/32 dev lo
 2) 端口 502 是特权端口，需要 root（或者自行做端口转发/能力设置）：
 
 ```bash
-sudo python3 /mnt/d/00.My_workspace/DoubleConeShooting/tools/motion_controller_simulator/modbus_tcp_motion_controller_sim.py
+sudo python3 tools/motion_controller_simulator/modbus_tcp_motion_controller_sim.py
 ```
 
 也可以直接执行脚本（需要先赋予可执行权限）：
 
 ```bash
-chmod +x /mnt/d/00.My_workspace/DoubleConeShooting/tools/motion_controller_simulator/modbus_tcp_motion_controller_sim.py
-sudo /mnt/d/00.My_workspace/DoubleConeShooting/tools/motion_controller_simulator/modbus_tcp_motion_controller_sim.py
+chmod +x tools/motion_controller_simulator/modbus_tcp_motion_controller_sim.py
+sudo tools/motion_controller_simulator/modbus_tcp_motion_controller_sim.py
 ```
 
 如果你想把每一帧报文都打出来，增加 `--raw-log`：
 
 ```bash
-sudo python3 /mnt/d/00.My_workspace/DoubleConeShooting/tools/motion_controller_simulator/modbus_tcp_motion_controller_sim.py --raw-log
+sudo python3 tools/motion_controller_simulator/modbus_tcp_motion_controller_sim.py --raw-log
 ```
 
 如果你想预置寄存器/线圈初值，可以用 `--init`：
 
 ```bash
-sudo python3 /mnt/d/00.My_workspace/DoubleConeShooting/tools/motion_controller_simulator/modbus_tcp_motion_controller_sim.py --init /mnt/d/00.My_workspace/DoubleConeShooting/tools/motion_controller_simulator/sim_init.example.json
+sudo python3 tools/motion_controller_simulator/modbus_tcp_motion_controller_sim.py --init tools/motion_controller_simulator/sim_init.example.json
 ```
 
 日志默认输出到：`tools/motion_controller_simulator/sim.log`。
@@ -63,14 +63,14 @@ sudo python3 /mnt/d/00.My_workspace/DoubleConeShooting/tools/motion_controller_s
 然后用这个脚本快速汇总“最常被读/写的寄存器段”（通常就是实际控制命令所在）：
 
 ```bash
-python3 /mnt/d/00.My_workspace/DoubleConeShooting/scripts/tools/analyze_motion_controller_sim_log.py --log /mnt/d/00.My_workspace/DoubleConeShooting/tools/motion_controller_simulator/sim.log
+python3 scripts/tools/analyze_motion_controller_sim_log.py --log tools/motion_controller_simulator/sim.log
 ```
 
 ## 常见问题：sim.log 没有内容
 
 这意味着 simulator **没有收到连接** 或者 **日志写到了别的路径**。
 
-按顺序检查（WSL）：
+按顺序检查：
 
 1) lo 上是否真的加了 192.168.1.11/12/13：
 
@@ -87,5 +87,5 @@ ss -ltnp | grep :502
 3) 用 LTSMC 冒烟测试强制发起连接（不依赖 GUI）：
 
 ```bash
-python3 /mnt/d/00.My_workspace/DoubleConeShooting/scripts/tools/ltsmc_smoke_test_wsl.py
+python3 scripts/tools/ltsmc_smoke_test.py
 ```

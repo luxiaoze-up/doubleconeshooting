@@ -5,8 +5,6 @@ Motion Controller Communication Module (SMC)
 """
 
 import ctypes
-import os
-import sys
 from pathlib import Path
 from typing import Optional, Tuple
 
@@ -16,154 +14,30 @@ class SMCController:
     
     def __init__(self):
         self.smc = None
-        self.is_windows = os.name == 'nt'
         self.card_id = 0
         self.connected = False
         self.dll_path = None
-        # 延迟加载：不在初始化时加载，而是在连接时加载
-        # self._load_library()
-    
-    def _find_lib_directory(self):
-        """查找lib目录（支持打包和开发环境）"""
-        # 检查是否在PyInstaller打包环境中
-        if getattr(sys, 'frozen', False):
-            # 打包环境：从exe所在目录查找
-            # sys.executable 指向exe文件路径
-            exe_dir = Path(sys.executable).parent
-            # 尝试多个可能的路径
-            possible_paths = [
-                exe_dir / "lib",  # exe同目录下的lib
-                exe_dir.parent / "lib",  # 上一级目录的lib
-            ]
-        else:
-            # 开发环境：从项目根目录查找
-            workspace_root = Path(__file__).parent.parent.parent.parent
-            possible_paths = [
-                workspace_root / "lib",
-            ]
-        
-        # 查找存在的lib目录
-        for lib_dir in possible_paths:
-            dll_path = lib_dir / "LTSMC.dll"
-            if dll_path.exists():
-                return dll_path
-        
-        # 如果都没找到，返回第一个可能的路径（用于错误提示）
-        return possible_paths[0] / "LTSMC.dll"
     
     def _load_library(self):
-        """加载SMC库"""
-        import platform
-        
-        # 使用新的查找方法
-        dll_path = self._find_lib_directory()
-        self.dll_path = dll_path
-        
-        if self.is_windows:
-            
-            if not dll_path.exists():
-                # 友好的错误信息
-                if getattr(sys, 'frozen', False):
-                    exe_dir = Path(sys.executable).parent
-                    search_paths = [
-                        exe_dir / 'lib' / 'LTSMC.dll',
-                        exe_dir.parent / 'lib' / 'LTSMC.dll'
-                    ]
-                else:
-                    workspace_root = Path(__file__).parent.parent.parent.parent
-                    search_paths = [workspace_root / 'lib' / 'LTSMC.dll']
-                
-                error_msg = (
-                    "未找到运动控制器驱动文件\n\n"
-                    "程序需要 LTSMC.dll 文件才能与运动控制器通信。\n\n"
-                    "请确保该文件位于以下位置之一：\n"
-                )
-                for path in search_paths:
-                    error_msg += f"  • {path}\n"
-                error_msg += (
-                    "\n解决方案：\n"
-                    "1. 检查 lib 文件夹是否存在\n"
-                    "2. 确认 LTSMC.dll 文件是否在 lib 文件夹中\n"
-                    "3. 如果文件缺失，请从安装包中复制该文件"
-                )
-                raise FileNotFoundError(error_msg)
-            
-            # 检查文件是否可读
-            if not os.access(dll_path, os.R_OK):
-                raise PermissionError(
-                    "无法访问驱动文件\n\n"
-                    f"程序无法读取文件：{dll_path}\n\n"
-                    "可能的原因：\n"
-                    "• 文件被其他程序占用\n"
-                    "• 文件权限不足\n"
-                    "• 文件损坏\n\n"
-                    "解决方案：\n"
-                    "1. 关闭可能占用该文件的其他程序\n"
-                    "2. 检查文件权限设置\n"
-                    "3. 尝试以管理员身份运行程序"
-                )
-            
-            try:
-                # 尝试加载DLL
-                self.smc = ctypes.WinDLL(str(dll_path))
-            except OSError as e:
-                error_code = e.winerror if hasattr(e, 'winerror') else None
-                if error_code == 193:
-                    # WinError 193: %1 不是有效的Win32应用程序
-                    python_arch = platform.architecture()[0]
-                    raise OSError(
-                        "无法加载运动控制器驱动\n\n"
-                        "驱动文件与当前系统不兼容。\n\n"
-                        "可能的原因：\n"
-                        "• 驱动文件版本不匹配（32位/64位）\n"
-                        "• 缺少必要的系统运行库\n"
-                        "• 驱动文件损坏\n\n"
-                        "解决方案：\n"
-                        "1. 确认驱动文件版本与程序版本匹配\n"
-                        "2. 安装 Microsoft Visual C++ Redistributable 运行库\n"
-                        "   （可从微软官网下载）\n"
-                        "3. 重新安装程序或从备份恢复驱动文件\n\n"
-                        f"当前系统架构：{python_arch}"
-                    ) from e
-                else:
-                    raise OSError(
-                        "无法加载运动控制器驱动\n\n"
-                        f"程序在加载驱动文件时遇到错误。\n\n"
-                        "可能的原因：\n"
-                        "• 驱动文件损坏\n"
-                        "• 系统缺少必要的运行库\n"
-                        "• 文件被占用或权限不足\n\n"
-                        "建议操作：\n"
-                        "1. 重新安装程序\n"
-                        "2. 安装 Microsoft Visual C++ Redistributable\n"
-                        "3. 检查系统日志获取更多信息\n\n"
-                        f"错误代码：{error_code}"
-                    ) from e
-        else:
-            # Linux环境：查找so文件
-            if getattr(sys, 'frozen', False):
-                exe_dir = Path(sys.executable).parent
-                so_path = exe_dir / "lib" / "libLTSMC.so"
-            else:
-                workspace_root = Path(__file__).parent.parent.parent.parent
-                so_path = workspace_root / "lib" / "libLTSMC.so"
-            
-            self.dll_path = so_path
-            
-            if not so_path.exists():
-                raise FileNotFoundError(
-                    f"SMC库未找到: {so_path}\n"
-                    f"请确保libLTSMC.so文件存在于lib目录中。"
-                )
-            
-            try:
-                self.smc = ctypes.CDLL(str(so_path))
-            except OSError as e:
-                raise OSError(
-                    f"无法加载SMC库: {so_path}\n"
-                    f"错误: {e}\n"
-                    f"可能的原因: 库文件损坏或依赖缺失"
-                ) from e
+        """从项目 lib 目录加载 Ubuntu x86-64 版 LTSMC 共享库。"""
+        workspace_root = Path(__file__).resolve().parents[3]
+        so_path = workspace_root / "lib" / "libLTSMC.so"
+        self.dll_path = so_path
+
+        if not so_path.exists():
+            raise FileNotFoundError(
+                f"SMC库未找到: {so_path}\n"
+                "请确认 Ubuntu x86-64 版 libLTSMC.so 位于项目 lib 目录。"
+            )
+
+        try:
+            self.smc = ctypes.CDLL(str(so_path))
+        except OSError as e:
+            raise OSError(
+                f"无法加载SMC库: {so_path}\n"
+                f"错误: {e}\n"
+                "请使用 ldd 检查共享库依赖和系统架构。"
+            ) from e
         
         # 定义函数签名
         self._define_function_signatures()
@@ -267,8 +141,8 @@ class SMCController:
             return True
         except Exception as e:
             error_msg = str(e)
-            # 如果是DLL加载错误，抛出更详细的异常
-            if "WinError 193" in error_msg or "无法加载SMC库" in error_msg:
+            # 共享库加载错误需要保留详细原因。
+            if "无法加载SMC库" in error_msg or "SMC库未找到" in error_msg:
                 raise RuntimeError(error_msg) from e
             # 其他连接异常静默处理
             self.connected = False

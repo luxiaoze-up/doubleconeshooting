@@ -33,7 +33,7 @@ VACUUM_CHAMBER_THEME = f"""
 QMainWindow, QWidget {{
     background-color: {COLORS["background"]};
     color: {COLORS["text_primary"]};
-    font-family: "Segoe UI Emoji", "Microsoft YaHei UI", "Segoe UI", "PingFang SC", sans-serif;
+    font-family: "Noto Sans CJK SC", "Noto Sans Symbols 2", "Ubuntu", sans-serif;
     font-size: {BASE_FONT_SIZE}px;
 }}
 

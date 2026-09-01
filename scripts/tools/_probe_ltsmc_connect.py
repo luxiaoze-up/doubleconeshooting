@@ -6,11 +6,12 @@ from pathlib import Path
 
 
 def main() -> None:
-    dll_path = Path(r"d:\00.My_workspace\DoubleConeShooting\lib\LTSMC.dll")
-    if not dll_path.exists():
-        raise SystemExit(f"LTSMC.dll not found: {dll_path}")
+    project_root = Path(__file__).resolve().parents[2]
+    so_path = project_root / "lib" / "libLTSMC.so"
+    if not so_path.exists():
+        raise SystemExit(f"libLTSMC.so not found: {so_path}")
 
-    smc = ctypes.WinDLL(str(dll_path))
+    smc = ctypes.CDLL(str(so_path))
 
     smc.smc_set_connect_timeout.argtypes = [ctypes.c_uint32]
     smc.smc_set_connect_timeout.restype = ctypes.c_int16
@@ -30,7 +31,7 @@ def main() -> None:
     dt = time.time() - t0
     print("smc_board_init ret:", ret, "elapsed_s:", round(dt, 3))
 
-    # keep process around briefly so netstat/Get-NetTCPConnection can observe state
+    # Keep the process around briefly so ss can observe the connection state.
     time.sleep(5)
 
 

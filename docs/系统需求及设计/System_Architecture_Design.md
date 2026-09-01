@@ -161,7 +161,7 @@ DoubleConeShooting/
 ├── include/                 # 头文件
 ├── config/                  # 配置文件
 ├── scripts/                 # 启动脚本与数据库注册脚本
-├── build-linux/             # Linux构建输出 (9个可执行文件)
+├── build/                   # Ubuntu 24.04 构建输出
 └── docs/                    # 设计文档
 ```
 
@@ -170,12 +170,13 @@ DoubleConeShooting/
 ### 8.1 编译
 ```bash
 cd DoubleConeShooting
-./wsl_build.sh
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake --build build --parallel
 ```
 
 ### 8.2 运行测试
 ```bash
-cd build-linux
+cd build
 ./test_devices   # 28个测试用例
 ```
 

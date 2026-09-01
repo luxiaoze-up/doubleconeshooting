@@ -59,7 +59,7 @@ class TwinDeviceItem(QGraphicsItem):
         # 设备名称标签 (下方)
         self.lbl_name = QGraphicsTextItem(self.name, self)
         self.lbl_name.setDefaultTextColor(Qt.white)
-        self.lbl_name.setFont(QFont("Microsoft YaHei", 8))
+        self.lbl_name.setFont(QFont("Noto Sans CJK SC", 8))
         # 居中对齐处理
         name_w = self.lbl_name.boundingRect().width()
         self.lbl_name.setPos(x + (w - name_w) / 2, y + h + 2)
@@ -67,7 +67,7 @@ class TwinDeviceItem(QGraphicsItem):
         # 状态标签 (右侧)
         self.lbl_status = QGraphicsTextItem("关闭", self)
         self.lbl_status.setDefaultTextColor(QColor("#888"))
-        self.lbl_status.setFont(QFont("Microsoft YaHei", 7))
+        self.lbl_status.setFont(QFont("Noto Sans CJK SC", 7))
         self.lbl_status.setPos(x + w + 2, y - 5)
         
         # 频率标签 (右侧下方, 仅泵)
@@ -75,7 +75,7 @@ class TwinDeviceItem(QGraphicsItem):
         if "pump" in dev_type and "valve" not in dev_type:
             self.lbl_hz = QGraphicsTextItem("0Hz", self)
             self.lbl_hz.setDefaultTextColor(QColor("#00E5FF"))
-            self.lbl_hz.setFont(QFont("Microsoft YaHei", 7))
+            self.lbl_hz.setFont(QFont("Noto Sans CJK SC", 7))
             self.lbl_hz.setPos(x + w + 2, y + 8)
             
     def boundingRect(self):
@@ -904,7 +904,7 @@ class DigitalTwinPage(QWidget):
         
         text = self._scene.addText("真空腔室")
         text.setDefaultTextColor(Qt.white)
-        text.setFont(QFont("Microsoft YaHei", 12, QFont.Bold))
+        text.setFont(QFont("Noto Sans CJK SC", 12, QFont.Bold))
         text.setPos(470, 155)
         
         # =====================================================================
@@ -1073,7 +1073,7 @@ class DigitalTwinPage(QWidget):
             # 文字（在颜色块右侧）
             lbl = self._scene.addText(text)
             lbl.setDefaultTextColor(QColor(COLORS['text_secondary']))
-            lbl.setFont(QFont("Microsoft YaHei", 8))
+            lbl.setFont(QFont("Noto Sans CJK SC", 8))
             lbl.setPos(x + 16, offset_y - 1)
             
             offset_y += item_height
@@ -1081,7 +1081,7 @@ class DigitalTwinPage(QWidget):
         # 提示文字（在图例下方）
         hint = self._scene.addText("单击设备弹出菜单 / 双击切换状态")
         hint.setDefaultTextColor(QColor(COLORS['text_secondary']))
-        hint.setFont(QFont("Microsoft YaHei", 7))
+        hint.setFont(QFont("Noto Sans CJK SC", 7))
         # 计算提示文字的位置，使其在图例项下方居中
         hint_rect = hint.boundingRect()
         hint_x = x - 10 + (legend_width - hint_rect.width()) / 2  # 居中
@@ -1118,7 +1118,7 @@ class DigitalTwinPage(QWidget):
         # 名称（圆形右侧）
         name_text = self._scene.addText(name)
         name_text.setDefaultTextColor(QColor(COLORS['text_secondary']))
-        name_text.setFont(QFont("Microsoft YaHei", 8))
+        name_text.setFont(QFont("Noto Sans CJK SC", 8))
         name_text.setPos(x + radius * 2 + 5, y - 2)
         
         # 数值（名称下方）
@@ -1132,7 +1132,7 @@ class DigitalTwinPage(QWidget):
         """添加文本"""
         t = self._scene.addText(text)
         t.setDefaultTextColor(QColor(color))
-        t.setFont(QFont("Microsoft YaHei", 9))
+        t.setFont(QFont("Noto Sans CJK SC", 9))
         t.setPos(x, y)
         
     def _add_water_status(self, x, y, name, attr_name):
@@ -1146,7 +1146,7 @@ class DigitalTwinPage(QWidget):
         # 名称标签
         label = self._scene.addText(name)
         label.setDefaultTextColor(QColor("#4FC3F7"))
-        label.setFont(QFont("Microsoft YaHei", 8))
+        label.setFont(QFont("Noto Sans CJK SC", 8))
         label.setPos(x + 14, y - 2)
         
         # 存储引用以便更新状态
@@ -1163,7 +1163,7 @@ class DigitalTwinPage(QWidget):
         # 标题
         title = self._scene.addText("水路/气路")
         title.setDefaultTextColor(QColor(COLORS['text_secondary']))
-        title.setFont(QFont("Microsoft YaHei", 10, QFont.Bold))
+        title.setFont(QFont("Noto Sans CJK SC", 10, QFont.Bold))
         title.setPos(x + 15, y + 5)
         
         # 水路状态 (4路)
@@ -1174,7 +1174,7 @@ class DigitalTwinPage(QWidget):
             # 水路名称
             name_text = self._scene.addText(f"水路{i}")
             name_text.setDefaultTextColor(QColor(COLORS['text_secondary']))
-            name_text.setFont(QFont("Microsoft YaHei", 9))
+            name_text.setFont(QFont("Noto Sans CJK SC", 9))
             name_text.setPos(x + 10, row_y)
             
             # 状态指示 (圆形)
@@ -1187,7 +1187,7 @@ class DigitalTwinPage(QWidget):
             # 状态文字
             status_text = self._scene.addText("有流")
             status_text.setDefaultTextColor(QColor(COLORS['success']))
-            status_text.setFont(QFont("Microsoft YaHei", 8))
+            status_text.setFont(QFont("Noto Sans CJK SC", 8))
             status_text.setPos(x + 92, row_y)
             self._water_scene_items.append(status_text)
         
@@ -1201,7 +1201,7 @@ class DigitalTwinPage(QWidget):
         air_y = sep_y + 5
         air_name = self._scene.addText("气源")
         air_name.setDefaultTextColor(QColor(COLORS['text_secondary']))
-        air_name.setFont(QFont("Microsoft YaHei", 9))
+        air_name.setFont(QFont("Noto Sans CJK SC", 9))
         air_name.setPos(x + 10, air_y)
         
         self._air_scene_indicator = QGraphicsEllipseItem(x + 75, air_y + 5, 12, 12)
@@ -1211,7 +1211,7 @@ class DigitalTwinPage(QWidget):
         
         self._air_scene_status = self._scene.addText("正常")
         self._air_scene_status.setDefaultTextColor(QColor(COLORS['success']))
-        self._air_scene_status.setFont(QFont("Microsoft YaHei", 8))
+        self._air_scene_status.setFont(QFont("Noto Sans CJK SC", 8))
         self._air_scene_status.setPos(x + 92, air_y)
         
     def _draw_line(self, x1, y1, x2, y2):
@@ -1626,7 +1626,7 @@ class DigitalTwinPage(QWidget):
         return True
 
     def _show_centered_message(self, icon_type, title, text, buttons=QMessageBox.Ok) -> int:
-        """确保弹出框在主窗口中心且不会被主窗口盖住（Windows Z-order 兼容）"""
+        """在主窗口中心显示应用模态对话框。"""
         main_win = self.window()
 
         # 关键：必须把主窗口作为 parent/owner，才能保证点主窗口不会把对话框压到后面
@@ -1639,9 +1639,6 @@ class DigitalTwinPage(QWidget):
         # 关键：应用模态，阻止与主窗口交互
         msg_box.setWindowModality(Qt.ApplicationModal)
         msg_box.setModal(True)
-
-        # Windows 下避免被主窗口“抢前台”盖住：强制置顶
-        msg_box.setWindowFlags(msg_box.windowFlags() | Qt.WindowStaysOnTopHint)
 
         # 额外保险：弹窗存在时吞掉主窗口的鼠标/键盘事件
         class _Blocker(QObject):

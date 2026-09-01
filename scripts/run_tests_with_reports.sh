@@ -31,7 +31,7 @@ echo "开始运行测试并生成报告..."
 echo "使用命令: $PYTEST_CMD"
 echo ""
 
-$PYTEST_CMD tests/ \
+$PYTEST_CMD scripts/unit_test/ \
     --html=reports/report.html \
     --self-contained-html \
     --cov=. \
@@ -58,4 +58,3 @@ fi
 echo "=========================================="
 
 exit $TEST_RESULT
-

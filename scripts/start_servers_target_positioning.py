@@ -66,10 +66,7 @@ def start_device_servers():
     # 阶段1：并行启动所有服务器（不等待）
     print("阶段1: 并行启动设备服务器...")
     for server in DEVICE_SERVERS:
-        # 优先尝试 build-linux (WSL/Linux)，然后尝试 build (Windows)
-        exe_path = os.path.join(base_path, "build-linux", server['executable'])
-        if not os.path.exists(exe_path):
-            exe_path = os.path.join(base_path, "build", server['executable'])
+        exe_path = os.path.join(base_path, "build", server['executable'])
         
         # 检查可执行文件是否存在
         if not os.path.exists(exe_path):
@@ -84,14 +81,9 @@ def start_device_servers():
             log_file_path = os.path.join(log_dir, f"{server['name'].lower()}.log")
             log_file = open(log_file_path, "w")
             
-            # 在 Linux/WSL 下使用 stdbuf 禁用缓冲 + tee
-            if sys.platform != 'win32':
-                tee_cmd = f"stdbuf -oL -eL {' '.join(cmd)} 2>&1 | tee -a {log_file_path}"
-                process = subprocess.Popen(tee_cmd, shell=True, cwd=base_path)
-            else:
-                process = subprocess.Popen(
-                    cmd, cwd=base_path, stdout=log_file, stderr=subprocess.STDOUT
-                )
+            # Ubuntu 下使用 stdbuf 禁用缓冲并把输出同步写入日志。
+            tee_cmd = f"stdbuf -oL -eL {' '.join(cmd)} 2>&1 | tee -a {log_file_path}"
+            process = subprocess.Popen(tee_cmd, shell=True, cwd=base_path)
             
             processes.append({
                 'process': process,

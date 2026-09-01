@@ -72,14 +72,14 @@ echo ""
 # 如果指定了--html或--cov，添加到REPORT_OPTS
 if [[ "$*" == *"--html"* ]] || [[ "$*" == *"--cov"* ]]; then
     # 用户已经指定了报告选项，使用用户指定的
-    $PYTEST_CMD tests/ \
+    $PYTEST_CMD scripts/unit_test/ \
         $TEST_OPTS \
         --tb=short \
         --color=yes \
         "$@"
 else
     # 使用脚本默认的报告选项
-    $PYTEST_CMD tests/ \
+    $PYTEST_CMD scripts/unit_test/ \
         $TEST_OPTS \
         $REPORT_OPTS \
         --tb=short \
@@ -98,4 +98,3 @@ fi
 echo "=========================================="
 
 exit $TEST_RESULT
-

@@ -6,7 +6,6 @@
 
 import sys
 import os
-import ctypes
 from datetime import datetime
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
@@ -37,10 +36,10 @@ def get_unicode_font(size: int = 9) -> QFont:
     """
     # 按优先级尝试支持 Unicode 符号的字体
     font_families = [
-        "Segoe UI Symbol",      # Windows 10+ 自带，支持常用符号
-        "Arial Unicode MS",     # 支持大量 Unicode 字符
-        "Segoe UI",             # Windows 标准字体，部分支持
-        "Microsoft YaHei",      # 中文字体，部分支持
+        "Noto Sans Symbols 2",
+        "Noto Sans CJK SC",
+        "DejaVu Sans",
+        "Ubuntu",
     ]
     
     for family in font_families:
@@ -187,7 +186,7 @@ class VacuumSystemMainWindow(QMainWindow):
         
         # 标题
         title = QLabel("真空系统控制台")
-        title.setFont(QFont("Microsoft YaHei", 18, QFont.Bold))
+        title.setFont(QFont("Noto Sans CJK SC", 18, QFont.Bold))
         title.setStyleSheet(f"color: {COLORS['primary_light']};")
         layout.addWidget(title)
         
@@ -362,21 +361,7 @@ def main():
     parser.add_argument("--direct", action="store_true", help="直接连接PLC（不通过Tango）")
     args = parser.parse_args()
     
-    # ---------------------------------------------------------------------
-    # High DPI / 缩放兼容（exe 环境 vs python 运行时的 DPI awareness 可能不同）
-    # 在创建 QApplication 前设置，避免 exe 下控件比例失调/字体异常缩放。
-    # ---------------------------------------------------------------------
-    try:
-        # Per-monitor DPI aware（Win10+）
-        ctypes.windll.shcore.SetProcessDpiAwareness(2)
-    except Exception:
-        try:
-            # 旧接口兜底
-            ctypes.windll.user32.SetProcessDPIAware()
-        except Exception:
-            pass
-
-    # Qt 高 DPI 支持
+    # Qt 高 DPI 支持（必须在 QApplication 创建前设置）。
     QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
     QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     try:
@@ -386,9 +371,6 @@ def main():
     except Exception:
         pass
 
-    # Windows 下原生对话框有概率出现 Z-order 异常（被主窗口盖住/点击后跑到后面）
-    # 强制使用 Qt 自绘对话框，确保模态/置顶行为可控。
-    QApplication.setAttribute(Qt.AA_DontUseNativeDialogs, True)
     app = QApplication(sys.argv)
     
     # 设置应用信息
@@ -396,12 +378,10 @@ def main():
     app.setOrganizationName("DoubleConeShooting")
     
     # ---------------------------------------------------------------------
-    # 设置应用程序默认字体，确保打包后字体一致
+    # 设置 Ubuntu 桌面的默认字体。
     # ---------------------------------------------------------------------
     default_font = QFont()
-    # 优先使用支持 Unicode 符号的字体，确保图标正确显示
-    # Segoe UI Symbol 和 Arial Unicode MS 都支持常用 Unicode 符号
-    font_families = ["Segoe UI", "Segoe UI Symbol", "Microsoft YaHei", "Arial Unicode MS", "SimHei", "Arial", "Sans-Serif"]
+    font_families = ["Noto Sans CJK SC", "Noto Sans Symbols 2", "Ubuntu", "DejaVu Sans", "Sans Serif"]
     for family in font_families:
         default_font.setFamily(family)
         if default_font.exactMatch() or QFont(family).exactMatch():

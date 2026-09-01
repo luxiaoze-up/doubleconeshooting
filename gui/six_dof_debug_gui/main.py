@@ -3,8 +3,7 @@
 Six DOF Robot Debug GUI - Entry Point
 
 重要：PyQt5 要求 QApplication 必须在任何 QWidget 之前创建。
-在 PyInstaller 打包环境中，模块加载顺序可能导致问题。
-此入口文件确保正确的初始化顺序。
+此入口文件确保 Ubuntu 运行环境中的初始化顺序正确。
 """
 
 import sys
@@ -14,27 +13,9 @@ from pathlib import Path
 
 
 def setup_paths():
-    """设置Python路径（支持打包和开发环境）"""
-    # 检查是否在PyInstaller打包环境中
-    if getattr(sys, 'frozen', False):
-        # 打包环境：从exe所在目录确定路径
-        exe_dir = Path(sys.executable).parent
-        # PyInstaller会在exe同目录创建_internal文件夹
-        if (exe_dir / "_internal").exists():
-            # onedir模式：exe在SixDofDebugGUI目录下
-            app_dir = exe_dir
-            project_root = exe_dir.parent
-        else:
-            app_dir = exe_dir
-            project_root = exe_dir
-        
-        # 添加应用目录到Python路径（用于导入打包的模块）
-        if str(app_dir) not in sys.path:
-            sys.path.insert(0, str(app_dir))
-    else:
-        # 开发环境：从当前文件所在目录确定路径
-        current_dir = Path(__file__).parent
-        project_root = current_dir.parent.parent
+    """把项目根目录加入 Python 模块搜索路径。"""
+    current_dir = Path(__file__).resolve().parent
+    project_root = current_dir.parent.parent
     
     # 添加项目根目录到Python路径
     if str(project_root) not in sys.path:
@@ -84,14 +65,8 @@ def run_app():
     
     # 第2步：现在可以安全地导入 QWidget 相关模块
     from PyQt5.QtWidgets import QMessageBox
-    from PyQt5.QtGui import QIcon
-    
     # 第3步：导入主窗口（这会导入其他 widget 模块）
-    try:
-        from gui.six_dof_debug_gui.main_window import SixDofDebugMainWindow
-    except ImportError:
-        # 如果相对导入失败，尝试直接导入（打包环境）
-        from main_window import SixDofDebugMainWindow
+    from gui.six_dof_debug_gui.main_window import SixDofDebugMainWindow
     
     # 第4步：创建并显示主窗口
     try:
@@ -115,9 +90,7 @@ def run_app():
             "2. 尝试重新启动程序\n"
             "3. 如果问题持续，请联系技术支持"
         )
-        detail_msg = f"技术详情：{str(e)}"
-        if not getattr(sys, 'frozen', False):
-            detail_msg += f"\n\n{traceback.format_exc()}"
+        detail_msg = f"技术详情：{str(e)}\n\n{traceback.format_exc()}"
         
         QMessageBox.critical(None, "启动失败", f"{user_msg}\n\n{detail_msg}")
         sys.exit(1)
@@ -151,9 +124,7 @@ def main():
             "2. 重新安装程序\n"
             "3. 联系技术支持获取帮助"
         )
-        detail_msg = f"缺少模块：{str(e)}"
-        if not getattr(sys, 'frozen', False):
-            detail_msg += f"\n\n{traceback.format_exc()}"
+        detail_msg = f"缺少模块：{str(e)}\n\n{traceback.format_exc()}"
         
         # 尝试显示错误对话框
         try:
@@ -164,8 +135,6 @@ def main():
             # 如果无法显示对话框，输出到控制台
             print(f"{user_msg}\n\n{detail_msg}")
         
-        if not getattr(sys, 'frozen', False):
-            input("\n按Enter键退出...")
         sys.exit(1)
         
     except Exception as e:
@@ -178,9 +147,7 @@ def main():
             "2. 检查系统是否满足运行要求\n"
             "3. 如果问题持续，请联系技术支持"
         )
-        detail_msg = f"错误信息：{str(e)}"
-        if not getattr(sys, 'frozen', False):
-            detail_msg += f"\n\n{traceback.format_exc()}"
+        detail_msg = f"错误信息：{str(e)}\n\n{traceback.format_exc()}"
         
         # 尝试显示错误对话框
         try:
@@ -191,8 +158,6 @@ def main():
             # 如果无法显示对话框，输出到控制台
             print(f"{user_msg}\n\n{detail_msg}")
         
-        if not getattr(sys, 'frozen', False):
-            input("\n按Enter键退出...")
         sys.exit(1)
 
 

@@ -8,40 +8,17 @@
 #include <sstream>
 #include <string>
 
-#ifdef _WIN32
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <windows.h>
-#pragma comment(lib, "ws2_32.lib")
-#else
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
-#endif
 
 namespace Common {
 
 namespace {
-#ifdef _WIN32
-bool ensure_winsock() {
-    static std::once_flag once;
-    static bool init_ok = false;
-    std::call_once(once, []() {
-        WSADATA wsa_data;
-        init_ok = (WSAStartup(MAKEWORD(2, 2), &wsa_data) == 0);
-    });
-    return init_ok;
-}
-#endif
-
 void sleep_ms(int ms) {
-#ifdef _WIN32
-    Sleep(static_cast<DWORD>(ms));
-#else
     usleep(ms * 1000);
-#endif
 }
 
 constexpr uint8_t kFrameHead = 0x7E;
@@ -83,19 +60,7 @@ std::string EncoderAcquisitionClient::last_error() const {
 }
 
 bool EncoderAcquisitionClient::connect_socket() {
-#ifdef _WIN32
-    if (!ensure_winsock()) {
-        std::lock_guard<std::mutex> lock(state_mutex_);
-        last_error_ = "WSAStartup failed";
-        return false;
-    }
-#endif
-
-#ifdef _WIN32
-    socket_fd_ = static_cast<int>(socket(AF_INET, SOCK_STREAM, IPPROTO_TCP));
-#else
     socket_fd_ = static_cast<int>(socket(AF_INET, SOCK_STREAM, 0));
-#endif
     if (socket_fd_ < 0) {
         std::lock_guard<std::mutex> lock(state_mutex_);
         last_error_ = "socket() failed";
@@ -107,16 +72,11 @@ bool EncoderAcquisitionClient::connect_socket() {
     addr.sin_port = htons(static_cast<uint16_t>(port_));
     addr.sin_addr.s_addr = inet_addr(ip_.c_str());
 
-    // Set recv timeout
-#ifdef _WIN32
-    DWORD timeout = kRecvTimeoutMs;
-    setsockopt(socket_fd_, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<const char *>(&timeout), sizeof(timeout));
-#else
+    // Set receive timeout.
     timeval tv {};
     tv.tv_sec = kRecvTimeoutMs / 1000;
     tv.tv_usec = (kRecvTimeoutMs % 1000) * 1000;
     setsockopt(socket_fd_, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
-#endif
 
     if (connect(socket_fd_, reinterpret_cast<sockaddr *>(&addr), sizeof(addr)) != 0) {
         std::lock_guard<std::mutex> lock(state_mutex_);
@@ -132,11 +92,7 @@ bool EncoderAcquisitionClient::connect_socket() {
 void EncoderAcquisitionClient::close_socket() {
     connected_ = false;
     if (socket_fd_ >= 0) {
-#ifdef _WIN32
-        closesocket(socket_fd_);
-#else
         close(socket_fd_);
-#endif
         socket_fd_ = -1;
     }
 }
@@ -151,32 +107,17 @@ void EncoderAcquisitionClient::run() {
         }
 
         uint8_t recv_buf[64];
-            int received = 0;
-    #ifdef _WIN32
-            received = recv(socket_fd_, reinterpret_cast<char *>(recv_buf), static_cast<int>(sizeof(recv_buf)), 0);
-            if (received <= 0) {
-                int err = WSAGetLastError();
-                if (err == WSAETIMEDOUT || err == WSAEWOULDBLOCK) {
-                    continue; // no data this cycle
-                }
-                std::lock_guard<std::mutex> lock(state_mutex_);
-                last_error_ = "recv failed (err=" + std::to_string(err) + ")";
-                close_socket();
-                continue;
+        int received = static_cast<int>(recv(socket_fd_, recv_buf, sizeof(recv_buf), 0));
+        if (received <= 0) {
+            int err = errno;
+            if (err == EWOULDBLOCK || err == EAGAIN || err == ETIMEDOUT) {
+                continue; // timeout, keep connection
             }
-    #else
-            received = static_cast<int>(recv(socket_fd_, recv_buf, sizeof(recv_buf), 0));
-            if (received <= 0) {
-                int err = errno;
-                if (err == EWOULDBLOCK || err == EAGAIN || err == ETIMEDOUT) {
-                    continue; // timeout, keep connection
-                }
-                std::lock_guard<std::mutex> lock(state_mutex_);
-                last_error_ = "recv failed (err=" + std::to_string(err) + ")";
-                close_socket();
-                continue;
-            }
-    #endif
+            std::lock_guard<std::mutex> lock(state_mutex_);
+            last_error_ = "recv failed (err=" + std::to_string(err) + ")";
+            close_socket();
+            continue;
+        }
 
         buffer_.insert(buffer_.end(), recv_buf, recv_buf + received);
         parse_buffer();

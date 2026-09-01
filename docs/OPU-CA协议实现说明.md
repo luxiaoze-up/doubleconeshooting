@@ -9,8 +9,7 @@ OPU-CA协议是基于TCP/IP的Siemens S7-1200 PLC通信协议实现。本文档�
 ### 已完成功能
 
 1. **TCP/IP连接管理**
-   - 支持Windows和Linux平台
-   - 自动初始化和清理Winsock（Windows）
+   - 面向 Ubuntu 24.04 的 POSIX Socket 实现
    - 连接/断开连接管理
    - 连接状态检查
 
@@ -117,22 +116,13 @@ if (plc_comm_->readBool(addr, pump_power)) {
 
 ### CMakeLists.txt配置
 
-已自动配置网络库链接：
-- Windows: 链接 `ws2_32`
-- Linux: 使用系统socket库
+使用 Ubuntu 系统 Socket 库，无需额外网络链接库。
 
 ### 编译命令
 
 ```bash
-# Linux/WSL
-mkdir -p build && cd build
-cmake ..
-make vacuum_server
-
-# Windows (Visual Studio)
-mkdir build && cd build
-cmake .. -G "Visual Studio 16 2019"
-cmake --build . --config Release
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake --build build --target vacuum_server --parallel
 ```
 
 ## 测试
@@ -216,8 +206,7 @@ python scripts/test_plc_communication.py
    - 查看协议响应格式
 
 3. **编译错误**
-   - Windows: 确保链接了ws2_32库
-   - Linux: 确保安装了开发工具链
+   - 确保 Ubuntu 已安装 CMake、编译工具链和项目依赖
 
 ## 后续优化建议
 

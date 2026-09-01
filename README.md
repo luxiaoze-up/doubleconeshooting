@@ -54,7 +54,7 @@
 - `src/drivers/`：第三方硬件/相机等驱动封装（可能包含待补全的 SDK 适配）
 - `config/`：系统与设备配置（JSON）
 - `scripts/`：启动、注册、测试、运维脚本
-- `build-linux/`：WSL/Linux 构建输出目录（由 `wsl_build.sh` 生成）
+- `build/`：Ubuntu 24.04 上的 CMake 构建输出目录
 
 ## 3. 配置说明
 
@@ -84,112 +84,93 @@
   - `poll_interval_ms`：轮询周期
   - `auto_sequence`、`safety_limits`：自动流程与安全阈值
 
-## 4. 使用方法
+## 4. Ubuntu 24.04 环境与运行
 
-### 4.1 推荐方式：WSL/Linux（主运行形态）
+项目仅支持 **Ubuntu 24.04 x86-64**。建议在项目根目录使用 Python 虚拟环境，系统服务通过 systemd 管理。
 
-此项目仓库已提供 WSL 相关脚本（最省心）：
+### 4.1 基础依赖
 
-1) **WSL 环境准备**
 ```bash
-./wsl_setup.sh
+sudo apt update
+sudo apt install -y \
+  build-essential cmake pkg-config \
+  libomniorb4-dev libzmq3-dev qtbase5-dev \
+  python3 python3-venv python3-pip
+
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -U pip
+python -m pip install -r requirements.txt
+python -m pip install -r gui/requirements.txt
+python -m pip install -r gui/vacuum_system_gui/requirements.txt
 ```
 
-2) **编译（WSL/Linux 输出到 build-linux）**
+Tango Controls、open62541、Snap7 和硬件厂商 SDK 按现场版本安装。运动控制使用仓库中的 Ubuntu x86-64 库 `lib/libLTSMC.so`。
+
+### 4.2 编译
+
 ```bash
-./wsl_build.sh
-# 或 Release：
-./wsl_build.sh release
-# 或清理重编：
-./wsl_build.sh clean
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake --build build --parallel
 ```
 
-3) **启动/部署（可选：自动检查/启动 Tango DB，并提示 MySQL 依赖）**
-```bash
-./wsl_deploy.sh
-```
+Release 构建使用 `-DCMAKE_BUILD_TYPE=Release`。如果修改了编译器或系统依赖，删除并重新生成 `build/`，不要复用其他机器生成的 CMake 缓存。
 
-4) **（真实模式）注册设备到 Tango 数据库**
-- 常用：按 `config/devices_config.json` 全量注册
+### 4.3 Tango 与设备服务
+
 ```bash
+export TANGO_HOST=127.0.0.1:10000
+sudo systemctl status mariadb
+tango_admin --ping-database
+
 python3 scripts/register_devices.py --config config/devices_config.json --force
-```
-- 或只注册某些设备（脚本支持 `--devices` 过滤，具体键名见脚本/配置）
-
-5) **启动设备服务**
-```bash
 python3 scripts/start_servers.py
 ```
-- 日志输出：`logs/*.log`
 
-6) **启动真空系统（单独启动）**
+`start_servers.py` 已包含 `VacuumSystem`。仅在不运行通用启动器、需要单独维护真空系统时使用：
+
 ```bash
 scripts/start_vacuum_system.sh
-# 或后台：
+# 后台运行
 scripts/start_vacuum_system.sh --background
 ```
 
-> 约定：真空系统**保持单独启动**，不并入 `scripts/start_servers.py` 的统一编排。
+日志写入 `logs/*.log`。真实设备联调前必须核对 `config/devices_config.json`、控制器网段、轴映射、限位、刹车和电源 IO。
 
-7) **启动 GUI（Qt）**
-在 WSL/Linux 下，当前使用的 GUI 为 Python/Qt：
+### 4.4 GUI 与图像流 API
+
 ```bash
-# 先安装 GUI 依赖（按需二选一或都装）
-python3 -m pip install -r gui/requirements.txt
-python3 -m pip install -r gui/vacuum_system_gui/requirements.txt
-
-# 启动：真空腔体系统控制 GUI（当前主 GUI）
+# 主 GUI
 python3 gui/vacuum_chamber_gui/main.py
 
-# 启动：真空系统独立 GUI
-python3 gui/vacuum_system_gui/run_gui.py          # 正常模式（需要 Tango）
-python3 gui/vacuum_system_gui/run_gui.py --mock   # 模拟模式（无需 Tango）
+# 真空系统 GUI
+python3 gui/vacuum_system_gui/run_gui.py
+python3 gui/vacuum_system_gui/run_gui.py --mock
+
+# 六自由度独立调试 GUI
+python3 -m gui.six_dof_debug_gui.main
+
+# 图像流 API
+scripts/start_image_api.sh
 ```
 
-可选：如果你需要使用 C++/Qt 的 `main_controller`（非当前主路径），可在 `build-linux/` 下启动：
-```bash
-cd build-linux
-./main_controller --sim
-```
-
-> 说明：CMake 中会根据环境是否找到 Tango/Qt 决定是否构建相应目标。
-
-### 4.2 Windows（辅助：仅构建/跑 Python 测试/编辑代码）
-
-Windows 下可使用 VS + CMake 构建（详见 `docs/编译和测试指南.md`）。
-如果主要目的是跑测试或工具脚本：
-```powershell
-pip install -r requirements.txt
-scripts\run_tests.bat
-```
-
-### 4.3 图像流 API（如需）
-
-- 启动：`scripts/start_image_api.sh` 或 `scripts/start_image_api.bat`
-- 代码入口：`scripts/image_stream_api.py`
+C++/Qt 客户端是可选目标：`./build/main_controller --sim`。
 
 ## 5. 测试与验证
 
-### 5.1 C++ 测试
-WSL/Linux 构建后：
 ```bash
-cd build-linux
-./test_devices
-```
+# 配置和编译检查
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake --build build --parallel
 
-### 5.2 Python 自动化测试
-- Linux/WSL：
-```bash
+# Python 单元测试
+scripts/run_tests.sh --unit -v
+
+# 带 HTML 与覆盖率报告
 scripts/run_tests.sh --html --cov
 ```
-- Windows：
-```powershell
-scripts\run_tests.bat
-```
 
-详细测试说明：
-- `docs/编译和测试指南.md`
-- `docs/端到端测试底层实现原理详解.md`
+`scripts/unit_test/` 中部分用例会连接 Tango 或真实硬件；运行前先阅读测试文件，确认目标 IP、设备名和运动范围。详细说明见 `docs/编译和测试指南.md` 与 `docs/端到端测试底层实现原理详解.md`。
 
 ## 6. 待开发事项（基于仓库内 TODO/文档）
 
@@ -244,9 +225,9 @@ scripts\run_tests.bat
   - 更新 `queryPowerStatus()` 命令输出，包含相机电源状态
 ### P0 / 需要尽快落实
 
-1) **真空系统保持单独启动的操作固化**
-- 已确认：真空系统不并入 `scripts/start_servers.py`，继续使用 `scripts/start_vacuum_system.sh` 独立管理。
-- 建议补充：在现场 SOP/快速操作卡中明确启动顺序（先数据库/设备服务，再真空服务，再 GUI）。
+1) **真空系统启动方式固化**
+- 当前 `scripts/start_servers.py` 已包含 `VacuumSystem`；`scripts/start_vacuum_system.sh` 供单独维护时使用，两者不要同时启动同一实例。
+- 建议补充：在现场 SOP/快速操作卡中明确采用通用启动器还是独立真空脚本。
 
 ### P1 / 功能完善（代码里明确存在 TODO）
 1) **海康相机驱动（MV-CU020-19GC）接入真实 SDK**

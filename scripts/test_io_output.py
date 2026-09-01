@@ -16,7 +16,6 @@ IO输出端口配置工具（直接使用SMC接口）
 
 import ctypes
 import sys
-import os
 from pathlib import Path
 from typing import Optional
 
@@ -42,22 +41,15 @@ class SMCIOController:
     
     def __init__(self):
         self.smc = None
-        self.is_windows = os.name == 'nt'
         self._load_library()
     
     def _load_library(self):
         """加载SMC库"""
         workspace_root = Path(__file__).parent.parent
-        if self.is_windows:
-            dll_path = workspace_root / "lib" / "LTSMC.dll"
-            if not dll_path.exists():
-                raise FileNotFoundError(f"SMC库未找到: {dll_path}")
-            self.smc = ctypes.WinDLL(str(dll_path))
-        else:
-            so_path = workspace_root / "lib" / "libLTSMC.so"
-            if not so_path.exists():
-                raise FileNotFoundError(f"SMC库未找到: {so_path}")
-            self.smc = ctypes.CDLL(str(so_path))
+        so_path = workspace_root / "lib" / "libLTSMC.so"
+        if not so_path.exists():
+            raise FileNotFoundError(f"SMC库未找到: {so_path}")
+        self.smc = ctypes.CDLL(str(so_path))
         
         # 定义函数签名
         self.smc.smc_set_connect_timeout.argtypes = [ctypes.c_uint32]

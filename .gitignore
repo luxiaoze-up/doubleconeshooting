@@ -6,10 +6,7 @@ lib/
 *.o
 *.a
 *.so
-*.dylib
-*.exe
 *.out
-*.app
 
 # ========================================
 # CMake generated files
@@ -95,7 +92,6 @@ test_db_conn
 # ========================================
 # System files
 # ========================================
-Thumbs.db
 .DS_Store
 *.swp
 *.swo

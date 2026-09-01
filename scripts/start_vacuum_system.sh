@@ -55,11 +55,11 @@ fi
 # 2. 启动服务器
 echo ""
 echo "[2/2] Starting vacuum_system_server..."
-EXECUTABLE="$PROJECT_ROOT/build-linux/vacuum_system_server"
+EXECUTABLE="$PROJECT_ROOT/build/vacuum_system_server"
 
 if [ ! -f "$EXECUTABLE" ]; then
     echo "✗ Executable not found: $EXECUTABLE"
-    echo "  Please build the project first: cd build-linux && make"
+    echo "  Please build the project first: cmake -S . -B build && cmake --build build --parallel"
     exit 1
 fi
 
@@ -105,4 +105,3 @@ else
     echo "Logs will only be written to file (use 'tail -f $LOG_FILE' to view)"
     stdbuf -oL -eL "$EXECUTABLE" vacuum2 -v4 > "$LOG_FILE" 2>&1
 fi
-

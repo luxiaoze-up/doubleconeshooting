@@ -15,7 +15,8 @@ def _bind_if_present(smc: ctypes.CDLL, name: str, argtypes, restype) -> bool:
 
 
 def main() -> None:
-    so_path = Path("/mnt/d/00.My_workspace/DoubleConeShooting/lib/libLTSMC.so")
+    project_root = Path(__file__).resolve().parents[2]
+    so_path = project_root / "lib" / "libLTSMC.so"
     if not so_path.exists():
         raise SystemExit(f"libLTSMC.so not found: {so_path}")
 

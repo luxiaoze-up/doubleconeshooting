@@ -1,7 +1,7 @@
 /**
  * 最小测试程序：验证雷赛 SMC 运动控制器网络连接
  * 
- * 编译 (Linux/WSL):
+ * 编译 (Ubuntu 24.04):
  *   g++ -o test_smc_connection test_smc_connection.cpp -L../lib -lLTSMC -Wl,-rpath,../lib
  * 
  * 运行:
@@ -88,7 +88,7 @@ void test_controller(const char* ip, unsigned short card_id) {
         std::cout << "  - 控制器未上电或网络未连接" << std::endl;
         std::cout << "  - IP 地址配置错误" << std::endl;
         std::cout << "  - 防火墙阻止连接" << std::endl;
-        std::cout << "  - WSL 网络与硬件不兼容" << std::endl;
+        std::cout << "  - Ubuntu 主机网卡未配置到控制器网段" << std::endl;
     }
 }
 

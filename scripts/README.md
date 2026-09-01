@@ -8,12 +8,11 @@
 
 - `start_servers.py` - 启动所有设备服务器
 - `start_vacuum_system.sh` - 启动真空系统服务
-- `start_image_api.sh` / `start_image_api.bat` - 启动图像流 API 服务
+- `start_image_api.sh` - 启动图像流 API 服务
 
 ### 系统配置脚本
 
-- `setup_omniORB.sh` - 配置 omniORB（解决 DNS 反向解析问题）
-- `fix_wsl_hosts.sh` - WSL hosts 文件修复工具
+- `setup_omniORB.sh` - 配置 Ubuntu 上的 omniORB（解决 DNS 反向解析问题）
 
 ### 设备管理脚本
 
@@ -21,8 +20,7 @@
 
 ### 测试脚本
 
-- `run_tests.sh` - 运行测试套件（Linux/WSL）
-- `run_tests.bat` - 运行测试套件（Windows）
+- `run_tests.sh` - 运行 Ubuntu 测试套件
 - `run_tests_with_reports.sh` - 运行测试并生成报告
 
 ### API 服务

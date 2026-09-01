@@ -50,10 +50,10 @@ def main() -> None:
         print("常见原因：")
         print("- simulator 实际写到了别的路径（建议启动时看它打印的 'Using log file:'）")
         print("- simulator 没有收到任何连接（上层没连上 / IP 没绑到 lo / 502 没监听成功）")
-        print("快速验证（WSL）：")
+        print("快速验证（Ubuntu 24.04）：")
         print("- ip addr show dev lo | grep 192.168.1")
         print("- ss -ltnp | grep :502")
-        print("- python3 scripts/tools/ltsmc_smoke_test_wsl.py （让驱动主动连三台 IP）")
+        print("- python3 scripts/tools/ltsmc_smoke_test.py （让驱动主动连三台 IP）")
         return
 
     reads: Dict[Tuple[str, int], Counter[Tuple[int, int]]] = defaultdict(Counter)

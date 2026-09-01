@@ -172,10 +172,10 @@ class ConnectionWidget(QWidget):
                         "无法加载运动控制器驱动\n\n"
                         "程序无法初始化运动控制器。\n\n"
                         "请检查以下事项：\n"
-                        "1. 确认 lib/LTSMC.dll 文件存在\n"
-                        "2. 检查驱动文件版本是否匹配\n"
-                        "3. 安装 Microsoft Visual C++ Redistributable 运行库\n"
-                        "4. 确认驱动文件完整未损坏\n\n"
+                        "1. 确认 lib/libLTSMC.so 文件存在\n"
+                        "2. 用 file 检查共享库是否为 x86-64\n"
+                        "3. 用 ldd 检查是否有缺失依赖\n"
+                        "4. 确认共享库权限和文件完整性\n\n"
                         "如果问题持续，请联系技术支持。"
                     )
                     QMessageBox.critical(self, "驱动加载失败", f"{user_msg}\n\n详细信息：{error_msg}")
@@ -218,10 +218,10 @@ class ConnectionWidget(QWidget):
                     "无法加载运动控制器驱动\n\n"
                     "程序无法初始化运动控制器驱动。\n\n"
                     "请检查以下事项：\n"
-                    "1. 确认 lib/LTSMC.dll 文件存在\n"
-                    "2. 检查驱动文件版本是否匹配\n"
-                    "3. 安装 Microsoft Visual C++ Redistributable 运行库\n"
-                    "4. 确认驱动文件完整未损坏\n\n"
+                    "1. 确认 lib/libLTSMC.so 文件存在\n"
+                    "2. 用 file 检查共享库是否为 x86-64\n"
+                    "3. 用 ldd 检查是否有缺失依赖\n"
+                    "4. 确认共享库权限和文件完整性\n\n"
                     "如果问题持续，请联系技术支持。"
                 )
                 QMessageBox.critical(self, "驱动加载失败", f"{user_msg}\n\n详细信息：{error_msg}")

@@ -34,7 +34,7 @@ QMainWindow {{
 
 QWidget {{
     color: {COLORS['text_primary']};
-    font-family: "Segoe UI", "Segoe UI Symbol", "Microsoft YaHei", "Arial Unicode MS", sans-serif;
+    font-family: "Noto Sans CJK SC", "Noto Sans Symbols 2", "Ubuntu", sans-serif;
     font-size: 13px;
 }}
 

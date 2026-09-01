@@ -7,11 +7,7 @@
 #include <chrono>
 #include <algorithm>
 #include <cctype>
-#ifdef _WIN32
-#include <windows.h>
-#else
 #include <unistd.h>
-#endif
 
 namespace Common {
 namespace 
@@ -123,11 +119,7 @@ bool OPCUACommunication::attemptReconnect() {
     
     reconnect_attempts_++;
     
-#ifdef _WIN32
-    Sleep(RECONNECT_DELAY_MS);
-#else
     usleep(RECONNECT_DELAY_MS * 1000);
-#endif
     
 #ifdef USE_OPEN62541
     // 重要：重连前先断开，清理残留 socket 和内部状态
@@ -993,11 +985,7 @@ bool S7Communication::attemptReconnect() {
               << "/" << MAX_RECONNECT_ATTEMPTS << ")" << std::endl;
     reconnect_attempts_++;
 
-#ifdef _WIN32
-    Sleep(RECONNECT_DELAY_MS);
-#else
     usleep(RECONNECT_DELAY_MS * 1000);
-#endif
 
 #ifdef USE_SNAP7
     // 重连前先断开旧连接，清理残留状态

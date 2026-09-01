@@ -1073,7 +1073,7 @@ class VacuumSystemMainPage(QWidget):
         return True
         
     def _show_centered_message(self, icon_type, title, text, buttons=QMessageBox.Ok) -> int:
-        """确保弹出框在主窗口中心且不会被主窗口盖住（Windows Z-order 兼容）"""
+        """在主窗口中心显示应用模态对话框。"""
         main_win = self.window()
 
         # 关键：必须把主窗口作为 parent/owner，才能保证点主窗口不会把对话框压到后面
@@ -1086,9 +1086,6 @@ class VacuumSystemMainPage(QWidget):
         # 关键：应用模态，阻止与主窗口交互（避免“点别处导致层级变化”的感觉）
         msg_box.setWindowModality(Qt.ApplicationModal)
         msg_box.setModal(True)
-
-        # Windows 下避免被主窗口“抢前台”盖住：强制置顶
-        msg_box.setWindowFlags(msg_box.windowFlags() | Qt.WindowStaysOnTopHint)
 
         # 额外保险：弹窗存在时吞掉主窗口的鼠标/键盘事件（防止用户点到主窗口触发激活/层级变化）
         class _Blocker(QObject):

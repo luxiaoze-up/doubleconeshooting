@@ -4,14 +4,6 @@
 #include <cstring>
 #include <vector>
 
-#ifdef _WIN32
-// Windows 兼容的 setenv
-inline int setenv(const char* name, const char* value, int overwrite) {
-    if (!overwrite && std::getenv(name) != nullptr) return 0;
-    return _putenv_s(name, value);
-}
-#endif
-
 #ifdef HAS_QT5
 #include <QFile>
 #include <QJsonDocument>

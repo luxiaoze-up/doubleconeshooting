@@ -4,7 +4,6 @@ Configuration Management Module
 """
 
 import json
-import os
 from pathlib import Path
 from typing import Dict, Any, Optional
 
@@ -62,17 +61,8 @@ class Config:
             config_file: 配置文件路径，如果为None则使用默认路径
         """
         if config_file is None:
-            # 默认配置文件路径：gui/six_dof_debug_gui/config.json
-            # 支持打包环境
-            import sys
-            if getattr(sys, 'frozen', False):
-                # 打包环境：从exe所在目录
-                exe_dir = Path(sys.executable).parent
-                config_file = str(exe_dir / "config.json")
-            else:
-                # 开发环境：从模块所在目录
-                base_dir = Path(__file__).parent
-                config_file = str(base_dir / "config.json")
+            base_dir = Path(__file__).resolve().parent
+            config_file = str(base_dir / "config.json")
         
         self.config_file = config_file
         self.config = self._load_config()

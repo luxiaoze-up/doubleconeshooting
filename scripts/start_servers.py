@@ -161,10 +161,8 @@ def start_device_servers():
         
         server = server_map[server_name]
         
-        # Try build-linux first (WSL/Linux), then build (Windows)
+        # Ubuntu 24.04 builds all C++ targets in the project build directory.
         exe_path = os.path.join(base_path, "build", server['executable'])
-        if not os.path.exists(exe_path):
-            exe_path = os.path.join(base_path, "build", server['executable'])
         
         # Check if executable exists
         if not os.path.exists(exe_path):

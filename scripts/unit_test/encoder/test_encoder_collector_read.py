@@ -328,7 +328,8 @@ def main() -> int:
         dump_path = None
         if args.dump_dir:
             ts = time.strftime("%Y%m%d_%H%M%S")
-            dump_path = f"{args.dump_dir.rstrip('\\/')}/encoder_{ip}_{port}_{ts}.bin"
+            dump_dir = args.dump_dir.rstrip("/\\")
+            dump_path = f"{dump_dir}/encoder_{ip}_{port}_{ts}.bin"
         clients.append(
             CollectorClient(
                 ip,

@@ -26,10 +26,10 @@ def get_unicode_font(size: int = 9) -> QFont:
     """
     # 按优先级尝试支持 Unicode 符号的字体
     font_families = [
-        "Segoe UI Symbol",      # Windows 10+ 自带，支持常用符号
-        "Arial Unicode MS",     # 支持大量 Unicode 字符
-        "Segoe UI",             # Windows 标准字体，部分支持
-        "Microsoft YaHei",      # 中文字体，部分支持
+        "Noto Sans Symbols 2",
+        "Noto Sans CJK SC",
+        "DejaVu Sans",
+        "Ubuntu",
     ]
     
     for family in font_families:
